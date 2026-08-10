@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cronograma — Guilherme Londero</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 14px; background: #f5f5f2; color: #1a1a18; padding: 2rem 1rem; }
+  .container { max-width: 860px; margin: 0 auto; }
+  h1 { font-size: 20px; font-weight: 500; margin-bottom: 4px; }
+  .subtitle { font-size: 13px; color: #6b6b66; margin-bottom: 2rem; }
+
+  /* PIPELINE */
+  .pipeline-wrap { background: #fff; border: 0.5px solid #e0dfd8; border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem; overflow-x: auto; }
+  .pipeline-title { font-size: 13px; font-weight: 500; color: #6b6b66; margin-bottom: 1rem; letter-spacing: .04em; text-transform: uppercase; }
+  .month-header { display: grid; grid-template-columns: 160px repeat(6, 1fr); gap: 0; margin-bottom: 8px; min-width: 700px; }
+  .month-label { text-align: center; font-size: 12px; font-weight: 500; color: #888780; padding: 4px 0; border-left: 0.5px solid #e0dfd8; }
+  .month-label:first-child { border-left: none; }
+  .grid-body { display: grid; grid-template-columns: 160px repeat(6, 1fr); gap: 0; min-width: 700px; position: relative; }
+  .row-label { font-size: 12px; color: #444441; padding: 6px 8px 6px 0; display: flex; align-items: center; font-weight: 500; }
+  .row-label .cat-dot { width: 8px; height: 8px; border-radius: 50%; margin-right: 6px; flex-shrink: 0; }
+  .grid-cell { border-left: 0.5px solid #f0efe8; padding: 3px; position: relative; }
+  .bar { border-radius: 6px; height: 32px; display: flex; align-items: center; padding: 0 10px; font-size: 11px; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; cursor: pointer; transition: opacity .15s; }
+  .bar:hover { opacity: .85; }
+  .bar-purple  { background: #EEEDFE; color: #3C3489; border: 0.5px solid #AFA9EC; }
+  .bar-teal    { background: #E1F5EE; color: #085041; border: 0.5px solid #5DCAA5; }
+  .bar-amber   { background: #FAEEDA; color: #633806; border: 0.5px solid #EF9F27; }
+  .bar-gray    { background: #F1EFE8; color: #444441; border: 0.5px solid #B4B2A9; }
+  .bar-coral   { background: #FAECE7; color: #712B13; border: 0.5px solid #F0997B; }
+  .bar-empty   { height: 32px; }
+  .span-2 { grid-column: span 2; }
+  .span-3 { grid-column: span 3; }
+  .span-4 { grid-column: span 4; }
+  .span-half { width: 50%; }
+  .row-gap { height: 6px; grid-column: 1 / -1; }
+
+  /* Legenda */
+  .legend { display: flex; gap: 16px; flex-wrap: wrap; margin-top: 1rem; }
+  .legend-item { display: flex; align-items: center; gap: 6px; font-size: 12px; color: #6b6b66; }
+  .legend-dot { width: 10px; height: 10px; border-radius: 3px; }
+
+  /* TABELA RESUMO */
+  .table-title { font-size: 13px; font-weight: 500; color: #6b6b66; margin-bottom: .8rem; letter-spacing: .04em; text-transform: uppercase; }
+  .summary-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .summary-table thead th { text-align: left; padding: 8px 12px; background: #f5f5f2; color: #6b6b66; font-weight: 500; font-size: 12px; border-bottom: 0.5px solid #e0dfd8; }
+  .summary-table tbody td { padding: 10px 12px; border-bottom: 0.5px solid #f0efe8; color: #1a1a18; vertical-align: top; }
+  .summary-table tbody tr:last-child td { border-bottom: none; }
+  .summary-table tbody tr:hover td { background: #fafaf8; }
+  .phase-badge { display: inline-block; font-size: 11px; font-weight: 500; padding: 2px 8px; border-radius: 20px; white-space: nowrap; }
+  .phase-purple { background: #EEEDFE; color: #3C3489; }
+  .phase-teal   { background: #E1F5EE; color: #085041; }
+  .phase-amber  { background: #FAEEDA; color: #633806; }
+  .phase-gray   { background: #F1EFE8; color: #444441; }
+  .phase-coral  { background: #FAECE7; color: #712B13; }
+  .period { font-size: 12px; color: #888780; white-space: nowrap; }
+  .activities { color: #444441; line-height: 1.6; }
+  .activities li { margin-left: 14px; }
+  .deliverable { font-size: 12px; color: #1a7a4a; background: #e6f4ed; border-radius: 4px; padding: 1px 6px; display: inline-block; margin-top: 4px; }
+  .alert-row td { background: #fef9f0; }
+  .alert-badge { font-size: 11px; color: #854f0b; background: #fef3e0; border: 0.5px solid #fac775; border-radius: 4px; padding: 1px 6px; margin-left: 6px; }
+
+  /* Nota */
+  .note { font-size: 12px; color: #888780; margin-top: 1rem; padding: 10px 14px; background: #f5f5f2; border-radius: 8px; border-left: 3px solid #e0dfd8; }
+
+  @media (max-width: 600px) {
+    .pipeline-wrap { padding: 1rem .5rem; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <h1>Cronograma do TCC — Guilherme Londero</h1>
+  <p class="subtitle">Protótipo funcional para validação da tecnologia RFID aplicada ao transporte escolar · 2026-2 · Jul–Dez</p>
+
+  <!-- PIPELINE VISUAL -->
+  <div class="pipeline-wrap">
+    <div class="pipeline-title">Pipeline de execução</div>
+
+    <div class="month-header">
+      <div></div>
+      <div class="month-label">Jul</div>
+      <div class="month-label">Ago</div>
+      <div class="month-label">Set</div>
+      <div class="month-label">Out</div>
+      <div class="month-label">Nov</div>
+      <div class="month-label">Dez</div>
+    </div>
+
+    <div class="grid-body">
+
+      <!-- Linha 1: Pesquisa e escopo -->
+      <div class="row-label"><span class="cat-dot" style="background:#534AB7"></span>Pesquisa e escopo</div>
+      <div class="grid-cell span-2">
+        <div class="bar bar-purple" title="Levantamento bibliográfico + definição de requisitos e métricas">Bibliogr. + requisitos + métricas</div>
+      </div>
+      <div class="grid-cell"></div>
+      <div class="grid-cell"></div>
+      <div class="grid-cell"></div>
+      <div class="grid-cell"></div>
+
+      <div class="row-gap"></div>
+
+      <!-- Linha 2: Hardware -->
+      <div class="row-label"><span class="cat-dot" style="background:#1D9E75"></span>Hardware embarcado</div>
+      <div class="grid-cell"></div>
+      <div class="grid-cell span-2">
+        <div class="bar bar-teal" title="Montagem ESP32 + MFRC522, testes de leitura RFID, distância, duplicatas">ESP32 + RFID + testes leitura</div>
+      </div>
+      <div class="grid-cell"></div>
+      <div class="grid-cell"></div>
+      <div class="grid-cell"></div>
+
+      <div class="row-gap"></div>
+
+      <!-- Linha 3: Backend + banco (paralelo ao hardware) -->
+      <div class="row-label"><span class="cat-dot" style="background:#534AB7"></span>Backend + banco</div>
+      <div class="grid-cell"></div>
+      <div class="grid-cell span-2">
+        <div class="bar bar-purple" title="API REST Python + modelagem e implementação MariaDB">Python API + MariaDB</div>
+      </div>
+      <div class="grid-cell"></div>
+      <div class="grid-cell"></div>
+      <div class="grid-cell"></div>
+
+      <div class="row-gap"></div>
+
+      <!-- Linha 4: Interface web -->
+      <div class="row-label"><span class="cat-dot" style="background:#1D9E75"></span>Interface web</div>
+      <div class="grid-cell"></div>
+      <div class="grid-cell"></div>
+      <div class="grid-cell span-2">
+        <div class="bar bar-teal" title="HTML, CSS, JS, Bootstrap — cadastro, registros, relatórios">HTML/JS/Bootstrap — gestão</div>
+      </div>
+      <div class="grid-cell"></div>
+      <div class="grid-cell"></div>
+
+      <div class="row-gap"></div>
+
+      <!-- Linha 5: Integração + Telegram -->
+      <div class="row-label"><span class="cat-dot" style="background:#BA7517"></span>Integração + Telegram</div>
+      <div class="grid-cell"></div>
+      <div class="grid-cell"></div>
+      <div class="grid-cell span-2">
+        <div class="bar bar-amber" title="Integração ESP32→API→MariaDB + bot Telegram como funcionalidade complementar">Integração ponta a ponta + bot</div>
+      </div>
+      <div class="grid-cell"></div>
+      <div class="grid-cell"></div>
+
+      <div class="row-gap"></div>
+
+      <!-- Linha 6: LGPD -->
+      <div class="row-label"><span class="cat-dot" style="background:#888780"></span>LGPD e conformidade</div>
+      <div class="grid-cell"></div>
+      <div class="grid-cell"></div>
+      <div class="grid-cell"></div>
+      <div class="grid-cell span-2">
+        <div class="bar bar-gray" title="Aplicação dos princípios da LGPD, uso de dados fictícios, documentação das medidas">LGPD + dados fictícios</div>
+      </div>
+      <div class="grid-cell"></div>
+
+      <div class="row-gap"></div>
+
+      <!-- Linha 7: Testes integrados e validação -->
+      <div class="row-label"><span class="cat-dot" style="background:#BA7517"></span>Testes e validação</div>
+      <div class="grid-cell"></div>
+      <div class="grid-cell"></div>
+      <div class="grid-cell"></div>
+      <div class="grid-cell span-2">
+        <div class="bar bar-amber" title="Testes de leitura, falhas, conectividade, consumo energético, comparação manual vs RFID">Métricas RFID + falhas + energia</div>
+      </div>
+      <div class="grid-cell"></div>
+
+      <div class="row-gap"></div>
+
+      <!-- Linha 8: Redação e entrega -->
+      <div class="row-label"><span class="cat-dot" style="background:#993C1D"></span>Redação e defesa</div>
+      <div class="grid-cell"></div>
+      <div class="grid-cell"></div>
+      <div class="grid-cell"></div>
+      <div class="grid-cell"></div>
+      <div class="grid-cell span-2">
+        <div class="bar bar-coral" title="Elaboração do artigo científico (ABNT), revisões, preparação para defesa">Artigo ABNT + revisões + defesa</div>
+      </div>
+
+    </div>
+
+    <div class="legend">
+      <div class="legend-item"><div class="legend-dot" style="background:#EEEDFE; border:0.5px solid #AFA9EC"></div>Pesquisa / backend</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#E1F5EE; border:0.5px solid #5DCAA5"></div>Hardware / interface</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#FAEEDA; border:0.5px solid #EF9F27"></div>Integração / testes</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#F1EFE8; border:0.5px solid #B4B2A9"></div>Conformidade</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#FAECE7; border:0.5px solid #F0997B"></div>Redação / entrega</div>
+    </div>
+  </div>
+
+  <!-- TABELA RESUMO -->
+  <div class="table-title">Resumo das fases</div>
+  <div style="background:#fff; border:0.5px solid #e0dfd8; border-radius:12px; overflow:hidden; margin-bottom:1.5rem;">
+    <table class="summary-table">
+      <thead>
+        <tr>
+          <th style="width:18%">Fase</th>
+          <th style="width:16%">Período</th>
+          <th>Principais atividades</th>
+          <th style="width:20%">Entregável</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="phase-badge phase-purple">Pesquisa e escopo</span></td>
+          <td class="period">Jul 1 – Ago 15</td>
+          <td class="activities">
+            <ul>
+              <li>Levantamento bibliográfico (IoT, RFID, ESP32)</li>
+              <li>Definição de requisitos funcionais e não funcionais</li>
+              <li>Definição das métricas de avaliação do protótipo</li>
+              <li>Diagrama de arquitetura e fluxo de dados</li>
+            </ul>
+          </td>
+          <td><span class="deliverable">Tabela de trabalhos relacionados</span></td>
+        </tr>
+        <tr>
+          <td><span class="phase-badge phase-teal">Hardware</span></td>
+          <td class="period">Ago 15 – Set 15</td>
+          <td class="activities">
+            <ul>
+              <li>Montagem do circuito ESP32 + MFRC522</li>
+              <li>Programação na IDE Arduino</li>
+              <li>Testes de distância, posicionamento e leituras duplicadas</li>
+              <li>Envio de dados via HTTP POST para a API</li>
+            </ul>
+          </td>
+          <td><span class="deliverable">Hardware funcional com leitura RFID</span></td>
+        </tr>
+        <tr>
+          <td><span class="phase-badge phase-purple">Backend + banco</span></td>
+          <td class="period">Ago 15 – Set 15 <em style="color:#888780;font-size:11px">(paralelo)</em></td>
+          <td class="activities">
+            <ul>
+              <li>API REST em Python recebendo dados do ESP32</li>
+              <li>Modelagem do banco: alunos, responsáveis, eventos, veículos</li>
+              <li>Implementação no MariaDB</li>
+              <li>Regras de negócio e controle de duplicidade</li>
+            </ul>
+          </td>
+          <td><span class="deliverable">API funcional + banco modelado</span></td>
+        </tr>
+        <tr>
+          <td><span class="phase-badge phase-teal">Interface web</span></td>
+          <td class="period">Set – Out 31</td>
+          <td class="activities">
+            <ul>
+              <li>Login e autenticação por perfil (admin, motorista)</li>
+              <li>Cadastro e gerenciamento de usuários</li>
+              <li>Consulta de registros em tempo real</li>
+              <li>Responsividade e testes de usabilidade</li>
+            </ul>
+          </td>
+          <td><span class="deliverable">Interface web responsiva</span></td>
+        </tr>
+        <tr>
+          <td><span class="phase-badge phase-amber">Integração + Telegram</span></td>
+          <td class="period">Set 15 – Nov 15</td>
+          <td class="activities">
+            <ul>
+              <li>Integração ponta a ponta: RFID → API → banco → interface</li>
+              <li>Bot Telegram para notificações (funcionalidade complementar)</li>
+              <li>Testes de formato e entrega das mensagens</li>
+            </ul>
+          </td>
+          <td><span class="deliverable">Fluxo completo integrado</span></td>
+        </tr>
+        <tr class="alert-row">
+          <td><span class="phase-badge phase-gray">LGPD</span> <span class="alert-badge">obrigatório</span></td>
+          <td class="period">Out – Nov 15</td>
+          <td class="activities">
+            <ul>
+              <li>Aplicação dos princípios da Lei 13.709/2018</li>
+              <li>Uso exclusivo de dados fictícios nos testes</li>
+              <li>Documentação das medidas de proteção adotadas</li>
+            </ul>
+          </td>
+          <td><span class="deliverable">Seção 3.3 documentada</span></td>
+        </tr>
+        <tr>
+          <td><span class="phase-badge phase-amber">Testes e validação</span></td>
+          <td class="period">Out – Nov 30</td>
+          <td class="activities">
+            <ul>
+              <li>Taxa de sucesso de leituras RFID</li>
+              <li>Tempo médio de registro por evento</li>
+              <li>Comportamento em falha de conexão e recuperação</li>
+              <li>Comparação manual vs automatizado</li>
+              <li>Consumo elétrico do conjunto ESP32 + MFRC522</li>
+            </ul>
+          </td>
+          <td><span class="deliverable">Resultados com métricas</span></td>
+        </tr>
+        <tr>
+          <td><span class="phase-badge phase-coral">Redação e defesa</span></td>
+          <td class="period">Nov 15 – Dez 31</td>
+          <td class="activities">
+            <ul>
+              <li>Elaboração do artigo científico (normas ABNT)</li>
+              <li>Análise e discussão dos resultados obtidos</li>
+              <li>Revisões finais e formatação</li>
+              <li>Preparação e apresentação da defesa</li>
+            </ul>
+          </td>
+          <td><span class="deliverable">Artigo entregue + defesa</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="note">
+    <strong>Atenção:</strong> Hardware e backend devem ser desenvolvidos em paralelo em agosto/setembro — não sequencialmente. A redação do artigo começa em novembro, junto com os testes, e não após eles. Aguardar tudo pronto para começar a escrever comprime demais o final do semestre.
+  </div>
+
+</div>
+</body>
+</html>
