@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Análise Pré-TCC — Guilherme Londero</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 14px; background: #f5f5f2; color: #1a1a18; padding: 2rem 1rem; }
+  .container { max-width: 780px; margin: 0 auto; }
+  h1 { font-size: 20px; font-weight: 500; margin-bottom: 4px; }
+  .subtitle { font-size: 13px; color: #6b6b66; margin-bottom: 1.5rem; }
+  .tabs { display: flex; gap: 6px; margin-bottom: 1.2rem; flex-wrap: wrap; }
+  .tab { font-size: 12px; font-weight: 500; padding: 6px 14px; border-radius: 8px; border: 0.5px solid #c8c7bf; background: #ececea; color: #6b6b66; cursor: pointer; transition: all .15s; }
+  .tab.active { background: #fff; color: #1a1a18; border-color: #888780; }
+  .tab:hover:not(.active) { background: #e2e2df; }
+  .pane { display: none; }
+  .pane.active { display: block; }
+  .summary-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 1.2rem; }
+  .summary-grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-bottom: 1.2rem; }
+  .summary-card { background: #fff; border-radius: 8px; border: 0.5px solid #e0dfd8; padding: .8rem; text-align: center; }
+  .summary-card .num { font-size: 24px; font-weight: 500; line-height: 1.1; }
+  .summary-card .lbl { font-size: 11px; color: #6b6b66; margin-top: 3px; }
+  .num-danger { color: #c0392b; } .num-warning { color: #b7650b; } .num-success { color: #1a7a4a; } .num-info { color: #185fa5; }
+  .section { border: 0.5px solid #e0dfd8; border-radius: 12px; margin-bottom: 10px; overflow: hidden; background: #fff; }
+  .section-header { display: flex; align-items: center; gap: 10px; padding: 13px 16px; cursor: pointer; user-select: none; }
+  .section-header:hover { background: #f7f7f5; }
+  .badge { font-size: 11px; font-weight: 500; padding: 3px 9px; border-radius: 8px; white-space: nowrap; }
+  .badge-critico { background: #fde8e8; color: #a32d2d; }
+  .badge-melhoria { background: #fef3e0; color: #854f0b; }
+  .badge-positivo { background: #e6f4ed; color: #1a7a4a; }
+  .badge-resolvido { background: #e6f0fb; color: #185fa5; }
+  .badge-parcial { background: #fef3e0; color: #854f0b; }
+  .badge-pendente { background: #fef3e0; color: #854f0b; }
+  .badge-urgente { background: #fde8e8; color: #a32d2d; border: 0.5px solid #f09595; }
+  .badge-fraco { background: #fef3e0; color: #854f0b; }
+  .badge-forte { background: #e6f4ed; color: #1a7a4a; }
+  .section-title { font-size: 14px; font-weight: 500; color: #1a1a18; flex: 1; }
+  .chevron { font-size: 18px; color: #aaa; transition: transform .2s; line-height: 1; }
+  .chevron.open { transform: rotate(180deg); }
+  .section-body { border-top: 0.5px solid #e0dfd8; padding: 14px 16px; display: none; }
+  .section-body.open { display: block; }
+  .block { border-radius: 8px; padding: 10px 12px; margin-bottom: 10px; }
+  .block:last-child { margin-bottom: 0; }
+  .block-danger { background: #fde8e8; border: 0.5px solid #f09595; }
+  .block-success { background: #e6f4ed; border: 0.5px solid #7dc9a0; }
+  .block-info { background: #e6f0fb; border: 0.5px solid #85b7eb; }
+  .block-warning { background: #fef3e0; border: 0.5px solid #fac775; }
+  .block-label { font-size: 11px; font-weight: 500; letter-spacing: .04em; margin-bottom: 5px; }
+  .block-label-danger { color: #a32d2d; } .block-label-success { color: #1a7a4a; }
+  .block-label-info { color: #185fa5; } .block-label-warning { color: #854f0b; }
+  .block-text { font-size: 13px; color: #1a1a18; line-height: 1.6; }
+  .block-text b { font-weight: 500; }
+  .compare-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }
+  .compare-cell { border-radius: 8px; padding: 10px 12px; font-size: 13px; line-height: 1.6; color: #1a1a18; }
+  .cell-before { background: #fde8e8; border: 0.5px solid #f09595; }
+  .cell-after { background: #e6f4ed; border: 0.5px solid #7dc9a0; }
+  .cell-label { font-size: 11px; font-weight: 500; margin-bottom: 4px; }
+  .cell-label-before { color: #a32d2d; } .cell-label-after { color: #1a7a4a; }
+  .action-btn { margin-top: 10px; font-size: 13px; padding: 6px 14px; cursor: pointer; border-radius: 8px; background: transparent; border: 0.5px solid #c8c7bf; color: #1a1a18; }
+  .action-btn:hover { background: #f0f0ee; }
+  .divider { font-size: 11px; font-weight: 500; color: #aaa; letter-spacing: .06em; margin: 1.2rem 0 .5rem; text-transform: uppercase; }
+  @media (max-width: 600px) {
+    .summary-grid { grid-template-columns: repeat(2, 1fr); }
+    .compare-row { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>Análise do Pré-TCC — Guilherme Londero</h1>
+  <p class="subtitle">Protótipo funcional para validação da tecnologia RFID aplicada ao transporte escolar · Versão 3 · 2026-2</p>
+
+  <div class="tabs">
+    <div class="tab active" onclick="showTab('comparativo')">A · Comparativo</div>
+    <div class="tab" onclick="showTab('fortes')">B · Pontos fortes</div>
+    <div class="tab" onclick="showTab('fracos')">C · Pontos fracos</div>
+    <div class="tab" onclick="showTab('urgente')">D · Urgente</div>
+  </div>
+
+  <!-- ABA A: COMPARATIVO -->
+  <div class="pane active" id="pane-comparativo">
+    <div class="summary-grid">
+      <div class="summary-card"><div class="num num-success">6</div><div class="lbl">Itens resolvidos</div></div>
+      <div class="summary-card"><div class="num num-info">3</div><div class="lbl">Avanços parciais</div></div>
+      <div class="summary-card"><div class="num num-warning">2</div><div class="lbl">Ainda pendentes</div></div>
+      <div class="summary-card"><div class="num num-danger">2</div><div class="lbl">Novos problemas</div></div>
+    </div>
+
+    <div class="divider">Resolvidos</div>
+
+    <div class="section">
+      <div class="section-header" onclick="toggle(this)">
+        <span class="badge badge-resolvido">Resolvido</span>
+        <span class="section-title">Título agora reflete o escopo real</span>
+        <span class="chevron">▾</span>
+      </div>
+      <div class="section-body">
+        <div class="compare-row">
+          <div class="compare-cell cell-before"><div class="cell-label cell-label-before">Antes</div>"Sistema Inteligente de Monitoramento no Transporte Escolar com RFID e Notificações em Tempo Real" — grandioso, implica sistema pronto para produção.</div>
+          <div class="compare-cell cell-after"><div class="cell-label cell-label-after">Agora</div>"Protótipo funcional para validação da tecnologia RFID aplicada ao transporte escolar" — honesto, acadêmico, defensável.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-header" onclick="toggle(this)">
+        <span class="badge badge-resolvido">Resolvido</span>
+        <span class="section-title">GPS removido completamente</span>
+        <span class="chevron">▾</span>
+      </div>
+      <div class="section-body">
+        <div class="compare-row">
+          <div class="compare-cell cell-before"><div class="cell-label cell-label-before">Antes</div>Rastreamento GPS listado como objetivo sem módulo definido nem referência de hardware.</div>
+          <div class="compare-cell cell-after"><div class="cell-label cell-label-after">Agora</div>Removido do escopo. Citado corretamente como limitação e trabalho futuro na seção 3.5.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-header" onclick="toggle(this)">
+        <span class="badge badge-resolvido">Resolvido</span>
+        <span class="section-title">Problema de pesquisa explicitado</span>
+        <span class="chevron">▾</span>
+      </div>
+      <div class="section-body">
+        <div class="compare-row">
+          <div class="compare-cell cell-before"><div class="cell-label cell-label-before">Antes</div>Introdução narrava o problema sem formular uma pergunta de pesquisa verificável.</div>
+          <div class="compare-cell cell-after"><div class="cell-label cell-label-after">Agora</div>Pergunta explícita: "se um protótipo baseado em RFID e ESP32 pode registrar, de forma automatizada e confiável, eventos de embarque e desembarque em ambiente controlado."</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-header" onclick="toggle(this)">
+        <span class="badge badge-resolvido">Resolvido</span>
+        <span class="section-title">Métricas de avaliação definidas</span>
+        <span class="chevron">▾</span>
+      </div>
+      <div class="section-body">
+        <div class="compare-row">
+          <div class="compare-cell cell-before"><div class="cell-label cell-label-before">Antes</div>Banca apontou ausência de métricas. Nenhum indicador definido.</div>
+          <div class="compare-cell cell-after"><div class="cell-label cell-label-after">Agora</div>9 métricas explícitas na seção 3.4: taxa de sucesso de leitura, tempo médio de registro, leituras duplicadas, comportamento sob falha de conexão, entre outras.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-header" onclick="toggle(this)">
+        <span class="badge badge-resolvido">Resolvido</span>
+        <span class="section-title">LGPD incluída na metodologia</span>
+        <span class="chevron">▾</span>
+      </div>
+      <div class="section-body">
+        <div class="compare-row">
+          <div class="compare-cell cell-before"><div class="cell-label cell-label-before">Antes</div>Banca apontou ausência de tratamento da LGPD. Dado pessoal de menores sem proteção mencionada.</div>
+          <div class="compare-cell cell-after"><div class="cell-label cell-label-after">Agora</div>Seção 3.3 dedicada à LGPD (Lei 13.709/2018), uso de dados fictícios nos testes e condicionamento ao Comitê de Ética para etapas com dados reais.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-header" onclick="toggle(this)">
+        <span class="badge badge-resolvido">Resolvido</span>
+        <span class="section-title">Cronograma detalhado e realista</span>
+        <span class="chevron">▾</span>
+      </div>
+      <div class="section-body">
+        <div class="compare-row">
+          <div class="compare-cell cell-before"><div class="cell-label cell-label-before">Antes</div>Cronograma iniciava em abril (inconsistente com 2026-2), sem detalhamento das atividades por etapa.</div>
+          <div class="compare-cell cell-after"><div class="cell-label cell-label-after">Agora</div>10 etapas de julho a dezembro, com atividades específicas por mês e código de cores por categoria. Redação do artigo aparece em novembro.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider">Avanços parciais</div>
+
+    <div class="section">
+      <div class="section-header" onclick="toggle(this)">
+        <span class="badge badge-parcial">Parcial</span>
+        <span class="section-title">Notificação: WhatsApp → Telegram, mas risco persiste</span>
+        <span class="chevron">▾</span>
+      </div>
+      <div class="section-body">
+        <div class="compare-row">
+          <div class="compare-cell cell-before"><div class="cell-label cell-label-before">Antes</div>WhatsApp Business — API com custo, aprovação difícil, alto risco de bloqueio durante testes.</div>
+          <div class="compare-cell cell-after"><div class="cell-label cell-label-after">Agora</div>Telegram Bot API — gratuita, oficial, integrável com Python. Melhora real. Mas ainda depende que os responsáveis tenham e usem o Telegram.</div>
+        </div>
+        <div class="block block-warning">
+          <div class="block-label block-label-warning">Atenção</div>
+          <div class="block-text">O documento trata o Telegram como "funcionalidade complementar", o que é a posição correta. Mas isso precisa estar claro no objetivo específico também — atualmente ainda aparece como objetivo, não como complemento opcional.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-header" onclick="toggle(this)">
+        <span class="badge badge-parcial">Parcial</span>
+        <span class="section-title">Backend: PHP → Python, mas sem justificativa</span>
+        <span class="chevron">▾</span>
+      </div>
+      <div class="section-body">
+        <div class="compare-row">
+          <div class="compare-cell cell-before"><div class="cell-label cell-label-before">Antes</div>PHP definido como backend sem justificativa técnica. Banca sugeriu Python pela compatibilidade com IoT.</div>
+          <div class="compare-cell cell-after"><div class="cell-label cell-label-after">Agora</div>Python adotado. Boa escolha técnica. Mas a troca não foi justificada no texto e ainda há menções a PHP na introdução.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-header" onclick="toggle(this)">
+        <span class="badge badge-parcial">Parcial</span>
+        <span class="section-title">Objetivos específicos — quantidade ainda excessiva</span>
+        <span class="chevron">▾</span>
+      </div>
+      <div class="section-body">
+        <div class="compare-row">
+          <div class="compare-cell cell-before"><div class="cell-label cell-label-before">Antes</div>7 objetivos específicos, alguns vagos e desalinhados com o geral.</div>
+          <div class="compare-cell cell-after"><div class="cell-label cell-label-after">Agora</div>10 objetivos específicos. Mais bem escritos, mas a quantidade aumentou. Vários são critérios de avaliação, não objetivos de desenvolvimento.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider">Ainda pendentes</div>
+
+    <div class="section">
+      <div class="section-header" onclick="toggle(this)">
+        <span class="badge badge-pendente">Pendente</span>
+        <span class="section-title">Seção de trabalhos relacionados ainda ausente</span>
+        <span class="chevron">▾</span>
+      </div>
+      <div class="section-body">
+        <div class="block block-warning">
+          <div class="block-label block-label-warning">Situação</div>
+          <div class="block-text">Os trabalhos relacionados continuam incorporados na introdução como parágrafos corridos. Para artigo científico, o esperado é uma seção dedicada com estrutura comparativa. A banca já havia apontado isso e não foi corrigido.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-header" onclick="toggle(this)">
+        <span class="badge badge-pendente">Pendente</span>
+        <span class="section-title">Diagrama de arquitetura não integrado ao texto</span>
+        <span class="chevron">▾</span>
+      </div>
+      <div class="section-body">
+        <div class="block block-warning">
+          <div class="block-label block-label-warning">Situação</div>
+          <div class="block-text">O diagrama está bem feito, mas aparece solto no documento sem numeração ("Figura 1"), sem legenda descritiva e sem chamada no texto ("conforme ilustrado na Figura 1..."). Em formatação ABNT isso é um erro formal.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider">Novos problemas introduzidos</div>
+
+    <div class="section">
+      <div class="section-header" onclick="toggle(this)">
+        <span class="badge badge-critico">Novo problema</span>
+        <span class="section-title">10 objetivos específicos — vários são metodologia, não objetivos</span>
+        <span class="chevron">▾</span>
+      </div>
+      <div class="section-body">
+        <div class="block block-danger">
+          <div class="block-label block-label-danger">Problema</div>
+          <div class="block-text">Os objetivos 6 a 9 ("avaliar o desempenho da identificação RFID", "avaliar comportamento diante de falhas", "analisar consumo energético", "identificar limitações técnicas") são atividades de avaliação do protótipo — pertencem à metodologia ou aos resultados esperados, não aos objetivos específicos. Objetivos específicos respondem "o quê construir", não "o quê medir depois".</div>
+        </div>
+        <div class="block block-success">
+          <div class="block-label block-label-success">Sugestão</div>
+          <div class="block-text">Manter como objetivos específicos apenas os 5 primeiros (hardware, backend, banco, interface web, notificação). Os demais ficam exclusivamente na seção 3.4, onde já estão descritos corretamente.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-header" onclick="toggle(this)">
+        <span class="badge badge-critico">Novo problema</span>
+        <span class="section-title">Inconsistência: backend é Python no texto, PHP ainda aparece</span>
+        <span class="chevron">▾</span>
+      </div>
+      <div class="section-body">
+        <div class="block block-danger">
+          <div class="block-label block-label-danger">Problema</div>
+          <div class="block-text">O texto da metodologia e os objetivos definem Python como backend. Mas a introdução ainda lista PHP na pilha tecnológica e nas referências bibliográficas. Em uma defesa, a pergunta "qual linguagem você vai usar?" pode gerar resposta contraditória com o documento.</div>
+        </div>
+        <div class="block block-success">
+          <div class="block-label block-label-success">Sugestão</div>
+          <div class="block-text">Buscar e remover todas as ocorrências de PHP no documento. Se não é mais usado, também sai das referências bibliográficas. Decisão tomada: Python.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ABA B: PONTOS FORTES -->
+  <div class="pane" id="pane-fortes">
+    <div class="summary-grid-2">
+      <div class="summary-card"><div class="num num-success">5</div><div class="lbl">Pontos fortes identificados</div></div>
+      <div class="summary-card"><div class="num num-info">+3</div><div class="lbl">Novos em relação à versão anterior</div></div>
+    </div>
+
+    <div class="section">
+      <div class="section-header" onclick="toggle(this)">
+        <span class="badge badge-forte">Forte</span>
+        <span class="section-title">Título honesto e academicamente defensável</span>
+        <span class="chevron">▾</span>
+      </div>
+      <div class="section-body">
+        <div class="block block-success">
+          <div class="block-label block-label-success">Destaque</div>
+          <div class="block-text">"Protótipo funcional para validação da tecnologia RFID" é exatamente o que um TCC de graduação deve propor. O enquadramento como protótipo acadêmico em ambiente controlado protege o trabalho de críticas sobre o que ele não pretende fazer.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-header" onclick="toggle(this)">
+        <span class="badge badge-forte">Forte</span>
+        <span class="section-title">Metodologia com subseções bem estruturadas</span>
+        <span class="chevron">▾</span>
+      </div>
+      <div class="section-body">
+        <div class="block block-success">
+          <div class="block-label block-label-success">Destaque</div>
+          <div class="block-text">A divisão em 3.1 (fluxo), 3.2 (falhas e conectividade), 3.3 (LGPD), 3.4 (avaliação), 3.5 (energia) e 3.6 (documentação) demonstra pensamento sistêmico real. Poucos pré-projetos de graduação chegam a discutir consumo energético e comportamento em zonas sem conexão como limitações explícitas.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-header" onclick="toggle(this)">
+        <span class="badge badge-forte">Forte</span>
+        <span class="section-title">Métricas quantitativas bem definidas</span>
+        <span class="chevron">▾</span>
+      </div>
+      <div class="section-body">
+        <div class="block block-success">
+          <div class="block-label block-label-success">Destaque</div>
+          <div class="block-text">As 9 métricas da seção 3.4 são mensuráveis e diretamente verificáveis. A proposta de comparar método manual simulado versus automatizado por RFID dá ao trabalho um caráter experimental concreto — fortalece muito a contribuição do artigo final.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-header" onclick="toggle(this)">
+        <span class="badge badge-forte">Forte</span>
+        <span class="section-title">LGPD tratada com seriedade e precisão</span>
+        <span class="chevron">▾</span>
+      </div>
+      <div class="section-body">
+        <div class="block block-success">
+          <div class="block-label block-label-success">Destaque</div>
+          <div class="block-text">A seção 3.3 cita a lei corretamente (nº 13.709/2018), define uso de dados fictícios nos testes e condiciona etapas futuras com dados reais ao Comitê de Ética. Responde diretamente à crítica da banca e demonstra maturidade acadêmica.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-header" onclick="toggle(this)">
+        <span class="badge badge-forte">Forte</span>
+        <span class="section-title">Cronograma com 10 etapas detalhadas</span>
+        <span class="chevron">▾</span>
+      </div>
+      <div class="section-body">
+        <div class="block block-success">
+          <div class="block-label block-label-success">Destaque</div>
+          <div class="block-text">É o cronograma mais detalhado de todas as versões analisadas. Cada etapa tem atividades específicas listadas, datas de início e fim, e categorização por tipo. A redação do artigo aparece em novembro com tempo suficiente para entrega em dezembro.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ABA C: PONTOS FRACOS -->
+  <div class="pane" id="pane-fracos">
+    <div class="summary-grid-2">
+      <div class="summary-card"><div class="num num-warning">4</div><div class="lbl">Pontos fracos persistentes</div></div>
+      <div class="summary-card"><div class="num num-danger">2</div><div class="lbl">Novos problemas introduzidos</div></div>
+    </div>
+
+    <div class="section">
+      <div class="section-header" onclick="toggle(this)">
+        <span class="badge badge-fraco">Fraco</span>
+        <span class="section-title">Objetivos específicos misturados com critérios de avaliação</span>
+        <span class="chevron">▾</span>
+      </div>
+      <div class="section-body">
+        <div class="block block-warning">
+          <div class="block-label block-label-warning">Problema</div>
+          <div class="block-text">Os objetivos 6 a 10 descrevem o que será avaliado após a construção — taxa de sucesso RFID, comportamento diante de falhas, consumo energético, limitações. Isso é conteúdo de metodologia e resultados esperados, não objetivos específicos. A distinção "o quê construir" vs "o quê medir" está confusa.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-header" onclick="toggle(this)">
+        <span class="badge badge-fraco">Fraco</span>
+        <span class="section-title">Trabalhos relacionados sem seção própria</span>
+        <span class="chevron">▾</span>
+      </div>
+      <div class="section-body">
+        <div class="block block-warning">
+          <div class="block-label block-label-warning">Problema</div>
+          <div class="block-text">Guimarães, Silva, Gadade, El-Medany, Mohamad Fadzir e Zamri estão todos na introdução em parágrafos corridos. Para um artigo científico, esses trabalhos precisam de seção própria com estrutura comparativa explícita. A banca já havia apontado isso e permanece não resolvido.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-header" onclick="toggle(this)">
+        <span class="badge badge-fraco">Fraco</span>
+        <span class="section-title">Inconsistência PHP vs Python não resolvida</span>
+        <span class="chevron">▾</span>
+      </div>
+      <div class="section-body">
+        <div class="block block-warning">
+          <div class="block-label block-label-warning">Problema</div>
+          <div class="block-text">A introdução ainda cita PHP em uma lista de tecnologias enquanto o corpo do texto define Python como linguagem do backend. Um avaliador atento vai notar essa inconsistência durante a defesa.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-header" onclick="toggle(this)">
+        <span class="badge badge-fraco">Fraco</span>
+        <span class="section-title">Diagrama de arquitetura sem referência formal no texto</span>
+        <span class="chevron">▾</span>
+      </div>
+      <div class="section-body">
+        <div class="block block-warning">
+          <div class="block-label block-label-warning">Problema</div>
+          <div class="block-text">O diagrama está visualmente bem construído, mas aparece solto no documento sem numeração ("Figura 1"), sem legenda descritiva e sem chamada no texto ("conforme ilustrado na Figura 1..."). Em formatação ABNT isso é um erro formal.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ABA D: URGENTE -->
+  <div class="pane" id="pane-urgente">
+    <div class="summary-grid-2">
+      <div class="summary-card"><div class="num num-danger">3</div><div class="lbl">Ações urgentes</div></div>
+      <div class="summary-card"><div class="num num-warning">2</div><div class="lbl">Antes de submeter</div></div>
+    </div>
+
+    <div class="section">
+      <div class="section-header" onclick="toggle(this)">
+        <span class="badge badge-urgente">Urgente</span>
+        <span class="section-title">Reduzir objetivos específicos de 10 para 5</span>
+        <span class="chevron">▾</span>
+      </div>
+      <div class="section-body">
+        <div class="block block-danger">
+          <div class="block-label block-label-danger">Por que é urgente</div>
+          <div class="block-text">A banca vai questionar diretamente os 10 objetivos. Os objetivos 6 a 10 são avaliações do protótipo, não construções — e já estão descritos corretamente na seção 3.4. Tê-los duplicados nos objetivos específicos enfraquece a estrutura do documento.</div>
+        </div>
+        <div class="block block-success">
+          <div class="block-label block-label-success">Ação</div>
+          <div class="block-text">Manter como objetivos específicos apenas: (1) protótipo ESP32 + RFID, (2) backend Python, (3) banco MariaDB, (4) interface web, (5) notificação Telegram como complemento. Os itens de avaliação ficam exclusivamente na seção 3.4.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-header" onclick="toggle(this)">
+        <span class="badge badge-urgente">Urgente</span>
+        <span class="section-title">Eliminar toda menção a PHP como backend</span>
+        <span class="chevron">▾</span>
+      </div>
+      <div class="section-body">
+        <div class="block block-danger">
+          <div class="block-label block-label-danger">Por que é urgente</div>
+          <div class="block-text">A inconsistência PHP/Python aparece na introdução e nas referências. Em uma defesa, a pergunta "qual linguagem você vai usar no backend?" pode gerar resposta contraditória com o que está no documento. Isso transmite falta de domínio sobre o próprio projeto.</div>
+        </div>
+        <div class="block block-success">
+          <div class="block-label block-label-success">Ação</div>
+          <div class="block-text">Buscar e remover todas as ocorrências de PHP no documento. Se não é mais usado, também sai das referências bibliográficas. Decisão tomada: Python.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-header" onclick="toggle(this)">
+        <span class="badge badge-urgente">Urgente</span>
+        <span class="section-title">Criar seção de trabalhos relacionados separada</span>
+        <span class="chevron">▾</span>
+      </div>
+      <div class="section-body">
+        <div class="block block-danger">
+          <div class="block-label block-label-danger">Por que é urgente</div>
+          <div class="block-text">Este item foi apontado pela banca na avaliação anterior e não foi corrigido. É um requisito de formatação de artigo científico e será apontado novamente se não for resolvido antes da submissão final.</div>
+        </div>
+        <div class="block block-success">
+          <div class="block-label block-label-success">Ação</div>
+          <div class="block-text">Extrair os parágrafos de Guimarães, Silva, Gadade, El-Medany, Fadzir e Zamri da introdução e reorganizá-los em uma seção "2. Trabalhos relacionados" com tabela comparativa: trabalho, tecnologia usada, foco e diferença em relação a este projeto.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-header" onclick="toggle(this)">
+        <span class="badge badge-melhoria">Antes de submeter</span>
+        <span class="section-title">Adicionar numeração e legenda ao diagrama de arquitetura</span>
+        <span class="chevron">▾</span>
+      </div>
+      <div class="section-body">
+        <div class="block block-warning">
+          <div class="block-label block-label-warning">Ação</div>
+          <div class="block-text">Incluir "Figura 1 — Arquitetura do sistema de monitoramento" abaixo do diagrama, com fonte ("Elaborado pelo autor, 2026"). Adicionar chamada no texto da metodologia: "conforme ilustrado na Figura 1".</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-header" onclick="toggle(this)">
+        <span class="badge badge-melhoria">Antes de submeter</span>
+        <span class="section-title">Alinhar apresentação com o documento atualizado</span>
+        <span class="chevron">▾</span>
+      </div>
+      <div class="section-body">
+        <div class="block block-warning">
+          <div class="block-label block-label-warning">Ação</div>
+          <div class="block-text">Os slides ainda têm objetivos da versão antiga e dois slides vazios. Com o documento agora bem evoluído, a apresentação precisa refletir: novo título, objetivos revisados (5 itens), diagrama de arquitetura, metodologia e cronograma detalhado.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+<script>
+function showTab(id) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.pane').forEach(p => p.classList.remove('active'));
+  document.getElementById('pane-' + id).classList.add('active');
+  event.target.classList.add('active');
+}
+function toggle(header) {
+  const body = header.nextElementSibling;
+  const chevron = header.querySelector('.chevron');
+  const isOpen = body.classList.contains('open');
+  body.classList.toggle('open', !isOpen);
+  chevron.classList.toggle('open', !isOpen);
+}
+</script>
+</body>
+</html>
