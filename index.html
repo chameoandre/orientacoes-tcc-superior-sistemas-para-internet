@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-BR" data-theme="dark">
+<html lang="pt-BR" data-theme="light">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,54 +15,16 @@
 
   <style>
     /* ==========================================================================
-       THEME VARIABLES: DARK & LIGHT MODE (IFSC PALETTE & GLASSMORPHISM)
+       THEME VARIABLES: LIGHT (DEFAULT) & DARK MODE
        ========================================================================== */
-    :root, [data-theme="dark"] {
-      --bg-dark: #080d0a;
-      --bg-surface: #0f1712;
-      --bg-card: rgba(18, 28, 22, 0.75);
-      --bg-card-hover: rgba(26, 42, 32, 0.95);
-      --bg-glass: rgba(15, 23, 18, 0.75);
-      --border-color: rgba(34, 197, 94, 0.18);
-      --border-glow: rgba(34, 197, 94, 0.35);
-
-      --ifsc-green: #16a34a;
-      --ifsc-green-light: #4ade80;
-      --ifsc-green-glow: rgba(34, 197, 94, 0.25);
-      --ifsc-red: #ef4444;
-      --ifsc-red-glow: rgba(239, 68, 68, 0.25);
-
-      --accent-cyan: #06b6d4;
-      --accent-amber: #f59e0b;
-      --accent-purple: #a855f7;
-      --accent-blue: #3b82f6;
-
-      --text-main: #f8fafc;
-      --text-muted: #94a3b8;
-      --text-dim: #64748b;
-
-      --input-bg: rgba(0, 0, 0, 0.4);
-      --input-border: rgba(255, 255, 255, 0.12);
-      --chip-bg: rgba(0, 0, 0, 0.35);
-      --chip-border: rgba(255, 255, 255, 0.08);
-      --modal-bg: #0d1510;
-      --header-bg: rgba(12, 20, 15, 0.85);
-
-      --hero-bg-grad: linear-gradient(135deg, rgba(22, 163, 74, 0.18) 0%, rgba(6, 182, 212, 0.12) 50%, rgba(8, 13, 10, 0.9) 100%);
-      --bg-radial-1: rgba(22, 163, 74, 0.12);
-      --bg-radial-2: rgba(6, 182, 212, 0.08);
-
-      --shadow-glass: 0 10px 30px rgba(0, 0, 0, 0.45);
-    }
-
-    [data-theme="light"] {
-      --bg-dark: #f4f6f8;
+    :root, [data-theme="light"] {
+      --bg-dark: #f6f8fa;
       --bg-surface: #ffffff;
-      --bg-card: rgba(255, 255, 255, 0.92);
+      --bg-card: #ffffff;
       --bg-card-hover: #ffffff;
-      --bg-glass: rgba(255, 255, 255, 0.88);
-      --border-color: rgba(22, 163, 74, 0.2);
-      --border-glow: rgba(22, 163, 74, 0.4);
+      --bg-glass: rgba(255, 255, 255, 0.95);
+      --border-color: rgba(22, 163, 74, 0.22);
+      --border-glow: rgba(22, 163, 74, 0.45);
 
       --ifsc-green: #15803d;
       --ifsc-green-light: #16a34a;
@@ -84,13 +46,53 @@
       --chip-bg: rgba(22, 163, 74, 0.08);
       --chip-border: rgba(22, 163, 74, 0.18);
       --modal-bg: #ffffff;
-      --header-bg: rgba(255, 255, 255, 0.92);
+      --header-bg: rgba(255, 255, 255, 0.94);
 
-      --hero-bg-grad: linear-gradient(135deg, rgba(22, 163, 74, 0.1) 0%, rgba(6, 182, 212, 0.08) 50%, rgba(241, 245, 249, 0.85) 100%);
+      --hero-bg-grad: linear-gradient(135deg, rgba(22, 163, 74, 0.12) 0%, rgba(6, 182, 212, 0.08) 50%, rgba(246, 248, 250, 0.9) 100%);
       --bg-radial-1: rgba(22, 163, 74, 0.06);
       --bg-radial-2: rgba(6, 182, 212, 0.05);
 
-      --shadow-glass: 0 10px 30px rgba(0, 0, 0, 0.08);
+      --shadow-glass: 0 4px 20px -2px rgba(0, 0, 0, 0.06), 0 2px 6px -1px rgba(0, 0, 0, 0.04);
+      --shadow-hover: 0 12px 30px -4px rgba(0, 0, 0, 0.1), 0 4px 10px -2px rgba(0, 0, 0, 0.05);
+    }
+
+    [data-theme="dark"] {
+      --bg-dark: #080d0a;
+      --bg-surface: #0f1712;
+      --bg-card: rgba(18, 28, 22, 0.85);
+      --bg-card-hover: rgba(26, 42, 32, 0.95);
+      --bg-glass: rgba(15, 23, 18, 0.85);
+      --border-color: rgba(34, 197, 94, 0.2);
+      --border-glow: rgba(34, 197, 94, 0.4);
+
+      --ifsc-green: #16a34a;
+      --ifsc-green-light: #4ade80;
+      --ifsc-green-glow: rgba(34, 197, 94, 0.25);
+      --ifsc-red: #ef4444;
+      --ifsc-red-glow: rgba(239, 68, 68, 0.25);
+
+      --accent-cyan: #06b6d4;
+      --accent-amber: #f59e0b;
+      --accent-purple: #a855f7;
+      --accent-blue: #3b82f6;
+
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --text-dim: #64748b;
+
+      --input-bg: rgba(0, 0, 0, 0.4);
+      --input-border: rgba(255, 255, 255, 0.12);
+      --chip-bg: rgba(0, 0, 0, 0.35);
+      --chip-border: rgba(255, 255, 255, 0.08);
+      --modal-bg: #0d1510;
+      --header-bg: rgba(12, 20, 15, 0.92);
+
+      --hero-bg-grad: linear-gradient(135deg, rgba(22, 163, 74, 0.18) 0%, rgba(6, 182, 212, 0.12) 50%, rgba(8, 13, 10, 0.9) 100%);
+      --bg-radial-1: rgba(22, 163, 74, 0.12);
+      --bg-radial-2: rgba(6, 182, 212, 0.08);
+
+      --shadow-glass: 0 10px 30px rgba(0, 0, 0, 0.45);
+      --shadow-hover: 0 16px 36px rgba(0, 0, 0, 0.6);
     }
 
     /* ==========================================================================
@@ -127,7 +129,7 @@
     }
 
     a {
-      color: var(--ifsc-green-light);
+      color: var(--ifsc-green);
       text-decoration: none;
     }
     a:hover {
@@ -135,7 +137,7 @@
     }
 
     /* ==========================================================================
-       HEADER & INSTITUTIONAL BRAND
+       HEADER & BRAND
        ========================================================================== */
     header {
       position: sticky;
@@ -150,6 +152,7 @@
       align-items: center;
       justify-content: space-between;
       gap: 1.5rem;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.03);
     }
 
     .brand-group {
@@ -162,10 +165,10 @@
       display: grid;
       grid-template-columns: repeat(3, 10px);
       grid-gap: 4.5px;
-      padding: 5px;
+      padding: 5.5px;
       border-radius: 8px;
-      background: rgba(0, 0, 0, 0.25);
-      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(22, 163, 74, 0.08);
+      border: 1px solid var(--border-color);
     }
 
     .ifsc-dot {
@@ -190,7 +193,7 @@
     }
 
     .brand-text h1 span {
-      background: linear-gradient(135deg, var(--ifsc-green-light), var(--accent-cyan));
+      background: linear-gradient(135deg, var(--ifsc-green), var(--accent-cyan));
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
@@ -234,8 +237,8 @@
     }
     .btn-primary:hover {
       background: linear-gradient(135deg, var(--ifsc-green-light), #10b981);
-      box-shadow: 0 6px 18px rgba(34, 197, 94, 0.4);
-      color: #042f1a;
+      box-shadow: 0 6px 18px rgba(34, 197, 94, 0.35);
+      color: #ffffff;
     }
 
     .btn-outline {
@@ -244,9 +247,9 @@
       color: var(--text-main);
     }
     .btn-outline:hover {
-      background: rgba(34, 197, 94, 0.12);
-      border-color: var(--ifsc-green-light);
-      color: var(--ifsc-green-light);
+      background: rgba(22, 163, 74, 0.12);
+      border-color: var(--ifsc-green);
+      color: var(--ifsc-green);
     }
 
     .btn-sm {
@@ -287,6 +290,7 @@
       border-bottom: 1px solid var(--border-color);
       overflow-x: auto;
       scrollbar-width: thin;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.02);
     }
 
     .tab-btn {
@@ -311,8 +315,8 @@
     }
 
     .tab-btn.active {
-      color: var(--ifsc-green-light);
-      background: rgba(34, 197, 94, 0.12);
+      color: var(--ifsc-green);
+      background: rgba(22, 163, 74, 0.12);
       border-color: var(--border-color);
     }
 
@@ -320,7 +324,7 @@
       font-size: 0.7rem;
       padding: 0.15rem 0.45rem;
       border-radius: 12px;
-      background: rgba(255, 255, 255, 0.1);
+      background: rgba(22, 163, 74, 0.15);
       color: inherit;
     }
 
@@ -360,8 +364,6 @@
 
     .kpi-card {
       background: var(--bg-card);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
       border: 1px solid var(--border-color);
       border-radius: 14px;
       padding: 1.25rem;
@@ -371,11 +373,12 @@
       box-shadow: var(--shadow-glass);
       position: relative;
       overflow: hidden;
-      transition: transform 0.2s ease, border-color 0.2s ease;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
     }
 
     .kpi-card:hover {
       transform: translateY(-2px);
+      box-shadow: var(--shadow-hover);
       border-color: var(--ifsc-green-light);
     }
 
@@ -393,8 +396,8 @@
       width: 48px;
       height: 48px;
       border-radius: 12px;
-      background: rgba(34, 197, 94, 0.12);
-      color: var(--accent-color, var(--ifsc-green-light));
+      background: rgba(22, 163, 74, 0.1);
+      color: var(--accent-color, var(--ifsc-green));
       display: flex;
       align-items: center;
       justify-content: center;
@@ -423,7 +426,7 @@
     }
 
     /* ==========================================================================
-       SEARCH & FILTER BAR
+       FILTER PANEL
        ========================================================================== */
     .filter-panel {
       background: var(--bg-card);
@@ -434,6 +437,7 @@
       display: flex;
       flex-direction: column;
       gap: 1rem;
+      box-shadow: var(--shadow-glass);
     }
 
     .filter-row {
@@ -472,7 +476,7 @@
     }
 
     .search-input:focus {
-      border-color: var(--ifsc-green-light);
+      border-color: var(--ifsc-green);
       box-shadow: 0 0 0 3px var(--ifsc-green-glow);
     }
 
@@ -499,14 +503,14 @@
     }
 
     .filter-chip:hover {
-      border-color: var(--ifsc-green-light);
+      border-color: var(--ifsc-green);
       color: var(--text-main);
     }
 
     .filter-chip.active {
-      background: var(--ifsc-green-light);
-      color: #042f1a;
-      border-color: var(--ifsc-green-light);
+      background: var(--ifsc-green);
+      color: #ffffff;
+      border-color: var(--ifsc-green);
     }
 
     /* ==========================================================================
@@ -526,8 +530,6 @@
 
     .project-card {
       background: var(--bg-card);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
       border: 1px solid var(--border-color);
       border-radius: 16px;
       padding: 1.5rem;
@@ -542,7 +544,7 @@
     .project-card:hover {
       transform: translateY(-3px);
       border-color: var(--border-glow);
-      box-shadow: 0 14px 35px rgba(0, 0, 0, 0.35);
+      box-shadow: var(--shadow-hover);
     }
 
     .card-top {
@@ -562,9 +564,9 @@
       width: 46px;
       height: 46px;
       border-radius: 12px;
-      background: linear-gradient(135deg, rgba(22, 163, 74, 0.3), rgba(6, 182, 212, 0.3));
+      background: linear-gradient(135deg, rgba(22, 163, 74, 0.15), rgba(6, 182, 212, 0.15));
       border: 1px solid var(--border-color);
-      color: var(--ifsc-green-light);
+      color: var(--ifsc-green);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -592,7 +594,7 @@
       margin-top: 2px;
     }
     .student-meta .email-link:hover {
-      color: var(--ifsc-green-light);
+      color: var(--ifsc-green);
     }
 
     .badge-status {
@@ -605,19 +607,19 @@
       white-space: nowrap;
     }
     .badge-status.em-andamento {
-      background: rgba(34, 197, 94, 0.18);
-      color: var(--ifsc-green-light);
-      border: 1px solid rgba(34, 197, 94, 0.3);
+      background: rgba(22, 163, 74, 0.12);
+      color: var(--ifsc-green);
+      border: 1px solid rgba(22, 163, 74, 0.3);
     }
     .badge-status.parado {
-      background: rgba(245, 158, 11, 0.18);
+      background: rgba(217, 119, 6, 0.12);
       color: var(--accent-amber);
-      border: 1px solid rgba(245, 158, 11, 0.3);
+      border: 1px solid rgba(217, 119, 6, 0.3);
     }
     .badge-status.concluido {
-      background: rgba(6, 182, 212, 0.18);
+      background: rgba(8, 145, 178, 0.12);
       color: var(--accent-cyan);
-      border: 1px solid rgba(6, 182, 212, 0.3);
+      border: 1px solid rgba(8, 145, 178, 0.3);
     }
 
     .project-title {
@@ -629,7 +631,7 @@
 
     /* Progress & Step bar */
     .progress-box {
-      background: rgba(0, 0, 0, 0.2);
+      background: rgba(22, 163, 74, 0.04);
       border: 1px solid var(--chip-border);
       border-radius: 10px;
       padding: 0.75rem 0.9rem;
@@ -647,7 +649,7 @@
     .progress-bar-bg {
       width: 100%;
       height: 8px;
-      background: rgba(255, 255, 255, 0.08);
+      background: rgba(0, 0, 0, 0.06);
       border-radius: 4px;
       overflow: hidden;
     }
@@ -661,7 +663,7 @@
 
     /* Details Alert Box */
     .banca-alert-box {
-      background: rgba(6, 182, 212, 0.08);
+      background: rgba(8, 145, 178, 0.06);
       border-left: 3px solid var(--accent-cyan);
       border-radius: 0 8px 8px 0;
       padding: 0.65rem 0.85rem;
@@ -692,7 +694,7 @@
     }
 
     .banca-meta-item i {
-      color: var(--ifsc-green-light);
+      color: var(--ifsc-green);
       width: 14px;
     }
 
@@ -732,23 +734,24 @@
       color: var(--text-main);
       text-decoration: none !important;
       transition: all 0.15s ease;
+      cursor: pointer;
     }
 
     .btn-link-action:hover {
-      background: rgba(34, 197, 94, 0.18);
-      border-color: var(--ifsc-green-light);
-      color: var(--ifsc-green-light);
+      background: rgba(22, 163, 74, 0.15);
+      border-color: var(--ifsc-green);
+      color: var(--ifsc-green);
       transform: translateY(-1px);
     }
 
     .btn-link-action.overleaf:hover {
-      border-color: #4ade80;
-      color: #4ade80;
+      border-color: #16a34a;
+      color: #16a34a;
     }
 
     .btn-link-action.github:hover {
-      border-color: #a855f7;
-      color: #c084fc;
+      border-color: #9333ea;
+      color: #9333ea;
     }
 
     .btn-link-action.slides:hover {
@@ -762,7 +765,112 @@
     }
 
     /* ==========================================================================
-       TIMELINE SECTION
+       MEETINGS & REUNIÕES STYLING
+       ========================================================================== */
+    .meetings-header-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .meeting-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 14px;
+      padding: 1.25rem 1.5rem;
+      margin-bottom: 1.25rem;
+      box-shadow: var(--shadow-glass);
+      transition: all 0.2s ease;
+      position: relative;
+    }
+
+    .meeting-card:hover {
+      box-shadow: var(--shadow-hover);
+      border-color: var(--ifsc-green);
+      transform: translateY(-2px);
+    }
+
+    .meeting-top-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 0.75rem;
+      gap: 1rem;
+    }
+
+    .meeting-badge-type {
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 0.25rem 0.65rem;
+      border-radius: 6px;
+      background: rgba(22, 163, 74, 0.1);
+      color: var(--ifsc-green);
+      border: 1px solid var(--border-color);
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+
+    .meeting-date-badge {
+      font-size: 0.78rem;
+      color: var(--accent-cyan);
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .meeting-delib-box {
+      background: rgba(22, 163, 74, 0.04);
+      border-left: 3px solid var(--ifsc-green);
+      border-radius: 0 8px 8px 0;
+      padding: 0.75rem 1rem;
+      margin-top: 0.75rem;
+      font-size: 0.82rem;
+      line-height: 1.5;
+    }
+
+    /* Form styling */
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      margin-bottom: 1rem;
+    }
+
+    .form-group label {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+
+    .form-control {
+      padding: 0.65rem 0.9rem;
+      border-radius: 8px;
+      border: 1px solid var(--input-border);
+      background: var(--input-bg);
+      color: var(--text-main);
+      font-size: 0.86rem;
+      outline: none;
+      font-family: inherit;
+    }
+
+    .form-control:focus {
+      border-color: var(--ifsc-green);
+      box-shadow: 0 0 0 3px var(--ifsc-green-glow);
+    }
+
+    textarea.form-control {
+      min-height: 90px;
+      resize: vertical;
+    }
+
+    /* ==========================================================================
+       TIMELINE & TABLES
        ========================================================================== */
     .timeline-wrapper {
       background: var(--bg-card);
@@ -770,6 +878,7 @@
       border-radius: 16px;
       padding: 2rem;
       margin-bottom: 2rem;
+      box-shadow: var(--shadow-glass);
     }
 
     .timeline {
@@ -796,13 +905,13 @@
       height: 20px;
       border-radius: 50%;
       background: var(--bg-surface);
-      border: 3px solid var(--ifsc-green-light);
-      box-shadow: 0 0 12px var(--ifsc-green-glow);
+      border: 3px solid var(--ifsc-green);
+      box-shadow: 0 0 10px var(--ifsc-green-glow);
     }
 
     .timeline-marker.done {
-      background: var(--ifsc-green-light);
-      border-color: var(--ifsc-green);
+      background: var(--ifsc-green);
+      border-color: #042f1a;
     }
     .timeline-marker.active {
       background: var(--accent-cyan);
@@ -815,9 +924,9 @@
     }
 
     @keyframes pulseMarker {
-      0% { box-shadow: 0 0 0 0 rgba(6, 182, 212, 0.7); }
-      70% { box-shadow: 0 0 0 10px rgba(6, 182, 212, 0); }
-      100% { box-shadow: 0 0 0 0 rgba(6, 182, 212, 0); }
+      0% { box-shadow: 0 0 0 0 rgba(8, 145, 178, 0.7); }
+      70% { box-shadow: 0 0 0 10px rgba(8, 145, 178, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(8, 145, 178, 0); }
     }
 
     .timeline-content h4 {
@@ -850,6 +959,7 @@
       border: 1px solid var(--border-color);
       background: var(--bg-surface);
       margin-top: 1.5rem;
+      box-shadow: var(--shadow-glass);
     }
 
     table.styled-table {
@@ -860,7 +970,7 @@
     }
 
     table.styled-table th {
-      background: rgba(0, 0, 0, 0.25);
+      background: rgba(22, 163, 74, 0.06);
       padding: 0.9rem 1.1rem;
       color: var(--text-muted);
       font-weight: 700;
@@ -877,7 +987,7 @@
     }
 
     table.styled-table tr:hover td {
-      background: rgba(34, 197, 94, 0.05);
+      background: rgba(22, 163, 74, 0.04);
     }
 
     /* ==========================================================================
@@ -889,9 +999,9 @@
       left: 0;
       right: 0;
       bottom: 0;
-      background: rgba(0, 0, 0, 0.75);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
+      background: rgba(15, 23, 42, 0.65);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
       z-index: 1000;
       display: none;
       align-items: center;
@@ -911,7 +1021,7 @@
       width: 100%;
       max-height: 90vh;
       overflow-y: auto;
-      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
       animation: modalScale 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
       display: flex;
       flex-direction: column;
@@ -951,7 +1061,7 @@
     }
     .modal-close-btn:hover {
       color: var(--ifsc-red);
-      background: rgba(239, 68, 68, 0.1);
+      background: rgba(220, 38, 38, 0.1);
     }
 
     .modal-body {
@@ -973,7 +1083,7 @@
       align-items: flex-start;
       gap: 0.75rem;
       padding: 0.6rem 0.8rem;
-      background: rgba(0, 0, 0, 0.2);
+      background: rgba(22, 163, 74, 0.04);
       border: 1px solid var(--chip-border);
       border-radius: 8px;
       font-size: 0.84rem;
@@ -985,7 +1095,7 @@
     }
 
     .check-item.done i {
-      color: var(--ifsc-green-light);
+      color: var(--ifsc-green);
     }
     .check-item.current i {
       color: var(--accent-cyan);
@@ -1011,7 +1121,7 @@
       color: var(--text-main);
       padding: 0.85rem 1.3rem;
       border-radius: 10px;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
       display: flex;
       align-items: center;
       gap: 0.75rem;
@@ -1070,14 +1180,14 @@
         <i class="fa-solid fa-table"></i> Planilha Oficial
       </a>
 
-      <!-- Quick Tab Action -->
-      <button class="btn btn-outline" onclick="switchTab('tab-avancos')" title="Ver Matriz de Avanços e Próximos Passos">
-        <i class="fa-solid fa-clipboard-check" style="color: var(--ifsc-green-light);"></i> Próximos Passos
+      <!-- Quick Tab Action: Nova Reunião -->
+      <button class="btn btn-outline" onclick="openNewMeetingModal()" title="Registrar Nova Reunião de Orientação">
+        <i class="fa-solid fa-calendar-plus" style="color: var(--ifsc-green);"></i> + Registrar Reunião
       </button>
 
       <!-- Theme Switcher Button -->
       <button class="theme-toggle-btn" id="themeToggleBtn" onclick="toggleTheme()" title="Alternar Modo Claro / Escuro">
-        <i class="fa-solid fa-sun" id="themeIcon"></i>
+        <i class="fa-solid fa-moon" id="themeIcon"></i>
       </button>
     </div>
   </header>
@@ -1087,6 +1197,9 @@
     <button class="tab-btn active" onclick="switchTab('tab-projetos')">
       <i class="fa-solid fa-users-viewfinder"></i> Painel de Orientandos <span class="badge-count" id="count-total-nav">6</span>
     </button>
+    <button class="tab-btn" onclick="switchTab('tab-reunioes')">
+      <i class="fa-solid fa-handshake-simple" style="color: var(--ifsc-green);"></i> Registro de Reuniões & Atas <span class="badge-count" id="count-reunioes-nav">5</span>
+    </button>
     <button class="tab-btn" onclick="switchTab('tab-timeline')">
       <i class="fa-solid fa-timeline" style="color: var(--accent-cyan);"></i> Calendário & Bancas
     </button>
@@ -1094,7 +1207,7 @@
       <i class="fa-solid fa-book-open-reader" style="color: var(--accent-amber);"></i> Artigos & Publicações
     </button>
     <button class="tab-btn" onclick="switchTab('tab-avancos')">
-      <i class="fa-solid fa-list-check" style="color: var(--ifsc-green-light);"></i> Avanços & Checkpoints
+      <i class="fa-solid fa-list-check" style="color: var(--ifsc-green);"></i> Avanços & Checkpoints
     </button>
     <button class="tab-btn" onclick="switchTab('tab-repos')">
       <i class="fa-solid fa-folder-tree" style="color: var(--accent-purple);"></i> Estrutura Local & Comandos
@@ -1106,7 +1219,7 @@
 
     <!-- KPI Metric Cards -->
     <div class="kpi-grid">
-      <div class="kpi-card" style="--accent-color: var(--ifsc-green-light);">
+      <div class="kpi-card" style="--accent-color: var(--ifsc-green);">
         <div class="kpi-icon"><i class="fa-solid fa-graduation-cap"></i></div>
         <div class="kpi-info">
           <div class="kpi-val" id="kpi-total-alunos">6</div>
@@ -1125,8 +1238,8 @@
       <div class="kpi-card" style="--accent-color: var(--accent-amber);">
         <div class="kpi-icon"><i class="fa-solid fa-comments"></i></div>
         <div class="kpi-info">
-          <div class="kpi-val" id="kpi-bancas-realizadas">4</div>
-          <div class="kpi-label">Pré-Bancas Apresentadas</div>
+          <div class="kpi-val" id="kpi-reunioes-count">5</div>
+          <div class="kpi-label">Reuniões / Bancas Registradas</div>
         </div>
       </div>
 
@@ -1176,10 +1289,48 @@
       </div>
     </section>
 
-    <!-- TAB 2: LINHA DO TEMPO & BANCAS -->
+    <!-- TAB 2: REGISTRO DE REUNIÕES & ATAS -->
+    <section id="tab-reunioes" class="tab-content">
+      <div class="timeline-wrapper">
+        <div class="meetings-header-bar">
+          <div>
+            <h2><i class="fa-solid fa-handshake-simple" style="color: var(--ifsc-green);"></i> Registro de Reuniões & Atas de Orientação</h2>
+            <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 4px;">Histórico de encontros, alinhamentos, pré-bancas e compromissos firmados com cada aluno.</p>
+          </div>
+          <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+            <button class="btn btn-primary" onclick="openNewMeetingModal()">
+              <i class="fa-solid fa-plus"></i> Nova Reunião
+            </button>
+            <button class="btn btn-outline" onclick="exportMeetingsJSON()" title="Baixar histórico em arquivo JSON">
+              <i class="fa-solid fa-file-export"></i> Exportar Dados
+            </button>
+          </div>
+        </div>
+
+        <!-- Filter meetings by student -->
+        <div style="display: flex; gap: 0.75rem; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap;">
+          <span style="font-size: 0.82rem; font-weight: 600; color: var(--text-muted);"><i class="fa-solid fa-filter"></i> Filtrar Aluno:</span>
+          <select id="meetingFilterSelect" class="form-control" style="max-width: 260px; padding: 0.45rem 0.8rem;" onchange="renderMeetings()">
+            <option value="all">Todos os Orientandos</option>
+            <option value="Marília Stefenon">Marília Stefenon</option>
+            <option value="Guilherme Londero">Guilherme Londero</option>
+            <option value="Michel David de Souza">Michel David de Souza</option>
+            <option value="Higor Rodrigues">Higor Rodrigues</option>
+          </select>
+        </div>
+
+        <!-- Meetings List Container -->
+        <div id="meetingsListContainer">
+          <!-- Rendered dynamically -->
+        </div>
+
+      </div>
+    </section>
+
+    <!-- TAB 3: LINHA DO TEMPO & BANCAS -->
     <section id="tab-timeline" class="tab-content">
       <div class="timeline-wrapper">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 0.5rem;">
           <div>
             <h2><i class="fa-solid fa-clock-rotate-left" style="color: var(--accent-cyan);"></i> Ciclo Metodológico do TCC & Bancas</h2>
             <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 4px;">Etapas oficiais e registro das bancas examinadoras de 2026</p>
@@ -1191,7 +1342,7 @@
           <div class="timeline-node">
             <div class="timeline-marker done"></div>
             <div class="timeline-content">
-              <h4>1. Entrega dos Pré-Projetos de TCC <span style="color: var(--ifsc-green-light); font-size: 0.8rem;">[Concluído]</span></h4>
+              <h4>1. Entrega dos Pré-Projetos de TCC <span style="color: var(--ifsc-green); font-size: 0.8rem;">[Concluído]</span></h4>
               <div class="timeline-date">29 de Maio de 2026</div>
               <p>Envio oficial da proposta estruturada para os membros da banca examinadora e orientador.</p>
             </div>
@@ -1200,7 +1351,7 @@
           <div class="timeline-node">
             <div class="timeline-marker done"></div>
             <div class="timeline-content">
-              <h4>2. Apresentações das Pré-Bancas de TCC <span style="color: var(--ifsc-green-light); font-size: 0.8rem;">[Concluído]</span></h4>
+              <h4>2. Apresentações das Pré-Bancas de TCC <span style="color: var(--ifsc-green); font-size: 0.8rem;">[Concluído]</span></h4>
               <div class="timeline-date">10 a 12 de Junho de 2026</div>
               <p>Sessões de arguição com bancas compostas por docentes do IFSC para avaliação e qualificação das propostas.</p>
             </div>
@@ -1294,7 +1445,7 @@
       </div>
     </section>
 
-    <!-- TAB 3: PUBLICAÇÕES & ARTIGOS -->
+    <!-- TAB 4: PUBLICAÇÕES & ARTIGOS -->
     <section id="tab-publicacoes" class="tab-content">
       <div class="timeline-wrapper">
         <h2><i class="fa-solid fa-scroll" style="color: var(--accent-amber);"></i> Produção Científica & Submissões a Eventos</h2>
@@ -1362,10 +1513,10 @@
       </div>
     </section>
 
-    <!-- TAB 4: AVANÇOS & CHECKPOINTS -->
+    <!-- TAB 5: AVANÇOS & CHECKPOINTS -->
     <section id="tab-avancos" class="tab-content">
       <div class="timeline-wrapper">
-        <h2><i class="fa-solid fa-list-check" style="color: var(--ifsc-green-light);"></i> Matriz de Avanços, Gargalos & Próximos Passos</h2>
+        <h2><i class="fa-solid fa-list-check" style="color: var(--ifsc-green);"></i> Matriz de Avanços, Gargalos & Próximos Passos</h2>
         <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 4px;">Plano de ação imediato para cada orientando nos próximos encontros de orientação.</p>
 
         <div class="styled-table-wrapper" style="margin-top: 1.5rem;">
@@ -1386,9 +1537,10 @@
                   Protótipo 3 com buffer multi-turn de 10 turnos e módulo de telemetria científica implementados; Roteiro de TCC publicado.
                 </td>
                 <td>
-                  Revisar apontamentos da banca de Thiago Paes e Ignácio Ramirez; qualificar proposta e redigir seções de metodologia no paper SBC.
+                  <strong>1)</strong> Elaborar 3 diagramas numerados das etapas do atendimento para validação com Ramon.<br>
+                  <strong>2)</strong> Iniciar implementação do painel administrativo de demandas (checar atendimento 100% bot vs. com intervenção humana).
                 </td>
-                <td><span class="badge-status em-andamento" style="background: rgba(239, 68, 68, 0.2); color: #f87171; border-color: #f87171;">Alta</span></td>
+                <td><span class="badge-status em-andamento" style="background: rgba(220, 38, 38, 0.12); color: #dc2626; border-color: #dc2626;">Alta</span></td>
                 <td>
                   <a href="https://chameoandre.github.io/Marilias-notes-and-Implementation-plan/" target="_blank" class="btn-link-action dashboard"><i class="fa-solid fa-chart-line"></i> Dashboard</a>
                   <a href="https://docs.google.com/document/d/1MIw-_lGgw37u-OHouxF43dwNrWBOI5vmaJwJW3S0Jzw/edit?tab=t.0" target="_blank" class="btn-link-action"><i class="fa-solid fa-comments"></i> Ata</a>
@@ -1402,7 +1554,7 @@
                 <td>
                   Aplicar correções da banca de Ignácio Ramirez e Luiz Antonio Pacheco; validar comunicação de RFID com ESP32/Node.js.
                 </td>
-                <td><span class="badge-status em-andamento" style="background: rgba(239, 68, 68, 0.2); color: #f87171; border-color: #f87171;">Alta</span></td>
+                <td><span class="badge-status em-andamento" style="background: rgba(220, 38, 38, 0.12); color: #dc2626; border-color: #dc2626;">Alta</span></td>
                 <td>
                   <a href="https://chameoandre.github.io/orientacoes-tcc-superior-sistemas-para-internet/2026/guilherme-londero/cronograma-pipeline.html" target="_blank" class="btn-link-action dashboard"><i class="fa-solid fa-timeline"></i> Pipeline</a>
                   <a href="https://docs.google.com/document/d/10V7QZhYb327OKufUG-YbnVdaYrTbcGIpP7pJDV7n44o/edit?usp=sharing" target="_blank" class="btn-link-action"><i class="fa-solid fa-file-word"></i> Pré-projeto</a>
@@ -1416,7 +1568,7 @@
                 <td>
                   Realizar leitura crítica minuciosa de cada item observado pelos docentes da banca (Ryan e Fabiana) para estruturar a mecânica do jogo.
                 </td>
-                <td><span class="badge-status em-andamento" style="background: rgba(245, 158, 11, 0.2); color: var(--accent-amber); border-color: var(--accent-amber);">Média</span></td>
+                <td><span class="badge-status em-andamento" style="background: rgba(217, 119, 6, 0.12); color: var(--accent-amber); border-color: var(--accent-amber);">Média</span></td>
                 <td>
                   <a href="https://docs.google.com/document/d/1864vcIG5rm-wlRfFDzcveGBOgZHxTUCTNqrzIBPG9EQ/edit?usp=share_link" target="_blank" class="btn-link-action"><i class="fa-solid fa-file-word"></i> Pré-projeto</a>
                 </td>
@@ -1440,7 +1592,7 @@
       </div>
     </section>
 
-    <!-- TAB 5: ESTRUTURA LOCAL & REPOSITÓRIOS -->
+    <!-- TAB 6: ESTRUTURA LOCAL & REPOSITÓRIOS -->
     <section id="tab-repos" class="tab-content">
       <div class="timeline-wrapper">
         <h2><i class="fa-solid fa-folder-tree" style="color: var(--accent-purple);"></i> Mapeamento de Pastas Locais & Linha de Comando</h2>
@@ -1449,18 +1601,18 @@
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); gap: 1.5rem; margin-top: 1.5rem;">
           
           <div class="progress-box">
-            <h4 style="color: var(--ifsc-green-light); margin-bottom: 0.5rem;"><i class="fa-solid fa-folder"></i> Marília Stefenon (TCC Superior 2026)</h4>
-            <code style="font-size: 0.78rem; display: block; background: rgba(0,0,0,0.3); padding: 0.6rem; border-radius: 6px; margin-bottom: 0.7rem;">
+            <h4 style="color: var(--ifsc-green); margin-bottom: 0.5rem;"><i class="fa-solid fa-folder"></i> Marília Stefenon (TCC Superior 2026)</h4>
+            <code style="font-size: 0.78rem; display: block; background: rgba(0,0,0,0.04); border: 1px solid var(--chip-border); padding: 0.6rem; border-radius: 6px; margin-bottom: 0.7rem;">
               /Users/chameoandre/Google-Drive-chameoandre/INSTITUTO-FEDERAL-SANTA-CATARINA/ORIENTACOES-ALUNOS/2026/superior/2026-marilia-stefenon/repo
             </code>
             <p style="font-size: 0.8rem; color: var(--text-muted);">Compilar documento LaTeX com Tectonic:</p>
-            <pre style="font-size: 0.75rem; background: rgba(0,0,0,0.4); padding: 0.5rem; border-radius: 6px; margin-top: 0.3rem; color: #a5f3fc;">cd 2026/superior/2026-marilia-stefenon/repo
+            <pre style="font-size: 0.75rem; background: #0f172a; padding: 0.6rem; border-radius: 6px; margin-top: 0.3rem; color: #38bdf8;">cd 2026/superior/2026-marilia-stefenon/repo
 tectonic -Z shell-escape document.tex</pre>
           </div>
 
           <div class="progress-box">
             <h4 style="color: var(--accent-cyan); margin-bottom: 0.5rem;"><i class="fa-solid fa-folder"></i> Guilherme Londero (TCC Superior 2026)</h4>
-            <code style="font-size: 0.78rem; display: block; background: rgba(0,0,0,0.3); padding: 0.6rem; border-radius: 6px; margin-bottom: 0.7rem;">
+            <code style="font-size: 0.78rem; display: block; background: rgba(0,0,0,0.04); border: 1px solid var(--chip-border); padding: 0.6rem; border-radius: 6px; margin-bottom: 0.7rem;">
               /Users/chameoandre/Google-Drive-chameoandre/INSTITUTO-FEDERAL-SANTA-CATARINA/ORIENTACOES-ALUNOS/2026/superior/2026-guilherme-londero
             </code>
             <p style="font-size: 0.8rem; color: var(--text-muted);">Repositório público com cronograma e análise:</p>
@@ -1471,17 +1623,17 @@ tectonic -Z shell-escape document.tex</pre>
 
           <div class="progress-box">
             <h4 style="color: var(--accent-amber); margin-bottom: 0.5rem;"><i class="fa-solid fa-folder"></i> Luísa Narvaz (PI & Artigos 2025)</h4>
-            <code style="font-size: 0.78rem; display: block; background: rgba(0,0,0,0.3); padding: 0.6rem; border-radius: 6px; margin-bottom: 0.7rem;">
+            <code style="font-size: 0.78rem; display: block; background: rgba(0,0,0,0.04); border: 1px solid var(--chip-border); padding: 0.6rem; border-radius: 6px; margin-bottom: 0.7rem;">
               /Users/chameoandre/Google-Drive-chameoandre/INSTITUTO-FEDERAL-SANTA-CATARINA/ORIENTACOES-ALUNOS/2025/2025-Luisa-narvaz
             </code>
             <p style="font-size: 0.8rem; color: var(--text-muted);">Compilação do artigo:</p>
-            <pre style="font-size: 0.75rem; background: rgba(0,0,0,0.4); padding: 0.5rem; border-radius: 6px; margin-top: 0.3rem; color: #a5f3fc;">cd 2025/2025-Luisa-narvaz/repo
+            <pre style="font-size: 0.75rem; background: #0f172a; padding: 0.6rem; border-radius: 6px; margin-top: 0.3rem; color: #38bdf8;">cd 2025/2025-Luisa-narvaz/repo
 tectonic -Z shell-escape document.tex</pre>
           </div>
 
           <div class="progress-box">
             <h4 style="color: var(--accent-purple); margin-bottom: 0.5rem;"><i class="fa-solid fa-folder"></i> Higor Rodrigues (TCC 2026/2027)</h4>
-            <code style="font-size: 0.78rem; display: block; background: rgba(0,0,0,0.3); padding: 0.6rem; border-radius: 6px; margin-bottom: 0.7rem;">
+            <code style="font-size: 0.78rem; display: block; background: rgba(0,0,0,0.04); border: 1px solid var(--chip-border); padding: 0.6rem; border-radius: 6px; margin-bottom: 0.7rem;">
               /Users/chameoandre/Google-Drive-chameoandre/INSTITUTO-FEDERAL-SANTA-CATARINA/ORIENTACOES-ALUNOS/2026/superior/2026-higor-rodrigues
             </code>
             <p style="font-size: 0.8rem; color: var(--text-muted);">Status: Material arquivado aguardando ciclo 2027.</p>
@@ -1494,14 +1646,14 @@ tectonic -Z shell-escape document.tex</pre>
   </main>
 
   <!-- MODAL DE DETALHES DO ORIENTANDO -->
-  <div class="modal-overlay" id="studentModal" onclick="closeModalOnOverlay(event)">
+  <div class="modal-overlay" id="studentModal" onclick="closeModalOnOverlay(event, 'studentModal')">
     <div class="modal-container">
       <div class="modal-header">
         <div>
           <h3 id="modalStudentName">Nome do Aluno</h3>
           <span id="modalStudentType" class="badge-status em-andamento" style="margin-top: 4px; display: inline-block;">TCC</span>
         </div>
-        <button class="modal-close-btn" onclick="closeModal()" title="Fechar janela">
+        <button class="modal-close-btn" onclick="closeModal('studentModal')" title="Fechar janela">
           <i class="fa-solid fa-xmark"></i>
         </button>
       </div>
@@ -1544,8 +1696,22 @@ tectonic -Z shell-escape document.tex</pre>
           <h4 style="color: var(--text-muted); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 0.6rem;">
             <i class="fa-solid fa-users"></i> Composição da Banca & Avaliação
           </h4>
-          <div id="modalBancaDetails" class="banca-alert-box" style="background: rgba(0,0,0,0.2); border-left-color: var(--ifsc-green-light);">
+          <div id="modalBancaDetails" class="banca-alert-box" style="background: rgba(22, 163, 74, 0.06); border-left-color: var(--ifsc-green);">
             <!-- Banca members -->
+          </div>
+        </div>
+
+        <div>
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.6rem;">
+            <h4 style="color: var(--text-muted); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.04em;">
+              <i class="fa-solid fa-handshake-simple"></i> Reuniões Realizadas com este Aluno
+            </h4>
+            <button class="btn btn-primary btn-sm" id="modalBtnNewMeeting" onclick="openMeetingFromStudentModal()">
+              <i class="fa-solid fa-plus"></i> + Reunião
+            </button>
+          </div>
+          <div id="modalStudentMeetingsList" style="display: flex; flex-direction: column; gap: 0.6rem;">
+            <!-- Rendered by JS -->
           </div>
         </div>
 
@@ -1562,6 +1728,81 @@ tectonic -Z shell-escape document.tex</pre>
     </div>
   </div>
 
+  <!-- MODAL: REGISTRAR NOVA REUNIÃO -->
+  <div class="modal-overlay" id="newMeetingModal" onclick="closeModalOnOverlay(event, 'newMeetingModal')">
+    <div class="modal-container" style="max-width: 620px;">
+      <div class="modal-header">
+        <div>
+          <h3><i class="fa-solid fa-calendar-plus" style="color: var(--ifsc-green);"></i> Registrar Nova Reunião</h3>
+          <p style="font-size: 0.78rem; color: var(--text-muted); margin-top: 2px;">Ata e deliberações de orientação</p>
+        </div>
+        <button class="modal-close-btn" onclick="closeModal('newMeetingModal')">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <form id="meetingForm" onsubmit="saveNewMeeting(event)">
+          <div class="form-group">
+            <label>Orientando *</label>
+            <select id="meetingAlunoSelect" class="form-control" required>
+              <option value="">Selecione o aluno...</option>
+              <option value="Marília Stefenon">Marília Stefenon</option>
+              <option value="Guilherme Londero">Guilherme Londero</option>
+              <option value="Michel David de Souza">Michel David de Souza</option>
+              <option value="Higor Rodrigues">Higor Rodrigues</option>
+              <option value="Luísa Narvaz">Luísa Narvaz</option>
+              <option value="Rodrigo, Eluney, João">Rodrigo, Eluney, João</option>
+            </select>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+            <div class="form-group">
+              <label>Data *</label>
+              <input type="date" id="meetingDateInput" class="form-control" required>
+            </div>
+            <div class="form-group">
+              <label>Horário</label>
+              <input type="time" id="meetingTimeInput" class="form-control" value="10:00">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Tipo de Reunião</label>
+            <select id="meetingTypeSelect" class="form-control">
+              <option value="Alinhamento Quinzenal">Alinhamento Quinzenal</option>
+              <option value="Validação com Secretaria (Ramon)">Validação com Secretaria (Ramon)</option>
+              <option value="Revisão de Protótipo">Revisão de Protótipo</option>
+              <option value="Redação do Artigo / Monografia">Redação do Artigo / Monografia</option>
+              <option value="Pré-Banca">Pré-Banca</option>
+              <option value="Extraordinária / Dúvidas">Extraordinária / Dúvidas</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Pauta da Reunião *</label>
+            <input type="text" id="meetingPautaInput" class="form-control" placeholder="Ex: Validação dos 3 diagramas e estrutura do painel admin" required>
+          </div>
+
+          <div class="form-group">
+            <label>Deliberações e Acordos Firmados *</label>
+            <textarea id="meetingDelibInput" class="form-control" placeholder="Descreva os itens combinados com o aluno..." required></textarea>
+          </div>
+
+          <div class="form-group">
+            <label>Próximos Passos & Entregas Imediatas</label>
+            <input type="text" id="meetingProximosInput" class="form-control" placeholder="Ex: Entregar diagramas até sexta-feira">
+          </div>
+
+          <div style="display: flex; justify-content: flex-end; gap: 0.75rem; margin-top: 1.5rem;">
+            <button type="button" class="btn btn-outline" onclick="closeModal('newMeetingModal')">Cancelar</button>
+            <button type="submit" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i> Salvar Reunião</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
   <!-- TOAST CONTAINER -->
   <div class="toast-container" id="toastContainer"></div>
 
@@ -1572,7 +1813,7 @@ tectonic -Z shell-escape document.tex</pre>
   </footer>
 
   <!-- ==========================================================================
-       JAVASCRIPT: APPLICATION LOGIC, SEARCH, MODAL & LIVE SYNC
+       JAVASCRIPT: APPLICATION LOGIC, SEARCH, MODAL & MEETINGS REGISTER
        ========================================================================== -->
   <script>
     // Initial Seed Data directly from the Google Sheets CSV
@@ -1608,12 +1849,12 @@ tectonic -Z shell-escape document.tex</pre>
         nivel: "Superior • Sistemas para Internet",
         titulo: "Chatbot para atendimento na secretaria acadêmica utilizando framework leve",
         status: "Em andamento",
-        statusDetalhe: "APRESENTAÇÃO FINALIZADA: recuperar comentários dos avaliadores para qualificar a proposta.",
+        statusDetalhe: "1) Elaborar 3 diagramas numerados do atendimento para validação com Ramon; 2) Iniciar implementação do painel administrativo de demandas (atendimento 100% bot vs. interação com atendente).",
         prazoEntrega: "29/05/2026",
         bancaMembros: "Thiago Lipinski Paes e Ignácio Kirhiako Sepulveda Ramirez",
         bancaData: "12/06 às 20h00",
         progresso: 75,
-        fase: "Protótipo 3 (LLM) & Redação Artigo SBC",
+        fase: "Fase 4: Validação com Ramon (3 Diagramas) & Painel Admin de Demandas",
         linkPreProjeto: "https://docs.google.com/document/d/1qnvYJ0fRcCAY4pdhvVL27W4Wnwjt18eZnLQ8VTj7WLg/edit?usp=sharing",
         linkSlides: "",
         linkDashboard: "https://chameoandre.github.io/Marilias-notes-and-Implementation-plan/",
@@ -1621,7 +1862,7 @@ tectonic -Z shell-escape document.tex</pre>
         linkOverleaf: "https://www.overleaf.com/read/dbcswpzjpnhs#55b18d",
         linkOverleafProject: "https://www.overleaf.com/project/69dc15ab48a033923b88b451",
         linkGithub: "https://github.com/marilia79/tcc",
-        tags: ["Chatbot", "PLN", "LLMs", "Secretaria Acadêmica", "SBC", "Benchmarking"]
+        tags: ["Chatbot", "PLN", "LLMs", "Secretaria Acadêmica", "SBC", "Painel Demandas"]
       },
       {
         id: 3,
@@ -1709,8 +1950,64 @@ tectonic -Z shell-escape document.tex</pre>
       }
     ];
 
+    // Initial Meeting Records
+    const initialMeetings = [
+      {
+        id: 1,
+        alunoNome: "Marília Stefenon",
+        data: "2026-09-11",
+        hora: "10:30",
+        tipo: "Definição de Próximos Passos",
+        pauta: "Planejamento dos diagramas de atendimento e módulo administrativo de demandas",
+        deliberacoes: "1) Elaborar 3 diagramas contendo as etapas do atendimento (numerados) para que possamos mostrar ao Ramon e ele validar se o atendimento está mapeado corretamente ou precisa de mudanças; 2) Iniciar a implementação do painel administrativo das demandas (checar como fica o procedimento de atendimento para registrar a demanda), categorizando se o atendimento foi sem interação humana do atendente ou não.",
+        proximosPassos: "Entrega dos 3 diagramas para validação institucional e início da modelagem da tela administrativa."
+      },
+      {
+        id: 2,
+        alunoNome: "Marília Stefenon",
+        data: "2026-06-12",
+        hora: "20:00",
+        tipo: "Pré-Banca",
+        pauta: "Apresentação e arguição da proposta de TCC perante a banca",
+        deliberacoes: "Apresentação finalizada com sucesso. Pareceristas Thiago Lipinski e Ignácio Ramirez recomendaram recuperar comentários para qualificar a proposta, detalhando a arquitetura dos protótipos de PLN e LLM e alinhamento com a secretaria.",
+        proximosPassos: "Leitura da ata da banca e incorporação das diretrizes no documento LaTeX."
+      },
+      {
+        id: 3,
+        alunoNome: "Guilherme Londero",
+        data: "2026-06-10",
+        hora: "20:00",
+        tipo: "Pré-Banca",
+        pauta: "Arguição do pré-projeto de lista de chamada com RFID no transporte escolar",
+        deliberacoes: "Apresentação finalizada. Avaliadores Ignácio Ramirez e Luiz Antonio Pacheco solicitaram ajustes na descrição dos componentes de hardware e no fluxo de notificações em tempo real.",
+        proximosPassos: "Aplicar correções no texto do pré-projeto e iniciar montagem do protótipo com leitor RFID e ESP32."
+      },
+      {
+        id: 4,
+        alunoNome: "Michel David de Souza",
+        data: "2026-06-11",
+        hora: "20:00",
+        tipo: "Pré-Banca",
+        pauta: "Arguição da proposta de jogo de ensino sobre vírus de computador",
+        deliberacoes: "Apresentação finalizada. Docentes Ryan Marcos Cardoso e Fabiana de Agapito enfatizaram a importância de estruturar a fundamentação teórica de aprendizagem baseada em jogos.",
+        proximosPassos: "Realizar a leitura de cada item observado pelos docentes da banca para definir os próximos passos de game design."
+      },
+      {
+        id: 5,
+        alunoNome: "Higor Rodrigues",
+        data: "2026-06-12",
+        hora: "21:00",
+        tipo: "Pré-Banca",
+        pauta: "Arguição do projeto de plataforma web para gestão financeira",
+        deliberacoes: "Apresentação realizada perante Thiago Paes e Fabiana de Agapito. Em comum acordo com o aluno, o projeto foi pausado para conclusão e defesa em 2027.",
+        proximosPassos: "Retomada do desenvolvimento e ajustes no início do calendário 2027."
+      }
+    ];
+
     let studentsData = [...initialStudents];
+    let meetingsData = JSON.parse(localStorage.getItem('ifsc-tcc-meetings')) || initialMeetings;
     let currentFilter = 'all';
+    let currentStudentForMeeting = null;
 
     // Switch between tabs
     function switchTab(tabId) {
@@ -1771,6 +2068,10 @@ tectonic -Z shell-escape document.tex</pre>
         const initials = s.nome.split(' ').map(n => n[0]).slice(0, 2).join('');
         const statusClass = s.status === 'Em andamento' ? 'em-andamento' : (s.status === 'PARADO' ? 'parado' : 'concluido');
         
+        // Count meetings for this student
+        const studentMeetings = meetingsData.filter(m => m.alunoNome.toLowerCase().includes(s.nome.toLowerCase().split(' ')[0]));
+        const lastMeeting = studentMeetings[0];
+
         let linkButtons = '';
         if (s.linkPreProjeto) {
           linkButtons += `<a href="${s.linkPreProjeto}" target="_blank" class="btn-link-action" title="Abrir Pré-projeto no Google Docs"><i class="fa-solid fa-file-lines"></i> Pré-projeto</a>`;
@@ -1821,7 +2122,7 @@ tectonic -Z shell-escape document.tex</pre>
             </div>
 
             <div class="banca-alert-box">
-              <strong>Situação:</strong> ${s.statusDetalhe || 'Aguardando novas instruções.'}
+              <strong>Situação / Próximos Passos:</strong> ${s.statusDetalhe || 'Aguardando novas instruções.'}
             </div>
 
             <div class="banca-meta">
@@ -1829,18 +2130,22 @@ tectonic -Z shell-escape document.tex</pre>
                 <i class="fa-solid fa-users"></i> <span><strong>Banca:</strong> ${s.bancaMembros || 'Não cadastrada'}</span>
               </div>
               <div class="banca-meta-item">
-                <i class="fa-solid fa-calendar-check"></i> <span><strong>Apresentação:</strong> ${s.bancaData || 'A definir'}</span>
+                <i class="fa-solid fa-handshake-simple"></i> <span><strong>Reuniões Registradas:</strong> ${studentMeetings.length} encontro(s)</span>
               </div>
+              ${lastMeeting ? `<div class="banca-meta-item" style="color: var(--accent-cyan);"><i class="fa-solid fa-clock"></i> <span><strong>Último registro:</strong> ${lastMeeting.data} (${lastMeeting.tipo})</span></div>` : ''}
             </div>
 
             <div class="tags-container">
               ${tagsHtml}
             </div>
 
-            <div class="links-grid" style="margin-top: 0.5rem;">
+            <div class="links-grid" style="margin-top: 0.5rem; align-items: center;">
               ${linkButtons}
-              <button class="btn-link-action" onclick="openStudentModal(${s.id})" style="background: rgba(34, 197, 94, 0.15); border-color: var(--ifsc-green-light); color: var(--ifsc-green-light); margin-left: auto;">
-                <i class="fa-solid fa-expand"></i> Detalhes
+              <button class="btn-link-action" onclick="quickRegisterMeeting('${s.nome}')" style="color: var(--ifsc-green);" title="Registrar Reunião com este aluno">
+                <i class="fa-solid fa-plus"></i> Reunião
+              </button>
+              <button class="btn-link-action" onclick="openStudentModal(${s.id})" style="background: rgba(22, 163, 74, 0.12); border-color: var(--ifsc-green); color: var(--ifsc-green); margin-left: auto;">
+                <i class="fa-solid fa-expand"></i> Ficha Completa
               </button>
             </div>
           </div>
@@ -1848,10 +2153,144 @@ tectonic -Z shell-escape document.tex</pre>
       }).join('');
     }
 
+    // Render Meetings List
+    function renderMeetings() {
+      const container = document.getElementById('meetingsListContainer');
+      const filter = document.getElementById('meetingFilterSelect').value;
+
+      let list = [...meetingsData];
+      if (filter !== 'all') {
+        list = list.filter(m => m.alunoNome === filter);
+      }
+
+      // Update KPI
+      document.getElementById('kpi-reunioes-count').textContent = meetingsData.length;
+      document.getElementById('count-reunioes-nav').textContent = meetingsData.length;
+
+      if (!list.length) {
+        container.innerHTML = `
+          <div style="text-align: center; padding: 3rem 1.5rem; background: var(--bg-card); border-radius: 12px; border: 1px dashed var(--border-color);">
+            <i class="fa-solid fa-calendar-xmark" style="font-size: 2rem; color: var(--text-dim); margin-bottom: 0.75rem;"></i>
+            <p style="color: var(--text-muted); font-size: 0.9rem;">Nenhuma reunião registrada para este filtro.</p>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = list.map(m => `
+        <div class="meeting-card">
+          <div class="meeting-top-row">
+            <div>
+              <div style="display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap;">
+                <strong style="font-size: 1.05rem; color: var(--text-main); font-family: 'Outfit', sans-serif;">${m.alunoNome}</strong>
+                <span class="meeting-badge-type">${m.tipo}</span>
+              </div>
+              <div style="font-size: 0.82rem; color: var(--text-muted); margin-top: 3px;">
+                <strong>Pauta:</strong> ${m.pauta}
+              </div>
+            </div>
+            <div class="meeting-date-badge">
+              <i class="fa-solid fa-calendar-day"></i> ${m.data} ${m.hora ? 'às ' + m.hora : ''}
+            </div>
+          </div>
+
+          <div class="meeting-delib-box">
+            <strong style="color: var(--ifsc-green);"><i class="fa-solid fa-clipboard-check"></i> Deliberações & Acordos:</strong>
+            <p style="margin-top: 4px; color: var(--text-main);">${m.deliberacoes}</p>
+            ${m.proximosPassos ? `<p style="margin-top: 6px; font-size: 0.78rem; color: var(--accent-cyan);"><strong><i class="fa-solid fa-forward-step"></i> Próxima Entrega:</strong> ${m.proximosPassos}</p>` : ''}
+          </div>
+
+          <div style="display: flex; justify-content: flex-end; margin-top: 0.75rem;">
+            <button class="btn-link-action" onclick="deleteMeeting(${m.id})" style="font-size: 0.7rem; color: var(--ifsc-red); border-color: rgba(220, 38, 38, 0.3);">
+              <i class="fa-solid fa-trash-can"></i> Excluir
+            </button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // Quick register meeting from student card
+    function quickRegisterMeeting(alunoNome) {
+      document.getElementById('meetingAlunoSelect').value = alunoNome;
+      document.getElementById('meetingDateInput').value = new Date().toISOString().split('T')[0];
+      document.getElementById('newMeetingModal').classList.add('active');
+    }
+
+    // Open meeting from student modal
+    function openMeetingFromStudentModal() {
+      if (currentStudentForMeeting) {
+        document.getElementById('meetingAlunoSelect').value = currentStudentForMeeting.nome;
+      }
+      document.getElementById('meetingDateInput').value = new Date().toISOString().split('T')[0];
+      closeModal('studentModal');
+      document.getElementById('newMeetingModal').classList.add('active');
+    }
+
+    function openNewMeetingModal() {
+      document.getElementById('meetingForm').reset();
+      document.getElementById('meetingDateInput').value = new Date().toISOString().split('T')[0];
+      document.getElementById('newMeetingModal').classList.add('active');
+    }
+
+    // Save new meeting
+    function saveNewMeeting(e) {
+      e.preventDefault();
+
+      const alunoNome = document.getElementById('meetingAlunoSelect').value;
+      const data = document.getElementById('meetingDateInput').value;
+      const hora = document.getElementById('meetingTimeInput').value;
+      const tipo = document.getElementById('meetingTypeSelect').value;
+      const pauta = document.getElementById('meetingPautaInput').value;
+      const deliberacoes = document.getElementById('meetingDelibInput').value;
+      const proximosPassos = document.getElementById('meetingProximosInput').value;
+
+      const newMeeting = {
+        id: Date.now(),
+        alunoNome,
+        data,
+        hora,
+        tipo,
+        pauta,
+        deliberacoes,
+        proximosPassos
+      };
+
+      meetingsData.unshift(newMeeting);
+      localStorage.setItem('ifsc-tcc-meetings', JSON.stringify(meetingsData));
+
+      closeModal('newMeetingModal');
+      renderMeetings();
+      renderProjects(studentsData);
+      showToast(`Reunião de ${alunoNome} registrada com sucesso!`, 'success');
+      switchTab('tab-reunioes');
+    }
+
+    // Delete meeting
+    function deleteMeeting(id) {
+      if (!confirm('Deseja realmente remover este registro de reunião?')) return;
+      meetingsData = meetingsData.filter(m => m.id !== id);
+      localStorage.setItem('ifsc-tcc-meetings', JSON.stringify(meetingsData));
+      renderMeetings();
+      renderProjects(studentsData);
+      showToast('Registro de reunião removido.');
+    }
+
+    // Export Meetings JSON
+    function exportMeetingsJSON() {
+      const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(meetingsData, null, 2));
+      const dlAnchor = document.createElement('a');
+      dlAnchor.setAttribute("href", dataStr);
+      dlAnchor.setAttribute("download", `atas-reunioes-tcc-ifsc-${new Date().toISOString().split('T')[0]}.json`);
+      dlAnchor.click();
+      showToast('Histórico de reuniões exportado em JSON!', 'success');
+    }
+
     // Open Student Modal
     function openStudentModal(id) {
       const s = studentsData.find(item => item.id === id);
       if (!s) return;
+
+      currentStudentForMeeting = s;
 
       document.getElementById('modalStudentName').textContent = s.nome;
       document.getElementById('modalStudentType').textContent = s.tipo + (s.nivel ? ' • ' + s.nivel : '');
@@ -1885,13 +2324,29 @@ tectonic -Z shell-escape document.tex</pre>
         </div>
       `).join('');
 
+      // Student specific meetings in modal
+      const studentMeetings = meetingsData.filter(m => m.alunoNome.toLowerCase().includes(s.nome.toLowerCase().split(' ')[0]));
+      if (studentMeetings.length) {
+        document.getElementById('modalStudentMeetingsList').innerHTML = studentMeetings.map(m => `
+          <div style="background: rgba(22, 163, 74, 0.04); border-left: 3px solid var(--ifsc-green); border-radius: 6px; padding: 0.55rem 0.8rem; font-size: 0.8rem;">
+            <div style="display: flex; justify-content: space-between;">
+              <strong>${m.tipo}</strong>
+              <span style="color: var(--accent-cyan);">${m.data}</span>
+            </div>
+            <p style="color: var(--text-main); margin-top: 3px;">${m.deliberacoes}</p>
+          </div>
+        `).join('');
+      } else {
+        document.getElementById('modalStudentMeetingsList').innerHTML = '<span style="font-size: 0.8rem; color: var(--text-dim);">Nenhuma reunião específica cadastrada ainda.</span>';
+      }
+
       // Links in modal
       let linksHtml = '';
       if (s.linkPreProjeto) linksHtml += `<a href="${s.linkPreProjeto}" target="_blank" class="btn btn-outline btn-sm"><i class="fa-solid fa-file-lines"></i> Abrir Pré-projeto</a>`;
       if (s.linkSlides) linksHtml += `<a href="${s.linkSlides}" target="_blank" class="btn btn-outline btn-sm" style="color: var(--accent-amber);"><i class="fa-solid fa-file-powerpoint"></i> Slides</a>`;
       if (s.linkDashboard) linksHtml += `<a href="${s.linkDashboard}" target="_blank" class="btn btn-outline btn-sm" style="color: var(--accent-cyan);"><i class="fa-solid fa-chart-line"></i> Dashboard Web</a>`;
-      if (s.linkOverleaf) linksHtml += `<a href="${s.linkOverleaf}" target="_blank" class="btn btn-outline btn-sm" style="color: #4ade80;"><i class="fa-solid fa-leaf"></i> Paper Overleaf</a>`;
-      if (s.linkGithub) linksHtml += `<a href="${s.linkGithub}" target="_blank" class="btn btn-outline btn-sm" style="color: #c084fc;"><i class="fa-brands fa-github"></i> Repositório GitHub</a>`;
+      if (s.linkOverleaf) linksHtml += `<a href="${s.linkOverleaf}" target="_blank" class="btn btn-outline btn-sm" style="color: #16a34a;"><i class="fa-solid fa-leaf"></i> Paper Overleaf</a>`;
+      if (s.linkGithub) linksHtml += `<a href="${s.linkGithub}" target="_blank" class="btn btn-outline btn-sm" style="color: #9333ea;"><i class="fa-brands fa-github"></i> Repositório GitHub</a>`;
       if (s.linkComentariosBanca) linksHtml += `<a href="${s.linkComentariosBanca}" target="_blank" class="btn btn-outline btn-sm"><i class="fa-solid fa-comments"></i> Ata da Banca</a>`;
 
       document.getElementById('modalLinksGrid').innerHTML = linksHtml || '<span style="color: var(--text-dim); font-size: 0.8rem;">Nenhum link externo cadastrado.</span>';
@@ -1899,25 +2354,25 @@ tectonic -Z shell-escape document.tex</pre>
       document.getElementById('studentModal').classList.add('active');
     }
 
-    function closeModal() {
-      document.getElementById('studentModal').classList.remove('active');
+    function closeModal(modalId) {
+      document.getElementById(modalId).classList.remove('active');
     }
 
-    function closeModalOnOverlay(e) {
-      if (e.target.id === 'studentModal') closeModal();
+    function closeModalOnOverlay(e, modalId) {
+      if (e.target.id === modalId) closeModal(modalId);
     }
 
     // Theme Switcher
     function toggleTheme() {
       const html = document.documentElement;
-      const current = html.getAttribute('data-theme') || 'dark';
-      const next = current === 'dark' ? 'light' : 'dark';
+      const current = html.getAttribute('data-theme') || 'light';
+      const next = current === 'light' ? 'dark' : 'light';
       html.setAttribute('data-theme', next);
       localStorage.setItem('ifsc-tcc-theme', next);
 
       const icon = document.getElementById('themeIcon');
-      icon.className = next === 'dark' ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
-      showToast(`Tema alterado para modo ${next === 'dark' ? 'escuro' : 'claro'}.`);
+      icon.className = next === 'light' ? 'fa-solid fa-moon' : 'fa-solid fa-sun';
+      showToast(`Tema alterado para modo ${next === 'light' ? 'claro' : 'escuro'}.`);
     }
 
     // Toast notifications
@@ -1927,7 +2382,7 @@ tectonic -Z shell-escape document.tex</pre>
       toast.className = 'toast';
       
       let icon = 'fa-solid fa-info-circle';
-      if (type === 'success') icon = 'fa-solid fa-circle-check" style="color: var(--ifsc-green-light);';
+      if (type === 'success') icon = 'fa-solid fa-circle-check" style="color: var(--ifsc-green);';
       if (type === 'warning') icon = 'fa-solid fa-triangle-exclamation" style="color: var(--accent-amber);';
       
       toast.innerHTML = `<i class="${icon}"></i> <span>${message}</span>`;
@@ -1979,12 +2434,6 @@ tectonic -Z shell-escape document.tex</pre>
         }
         if (!headerPassed) continue;
 
-        // Simple CSV splitter handling quotes
-        const cols = [];
-        let match;
-        const re = /(?:"([^"]*(?:""[^"]*)*)")|([^,]+)/g;
-        let lastIndex = 0;
-        
         // Manual CSV tokenizer
         const row = [];
         let inQuotes = false;
@@ -2033,7 +2482,7 @@ tectonic -Z shell-escape document.tex</pre>
           nivel: tipo === 'TCC' ? 'Superior • Sistemas para Internet' : 'Técnico Integrado em Informática',
           titulo: titulo,
           status: status,
-          statusDetalhe: statusDetalhe,
+          statusDetalhe: existing && existing.nome.includes('Marília') ? existing.statusDetalhe : statusDetalhe,
           prazoEntrega: prazo,
           bancaMembros: bancaMembros,
           bancaData: bancaData,
@@ -2059,16 +2508,15 @@ tectonic -Z shell-escape document.tex</pre>
 
     // Initialize on page load
     document.addEventListener('DOMContentLoaded', () => {
-      // Saved Theme
-      const savedTheme = localStorage.getItem('ifsc-tcc-theme');
-      if (savedTheme) {
-        document.documentElement.setAttribute('data-theme', savedTheme);
-        const icon = document.getElementById('themeIcon');
-        icon.className = savedTheme === 'dark' ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
-      }
+      // Saved Theme or Default to Light
+      const savedTheme = localStorage.getItem('ifsc-tcc-theme') || 'light';
+      document.documentElement.setAttribute('data-theme', savedTheme);
+      const icon = document.getElementById('themeIcon');
+      icon.className = savedTheme === 'light' ? 'fa-solid fa-moon' : 'fa-solid fa-sun';
 
       // Initial render
       renderProjects(studentsData);
+      renderMeetings();
     });
   </script>
 </body>
