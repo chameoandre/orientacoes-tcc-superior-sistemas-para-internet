@@ -2430,9 +2430,7 @@ tectonic -Z shell-escape document.tex</pre>
     }
 
     function parseMeetingsCsvAndUpdate(csvText) {
-      const lines = csvText.split(/
-?
-/);
+      const lines = csvText.split(String.fromCharCode(10));
       if (lines.length < 2) return;
       
       const parsedMeetings = [];
@@ -2528,7 +2526,7 @@ tectonic -Z shell-escape document.tex</pre>
 
     // Parse CSV Text from Google Sheets
     function parseCsvAndUpdate(csvText) {
-      const lines = csvText.split(/\r?\n/);
+      const lines = csvText.split(String.fromCharCode(10));
       let headerPassed = false;
       let newStudents = [];
       let idCounter = 1;
