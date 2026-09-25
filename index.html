@@ -2278,6 +2278,7 @@ tectonic -Z shell-escape document.tex</pre>
 
       closeModal('newMeetingModal');
       renderMeetings();
+      loadMeetingsFromSheet();
       renderProjects(studentsData);
       showToast(`Reunião de ${alunoNome} registrada com sucesso!`, 'success');
       switchTab('tab-reunioes');
@@ -2289,6 +2290,7 @@ tectonic -Z shell-escape document.tex</pre>
       meetingsData = meetingsData.filter(m => m.id !== id);
       localStorage.setItem('ifsc-tcc-meetings', JSON.stringify(meetingsData));
       renderMeetings();
+      loadMeetingsFromSheet();
       renderProjects(studentsData);
       showToast('Registro de reunião removido.');
     }
@@ -2413,6 +2415,79 @@ tectonic -Z shell-escape document.tex</pre>
       }, 3500);
     }
 
+
+    // Busca automática das reuniões da aba reunioes-registro no Google Sheets
+    async function loadMeetingsFromSheet() {
+      try {
+        const url = 'https://docs.google.com/spreadsheets/d/193Uemkt_-eAkzlQxUuAznmwLxzzO4FW6mjw1e_DURhA/gviz/tq?tqx=out:csv&sheet=reunioes-registro&t=' + Date.now();
+        const res = await fetch(url);
+        if (!res.ok) throw new Error('Status HTTP: ' + res.status);
+        const csvText = await res.text();
+        parseMeetingsCsvAndUpdate(csvText);
+      } catch (err) {
+        console.warn('Usando dados de reuniões embutidos/locais:', err);
+      }
+    }
+
+    function parseMeetingsCsvAndUpdate(csvText) {
+      const lines = csvText.split(/
+?
+/);
+      if (lines.length < 2) return;
+      
+      const parsedMeetings = [];
+      let idCounter = 100;
+
+      for (let i = 1; i < lines.length; i++) {
+        const line = lines[i].trim();
+        if (!line) continue;
+
+        // Parse CSV columns handling quotes
+        const row = [];
+        let inQuotes = false;
+        let curVal = '';
+        for (let j = 0; j < line.length; j++) {
+          const char = line[j];
+          if (char === '"') {
+            inQuotes = !inQuotes;
+          } else if (char === ',' && !inQuotes) {
+            row.push(curVal.trim().replace(/^"|"$/g, ''));
+            curVal = '';
+          } else {
+            curVal += char;
+          }
+        }
+        row.push(curVal.trim().replace(/^"|"$/g, ''));
+
+        if (row.length < 3 || !row[0] || !row[2]) continue;
+
+        parsedMeetings.push({
+          id: idCounter++,
+          data: row[0],
+          hora: row[1] || '10:00',
+          alunoNome: row[2],
+          tipo: row[3] || 'Alinhamento',
+          pauta: row[4] || 'A definir',
+          deliberacoes: row[5] || '',
+          proximosPassos: row[6] || ''
+        });
+      }
+
+      if (parsedMeetings.length > 0) {
+        // Merge with existing
+        const combined = [...parsedMeetings];
+        meetingsData.forEach(m => {
+          if (!combined.some(c => c.data === m.data && c.alunoNome === m.alunoNome && c.tipo === m.tipo)) {
+            combined.push(m);
+          }
+        });
+        meetingsData = combined;
+        renderMeetings();
+      loadMeetingsFromSheet();
+        renderProjects(studentsData);
+      }
+    }
+
     // Live Sync with Google Sheets
     async function liveSyncFromSheet() {
       const btn = document.getElementById('liveSyncBtn');
@@ -2428,6 +2503,7 @@ tectonic -Z shell-escape document.tex</pre>
         const csvText = await res.text();
         
         parseCsvAndUpdate(csvText);
+        await loadMeetingsFromSheet();
         showToast('Planilha oficial sincronizada ao vivo com sucesso!', 'success');
       } catch (err) {
         console.warn('Falha ao baixar CSV ao vivo (possível restrição de CORS ou rede):', err);
@@ -2535,6 +2611,7 @@ tectonic -Z shell-escape document.tex</pre>
       // Initial render
       renderProjects(studentsData);
       renderMeetings();
+      loadMeetingsFromSheet();
     });
   </script>
 </body>
