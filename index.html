@@ -2481,9 +2481,21 @@ tectonic -Z shell-escape document.tex</pre>
             combined.push(m);
           }
         });
+        // Sort descending: most recent date on top
+        function parseDateBR(dStr) {
+          if (!dStr) return 0;
+          if (dStr.includes('/')) {
+            const parts = dStr.split('/');
+            if (parts.length === 3) return new Date(parts[2], parts[1] - 1, parts[0]).getTime();
+          } else if (dStr.includes('-')) {
+            return new Date(dStr).getTime();
+          }
+          return 0;
+        }
+        combined.sort((a, b) => parseDateBR(b.data) - parseDateBR(a.data));
+
         meetingsData = combined;
         renderMeetings();
-      loadMeetingsFromSheet();
         renderProjects(studentsData);
       }
     }
