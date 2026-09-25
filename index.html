@@ -2250,13 +2250,21 @@ tectonic -Z shell-escape document.tex</pre>
       document.getElementById('newMeetingModal').classList.add('active');
     }
 
+    // Google Apps Script Web App URL para inclusão remota
+    const GOOGLE_SCRIPT_WEBAPP_URL = 'https://script.google.com/macros/s/AKfycbyXQEKRxt3YK1T5nVUcXtq1TXvC2qwiLvsGPE_-ZMGYca01ET0nk4HIhqVy2S0rr18/exec';
+
     // Save new meeting
-    function saveNewMeeting(e) {
+    async function saveNewMeeting(e) {
       e.preventDefault();
 
       const alunoNome = document.getElementById('meetingAlunoSelect').value;
-      const data = document.getElementById('meetingDateInput').value;
-      const hora = document.getElementById('meetingTimeInput').value;
+      let rawData = document.getElementById('meetingDateInput').value;
+      let dataFormatada = rawData;
+      if (rawData && rawData.includes('-')) {
+        const p = rawData.split('-');
+        if (p.length === 3) dataFormatada = `${p[2]}/${p[1]}/${p[0]}`;
+      }
+      const hora = document.getElementById('meetingTimeInput').value || '10:00';
       const tipo = document.getElementById('meetingTypeSelect').value;
       const pauta = document.getElementById('meetingPautaInput').value;
       const deliberacoes = document.getElementById('meetingDelibInput').value;
@@ -2265,7 +2273,7 @@ tectonic -Z shell-escape document.tex</pre>
       const newMeeting = {
         id: Date.now(),
         alunoNome,
-        data,
+        data: dataFormatada,
         hora,
         tipo,
         pauta,
@@ -2273,15 +2281,37 @@ tectonic -Z shell-escape document.tex</pre>
         proximosPassos
       };
 
+      // Inclusão imediata no estado local e interface
       meetingsData.unshift(newMeeting);
       localStorage.setItem('ifsc-tcc-meetings', JSON.stringify(meetingsData));
 
       closeModal('newMeetingModal');
       renderMeetings();
-      loadMeetingsFromSheet();
       renderProjects(studentsData);
-      showToast(`Reunião de ${alunoNome} registrada com sucesso!`, 'success');
       switchTab('tab-reunioes');
+      showToast(`Reunião de ${alunoNome} salva localmente! Sincronizando com a planilha...`, 'info');
+
+      // Envia ao Google Apps Script Web App
+      if (GOOGLE_SCRIPT_WEBAPP_URL) {
+        try {
+          await fetch(GOOGLE_SCRIPT_WEBAPP_URL, {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: {
+              'Content-Type': 'text/plain;charset=utf-8'
+            },
+            body: JSON.stringify(newMeeting)
+          });
+          showToast(`Reunião enviada para a planilha Google com sucesso!`, 'success');
+          // Recarrega dados da planilha após 2.5s para unificar IDs
+          setTimeout(() => {
+            loadMeetingsFromSheet();
+          }, 2500);
+        } catch (err) {
+          console.warn('Erro ao sincronizar com Google Apps Script:', err);
+          showToast(`Salvo localmente no navegador. Verifique a implantação do Apps Script.`, 'warning');
+        }
+      }
     }
 
     // Delete meeting
