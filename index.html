@@ -1955,12 +1955,22 @@ tectonic -Z shell-escape document.tex</pre>
       {
         id: 1,
         alunoNome: "Marília Stefenon",
+        data: "2026-09-25",
+        hora: "14:30",
+        tipo: "Alinhamento de Orientação",
+        pauta: "Validação dos 3 diagramas de atendimento com Ramon e painel administrativo de demandas",
+        deliberacoes: "1) Elaborar 3 diagramas contendo as etapas do atendimento (numerados) para que possamos mostrar ao Ramon e ele validar se o atendimento está mapeado corretamente ou precisa de mudanças; 2) Iniciar a implementação do painel administrativo das demandas (checar como fica o procedimento de atendimento para registrar a demanda), categorizando se o atendimento foi sem interação humana do atendente ou não.",
+        proximosPassos: "Entrega dos 3 diagramas sequenciais numerados e início do protótipo da tela administrativa de demandas."
+      },
+      {
+        id: 6,
+        alunoNome: "Marília Stefenon",
         data: "2026-09-11",
         hora: "10:30",
         tipo: "Definição de Próximos Passos",
         pauta: "Planejamento dos diagramas de atendimento e módulo administrativo de demandas",
-        deliberacoes: "1) Elaborar 3 diagramas contendo as etapas do atendimento (numerados) para que possamos mostrar ao Ramon e ele validar se o atendimento está mapeado corretamente ou precisa de mudanças; 2) Iniciar a implementação do painel administrativo das demandas (checar como fica o procedimento de atendimento para registrar a demanda), categorizando se o atendimento foi sem interação humana do atendente ou não.",
-        proximosPassos: "Entrega dos 3 diagramas para validação institucional e início da modelagem da tela administrativa."
+        deliberacoes: "1) Elaborar 3 diagramas contendo as etapas do atendimento (numerados); 2) Iniciar a implementação do painel administrativo das demandas.",
+        proximosPassos: "Estruturar o fluxo de triagem e mapear rotinas com a secretaria."
       },
       {
         id: 2,
@@ -2005,7 +2015,15 @@ tectonic -Z shell-escape document.tex</pre>
     ];
 
     let studentsData = [...initialStudents];
-    let meetingsData = JSON.parse(localStorage.getItem('ifsc-tcc-meetings')) || initialMeetings;
+    // Garante que as reuniões oficiais estejam sempre visíveis, unindo com localStorage
+    const savedMeetings = JSON.parse(localStorage.getItem('ifsc-tcc-meetings')) || [];
+    const mergedMeetings = [...initialMeetings];
+    savedMeetings.forEach(s => {
+      if (!mergedMeetings.some(m => m.id === s.id)) {
+        mergedMeetings.unshift(s);
+      }
+    });
+    let meetingsData = mergedMeetings;
     let currentFilter = 'all';
     let currentStudentForMeeting = null;
 
