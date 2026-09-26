@@ -1816,6 +1816,24 @@ tectonic -Z shell-escape document.tex</pre>
        JAVASCRIPT: APPLICATION LOGIC, SEARCH, MODAL & MEETINGS REGISTER
        ========================================================================== -->
   <script>
+    // Helper para garantir formato de data brasileiro (DD/MM/YYYY)
+    function formatDateBR(dStr) {
+      if (!dStr) return '';
+      dStr = String(dStr).trim();
+      // Converte YYYY-MM-DD ou YYYY-MM-DDTHH:mm... para DD/MM/YYYY
+      if (dStr.includes('-')) {
+        const onlyDate = dStr.split('T')[0];
+        const parts = onlyDate.split('-');
+        if (parts.length === 3 && parts[0].length === 4) {
+          const dia = parts[2].padStart(2, '0');
+          const mes = parts[1].padStart(2, '0');
+          const ano = parts[0];
+          return `${dia}/${mes}/${ano}`;
+        }
+      }
+      return dStr;
+    }
+
     // Initial Seed Data directly from the Google Sheets CSV
     const initialStudents = [
       {
@@ -2019,11 +2037,17 @@ tectonic -Z shell-escape document.tex</pre>
     const savedMeetings = JSON.parse(localStorage.getItem('ifsc-tcc-meetings')) || [];
     const mergedMeetings = [...initialMeetings];
     savedMeetings.forEach(s => {
+      s.data = formatDateBR(s.data);
       if (!mergedMeetings.some(m => m.id === s.id)) {
         mergedMeetings.unshift(s);
       }
     });
+    // Atualiza o localStorage higienizado para o formato BR
+    if (savedMeetings.length > 0) {
+      localStorage.setItem('ifsc-tcc-meetings', JSON.stringify(savedMeetings));
+    }
     let meetingsData = mergedMeetings;
+    meetingsData.forEach(m => { m.data = formatDateBR(m.data); });
     let currentFilter = 'all';
     let currentStudentForMeeting = null;
 
@@ -2208,7 +2232,7 @@ tectonic -Z shell-escape document.tex</pre>
               </div>
             </div>
             <div class="meeting-date-badge">
-              <i class="fa-solid fa-calendar-day"></i> ${m.data} ${m.hora ? 'às ' + m.hora : ''}
+              <i class="fa-solid fa-calendar-day"></i> ${formatDateBR(m.data)} ${m.hora ? 'às ' + m.hora : ''}
             </div>
           </div>
 
@@ -2381,7 +2405,7 @@ tectonic -Z shell-escape document.tex</pre>
           <div style="background: rgba(22, 163, 74, 0.04); border-left: 3px solid var(--ifsc-green); border-radius: 6px; padding: 0.55rem 0.8rem; font-size: 0.8rem;">
             <div style="display: flex; justify-content: space-between;">
               <strong>${m.tipo}</strong>
-              <span style="color: var(--accent-cyan);">${m.data}</span>
+              <span style="color: var(--accent-cyan);">${formatDateBR(m.data)}</span>
             </div>
             <p style="color: var(--text-main); margin-top: 3px;">${m.deliberacoes}</p>
           </div>
@@ -2491,7 +2515,7 @@ tectonic -Z shell-escape document.tex</pre>
 
         parsedMeetings.push({
           id: idCounter++,
-          data: row[0],
+          data: formatDateBR(row[0]),
           hora: row[1] || '10:00',
           alunoNome: row[2],
           tipo: row[3] || 'Alinhamento',
@@ -2505,6 +2529,7 @@ tectonic -Z shell-escape document.tex</pre>
         // Merge with existing
         const combined = [...parsedMeetings];
         meetingsData.forEach(m => {
+          m.data = formatDateBR(m.data);
           if (!combined.some(c => c.data === m.data && c.alunoNome === m.alunoNome && c.tipo === m.tipo)) {
             combined.push(m);
           }
@@ -2512,6 +2537,7 @@ tectonic -Z shell-escape document.tex</pre>
         // Sort descending: most recent date on top
         function parseDateBR(dStr) {
           if (!dStr) return 0;
+          dStr = formatDateBR(dStr);
           if (dStr.includes('/')) {
             const parts = dStr.split('/');
             if (parts.length === 3) return new Date(parts[2], parts[1] - 1, parts[0]).getTime();
