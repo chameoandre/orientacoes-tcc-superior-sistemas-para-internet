@@ -765,6 +765,95 @@
     }
 
     /* ==========================================================================
+       PAPER SHOWCASE & VITRINE STYLING
+       ========================================================================== */
+    .paper-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      box-shadow: var(--shadow-glass);
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+    }
+    .paper-card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-hover);
+      border-color: var(--accent-amber);
+    }
+    .paper-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: var(--paper-accent, var(--ifsc-green));
+    }
+    .paper-top-badges {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+    .badge-event {
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 0.25rem 0.65rem;
+      border-radius: 6px;
+      background: rgba(217, 119, 6, 0.12);
+      color: var(--accent-amber);
+      border: 1px solid rgba(217, 119, 6, 0.3);
+      font-family: 'Outfit', sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .badge-event.snct {
+      background: rgba(22, 163, 74, 0.12);
+      color: var(--ifsc-green);
+      border-color: rgba(22, 163, 74, 0.3);
+    }
+    .badge-event.cotb {
+      background: rgba(8, 145, 178, 0.12);
+      color: var(--accent-cyan);
+      border-color: rgba(8, 145, 178, 0.3);
+    }
+    .badge-event.sbc {
+      background: rgba(147, 51, 234, 0.12);
+      color: var(--accent-purple);
+      border-color: rgba(147, 51, 234, 0.3);
+    }
+    .paper-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      line-height: 1.35;
+      color: var(--text-main);
+      font-family: 'Outfit', sans-serif;
+    }
+    .paper-authors {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .paper-abstract {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+      background: rgba(22, 163, 74, 0.03);
+      border-radius: 8px;
+      padding: 0.75rem 0.9rem;
+      border-left: 3px solid var(--paper-accent, var(--ifsc-green));
+    }
+
+
+    /* ==========================================================================
        MEETINGS & REUNIÕES STYLING
        ========================================================================== */
     .meetings-header-bar {
@@ -1204,7 +1293,7 @@
       <i class="fa-solid fa-timeline" style="color: var(--accent-cyan);"></i> Calendário & Bancas
     </button>
     <button class="tab-btn" onclick="switchTab('tab-publicacoes')">
-      <i class="fa-solid fa-book-open-reader" style="color: var(--accent-amber);"></i> Artigos & Publicações
+      <i class="fa-solid fa-book-open-reader" style="color: var(--accent-amber);"></i> Vitrine de Papers & Publicações <span class="badge-count" id="count-papers-nav">6</span>
     </button>
     <button class="tab-btn" onclick="switchTab('tab-avancos')">
       <i class="fa-solid fa-list-check" style="color: var(--ifsc-green);"></i> Avanços & Checkpoints
@@ -1445,70 +1534,75 @@
       </div>
     </section>
 
-    <!-- TAB 4: PUBLICAÇÕES & ARTIGOS -->
+    <!-- TAB 4: VITRINE DE PAPERS & PUBLICAÇÕES -->
     <section id="tab-publicacoes" class="tab-content">
       <div class="timeline-wrapper">
-        <h2><i class="fa-solid fa-scroll" style="color: var(--accent-amber);"></i> Produção Científica & Submissões a Eventos</h2>
-        <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 4px;">Acompanhamento de papers vinculados aos TCCs e Projetos Integradores para difusão da pesquisa do IFSC.</p>
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; flex-wrap: wrap;">
+          <div>
+            <h2><i class="fa-solid fa-scroll" style="color: var(--accent-amber);"></i> Vitrine de Papers & Publicações Científicas</h2>
+            <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 4px;">Produção bibliográfica, submissões a eventos e artigos vinculados aos Trabalhos de Conclusão de Curso e Projetos Integradores do IFSC Garopaba.</p>
+          </div>
+          <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+            <a href="https://computeronthebeach.com.br" target="_blank" class="btn btn-outline btn-sm"><i class="fa-solid fa-umbrella-beach"></i> COTB 2026</a>
+            <a href="https://www.sbc.org.br" target="_blank" class="btn btn-outline btn-sm"><i class="fa-solid fa-award"></i> SBC Template</a>
+          </div>
+        </div>
 
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)); gap: 1.5rem; margin-top: 1.5rem;">
-          
-          <div class="project-card">
-            <div class="card-top">
-              <span class="badge-status concluido">COTB • SNCT • SEPEI</span>
-              <span style="font-size: 0.75rem; color: var(--text-dim);">Artigo & Projeto</span>
-            </div>
-            <h3 class="project-title">Música, Jogo e Atenção: uma proposta educacional com Raspberry Pi</h3>
-            <p style="font-size: 0.82rem; color: var(--text-muted);">Autora: <strong>Luísa Narvaz</strong> • Orientador: Prof. André Moraes</p>
-            <div class="tags-container">
-              <span class="tag-badge">SNCT 2025</span>
-              <span class="tag-badge">COTB 2026</span>
-              <span class="tag-badge">SEPEI 2026</span>
-              <span class="tag-badge">WebMedia 2026</span>
-            </div>
-            <div class="links-grid" style="margin-top: auto;">
-              <a href="https://www.overleaf.com/read/fxhzcxmbwsqw#b139ac" target="_blank" class="btn-link-action overleaf"><i class="fa-solid fa-leaf"></i> Artigo no Overleaf</a>
+        <!-- Papers KPI Bar -->
+        <div class="kpi-grid" style="margin-top: 1.5rem; margin-bottom: 1.5rem;">
+          <div class="kpi-card" style="--accent-color: var(--accent-amber);">
+            <div class="kpi-icon"><i class="fa-solid fa-book-bookmark"></i></div>
+            <div class="kpi-info">
+              <div class="kpi-val" id="kpi-total-papers">6</div>
+              <div class="kpi-label">Artigos & Submissões Mapeados</div>
             </div>
           </div>
-
-          <div class="project-card">
-            <div class="card-top">
-              <span class="badge-status concluido">COTB • SEPEI • WebMedia</span>
-              <span style="font-size: 0.75rem; color: var(--text-dim);">Artigo & Projeto</span>
-            </div>
-            <h3 class="project-title">JIFTv: Streaming Adaptativo nos Jogos Escolares do IFSC</h3>
-            <p style="font-size: 0.82rem; color: var(--text-muted);">Autores: <strong>Rodrigo, Eluney, João</strong> • Orientador: Prof. André Moraes</p>
-            <div class="tags-container">
-              <span class="tag-badge">COTB 2026</span>
-              <span class="tag-badge">SEPEI 2026</span>
-              <span class="tag-badge">WebMedia 2026</span>
-              <span class="tag-badge">DASH/HLS</span>
-            </div>
-            <div class="links-grid" style="margin-top: auto;">
-              <span class="btn-link-action" style="opacity: 0.7;"><i class="fa-solid fa-video"></i> Streaming IFSC</span>
+          <div class="kpi-card" style="--accent-color: var(--ifsc-green);">
+            <div class="kpi-icon"><i class="fa-solid fa-circle-check"></i></div>
+            <div class="kpi-info">
+              <div class="kpi-val" id="kpi-papers-publicados">2</div>
+              <div class="kpi-label">Publicados / Apresentados</div>
             </div>
           </div>
-
-          <div class="project-card">
-            <div class="card-top">
-              <span class="badge-status em-andamento">SBC Template (LaTeX)</span>
-              <span style="font-size: 0.75rem; color: var(--text-dim);">Artigo TCC</span>
-            </div>
-            <h3 class="project-title">Chatbot para Atendimento na Secretaria Acadêmica com Framework Leve</h3>
-            <p style="font-size: 0.82rem; color: var(--text-muted);">Autora: <strong>Marília Stefenon</strong> • Orientador: Prof. André Moraes</p>
-            <div class="tags-container">
-              <span class="tag-badge">SBC 2026</span>
-              <span class="tag-badge">PLN / LLMs</span>
-              <span class="tag-badge">Benchmarking</span>
-              <span class="tag-badge">TCC Superior</span>
-            </div>
-            <div class="links-grid" style="margin-top: auto;">
-              <a href="https://www.overleaf.com/read/dbcswpzjpnhs#55b18d" target="_blank" class="btn-link-action overleaf"><i class="fa-solid fa-leaf"></i> Overleaf (Leitura)</a>
-              <a href="https://www.overleaf.com/project/69dc15ab48a033923b88b451" target="_blank" class="btn-link-action overleaf"><i class="fa-solid fa-pen-to-square"></i> Overleaf (Edição)</a>
-              <a href="https://github.com/marilia79/tcc" target="_blank" class="btn-link-action github"><i class="fa-brands fa-github"></i> GitHub</a>
+          <div class="kpi-card" style="--accent-color: var(--accent-cyan);">
+            <div class="kpi-icon"><i class="fa-solid fa-paper-plane"></i></div>
+            <div class="kpi-info">
+              <div class="kpi-val" id="kpi-papers-submetidos">2</div>
+              <div class="kpi-label">Submetidos / Em Avaliação</div>
             </div>
           </div>
+          <div class="kpi-card" style="--accent-color: var(--accent-purple);">
+            <div class="kpi-icon"><i class="fa-solid fa-pen-nib"></i></div>
+            <div class="kpi-info">
+              <div class="kpi-val" id="kpi-papers-redacao">2</div>
+              <div class="kpi-label">Em Redação (Overleaf Ativo)</div>
+            </div>
+          </div>
+        </div>
 
+        <!-- Filter bar for Papers -->
+        <div style="display: flex; gap: 0.75rem; align-items: center; justify-content: space-between; flex-wrap: wrap; background: var(--bg-surface); padding: 0.9rem 1.2rem; border-radius: 12px; border: 1px solid var(--border-color); margin-bottom: 1.5rem;">
+          <div class="chip-group" id="paperStatusFilters">
+            <button class="filter-chip active" onclick="filterPapers('all', this)"><i class="fa-solid fa-layer-group"></i> Todos (<span id="chip-papers-total">6</span>)</button>
+            <button class="filter-chip" onclick="filterPapers('Publicado', this)"><i class="fa-solid fa-check-double" style="color: var(--ifsc-green);"></i> Publicados (2)</button>
+            <button class="filter-chip" onclick="filterPapers('Submetido', this)"><i class="fa-solid fa-clock" style="color: var(--accent-cyan);"></i> Submetidos (2)</button>
+            <button class="filter-chip" onclick="filterPapers('Em Redação', this)"><i class="fa-solid fa-pen-ruler" style="color: var(--accent-purple);"></i> Em Redação (2)</button>
+          </div>
+          <div style="min-width: 220px;">
+            <select id="paperStudentFilter" class="form-control" style="font-size: 0.8rem; padding: 0.45rem 0.8rem;" onchange="filterPapersByStudent(this.value)">
+              <option value="all">Todos os Orientandos</option>
+              <option value="Luísa Narvaz">Luísa Narvaz</option>
+              <option value="Marília Stefenon">Marília Stefenon</option>
+              <option value="Rodrigo, Eluney, João">Rodrigo, Eluney, João</option>
+              <option value="Guilherme Londero">Guilherme Londero</option>
+              <option value="Michel David de Souza">Michel David de Souza</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Papers Cards Grid -->
+        <div id="papersShowcaseGrid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(440px, 1fr)); gap: 1.5rem;">
+          <!-- Injetado dinamicamente via renderPapers() -->
         </div>
       </div>
     </section>
@@ -2739,9 +2833,208 @@ tectonic -Z shell-escape document.tex</pre>
       const icon = document.getElementById('themeIcon');
       icon.className = savedTheme === 'light' ? 'fa-solid fa-moon' : 'fa-solid fa-sun';
 
+
+    // Dados da Vitrine de Papers & Publicações
+    const papersData = [
+      {
+        id: 1,
+        titulo: "Música, Jogo e Atenção: uma proposta educacional com Raspberry Pi",
+        evento: "SNCT 2025",
+        eventoClasse: "snct",
+        ano: "2025",
+        status: "Publicado",
+        orientando: "Luísa Narvaz",
+        coautores: "Prof. André Moraes",
+        afiliacao: "IFSC Garopaba • Técnico Integrado em Informática",
+        resumo: "Ambiente educacional tangível utilizando Raspberry Pi e sensores táteis para o estímulo da atenção e funções executivas por meio de feedback sonoro e gamificação assistiva.",
+        tags: ["Raspberry Pi", "Tecnologia Assistiva", "Python", "SNCT 2025", "Hardware Livre"],
+        overleafUrl: "https://www.overleaf.com/read/fxhzcxmbwsqw#b139ac",
+        repoUrl: "",
+        docUrl: ""
+      },
+      {
+        id: 2,
+        titulo: "Música, Jogo e Atenção: Interação e Engajamento Cognitivo em Hardware Embarcado",
+        evento: "COTB 2026",
+        eventoClasse: "cotb",
+        ano: "2026",
+        status: "Submetido",
+        orientando: "Luísa Narvaz",
+        coautores: "Prof. André Moraes",
+        afiliacao: "IFSC Garopaba • Computer on the Beach",
+        resumo: "Artigo completo submetido ao Computer on the Beach apresentando metodologia de testes de usabilidade e resultados empíricos da interação de estudantes com o jogo musical embarcado.",
+        tags: ["COTB 2026", "IHC", "Jogos Educacionais", "Educação Básica"],
+        overleafUrl: "https://www.overleaf.com/read/fxhzcxmbwsqw#b139ac",
+        repoUrl: "",
+        docUrl: ""
+      },
+      {
+        id: 3,
+        titulo: "JIFTv: Arquitetura de Streaming Adaptativo de Baixa Latência para Jogos Escolares",
+        evento: "COTB 2026",
+        eventoClasse: "cotb",
+        ano: "2026",
+        status: "Submetido",
+        orientando: "Rodrigo, Eluney, João",
+        coautores: "Prof. André Moraes",
+        afiliacao: "IFSC Garopaba • Projeto Integrador",
+        resumo: "Pipeline de transmissão de vídeo ao vivo com bitrate adaptativo (HLS/DASH) implementado para cobertura esportiva estudantil sob condições de rede móvel restrita.",
+        tags: ["COTB 2026", "HLS/DASH", "Streaming Adaptativo", "Nginx RTMP", "Redes"],
+        overleafUrl: "",
+        repoUrl: "",
+        docUrl: ""
+      },
+      {
+        id: 4,
+        titulo: "Chatbot para Atendimento Acadêmico: Avaliação Comparativa com e sem Processamento de Linguagem Natural",
+        evento: "COTB 2026",
+        eventoClasse: "cotb",
+        ano: "2026",
+        status: "Em Redação",
+        orientando: "Marília Stefenon",
+        coautores: "Prof. André Moraes",
+        afiliacao: "IFSC Garopaba • Superior em Sistemas para Internet",
+        resumo: "Estudo comparativo de usabilidade e precisão entre chatbot de busca lexical e assistente conversacional dotado de motor de PLN (slots e intents) integrado à secretaria acadêmica.",
+        tags: ["Chatbot", "PLN", "NLP", "COTB 2026", "SIGAA", "Benchmark"],
+        overleafUrl: "https://www.overleaf.com/read/dbcswpzjpnhs#55b18d",
+        repoUrl: "https://github.com/marilia79/tcc",
+        docUrl: ""
+      },
+      {
+        id: 5,
+        titulo: "Sistema de Lista de Chamada no Transporte Escolar com RFID e Notificações em Tempo Real",
+        evento: "SBC 2026",
+        eventoClasse: "sbc",
+        ano: "2026",
+        status: "Em Redação",
+        orientando: "Guilherme Londero",
+        coautores: "Prof. André Moraes",
+        afiliacao: "IFSC Garopaba • Superior em Sistemas para Internet",
+        resumo: "Aplicação distribuída com microcontroladores e leitores RFID integrados a backend WebSockets para registro de embarque/desembarque e notificações instantâneas aos responsáveis.",
+        tags: ["RFID", "IoT", "Node.js", "WebSockets", "Transporte Escolar", "SBC"],
+        overleafUrl: "",
+        repoUrl: "https://chameoandre.github.io/orientacoes-tcc-superior-sistemas-para-internet/2026/guilherme-londero/cronograma-pipeline.html",
+        docUrl: "https://docs.google.com/document/d/10V7QZhYb327OKufUG-YbnVdaYrTbcGIpP7pJDV7n44o/edit?usp=sharing"
+      },
+      {
+        id: 6,
+        titulo: "Jogo Educacional sobre Cibersegurança: Prevenção e Letramento Digital em Vírus de Computador",
+        evento: "SBGames / COTB",
+        eventoClasse: "sbc",
+        ano: "2026",
+        status: "Em Redação",
+        orientando: "Michel David de Souza",
+        coautores: "Prof. André Moraes",
+        afiliacao: "IFSC Garopaba • Superior em Sistemas para Internet",
+        resumo: "Design e desenvolvimento de jogo sério em 2D voltado ao ensino de boas práticas de segurança da informação, conscientização sobre ameaças digitais e resposta a malwares.",
+        tags: ["Serious Games", "Cibersegurança", "Vírus", "Educação Básica", "WebGL"],
+        overleafUrl: "",
+        repoUrl: "",
+        docUrl: "https://docs.google.com/document/d/1864vcIG5rm-wlRfFDzcveGBOgZHxTUCTNqrzIBPG9EQ/edit?usp=share_link"
+      }
+    ];
+
+    let currentPaperStatusFilter = 'all';
+    let currentPaperStudentFilter = 'all';
+
+    function renderPapers() {
+      const container = document.getElementById('papersShowcaseGrid');
+      if (!container) return;
+
+      let list = [...papersData];
+      if (currentPaperStatusFilter !== 'all') {
+        list = list.filter(p => p.status === currentPaperStatusFilter);
+      }
+      if (currentPaperStudentFilter !== 'all') {
+        list = list.filter(p => p.orientando.toLowerCase().includes(currentPaperStudentFilter.toLowerCase().split(' ')[0]));
+      }
+
+      // Update KPI
+      const total = papersData.length;
+      const pub = papersData.filter(p => p.status === 'Publicado' || p.status === 'Aceito').length;
+      const sub = papersData.filter(p => p.status === 'Submetido').length;
+      const red = papersData.filter(p => p.status === 'Em Redação').length;
+
+      if (document.getElementById('kpi-total-papers')) document.getElementById('kpi-total-papers').textContent = total;
+      if (document.getElementById('kpi-papers-publicados')) document.getElementById('kpi-papers-publicados').textContent = pub;
+      if (document.getElementById('kpi-papers-submetidos')) document.getElementById('kpi-papers-submetidos').textContent = sub;
+      if (document.getElementById('kpi-papers-redacao')) document.getElementById('kpi-papers-redacao').textContent = red;
+      if (document.getElementById('count-papers-nav')) document.getElementById('count-papers-nav').textContent = total;
+      if (document.getElementById('chip-papers-total')) document.getElementById('chip-papers-total').textContent = total;
+
+      if (!list.length) {
+        container.innerHTML = `
+          <div style="grid-column: 1 / -1; text-align: center; padding: 3rem 1.5rem; background: var(--bg-card); border-radius: 12px; border: 1px dashed var(--border-color);">
+            <i class="fa-solid fa-book-open" style="font-size: 2rem; color: var(--text-dim); margin-bottom: 0.75rem;"></i>
+            <p style="color: var(--text-muted); font-size: 0.9rem;">Nenhum artigo encontrado para o filtro selecionado.</p>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = list.map(p => {
+        let accentColor = 'var(--ifsc-green)';
+        let statusBadgeClass = 'concluido';
+        if (p.status === 'Submetido') {
+          accentColor = 'var(--accent-cyan)';
+          statusBadgeClass = 'em-andamento';
+        } else if (p.status === 'Em Redação') {
+          accentColor = 'var(--accent-purple)';
+          statusBadgeClass = 'parado';
+        }
+
+        return `
+          <div class="paper-card" style="--paper-accent: ${accentColor};">
+            <div class="paper-top-badges">
+              <span class="badge-event ${p.eventoClasse}">${p.evento} • ${p.ano}</span>
+              <span class="badge-status ${statusBadgeClass}"><i class="fa-solid ${p.status === 'Publicado' ? 'fa-circle-check' : (p.status === 'Submetido' ? 'fa-clock' : 'fa-pen-nib')}"></i> ${p.status}</span>
+            </div>
+
+            <h3 class="paper-title">${p.titulo}</h3>
+
+            <div class="paper-authors">
+              <i class="fa-solid fa-user-pen" style="color: var(--ifsc-green);"></i>
+              <span><strong>${p.orientando}</strong> • ${p.coautores}</span>
+            </div>
+            <div style="font-size: 0.74rem; color: var(--text-dim); margin-top: -6px;">
+              <i class="fa-solid fa-building-columns"></i> ${p.afiliacao}
+            </div>
+
+            <div class="paper-abstract">
+              <strong>Escopo / Resumo Executivo:</strong>
+              <p style="margin-top: 4px; color: var(--text-main);">${p.resumo}</p>
+            </div>
+
+            <div class="tags-container">
+              ${p.tags.map(t => `<span class="tag-badge">#${t}</span>`).join('')}
+            </div>
+
+            <div class="links-grid" style="margin-top: auto; padding-top: 0.75rem; border-top: 1px dashed var(--chip-border);">
+              ${p.overleafUrl ? `<a href="${p.overleafUrl}" target="_blank" class="btn-link-action overleaf"><i class="fa-solid fa-leaf"></i> Artigo no Overleaf</a>` : ''}
+              ${p.repoUrl ? `<a href="${p.repoUrl}" target="_blank" class="btn-link-action github"><i class="fa-brands fa-github"></i> Repositório</a>` : ''}
+              ${p.docUrl ? `<a href="${p.docUrl}" target="_blank" class="btn-link-action dashboard"><i class="fa-solid fa-file-lines"></i> Documento / Pré-projeto</a>` : ''}
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function filterPapers(status, btn) {
+      currentPaperStatusFilter = status;
+      document.querySelectorAll('#paperStatusFilters .filter-chip').forEach(b => b.classList.remove('active'));
+      if (btn) btn.classList.add('active');
+      renderPapers();
+    }
+
+    function filterPapersByStudent(student) {
+      currentPaperStudentFilter = student;
+      renderPapers();
+    }
+
       // Initial render
       renderProjects(studentsData);
       renderMeetings();
+      renderPapers();
       loadMeetingsFromSheet();
     });
   </script>
