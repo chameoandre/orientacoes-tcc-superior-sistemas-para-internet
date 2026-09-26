@@ -1,0 +1,1150 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard de TCC — Guilherme Londero | IFSC Garopaba</title>
+  
+  <!-- Fonts & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <style>
+    :root, [data-theme="light"] {
+      --ifsc-green: #16a34a;
+      --ifsc-green-dark: #15803d;
+      --ifsc-green-light: #22c55e;
+      --ifsc-red: #dc2626;
+      --bg-dark: #f8fafc;
+      --bg-surface: #ffffff;
+      --bg-card: #ffffff;
+      --bg-card-hover: #f1f5f9;
+      --border-color: #e2e8f0;
+      --text-main: #0f172a;
+      --text-muted: #475569;
+      --text-dim: #64748b;
+      --header-bg: rgba(255, 255, 255, 0.92);
+      --hero-bg: linear-gradient(135deg, #ffffff 0%, #f0fdf4 100%);
+      --hero-border: #bbf7d0;
+      --chip-bg: rgba(0, 0, 0, 0.04);
+      --progress-bg: rgba(0, 0, 0, 0.08);
+      
+      --accent-blue: #0284c7;
+      --accent-indigo: #4f46e5;
+      --accent-emerald: #059669;
+      --accent-purple: #7c3aed;
+      --accent-amber: #d97706;
+      --accent-rose: #e11d48;
+      
+      --radius-lg: 16px;
+      --radius-md: 10px;
+      --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
+      --shadow-card: 0 4px 14px rgba(0, 0, 0, 0.04);
+      --shadow-glow: 0 4px 20px rgba(22, 163, 74, 0.08);
+    }
+
+    [data-theme="dark"] {
+      --ifsc-green: #16a34a;
+      --ifsc-green-dark: #15803d;
+      --ifsc-green-light: #22c55e;
+      --ifsc-red: #dc2626;
+      --bg-dark: #090d16;
+      --bg-surface: #0f172a;
+      --bg-card: #131b2e;
+      --bg-card-hover: #1c2742;
+      --border-color: rgba(255, 255, 255, 0.1);
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --text-dim: #64748b;
+      --header-bg: rgba(19, 27, 46, 0.88);
+      --hero-bg: linear-gradient(135deg, rgba(19, 27, 46, 0.9) 0%, rgba(15, 23, 42, 0.95) 100%);
+      --hero-border: rgba(255, 255, 255, 0.1);
+      --chip-bg: rgba(255, 255, 255, 0.05);
+      --progress-bg: rgba(255, 255, 255, 0.1);
+      
+      --accent-blue: #38bdf8;
+      --accent-indigo: #818cf8;
+      --accent-emerald: #34d399;
+      --accent-purple: #c084fc;
+      --accent-amber: #fbbf24;
+      --accent-rose: #fb7185;
+      
+      --radius-lg: 16px;
+      --radius-md: 10px;
+      --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+      --shadow-card: 0 4px 14px rgba(0, 0, 0, 0.2);
+      --shadow-glow: 0 0 20px rgba(56, 189, 248, 0.15);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      line-height: 1.6;
+      min-height: 100vh;
+      padding-bottom: 3rem;
+      transition: background-color 0.25s ease, color 0.25s ease;
+    }
+
+    .container {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    /* HEADER */
+    header {
+      background: var(--header-bg);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-color);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      padding: 0.85rem 0;
+    }
+
+    .nav-wrapper {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .brand-group {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .brand-badge {
+      background: rgba(22, 163, 74, 0.15);
+      border: 1px solid var(--ifsc-green);
+      color: var(--ifsc-green);
+      font-family: 'Fira Code', monospace;
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 0.25rem 0.65rem;
+      border-radius: 20px;
+    }
+
+    .brand-title {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 700;
+      font-size: 1.15rem;
+      color: var(--text-main);
+    }
+
+    .nav-actions {
+      display: flex;
+      gap: 0.6rem;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .btn-nav {
+      background: var(--chip-bg);
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      padding: 0.45rem 0.85rem;
+      border-radius: 8px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+
+    .btn-nav:hover {
+      background: rgba(22, 163, 74, 0.12);
+      border-color: var(--ifsc-green);
+      color: var(--ifsc-green);
+    }
+
+    .btn-nav-primary {
+      background: var(--ifsc-green);
+      border-color: var(--ifsc-green);
+      color: #ffffff !important;
+    }
+    .btn-nav-primary:hover {
+      background: var(--ifsc-green-dark);
+      border-color: var(--ifsc-green-dark);
+      color: #ffffff !important;
+    }
+
+    /* HERO BANNER */
+    .hero-banner {
+      background: var(--hero-bg);
+      border: 1px solid var(--hero-border);
+      border-radius: var(--radius-lg);
+      padding: 2.2rem;
+      margin: 2rem 0 1.5rem 0;
+      position: relative;
+      overflow: hidden;
+      box-shadow: var(--shadow-glow);
+    }
+
+    .hero-tag {
+      color: var(--accent-indigo);
+      font-family: 'Fira Code', monospace;
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      margin-bottom: 0.6rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .hero-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 2rem;
+      font-weight: 800;
+      line-height: 1.25;
+      color: var(--text-main);
+      margin-bottom: 0.8rem;
+    }
+
+    .hero-subtitle {
+      color: var(--text-muted);
+      font-size: 1rem;
+      max-width: 960px;
+      margin-bottom: 1.5rem;
+      line-height: 1.55;
+    }
+
+    .meta-info-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1rem;
+      margin-top: 1.2rem;
+      padding-top: 1.2rem;
+      border-top: 1px dashed var(--border-color);
+    }
+
+    .meta-item {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .meta-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: var(--chip-bg);
+      border: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.15rem;
+    }
+
+    .meta-text label {
+      display: block;
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      font-weight: 600;
+    }
+
+    .meta-text span {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    /* Progress bar */
+    .overall-progress-box {
+      margin-top: 1.5rem;
+      background: rgba(22, 163, 74, 0.04);
+      padding: 1rem 1.2rem;
+      border-radius: 12px;
+      border: 1px solid var(--border-color);
+    }
+
+    .progress-header {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.88rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .progress-bar-bg {
+      background: var(--progress-bg);
+      height: 12px;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .progress-bar-fill {
+      background: linear-gradient(90deg, var(--ifsc-green) 0%, var(--accent-indigo) 100%);
+      height: 100%;
+      border-radius: 10px;
+      transition: width 0.4s ease;
+    }
+
+    /* KPI CARDS */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.2rem;
+      margin-bottom: 2rem;
+    }
+
+    .kpi-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 1.3rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      box-shadow: var(--shadow-card);
+      transition: transform 0.2s ease, border-color 0.2s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .kpi-card:hover {
+      transform: translateY(-2px);
+      border-color: var(--ifsc-green);
+    }
+
+    .kpi-card::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: var(--accent, var(--ifsc-green));
+    }
+
+    .kpi-title {
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .kpi-value {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--text-main);
+      margin: 0.4rem 0 0.2rem 0;
+    }
+
+    .kpi-desc {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+    }
+
+    /* TABS NAVIGATION */
+    .tabs-nav {
+      display: flex;
+      gap: 0.5rem;
+      border-bottom: 1px solid var(--border-color);
+      margin-bottom: 2rem;
+      overflow-x: auto;
+      padding-bottom: 0.2rem;
+    }
+
+    .tab-btn {
+      background: transparent;
+      border: 1px solid transparent;
+      color: var(--text-muted);
+      padding: 0.65rem 1.15rem;
+      border-radius: 8px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      white-space: nowrap;
+      transition: all 0.2s ease;
+    }
+
+    .tab-btn:hover {
+      color: var(--text-main);
+      background: var(--chip-bg);
+    }
+
+    .tab-btn.active {
+      color: var(--ifsc-green);
+      background: rgba(22, 163, 74, 0.12);
+      border-color: rgba(22, 163, 74, 0.25);
+    }
+
+    .tab-pane {
+      display: none;
+      animation: fadeIn 0.3s ease forwards;
+    }
+    .tab-pane.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* CARDS & CONTAINERS */
+    .content-box {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 1.8rem;
+      box-shadow: var(--shadow-card);
+      margin-bottom: 2rem;
+    }
+
+    .box-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .box-desc {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 1.5rem;
+    }
+
+    /* GRID DE MATERIAIS PRODUZIDOS */
+    .artifacts-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.2rem;
+    }
+
+    .artifact-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 1rem;
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+    .artifact-card:hover {
+      transform: translateY(-2px);
+      border-color: var(--ifsc-green);
+    }
+
+    .artifact-badge {
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 0.2rem 0.55rem;
+      border-radius: 6px;
+      background: rgba(22, 163, 74, 0.12);
+      color: var(--ifsc-green);
+      display: inline-block;
+      align-self: flex-start;
+    }
+
+    .artifact-title {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-top: 0.4rem;
+    }
+
+    .artifact-desc {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    /* CHECKLIST DE PRÓXIMOS PASSOS */
+    .checklist-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .check-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.85rem;
+      padding: 0.9rem 1.1rem;
+      border-radius: 10px;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+    .check-item:hover {
+      border-color: var(--ifsc-green);
+      background: rgba(22, 163, 74, 0.02);
+    }
+    .check-item.done {
+      border-left: 4px solid var(--ifsc-green);
+    }
+    .check-item.current {
+      border-left: 4px solid var(--accent-blue);
+      background: rgba(2, 132, 199, 0.03);
+    }
+    .check-item.urgent {
+      border-left: 4px solid var(--accent-rose);
+      background: rgba(225, 29, 72, 0.03);
+    }
+
+    .check-icon {
+      font-size: 1.2rem;
+      margin-top: 2px;
+      flex-shrink: 0;
+    }
+    .check-item.done .check-icon { color: var(--ifsc-green); }
+    .check-item.current .check-icon { color: var(--accent-blue); }
+    .check-item.urgent .check-icon { color: var(--accent-rose); }
+
+    .check-content h4 {
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .check-content p {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-top: 3px;
+      line-height: 1.45;
+    }
+
+    /* ACCORDION SECTIONS DA BANCA */
+    .banca-section {
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      margin-bottom: 0.75rem;
+      overflow: hidden;
+      background: var(--bg-surface);
+    }
+
+    .banca-header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.9rem 1.2rem;
+      cursor: pointer;
+      user-select: none;
+      background: var(--bg-surface);
+      transition: background 0.15s ease;
+    }
+    .banca-header:hover {
+      background: var(--bg-card-hover);
+    }
+
+    .banca-title {
+      font-size: 0.92rem;
+      font-weight: 600;
+      color: var(--text-main);
+      flex: 1;
+    }
+
+    .banca-chevron {
+      color: var(--text-dim);
+      transition: transform 0.2s ease;
+    }
+    .banca-chevron.open {
+      transform: rotate(180deg);
+    }
+
+    .banca-body {
+      padding: 1rem 1.2rem;
+      border-top: 1px solid var(--border-color);
+      display: none;
+      background: var(--bg-card);
+    }
+    .banca-body.open {
+      display: block;
+    }
+
+    .compare-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+    }
+    @media (max-width: 680px) {
+      .compare-grid { grid-template-columns: 1fr; }
+    }
+
+    .cell-before {
+      background: rgba(220, 38, 38, 0.06);
+      border: 1px solid rgba(220, 38, 38, 0.25);
+      border-radius: 8px;
+      padding: 0.75rem 1rem;
+      font-size: 0.82rem;
+      line-height: 1.5;
+    }
+    .cell-after {
+      background: rgba(22, 163, 74, 0.06);
+      border: 1px solid rgba(22, 163, 74, 0.25);
+      border-radius: 8px;
+      padding: 0.75rem 1rem;
+      font-size: 0.82rem;
+      line-height: 1.5;
+    }
+
+    .badge-status-item {
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 0.2rem 0.55rem;
+      border-radius: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+    .badge-status-item.resolvido { background: rgba(22, 163, 74, 0.12); color: var(--ifsc-green); }
+    .badge-status-item.parcial { background: rgba(217, 119, 6, 0.12); color: var(--accent-amber); }
+    .badge-status-item.pendente { background: rgba(2, 132, 199, 0.12); color: var(--accent-blue); }
+    .badge-status-item.problema { background: rgba(220, 38, 38, 0.12); color: var(--ifsc-red); }
+
+    /* FOOTER */
+    footer {
+      text-align: center;
+      margin-top: 3rem;
+      padding: 2rem 0;
+      border-top: 1px solid var(--border-color);
+      color: var(--text-dim);
+      font-size: 0.82rem;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <div class="container nav-wrapper">
+      <div class="brand-group">
+        <span class="brand-badge">IFSC GAROPABA • TCC 2026</span>
+        <div class="brand-title">Guilherme Londero — Validação RFID</div>
+      </div>
+      <div class="nav-actions">
+        <button id="themeToggleBtn" onclick="toggleTheme()" class="btn-nav" title="Alternar tema Claro / Escuro">
+          <i class="fa-solid fa-moon" id="themeIcon"></i> <span id="themeLabel">Modo Escuro</span>
+        </button>
+        <a href="https://chameoandre.github.io/orientacoes-tcc-superior-sistemas-para-internet/" class="btn-nav" title="Voltar ao Painel Geral de TCC">
+          <i class="fa-solid fa-arrow-left"></i> Painel Geral TCC
+        </a>
+        <a href="Guilherme-Pre-TCC.pdf" target="_blank" class="btn-nav btn-nav-primary">
+          <i class="fa-solid fa-file-pdf"></i> Pré-TCC (PDF)
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <!-- HERO BANNER -->
+    <section class="hero-banner">
+      <div class="hero-tag">
+        <i class="fa-solid fa-id-card-clip"></i> TRABALHO DE CONCLUSÃO DE CURSO • SISTEMAS PARA INTERNET
+      </div>
+      <h1 class="hero-title">
+        Protótipo Funcional para Validação da Tecnologia RFID Aplicada ao Transporte Escolar
+      </h1>
+      <p class="hero-subtitle">
+        Desenvolvimento e validação experimental de arquitetura IoT baseada em microcontrolador ESP32, leitor MFRC522 (13.56 MHz), backend REST em Python com banco MariaDB, painel web de monitoramento e notificações complementares via Telegram.
+      </p>
+
+      <div class="meta-info-grid">
+        <div class="meta-item">
+          <div class="meta-icon" style="color: var(--ifsc-green);"><i class="fa-solid fa-user-graduate"></i></div>
+          <div class="meta-text">
+            <label>Orientando</label>
+            <span>Guilherme Londero</span>
+          </div>
+        </div>
+
+        <div class="meta-item">
+          <div class="meta-icon" style="color: var(--accent-blue);"><i class="fa-solid fa-chalkboard-user"></i></div>
+          <div class="meta-text">
+            <label>Professor Orientador</label>
+            <span>Prof. André Moraes</span>
+          </div>
+        </div>
+
+        <div class="meta-item">
+          <div class="meta-icon" style="color: var(--accent-purple);"><i class="fa-solid fa-users"></i></div>
+          <div class="meta-text">
+            <label>Banca Examinadora</label>
+            <span>Prof. Ignácio Ramirez & Prof. Luiz Pacheco</span>
+          </div>
+        </div>
+
+        <div class="meta-item">
+          <div class="meta-icon" style="color: var(--accent-amber);"><i class="fa-solid fa-calendar-check"></i></div>
+          <div class="meta-text">
+            <label>Pré-banca Realizada</label>
+            <span>10/06 às 20h00 • Aprovado</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Barra de Progresso Geral -->
+      <div class="overall-progress-box">
+        <div class="progress-header">
+          <span><i class="fa-solid fa-bars-progress" style="color: var(--ifsc-green);"></i> Progresso Geral do TCC</span>
+          <span style="color: var(--ifsc-green);">65% Concluído (Pré-banca Aprovada • Desenvolvimento de Hardware em Andamento)</span>
+        </div>
+        <div class="progress-bar-bg">
+          <div class="progress-bar-fill" style="width: 65%;"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- KPI CARDS -->
+    <div class="kpi-grid">
+      <div class="kpi-card" style="--accent: var(--ifsc-green);">
+        <div class="kpi-title">Fase Atual</div>
+        <div class="kpi-value">Desenvolvimento</div>
+        <div class="kpi-desc">Montagem de hardware em bancada e testes de leitura com MFRC522.</div>
+      </div>
+
+      <div class="kpi-card" style="--accent: var(--accent-blue);">
+        <div class="kpi-title">Itens Resolvidos da Banca</div>
+        <div class="kpi-value">6 de 13</div>
+        <div class="kpi-desc">Escopo delimitado, GPS removido e métricas de avaliação criadas.</div>
+      </div>
+
+      <div class="kpi-card" style="--accent: var(--accent-amber);">
+        <div class="kpi-title">Ajustes Urgentes</div>
+        <div class="kpi-value">2 Pendências</div>
+        <div class="kpi-desc">Remover menções residuais a PHP e limpar objetivos metodológicos.</div>
+      </div>
+
+      <div class="kpi-card" style="--accent: var(--accent-purple);">
+        <div class="kpi-title">Meta de Entrega</div>
+        <div class="kpi-value">Artigo SBC</div>
+        <div class="kpi-desc">Finalização dos testes controlados e redação no template SBC LaTeX.</div>
+      </div>
+    </div>
+
+    <!-- TABS BAR -->
+    <div class="tabs-nav">
+      <button class="tab-btn active" onclick="switchTab('tab-visao')">
+        <i class="fa-solid fa-compass"></i> Visão Geral & Materiais Prontos
+      </button>
+      <button class="tab-btn" onclick="switchTab('tab-passos')">
+        <i class="fa-solid fa-list-check" style="color: var(--ifsc-green);"></i> O que Tem por Fazer (Checklist)
+      </button>
+      <button class="tab-btn" onclick="switchTab('tab-cronograma')">
+        <i class="fa-solid fa-timeline" style="color: var(--accent-indigo);"></i> Pipeline & Cronograma (Jul–Dez)
+      </button>
+      <button class="tab-btn" onclick="switchTab('tab-pareceres')">
+        <i class="fa-solid fa-scale-balanced" style="color: var(--accent-amber);"></i> Pareceres da Banca (V3)
+      </button>
+      <button class="tab-btn" onclick="switchTab('tab-links')">
+        <i class="fa-solid fa-folder-open" style="color: var(--accent-purple);"></i> Documentos & Acessos
+      </button>
+    </div>
+
+    <!-- TAB 1: VISÃO GERAL & MATERIAIS PRONTOS -->
+    <div id="tab-visao" class="tab-pane active">
+      <div class="content-box">
+        <div class="box-title"><i class="fa-solid fa-box-archive" style="color: var(--ifsc-green);"></i> O que Guilherme já Produziu e Consolidou</div>
+        <div class="box-desc">Artefatos acadêmicos e técnicos finalizados e entregues durante a primeira etapa do TCC.</div>
+
+        <div class="artifacts-grid">
+          <div class="artifact-card">
+            <span class="artifact-badge">DOCUMENTO OFICIAL</span>
+            <div>
+              <div class="artifact-title">Pré-projeto de TCC (Versão 3)</div>
+              <div class="artifact-desc">Documento completo revisado com escopo delimitado, justificativa de hardware, protocolo LGPD e 9 métricas explícitas.</div>
+            </div>
+            <a href="Guilherme-Pre-TCC.pdf" target="_blank" class="btn-nav btn-nav-primary"><i class="fa-solid fa-file-pdf"></i> Abrir Pré-TCC em PDF</a>
+          </div>
+
+          <div class="artifact-card">
+            <span class="artifact-badge">APRESENTAÇÃO ORAL</span>
+            <div>
+              <div class="artifact-title">Slides da Pré-banca Examinadora</div>
+              <div class="artifact-desc">Apresentação com 20 slides estruturados perante os avaliadores Prof. Ignácio Ramirez e Prof. Luiz Pacheco em 10/06.</div>
+            </div>
+            <a href="https://docs.google.com/presentation/d/1yv32VLyXsRgQX9URjhIafPXQf-q5c-tbkisyW8Fsh34/edit#slide=id.g50448e8ad77b6eb9_9" target="_blank" class="btn-nav"><i class="fa-solid fa-file-powerpoint" style="color: var(--accent-amber);"></i> Abrir Slides Google Drive</a>
+          </div>
+
+          <div class="artifact-card">
+            <span class="artifact-badge">ARQUITETURA DEFINIDA</span>
+            <div>
+              <div class="artifact-title">Diagrama de Blocos do Sistema IoT</div>
+              <div class="artifact-desc">Estrutura em 4 camadas: ESP32 + MFRC522 (hardware) → API REST Python (comunicação) → MariaDB (persistência) → Web & Telegram (usuários).</div>
+            </div>
+            <a href="#tab-cronograma" onclick="switchTab('tab-cronograma')" class="btn-nav"><i class="fa-solid fa-diagram-project" style="color: var(--accent-indigo);"></i> Ver Pipeline de Execução</a>
+          </div>
+
+          <div class="artifact-card">
+            <span class="artifact-badge">AVALIAÇÃO CRÍTICA</span>
+            <div>
+              <div class="artifact-title">Análise Comparativa dos Pareceres</div>
+              <div class="artifact-desc">Quadro consolidado de evolução entre a V1 e a V3 (6 itens resolvidos, 3 parciais e plano para as pendências restantes).</div>
+            </div>
+            <a href="#tab-pareceres" onclick="switchTab('tab-pareceres')" class="btn-nav"><i class="fa-solid fa-magnifying-glass-chart" style="color: var(--accent-blue);"></i> Abrir Pareceres da Banca</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 2: PRÓXIMOS PASSOS & CHECKLIST -->
+    <div id="tab-passos" class="tab-pane">
+      <div class="content-box">
+        <div class="box-title"><i class="fa-solid fa-triangle-exclamation" style="color: var(--accent-rose);"></i> Ações Urgentes de Ajuste Teórico</div>
+        <div class="box-desc">Correções prioritárias no documento textual apontadas pela orientação para sanar inconsistências.</div>
+
+        <div class="checklist-group">
+          <div class="check-item urgent">
+            <div class="check-icon"><i class="fa-solid fa-circle-exclamation"></i></div>
+            <div class="check-content">
+              <h4>1. Remover Todas as Ocorrências Residuais de PHP</h4>
+              <p>O backend definitivo adotado é <strong>Python</strong>. É necessário fazer uma busca global no documento e remover menções a PHP na introdução, na tabela de tecnologias e nas referências bibliográficas.</p>
+            </div>
+          </div>
+
+          <div class="check-item urgent">
+            <div class="check-icon"><i class="fa-solid fa-circle-exclamation"></i></div>
+            <div class="check-content">
+              <h4>2. Enxugar Objetivos Específicos (Manter apenas os 5 de Desenvolvimento)</h4>
+              <p>Mover os objetivos 6 a 9 (avaliações de taxa de leitura, consumo e debounce) exclusivamente para a Seção Metodológica 3.4. Objetivos específicos devem responder apenas "o que construir".</p>
+            </div>
+          </div>
+
+          <div class="check-item urgent">
+            <div class="check-icon"><i class="fa-solid fa-circle-exclamation"></i></div>
+            <div class="check-content">
+              <h4>3. Estruturar Seção de Trabalhos Relacionados em Tabela Comparativa</h4>
+              <p>Retirar os artigos de referência de dentro dos parágrafos da introdução e criar uma subseção dedicada com uma tabela comparando autor, ano, tecnologia utilizada e limitações em relação a esta proposta.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="box-title" style="margin-top: 2rem;"><i class="fa-solid fa-screwdriver-wrench" style="color: var(--accent-indigo);"></i> Roteiro de Implementação Prática (Trilhas de Trabalho)</div>
+        <div class="box-desc">Tarefas práticas de engenharia e coleta de dados divididas por componente.</div>
+
+        <div class="checklist-group">
+          <div class="check-item current">
+            <div class="check-icon"><i class="fa-solid fa-microchip"></i></div>
+            <div class="check-content">
+              <h4>Trilha 1: Montagem de Bancada & Testes de Leitura RFID (ESP32 + MFRC522)</h4>
+              <p>Conectar o leitor MFRC522 aos pinos SPI do ESP32, implementar algoritmo de debounce (intervalo mínimo de 3 segundos para mesma tag) e testar leitura com tags chaveiro e cartões PVC.</p>
+            </div>
+          </div>
+
+          <div class="check-item current">
+            <div class="check-icon"><i class="fa-solid fa-server"></i></div>
+            <div class="check-content">
+              <h4>Trilha 2: Criação da API REST em Python & Modelagem MariaDB</h4>
+              <p>Criar endpoints para recebimento de eventos de leitura (UID, timestamp, status), modelar tabelas (Alunos, Tags, Viagens, Registros) e implementar tratamento de quedas de rede com buffer no ESP32.</p>
+            </div>
+          </div>
+
+          <div class="check-item">
+            <div class="check-icon"><i class="fa-solid fa-laptop-code"></i></div>
+            <div class="check-content">
+              <h4>Trilha 3: Interface Web de Gestão & Bot Telegram</h4>
+              <p>Desenvolver painel web simples para consulta de embarques/desembarques em tempo real e configurar o bot do Telegram para despacho das notificações aos responsáveis.</p>
+            </div>
+          </div>
+
+          <div class="check-item">
+            <div class="check-icon"><i class="fa-solid fa-flask"></i></div>
+            <div class="check-content">
+              <h4>Trilha 4: Coleta Experimental das 9 Métricas Acadêmicas</h4>
+              <p>Executar testes controlados em ambiente simulado e preencher a tabela de resultados: taxa de acerto de leitura, tempo de transmissão, consumo e resiliência offline.</p>
+            </div>
+          </div>
+
+          <div class="check-item">
+            <div class="check-icon"><i class="fa-solid fa-file-pen"></i></div>
+            <div class="check-content">
+              <h4>Trilha 5: Redação do Artigo Científico no Template SBC (LaTeX)</h4>
+              <p>Transpor os resultados e discussões para o formato de artigo da Sociedade Brasileira de Computação (SBC) para apresentação perante a banca examinadora final.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 3: PIPELINE & CRONOGRAMA -->
+    <div id="tab-cronograma" class="tab-pane">
+      <div class="content-box">
+        <div class="box-title"><i class="fa-solid fa-calendar-days" style="color: var(--accent-indigo);"></i> Cronograma de Execução Semestral (Julho a Dezembro)</div>
+        <div class="box-desc">Distribuição temporal das atividades por mês, alinhadas aos prazos institucionais do IFSC Garopaba.</div>
+
+        <div style="overflow-x: auto;">
+          <table style="width: 100%; border-collapse: collapse; font-size: 0.85rem; margin-top: 1rem;">
+            <thead>
+              <tr style="background: var(--bg-surface); border-bottom: 2px solid var(--border-color);">
+                <th style="padding: 10px; text-align: left;">Fase / Categoria</th>
+                <th style="padding: 10px; text-align: center;">Mês</th>
+                <th style="padding: 10px; text-align: left;">Principais Atividades</th>
+                <th style="padding: 10px; text-align: left;">Entrega / Marco</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style="border-bottom: 1px solid var(--border-color);">
+                <td style="padding: 10px;"><strong>Pesquisa & Escopo</strong></td>
+                <td style="padding: 10px; text-align: center;"><span class="artifact-badge" style="background: rgba(124, 58, 237, 0.12); color: var(--accent-purple);">Jul–Ago</span></td>
+                <td style="padding: 10px; color: var(--text-muted);">Levantamento bibliográfico, definição de escopo, métricas e protocolo LGPD.</td>
+                <td style="padding: 10px;"><span style="color: var(--ifsc-green); font-weight: 600;"><i class="fa-solid fa-check"></i> Pré-projeto Aprovado</span></td>
+              </tr>
+              <tr style="border-bottom: 1px solid var(--border-color); background: rgba(22, 163, 74, 0.02);">
+                <td style="padding: 10px;"><strong>Hardware Embarcado</strong></td>
+                <td style="padding: 10px; text-align: center;"><span class="artifact-badge">Ago–Set</span></td>
+                <td style="padding: 10px; color: var(--text-muted);">Montagem em bancada do ESP32 + leitor MFRC522; testes de alcance e debounce.</td>
+                <td style="padding: 10px; font-weight: 600; color: var(--accent-blue);">Circuito de leitura funcional</td>
+              </tr>
+              <tr style="border-bottom: 1px solid var(--border-color);">
+                <td style="padding: 10px;"><strong>Backend & Banco de Dados</strong></td>
+                <td style="padding: 10px; text-align: center;"><span class="artifact-badge" style="background: rgba(124, 58, 237, 0.12); color: var(--accent-purple);">Set–Out</span></td>
+                <td style="padding: 10px; color: var(--text-muted);">API REST em Python + modelagem do MariaDB com endpoints de registro.</td>
+                <td style="padding: 10px; font-weight: 600;">API com persistência operacional</td>
+              </tr>
+              <tr style="border-bottom: 1px solid var(--border-color); background: rgba(2, 132, 199, 0.02);">
+                <td style="padding: 10px;"><strong>Interface Web & Notificações</strong></td>
+                <td style="padding: 10px; text-align: center;"><span class="artifact-badge" style="background: rgba(2, 132, 199, 0.12); color: var(--accent-blue);">Out–Nov</span></td>
+                <td style="padding: 10px; color: var(--text-muted);">Painel web em HTML/Bootstrap + integração do bot Telegram como notificador.</td>
+                <td style="padding: 10px; font-weight: 600;">Painel de monitoramento e alertas</td>
+              </tr>
+              <tr style="border-bottom: 1px solid var(--border-color);">
+                <td style="padding: 10px;"><strong>Testes & Coleta de Métricas</strong></td>
+                <td style="padding: 10px; text-align: center;"><span class="artifact-badge" style="background: rgba(217, 119, 6, 0.12); color: var(--accent-amber);">Nov</span></td>
+                <td style="padding: 10px; color: var(--text-muted);">Execução das 9 métricas acadêmicas (tempo de resposta, taxa de falha, offline).</td>
+                <td style="padding: 10px; font-weight: 600;">Tabelas e gráficos de resultados</td>
+              </tr>
+              <tr>
+                <td style="padding: 10px;"><strong>Artigo SBC & Defesa Final</strong></td>
+                <td style="padding: 10px; text-align: center;"><span class="artifact-badge" style="background: rgba(220, 38, 38, 0.12); color: var(--ifsc-red);">Nov–Dez</span></td>
+                <td style="padding: 10px; color: var(--text-muted);">Redação final do artigo em LaTeX SBC, revisão do orientador e apresentação na banca.</td>
+                <td style="padding: 10px; font-weight: 700; color: var(--ifsc-green);">Artigo Final & Defesa de TCC</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 4: PARECERES DA BANCA (V3) -->
+    <div id="tab-pareceres" class="tab-pane">
+      <div class="content-box">
+        <div class="box-title"><i class="fa-solid fa-scale-balanced" style="color: var(--accent-amber);"></i> Síntese dos Pareceres da Pré-banca (Versão 3)</div>
+        <div class="box-desc">Evolução detalhada das recomendações da banca examinadora (Prof. Ignácio e Prof. Luiz Pacheco).</div>
+
+        <div style="margin-bottom: 1.5rem; display: flex; gap: 0.6rem; flex-wrap: wrap;">
+          <span class="badge-status-item resolvido">6 Resolvidos</span>
+          <span class="badge-status-item parcial">3 Avanços Parciais</span>
+          <span class="badge-status-item pendente">2 Pendentes</span>
+          <span class="badge-status-item problema">2 Novos Problemas</span>
+        </div>
+
+        <div class="banca-section">
+          <div class="banca-header" onclick="toggleBanca(this)">
+            <span class="badge-status-item resolvido">Resolvido</span>
+            <span class="banca-title">Título agora reflete o escopo real e acadêmico</span>
+            <i class="fa-solid fa-chevron-down banca-chevron"></i>
+          </div>
+          <div class="banca-body">
+            <div class="compare-grid">
+              <div class="cell-before"><strong>Antes:</strong> "Sistema Inteligente de Monitoramento no Transporte Escolar..." — grandioso, implicava sistema pronto para produção.</div>
+              <div class="cell-after"><strong>Agora:</strong> "Protótipo funcional para validação da tecnologia RFID aplicada ao transporte escolar" — honesto, viável e defensável.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="banca-section">
+          <div class="banca-header" onclick="toggleBanca(this)">
+            <span class="badge-status-item resolvido">Resolvido</span>
+            <span class="banca-title">GPS removido do escopo e alocado como trabalho futuro</span>
+            <i class="fa-solid fa-chevron-down banca-chevron"></i>
+          </div>
+          <div class="banca-body">
+            <div class="compare-grid">
+              <div class="cell-before"><strong>Antes:</strong> Rastreamento GPS listado como objetivo sem módulo de hardware definido.</div>
+              <div class="cell-after"><strong>Agora:</strong> Removido do escopo principal e citado corretamente como trabalho futuro na Seção 3.5.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="banca-section">
+          <div class="banca-header" onclick="toggleBanca(this)">
+            <span class="badge-status-item resolvido">Resolvido</span>
+            <span class="banca-title">Problema de pesquisa e pergunta científica explicitados</span>
+            <i class="fa-solid fa-chevron-down banca-chevron"></i>
+          </div>
+          <div class="banca-body">
+            <div class="compare-grid">
+              <div class="cell-before"><strong>Antes:</strong> Introdução narrava o problema empírico sem pergunta verificável.</div>
+              <div class="cell-after"><strong>Agora:</strong> Pergunta explícita se um protótipo baseado em RFID e ESP32 registra de forma automatizada e confiável os eventos.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="banca-section">
+          <div class="banca-header" onclick="toggleBanca(this)">
+            <span class="badge-status-item resolvido">Resolvido</span>
+            <span class="banca-title">9 Métricas de avaliação bem definidas</span>
+            <i class="fa-solid fa-chevron-down banca-chevron"></i>
+          </div>
+          <div class="banca-body">
+            <div class="compare-grid">
+              <div class="cell-before"><strong>Antes:</strong> Ausência total de métricas de medição do protótipo.</div>
+              <div class="cell-after"><strong>Agora:</strong> 9 métricas na seção 3.4 (taxa de leitura, tempo de registro, debounce, comportamento offline, etc.).</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="banca-section">
+          <div class="banca-header" onclick="toggleBanca(this)">
+            <span class="badge-status-item parcial">Avanço Parcial</span>
+            <span class="banca-title">Notificação: WhatsApp migrado para Telegram Bot API</span>
+            <i class="fa-solid fa-chevron-down banca-chevron"></i>
+          </div>
+          <div class="banca-body">
+            <div class="compare-grid">
+              <div class="cell-before"><strong>Antes:</strong> WhatsApp Business API (pago, difícil aprovação e alto risco de bloqueio).</div>
+              <div class="cell-after"><strong>Agora:</strong> Telegram Bot API (gratuito, oficial e simples de integrar em Python). Manter como funcionalidade complementar.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="banca-section">
+          <div class="banca-header" onclick="toggleBanca(this)">
+            <span class="badge-status-item problema">Ajuste Imediato</span>
+            <span class="banca-title">Inconsistência de Linguagem: remover resíduos de PHP no texto</span>
+            <i class="fa-solid fa-chevron-down banca-chevron"></i>
+          </div>
+          <div class="banca-body">
+            <div style="background: rgba(220, 38, 38, 0.05); padding: 0.9rem; border-radius: 8px; border-left: 3px solid var(--ifsc-red); font-size: 0.84rem;">
+              <strong>Problema identificado:</strong> O texto da metodologia define Python, mas a introdução ainda cita PHP. Em uma banca, isso gera questionamento formal. <strong>Ação:</strong> Remover todas as menções a PHP.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 5: DOCUMENTOS & ACESSOS -->
+    <div id="tab-links" class="tab-pane">
+      <div class="content-box">
+        <div class="box-title"><i class="fa-solid fa-link" style="color: var(--accent-purple);"></i> Links Oficiais & Acessos Rápidos</div>
+        <div class="box-desc">Repositórios, documentos na nuvem e ferramentas vinculadas ao trabalho do Guilherme.</div>
+
+        <div class="artifacts-grid">
+          <div class="artifact-card">
+            <span class="artifact-badge" style="background: rgba(2, 132, 199, 0.12); color: var(--accent-blue);">GOOGLE DOCS</span>
+            <div>
+              <div class="artifact-title">Documento de Pré-projeto Editável</div>
+              <div class="artifact-desc">Texto oficial em edição com as correções e anotações do orientador.</div>
+            </div>
+            <a href="https://docs.google.com/document/d/10V7QZhYb327OKufUG-YbnVdaYrTbcGIpP7pJDV7n44o/edit?usp=sharing" target="_blank" class="btn-nav"><i class="fa-solid fa-pen-to-square"></i> Abrir Google Doc</a>
+          </div>
+
+          <div class="artifact-card">
+            <span class="artifact-badge" style="background: rgba(217, 119, 6, 0.12); color: var(--accent-amber);">GOOGLE SLIDES</span>
+            <div>
+              <div class="artifact-title">Slides Oficiais da Apresentação</div>
+              <div class="artifact-desc">Apresentação utilizada na pré-banca e base para os slides da defesa final.</div>
+            </div>
+            <a href="https://docs.google.com/presentation/d/1yv32VLyXsRgQX9URjhIafPXQf-q5c-tbkisyW8Fsh34/edit#slide=id.g50448e8ad77b6eb9_9" target="_blank" class="btn-nav"><i class="fa-solid fa-file-powerpoint"></i> Abrir Apresentação</a>
+          </div>
+
+          <div class="artifact-card">
+            <span class="artifact-badge" style="background: rgba(22, 163, 74, 0.12); color: var(--ifsc-green);">DIAGNÓSTICO V3</span>
+            <div>
+              <div class="artifact-title">Análise Completa da Pré-banca V3</div>
+              <div class="artifact-desc">Página local com detalhamento minucioso de pontos fortes, fracos e urgentes.</div>
+            </div>
+            <a href="analise-pre-tcc-v3.html" target="_blank" class="btn-nav"><i class="fa-solid fa-chart-pie"></i> Ver Análise Completa V3</a>
+          </div>
+
+          <div class="artifact-card">
+            <span class="artifact-badge" style="background: rgba(124, 58, 237, 0.12); color: var(--accent-purple);">NOTAS DE ORIENTAÇÃO</span>
+            <div>
+              <div class="artifact-title">Notes & Implementation Report Work</div>
+              <div class="artifact-desc">Anotações conjuntas de orientação e registro de decisões arquiteturais.</div>
+            </div>
+            <a href="https://docs.google.com/document/d/1vktbGULallqievWISoteulKw6XUyyJyczY6VBUcoB24/edit?usp=sharing" target="_blank" class="btn-nav"><i class="fa-solid fa-clipboard-list"></i> Abrir Documento de Notas</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <footer>
+    <div class="container">
+      <p><strong>Instituto Federal de Santa Catarina (IFSC) — Câmpus Garopaba</strong></p>
+      <p style="margin-top: 4px;">Curso Superior de Tecnologia em Sistemas para a Internet • Orientação de TCC • Prof. André Moraes • 2026</p>
+    </div>
+  </footer>
+
+  <script>
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+      document.querySelectorAll('.tab-pane').forEach(pane => pane.classList.remove('active'));
+
+      const activeBtn = Array.from(document.querySelectorAll('.tab-btn')).find(b => b.getAttribute('onclick').includes(tabId));
+      if (activeBtn) activeBtn.classList.add('active');
+
+      const target = document.getElementById(tabId);
+      if (target) target.classList.add('active');
+    }
+
+    function toggleBanca(headerEl) {
+      const chevron = headerEl.querySelector('.banca-chevron');
+      const body = headerEl.nextElementSibling;
+      chevron.classList.toggle('open');
+      body.classList.toggle('open');
+    }
+
+    // Theme Switcher (Padrão: Claro)
+    function toggleTheme() {
+      const html = document.documentElement;
+      const current = html.getAttribute('data-theme') || 'light';
+      const next = current === 'light' ? 'dark' : 'light';
+      html.setAttribute('data-theme', next);
+      localStorage.setItem('guilherme-tcc-theme', next);
+      updateThemeUI(next);
+    }
+
+    function updateThemeUI(theme) {
+      const icon = document.getElementById('themeIcon');
+      const label = document.getElementById('themeLabel');
+      if (theme === 'dark') {
+        if (icon) icon.className = 'fa-solid fa-sun';
+        if (label) label.textContent = 'Modo Claro';
+      } else {
+        if (icon) icon.className = 'fa-solid fa-moon';
+        if (label) label.textContent = 'Modo Escuro';
+      }
+    }
+
+    (function initTheme() {
+      const saved = localStorage.getItem('guilherme-tcc-theme') || 'light';
+      document.documentElement.setAttribute('data-theme', saved);
+      updateThemeUI(saved);
+    })();
+  </script>
+</body>
+</html>
