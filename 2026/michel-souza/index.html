@@ -1,0 +1,1392 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard de TCC — Michel David de Souza | IFSC Garopaba</title>
+  
+  <!-- Fonts & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <style>
+    :root, [data-theme="light"] {
+      --ifsc-green: #16a34a;
+      --ifsc-green-dark: #15803d;
+      --ifsc-green-light: #22c55e;
+      --ifsc-red: #dc2626;
+      --bg-dark: #f8fafc;
+      --bg-surface: #ffffff;
+      --bg-card: #ffffff;
+      --bg-card-hover: #f1f5f9;
+      --border-color: #e2e8f0;
+      --text-main: #0f172a;
+      --text-muted: #475569;
+      --text-dim: #64748b;
+      --header-bg: rgba(255, 255, 255, 0.92);
+      --hero-bg: linear-gradient(135deg, #ffffff 0%, #f0fdf4 100%);
+      --hero-border: #bbf7d0;
+      --chip-bg: rgba(0, 0, 0, 0.04);
+      --progress-bg: rgba(0, 0, 0, 0.08);
+      
+      --accent-blue: #0284c7;
+      --accent-indigo: #4f46e5;
+      --accent-emerald: #059669;
+      --accent-purple: #7c3aed;
+      --accent-amber: #d97706;
+      --accent-rose: #e11d48;
+      
+      --radius-lg: 16px;
+      --radius-md: 10px;
+      --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
+      --shadow-card: 0 4px 14px rgba(0, 0, 0, 0.04);
+      --shadow-glow: 0 4px 20px rgba(22, 163, 74, 0.08);
+    }
+
+    [data-theme="dark"] {
+      --ifsc-green: #16a34a;
+      --ifsc-green-dark: #15803d;
+      --ifsc-green-light: #22c55e;
+      --ifsc-red: #dc2626;
+      --bg-dark: #090d16;
+      --bg-surface: #0f172a;
+      --bg-card: #131b2e;
+      --bg-card-hover: #1c2742;
+      --border-color: rgba(255, 255, 255, 0.1);
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --text-dim: #64748b;
+      --header-bg: rgba(19, 27, 46, 0.88);
+      --hero-bg: linear-gradient(135deg, rgba(19, 27, 46, 0.9) 0%, rgba(15, 23, 42, 0.95) 100%);
+      --hero-border: rgba(255, 255, 255, 0.1);
+      --chip-bg: rgba(255, 255, 255, 0.05);
+      --progress-bg: rgba(255, 255, 255, 0.1);
+      
+      --accent-blue: #38bdf8;
+      --accent-indigo: #818cf8;
+      --accent-emerald: #34d399;
+      --accent-purple: #c084fc;
+      --accent-amber: #fbbf24;
+      --accent-rose: #fb7185;
+      
+      --radius-lg: 16px;
+      --radius-md: 10px;
+      --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+      --shadow-card: 0 4px 14px rgba(0, 0, 0, 0.2);
+      --shadow-glow: 0 0 20px rgba(56, 189, 248, 0.15);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      line-height: 1.6;
+      min-height: 100vh;
+      padding-bottom: 3rem;
+      transition: background-color 0.25s ease, color 0.25s ease;
+    }
+
+    .container {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    /* HEADER */
+    header {
+      background: var(--header-bg);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-color);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      padding: 0.75rem 0;
+      transition: background-color 0.25s ease;
+    }
+
+    .nav-wrapper {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .brand-group {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .brand-badge {
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: var(--ifsc-green);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .brand-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .nav-actions {
+      display: flex;
+      gap: 0.6rem;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .btn-nav {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.45rem 0.85rem;
+      border-radius: var(--radius-md);
+      font-size: 0.82rem;
+      font-weight: 600;
+      text-decoration: none;
+      color: var(--text-main);
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+
+    .btn-nav:hover {
+      background: var(--bg-card-hover);
+      border-color: var(--ifsc-green);
+      transform: translateY(-1px);
+    }
+
+    .btn-nav-primary {
+      background: var(--ifsc-green);
+      color: #ffffff !important;
+      border-color: var(--ifsc-green);
+    }
+
+    .btn-nav-primary:hover {
+      background: var(--ifsc-green-dark);
+      border-color: var(--ifsc-green-dark);
+    }
+
+    /* HERO BANNER */
+    .hero-banner {
+      background: var(--hero-bg);
+      border: 1px solid var(--hero-border);
+      border-radius: var(--radius-lg);
+      padding: 2.2rem;
+      margin: 2rem 0 1.5rem 0;
+      box-shadow: var(--shadow-glow);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(22, 163, 74, 0.12);
+      color: var(--ifsc-green);
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 0.3rem 0.75rem;
+      border-radius: 999px;
+      margin-bottom: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .hero-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.85rem;
+      font-weight: 800;
+      line-height: 1.25;
+      margin-bottom: 0.8rem;
+      color: var(--text-main);
+    }
+
+    .hero-subtitle {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      max-width: 980px;
+      margin-bottom: 1.5rem;
+      line-height: 1.6;
+    }
+
+    .meta-info-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1rem;
+      padding-top: 1.2rem;
+      border-top: 1px solid var(--border-color);
+    }
+
+    .meta-item {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .meta-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      background: var(--chip-bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+    }
+
+    .meta-text label {
+      display: block;
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      font-weight: 600;
+      color: var(--text-dim);
+    }
+
+    .meta-text span {
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--text-main);
+    }
+
+    /* BARRA DE PROGRESSO GERAL */
+    .overall-progress-box {
+      margin-top: 1.5rem;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 1rem 1.2rem;
+    }
+
+    .progress-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.82rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .progress-bar-bg {
+      height: 10px;
+      background: var(--progress-bg);
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--ifsc-green) 0%, var(--accent-blue) 100%);
+      border-radius: 999px;
+      transition: width 0.6s ease;
+    }
+
+    /* KPI CARDS */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .kpi-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 1.2rem 1.4rem;
+      box-shadow: var(--shadow-card);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .kpi-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: var(--accent, var(--ifsc-green));
+    }
+
+    .kpi-title {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--text-dim);
+      margin-bottom: 0.35rem;
+    }
+
+    .kpi-value {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 0.25rem;
+    }
+
+    .kpi-desc {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+    }
+
+    /* TABS NAVIGATION */
+    .tabs-nav {
+      display: flex;
+      gap: 0.5rem;
+      border-bottom: 1px solid var(--border-color);
+      margin-bottom: 2rem;
+      overflow-x: auto;
+      padding-bottom: 0.2rem;
+    }
+
+    .tab-btn {
+      background: transparent;
+      border: 1px solid transparent;
+      color: var(--text-muted);
+      padding: 0.65rem 1.15rem;
+      border-radius: 8px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      white-space: nowrap;
+      transition: all 0.2s ease;
+    }
+
+    .tab-btn:hover {
+      color: var(--text-main);
+      background: var(--chip-bg);
+    }
+
+    .tab-btn.active {
+      color: var(--ifsc-green);
+      background: rgba(22, 163, 74, 0.12);
+      border-color: rgba(22, 163, 74, 0.25);
+    }
+
+    .tab-pane {
+      display: none;
+      animation: fadeIn 0.3s ease forwards;
+    }
+    .tab-pane.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* CARDS & CONTAINERS */
+    .content-box {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 1.8rem;
+      box-shadow: var(--shadow-card);
+      margin-bottom: 2rem;
+    }
+
+    .box-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .box-desc {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 1.5rem;
+      line-height: 1.5;
+    }
+
+    /* CALLOUT BOXES */
+    .callout-box {
+      background: rgba(2, 132, 199, 0.05);
+      border-left: 4px solid var(--accent-blue);
+      border-radius: 8px;
+      padding: 1rem 1.25rem;
+      margin: 1.2rem 0 1.5rem 0;
+      font-size: 0.86rem;
+      line-height: 1.6;
+      color: var(--text-main);
+    }
+
+    .callout-box.callout-amber {
+      background: rgba(217, 119, 6, 0.05);
+      border-left-color: var(--accent-amber);
+    }
+
+    .callout-box.callout-green {
+      background: rgba(22, 163, 74, 0.05);
+      border-left-color: var(--ifsc-green);
+    }
+
+    .callout-header {
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 0.35rem;
+    }
+
+    /* GRIDS */
+    .artifacts-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 1.2rem;
+    }
+
+    .artifact-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 1.4rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 1rem;
+      transition: all 0.2s ease;
+    }
+
+    .artifact-card:hover {
+      border-color: var(--ifsc-green);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .artifact-badge {
+      display: inline-block;
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 0.2rem 0.55rem;
+      border-radius: 6px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      align-self: flex-start;
+      background: rgba(22, 163, 74, 0.12);
+      color: var(--ifsc-green);
+    }
+
+    .artifact-badge.badge-autoral {
+      background: rgba(22, 163, 74, 0.12);
+      color: var(--ifsc-green);
+      border: 1px solid rgba(22, 163, 74, 0.25);
+    }
+
+    .artifact-badge.badge-blue {
+      background: rgba(2, 132, 199, 0.12);
+      color: var(--accent-blue);
+      border: 1px solid rgba(2, 132, 199, 0.25);
+    }
+
+    .artifact-badge.badge-purple {
+      background: rgba(124, 58, 237, 0.12);
+      color: var(--accent-purple);
+      border: 1px solid rgba(124, 58, 237, 0.25);
+    }
+
+    .artifact-badge.badge-amber {
+      background: rgba(217, 119, 6, 0.12);
+      color: var(--accent-amber);
+      border: 1px solid rgba(217, 119, 6, 0.25);
+    }
+
+    .artifact-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 0.35rem;
+    }
+
+    .artifact-desc {
+      font-size: 0.83rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    /* CHECKLIST */
+    .checklist-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+    }
+
+    .check-item {
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 1.1rem;
+      transition: all 0.2s ease;
+    }
+
+    .check-item:hover {
+      border-color: var(--ifsc-green);
+    }
+
+    .check-item.done {
+      border-left: 4px solid var(--ifsc-green);
+    }
+
+    .check-item.current {
+      border-left: 4px solid var(--accent-amber);
+      background: rgba(217, 119, 6, 0.02);
+    }
+
+    .check-icon {
+      font-size: 1.25rem;
+      color: var(--text-dim);
+      margin-top: 2px;
+    }
+
+    .check-item.done .check-icon { color: var(--ifsc-green); }
+    .check-item.current .check-icon { color: var(--accent-amber); }
+
+    .check-content h4 {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 0.25rem;
+    }
+
+    .check-content p {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    /* GAME AREAS GRID */
+    .areas-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 1.2rem;
+    }
+
+    .area-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 1.3rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 0.8rem;
+    }
+
+    .area-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .area-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .malware-tag-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+      margin: 0.4rem 0;
+    }
+
+    .malware-chip {
+      background: rgba(220, 38, 38, 0.08);
+      color: var(--ifsc-red);
+      font-size: 0.72rem;
+      font-weight: 600;
+      padding: 0.15rem 0.45rem;
+      border-radius: 4px;
+    }
+
+    .ability-box {
+      background: var(--chip-bg);
+      border-left: 3px solid var(--accent-blue);
+      padding: 0.55rem 0.8rem;
+      border-radius: 4px;
+      font-size: 0.78rem;
+      color: var(--text-main);
+    }
+
+    /* BANCA & REUNIÕES */
+    .banca-section {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 1.2rem;
+      margin-bottom: 1rem;
+    }
+
+    .banca-header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .banca-title {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--text-main);
+      flex: 1;
+    }
+
+    .banca-chevron {
+      color: var(--text-dim);
+      transition: transform 0.2s ease;
+    }
+
+    .banca-chevron.open {
+      transform: rotate(180deg);
+    }
+
+    .banca-body {
+      display: none;
+      padding-top: 1rem;
+      margin-top: 0.8rem;
+      border-top: 1px solid var(--border-color);
+    }
+
+    .banca-body.open {
+      display: block;
+    }
+
+    .badge-status-item {
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 0.2rem 0.55rem;
+      border-radius: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+    .badge-status-item.resolvido { background: rgba(22, 163, 74, 0.12); color: var(--ifsc-green); }
+    .badge-status-item.parcial { background: rgba(217, 119, 6, 0.12); color: var(--accent-amber); }
+    .badge-status-item.pendente { background: rgba(2, 132, 199, 0.12); color: var(--accent-blue); }
+
+    /* FOOTER */
+    footer {
+      text-align: center;
+      margin-top: 3rem;
+      padding: 2rem 0;
+      border-top: 1px solid var(--border-color);
+      color: var(--text-dim);
+      font-size: 0.82rem;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <div class="container nav-wrapper">
+      <div class="brand-group">
+        <span class="brand-badge">IFSC GAROPABA • TCC 2026</span>
+        <div class="brand-title">Michel David de Souza — Jogo de Ensino sobre Malwares</div>
+      </div>
+      <div class="nav-actions">
+        <button id="themeToggleBtn" onclick="toggleTheme()" class="btn-nav" title="Alternar tema Claro / Escuro">
+          <i class="fa-solid fa-moon" id="themeIcon"></i> <span id="themeLabel">Modo Escuro</span>
+        </button>
+        <a href="https://chameoandre.github.io/orientacoes-tcc-superior-sistemas-para-internet/" class="btn-nav" title="Voltar ao Painel Geral de TCC">
+          <i class="fa-solid fa-arrow-left"></i> Painel Geral TCC
+        </a>
+        <a href="https://docs.google.com/document/d/1864vcIG5rm-wlRfFDzcveGBOgZHxTUCTNqrzIBPG9EQ/edit?usp=share_link" target="_blank" class="btn-nav btn-nav-primary">
+          <i class="fa-solid fa-file-word"></i> Pré-projeto (Google Docs)
+        </a>
+        <a href="https://docs.google.com/presentation/d/1o1OSCnHlCH7t4UPvyvyP-Al_j_Mey2tAVV1Vx99rL4k/edit#slide=id.p" target="_blank" class="btn-nav" style="border-color: rgba(217, 119, 6, 0.4); color: var(--accent-amber);">
+          <i class="fa-solid fa-file-powerpoint"></i> Slides Pré-Banca
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <!-- HERO BANNER -->
+    <section class="hero-banner">
+      <div class="hero-tag">
+        <i class="fa-solid fa-gamepad"></i> TRABALHO DE CONCLUSÃO DE CURSO • SISTEMAS PARA A INTERNET
+      </div>
+      <h1 class="hero-title">
+        Jogo de Ensino sobre Programas Maliciosos: Os Famosos Malwares (Metroidvania 2D)
+      </h1>
+      <p class="hero-subtitle">
+        Desenvolvimento e validação de um jogo educacional digital 2D no gênero Metroidvania (Godot Engine / GDScript), fundamentado em <em>Game-Based Learning (GBL)</em> para o ensino lúdico de cibersegurança e conscientização contra malwares entre estudantes do ensino médio.
+      </p>
+
+      <div class="meta-info-grid">
+        <div class="meta-item">
+          <div class="meta-icon" style="color: var(--ifsc-green);"><i class="fa-solid fa-user-graduate"></i></div>
+          <div class="meta-text">
+            <label>Orientando</label>
+            <span>Michel David de Souza</span>
+          </div>
+        </div>
+
+        <div class="meta-item">
+          <div class="meta-icon" style="color: var(--accent-blue);"><i class="fa-solid fa-chalkboard-user"></i></div>
+          <div class="meta-text">
+            <label>Professor Orientador</label>
+            <span>Prof. André Moraes</span>
+          </div>
+        </div>
+
+        <div class="meta-item">
+          <div class="meta-icon" style="color: var(--accent-purple);"><i class="fa-solid fa-users"></i></div>
+          <div class="meta-text">
+            <label>Banca Examinadora</label>
+            <span>Prof. Ryan Marcos Cardoso & Profª. Fabiana de Agapito</span>
+          </div>
+        </div>
+
+        <div class="meta-item">
+          <div class="meta-icon" style="color: var(--accent-amber);"><i class="fa-solid fa-calendar-check"></i></div>
+          <div class="meta-text">
+            <label>Pré-banca Realizada</label>
+            <span>11/06 às 20h00 • Aprovada</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Barra de Progresso Geral -->
+      <div class="overall-progress-box">
+        <div class="progress-header">
+          <span><i class="fa-solid fa-bars-progress" style="color: var(--ifsc-green);"></i> Progresso Geral do TCC</span>
+          <span style="color: var(--ifsc-green);">60% Concluído (Pré-banca Aprovada • Modelagem de Mecânicas & Escopo em Andamento)</span>
+        </div>
+        <div class="progress-bar-bg">
+          <div class="progress-bar-fill" style="width: 60%;"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- KPI CARDS -->
+    <div class="kpi-grid">
+      <div class="kpi-card" style="--accent: var(--ifsc-green);">
+        <div class="kpi-title">Fase Atual</div>
+        <div class="kpi-value">Escopo & Mecânicas</div>
+        <div class="kpi-desc">Tratamento das recomendações da banca (Ryan e Fabiana) e fechamento do GDD.</div>
+      </div>
+
+      <div class="kpi-card" style="--accent: var(--accent-blue);">
+        <div class="kpi-title">Engine & Stack</div>
+        <div class="kpi-value">Godot 4 • GDScript</div>
+        <div class="kpi-desc">Motor 2D nativo com arquitetura baseada em Nós e Cenas, prototipagem de UI no Figma.</div>
+      </div>
+
+      <div class="kpi-card" style="--accent: var(--accent-purple);">
+        <div class="kpi-title">Mecânica Pedagógica</div>
+        <div class="kpi-value">Metroidvania & Bestiário</div>
+        <div class="kpi-desc">6 áreas temáticas com habilidades de cibersegurança e enciclopédia interativa de malwares.</div>
+      </div>
+
+      <div class="kpi-card" style="--accent: var(--accent-amber);">
+        <div class="kpi-title">Validação Científica</div>
+        <div class="kpi-value">GEQ & Teste t Pareado</div>
+        <div class="kpi-desc">Playtesting com 10 estudantes do Ensino Médio, questionário GEQ e pré/pós-testes.</div>
+      </div>
+    </div>
+
+    <!-- TABS BAR -->
+    <div class="tabs-nav">
+      <button class="tab-btn active" onclick="switchTab('tab-visao')">
+        <i class="fa-solid fa-compass"></i> Visão Geral & Materiais Prontos
+      </button>
+      <button class="tab-btn" onclick="switchTab('tab-passos')">
+        <i class="fa-solid fa-list-check" style="color: var(--ifsc-green);"></i> O que Tem por Fazer (Checklist)
+      </button>
+      <button class="tab-btn" onclick="switchTab('tab-gamedesign')">
+        <i class="fa-solid fa-gamepad" style="color: var(--accent-purple);"></i> Game Design & Bestiário (6 Áreas)
+      </button>
+      <button class="tab-btn" onclick="switchTab('tab-cronograma')">
+        <i class="fa-solid fa-timeline" style="color: var(--accent-indigo);"></i> Metodologia & Pipeline (2026-2)
+      </button>
+      <button class="tab-btn" onclick="switchTab('tab-reunioes')">
+        <i class="fa-solid fa-handshake-simple" style="color: var(--accent-amber);"></i> Atas & Deliberações da Banca
+      </button>
+      <button class="tab-btn" onclick="switchTab('tab-links')">
+        <i class="fa-solid fa-folder-open" style="color: var(--accent-blue);"></i> Documentos & Recursos
+      </button>
+    </div>
+
+    <!-- TAB 1: VISÃO GERAL & MATERIAIS PRONTOS -->
+    <div id="tab-visao" class="tab-pane active">
+      <div class="content-box">
+        <div class="box-title">
+          <i class="fa-solid fa-box-archive" style="color: var(--ifsc-green);"></i> O que Michel já Produziu e Consolidou
+        </div>
+        <div class="box-desc">
+          Documentos teóricos, proposta de game design pedagógico e apresentações já validadas pelo colegiado e pela banca examinadora.
+        </div>
+
+        <div class="artifacts-grid">
+          <div class="artifact-card">
+            <span class="artifact-badge badge-autoral">DOCUMENTO TEÓRICO FORMAL</span>
+            <div>
+              <div class="artifact-title">Pré-projeto de TCC Completo (Google Docs)</div>
+              <div class="artifact-desc">Texto detalhado com introdução sobre incidentes cibernéticos (CERT.br), fundamentação em Game-Based Learning (Prensky e Kapp), taxonomia de malwares, trabalhos relacionados (CodeCombat, Hack 'n' Slash, CyberCops) e metodologia experimental.</div>
+            </div>
+            <a href="https://docs.google.com/document/d/1864vcIG5rm-wlRfFDzcveGBOgZHxTUCTNqrzIBPG9EQ/edit?usp=share_link" target="_blank" class="btn-nav btn-nav-primary"><i class="fa-solid fa-file-word"></i> Abrir Pré-projeto no Google Docs</a>
+          </div>
+
+          <div class="artifact-card">
+            <span class="artifact-badge badge-amber">APRESENTAÇÃO OFICIAL</span>
+            <div>
+              <div class="artifact-title">Apresentação de Slides da Pré-Banca</div>
+              <div class="artifact-desc">Slides completos apresentados em 11/06/2026 contendo a justificativa do projeto, a transposição didática dos conceitos de vírus para mecânicas de jogos e os diagramas de fases.</div>
+            </div>
+            <a href="https://docs.google.com/presentation/d/1o1OSCnHlCH7t4UPvyvyP-Al_j_Mey2tAVV1Vx99rL4k/edit#slide=id.p" target="_blank" class="btn-nav"><i class="fa-solid fa-file-powerpoint"></i> Abrir Slides da Apresentação</a>
+          </div>
+
+          <div class="artifact-card">
+            <span class="artifact-badge badge-purple">ARQUITETURA DE GAME DESIGN</span>
+            <div>
+              <div class="artifact-title">Concepção Metroidvania & 6 Áreas Temáticas</div>
+              <div class="artifact-desc">Modelagem do mundo interconectado em 2D com backtracking guiado por habilidades de segurança (Firewall Dash, Integrity Scanner, Security Mode, EMP Pulse, Restore Point).</div>
+            </div>
+            <button class="btn-nav" onclick="switchTab('tab-gamedesign')"><i class="fa-solid fa-gamepad"></i> Ver Detalhamento do Game Design</button>
+          </div>
+
+          <div class="artifact-card">
+            <span class="artifact-badge badge-blue">STACK TECNOLÓGICA</span>
+            <div>
+              <div class="artifact-title">Godot Engine 4 & Prototipagem Figma</div>
+              <div class="artifact-desc">Seleção da engine Godot pelo suporte dedicado a renderização 2D limpa, arquitetura modular baseada em Nós/Cenas e GDScript de alta produtividade, espelhada com os layouts do Figma.</div>
+            </div>
+            <a href="https://godotengine.org/" target="_blank" class="btn-nav"><i class="fa-solid fa-gears"></i> Conhecer a Godot Engine 4</a>
+          </div>
+
+          <div class="artifact-card">
+            <span class="artifact-badge badge-autoral">PROTOCOLO EXPERIMENTAL</span>
+            <div>
+              <div class="artifact-title">Protocolo de Avaliação GEQ & Teste t Pareado</div>
+              <div class="artifact-desc">Metodologia quantitativa delineada para testar a retenção de conceitos com 10 alunos do Ensino Médio, mensurando imersão, fluxo, competência, desafio e ganho cognitivo estatístico.</div>
+            </div>
+            <button class="btn-nav" onclick="switchTab('tab-cronograma')"><i class="fa-solid fa-square-poll-vertical"></i> Ver Protocolo de Testes</button>
+          </div>
+
+          <div class="artifact-card">
+            <span class="artifact-badge badge-amber">QUALIFICAÇÃO</span>
+            <div>
+              <div class="artifact-title">Parecer da Banca (Ryan & Fabiana)</div>
+              <div class="artifact-desc">Trabalho avaliado e aprovado em 11/06/2026, com foco recomendado na delimitação do escopo das fases e no aprofundamento da transposição pedagógica das mecânicas.</div>
+            </div>
+            <button class="btn-nav" onclick="switchTab('tab-reunioes')"><i class="fa-solid fa-comments"></i> Ler Ata da Banca</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 2: PRÓXIMOS PASSOS & CHECKLIST -->
+    <div id="tab-passos" class="tab-pane">
+      <div class="content-box">
+        <div class="box-title">
+          <i class="fa-solid fa-triangle-exclamation" style="color: var(--accent-amber);"></i> Ações Imediatas & Deliberações da Banca (Ryan & Fabiana)
+        </div>
+        <div class="box-desc">
+          Apontamentos críticos levantados na pré-banca que precisam ser incorporados para delimitar o escopo executável de 2026-2.
+        </div>
+
+        <div class="callout-box callout-amber">
+          <div class="callout-header">
+            <i class="fa-solid fa-bullseye" style="color: var(--accent-amber);"></i> Diretriz Central da Orientação:
+          </div>
+          A apresentação foi finalizada com sucesso! O passo crucial agora é <strong>realizar a leitura minuciosa de cada item observado pelos docentes da banca</strong> para delimitar um escopo jogável e realista (focando em 2 ou 3 áreas representativas totalmente polidas) e garantir que a mecânica do Bestiário seja o coração da aprendizagem.
+        </div>
+
+        <div class="checklist-group">
+          <div class="check-item current">
+            <div class="check-icon"><i class="fa-solid fa-spinner fa-spin"></i></div>
+            <div class="check-content">
+              <h4>1. Leitura Crítica e Resposta aos Apontamentos da Banca</h4>
+              <p>Revisar individualmente cada observação do Prof. Ryan e da Profª. Fabiana, estruturando um plano de ação para os ajustes metodológicos e teóricos solicitados no texto da monografia.</p>
+            </div>
+          </div>
+
+          <div class="check-item current">
+            <div class="check-icon"><i class="fa-solid fa-scissors"></i></div>
+            <div class="check-content">
+              <h4>2. Delimitação Rigorosa do Escopo Jogável (Vertical Slice)</h4>
+              <p>Definir o <em>Vertical Slice</em> (fatia vertical jogável) contendo as Áreas 1 e 2 plenamente funcionais com Adware, Phishing e Keylogger, garantindo a entrega do protótipo dentro do prazo do semestre.</p>
+            </div>
+          </div>
+
+          <div class="check-item">
+            <div class="check-icon"><i class="fa-solid fa-book-bookmark"></i></div>
+            <div class="check-content">
+              <h4>3. Aprofundar a Teoria de Game-Based Learning (GBL)</h4>
+              <p>Expandir a fundamentação sobre Karl Kapp e Marc Prensky no documento, justificando academicamente por que as metáforas do jogo (ex: Firewall Dash) facilitam a retenção do conceito de segurança.</p>
+            </div>
+          </div>
+
+          <div class="check-item">
+            <div class="check-icon"><i class="fa-solid fa-code"></i></div>
+            <div class="check-content">
+              <h4>4. Estruturação do Repositório Git e Projeto Base na Godot 4</h4>
+              <p>Criar o repositório oficial de código do jogo, configurando o projeto na Godot 4 com arquitetura limpa de Cenas e Scripts (PlayerController, EnemyBase, BestiaryManager, UIManager).</p>
+            </div>
+          </div>
+
+          <div class="check-item">
+            <div class="check-icon"><i class="fa-solid fa-table-list"></i></div>
+            <div class="check-content">
+              <h4>5. Elaboração do Questionário de Pré-Teste e Pós-Teste</h4>
+              <p>Redigir as questões objetivas de cibersegurança (conceitos de adware, ransomware, phishing e engenharia social) que serão submetidas aos 10 estudantes do Ensino Médio antes e após jogarem.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="box-title" style="margin-top: 2rem;">
+          <i class="fa-solid fa-bars-staggered" style="color: var(--accent-indigo);"></i> Trilhas de Engenharia do Jogo
+        </div>
+        <div class="box-desc">Fluxo contínuo de desenvolvimento técnico do jogo até a defesa perante a banca.</div>
+
+        <div class="checklist-group">
+          <div class="check-item done">
+            <div class="check-icon"><i class="fa-solid fa-circle-check"></i></div>
+            <div class="check-content">
+              <h4>Trilha 1: Concepção Pedagógica & Pré-projeto Formal</h4>
+              <p>Definição dos objetivos pedagógicos, revisão bibliográfica e aprovação perante a banca na pré-banca de TCC.</p>
+            </div>
+          </div>
+
+          <div class="check-item current">
+            <div class="check-icon"><i class="fa-solid fa-gamepad"></i></div>
+            <div class="check-content">
+              <h4>Trilha 2: Core Gameplay Loop na Godot (Movimento, Combate e Colisões)</h4>
+              <p>Implementação do controle do jogador com espada multidirecional (4 direções), sistema de bits (moeda), vida e energia.</p>
+            </div>
+          </div>
+
+          <div class="check-item">
+            <div class="check-icon"><i class="fa-solid fa-shield-halved"></i></div>
+            <div class="check-content">
+              <h4>Trilha 3: Sistema do Bestiário & Habilidades de Cibersegurança</h4>
+              <p>Implementação das telas de enciclopédia interativa (descrição, vetor de infecção e prevenção) desbloqueadas ao derrotar malwares.</p>
+            </div>
+          </div>
+
+          <div class="check-item">
+            <div class="check-icon"><i class="fa-solid fa-chart-column"></i></div>
+            <div class="check-content">
+              <h4>Trilha 4: Playtesting Controlado, Validação GEQ e Redação da Monografia</h4>
+              <p>Sessão experimental com 10 alunos do ensino médio, tabulação estatística do Teste t e consolidação do texto final de TCC.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 3: GAME DESIGN & BESTIÁRIO -->
+    <div id="tab-gamedesign" class="tab-pane">
+      <div class="content-box">
+        <div class="box-title">
+          <i class="fa-solid fa-dungeon" style="color: var(--accent-purple);"></i> As 6 Áreas Temáticas do Metroidvania & Malwares
+        </div>
+        <div class="box-desc">
+          Mapeamento das regiões de exploração, inimigos digitais correspondentes e habilidades de segurança cibernética desbloqueadas pelo jogador.
+        </div>
+
+        <div class="areas-grid">
+          <div class="area-card">
+            <div>
+              <div class="area-header">
+                <span class="artifact-badge badge-autoral">ÁREA 1 • INICIAL</span>
+                <span style="font-size: 0.75rem; color: var(--text-dim); font-weight: 600;">Risco Baixo</span>
+              </div>
+              <h3 class="area-title" style="margin-top: 0.5rem;">Perímetro Web & Pop-ups</h3>
+              <p style="font-size: 0.82rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 0.6rem;">Ambiente introdutório que simula navegadores desprotegidos e anúncios enganosos.</p>
+              <div class="malware-tag-list">
+                <span class="malware-chip">Adware Popup</span>
+                <span class="malware-chip">Fake Optimizer</span>
+                <span class="malware-chip">Cookie Tracker</span>
+                <span class="malware-chip">Spam Bot</span>
+                <span class="malware-chip">Scareware</span>
+              </div>
+            </div>
+            <div class="ability-box">
+              <i class="fa-solid fa-bolt" style="color: var(--accent-blue);"></i> <strong>Habilidade Desbloqueada: Firewall Dash</strong><br>
+              Permite atravessar projéteis fracos temporariamente, simbolizando a filtragem de pacotes e tráfego malicioso.
+            </div>
+          </div>
+
+          <div class="area-card">
+            <div>
+              <div class="area-header">
+                <span class="artifact-badge badge-blue">ÁREA 2</span>
+                <span style="font-size: 0.75rem; color: var(--text-dim); font-weight: 600;">Risco Médio</span>
+              </div>
+              <h3 class="area-title" style="margin-top: 0.5rem;">Câmara de Engenharia Social</h3>
+              <p style="font-size: 0.82rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 0.6rem;">Inimigos miméticos que tentam capturar credenciais e ludibriar o usuário com réplicas visuais.</p>
+              <div class="malware-tag-list">
+                <span class="malware-chip">Phishing Mimic</span>
+                <span class="malware-chip">Keylogger Worm</span>
+                <span class="malware-chip">Clipboard Hijacker</span>
+                <span class="malware-chip">Credential Leecher</span>
+                <span class="malware-chip">Fake Login Portal</span>
+              </div>
+            </div>
+            <div class="ability-box">
+              <i class="fa-solid fa-eye" style="color: var(--accent-blue);"></i> <strong>Habilidade Desbloqueada: Integrity Scanner</strong><br>
+              Revela paredes falsas, inimigos camuflados e links fraudulentos ocultos no cenário.
+            </div>
+          </div>
+
+          <div class="area-card">
+            <div>
+              <div class="area-header">
+                <span class="artifact-badge badge-purple">ÁREA 3</span>
+                <span style="font-size: 0.75rem; color: var(--text-dim); font-weight: 600;">Risco Elevado</span>
+              </div>
+              <h3 class="area-title" style="margin-top: 0.5rem;">Profundezas do Sistema & Rootkits</h3>
+              <p style="font-size: 0.82rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 0.6rem;">Processos ocultos com privilégios de administrador que manipulam tabelas e memória.</p>
+              <div class="malware-tag-list">
+                <span class="malware-chip">Spycam Drone</span>
+                <span class="malware-chip">Rootkit Shade</span>
+                <span class="malware-chip">Registry Leech</span>
+                <span class="malware-chip">Process Hollow</span>
+                <span class="malware-chip">ROOT-0 (Mini-boss)</span>
+              </div>
+            </div>
+            <div class="ability-box">
+              <i class="fa-solid fa-shield-virus" style="color: var(--accent-purple);"></i> <strong>Habilidade Desbloqueada: Security Mode</strong><br>
+              Concede imunidade temporária a efeitos de lentidão e drenagem de energia causados por malwares residentes.
+            </div>
+          </div>
+
+          <div class="area-card">
+            <div>
+              <div class="area-header">
+                <span class="artifact-badge badge-amber">ÁREA 4</span>
+                <span style="font-size: 0.75rem; color: var(--text-dim); font-weight: 600;">Risco Severo</span>
+              </div>
+              <h3 class="area-title" style="margin-top: 0.5rem;">Rede Zumbi & Colmeia Botnet</h3>
+              <p style="font-size: 0.82rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 0.6rem;">Enxame coordenado de máquinas comprometidas controladas por servidores de comando (C2).</p>
+              <div class="malware-tag-list">
+                <span class="malware-chip">Bot Drone</span>
+                <span class="malware-chip">LAN Worm</span>
+                <span class="malware-chip">Trojan Carrier</span>
+                <span class="malware-chip">Remote Puppet</span>
+                <span class="malware-chip">BotMaster</span>
+              </div>
+            </div>
+            <div class="ability-box">
+              <i class="fa-solid fa-burst" style="color: var(--accent-amber);"></i> <strong>Habilidade Desbloqueada: EMP Pulse</strong><br>
+              Emite uma onda de choque que sobrecarrega escudos eletrônicos e paralisa botnets temporariamente.
+            </div>
+          </div>
+
+          <div class="area-card">
+            <div>
+              <div class="area-header">
+                <span class="artifact-badge" style="background: rgba(220, 38, 38, 0.12); color: var(--ifsc-red);">ÁREA 5</span>
+                <span style="font-size: 0.75rem; color: var(--text-dim); font-weight: 600;">Risco Crítico</span>
+              </div>
+              <h3 class="area-title" style="margin-top: 0.5rem;">Cofre Criptografado & Ransomware</h3>
+              <p style="font-size: 0.82rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 0.6rem;">Zona de alta tensão onde os arquivos do jogador são sequestrados e bloqueados.</p>
+              <div class="malware-tag-list">
+                <span class="malware-chip">Encryptor</span>
+                <span class="malware-chip">Locker Beast</span>
+                <span class="malware-chip">Shadow Miner</span>
+                <span class="malware-chip">Wiper Unit</span>
+                <span class="malware-chip">Ransomware Titan</span>
+              </div>
+            </div>
+            <div class="ability-box" style="border-left-color: var(--ifsc-red);">
+              <i class="fa-solid fa-clock-rotate-left" style="color: var(--ifsc-red);"></i> <strong>Habilidade Desbloqueada: Restore Point</strong><br>
+              Teleporta o jogador de volta ao último ponto de salvamento seguro, recuperando dados corrompidos.
+            </div>
+          </div>
+
+          <div class="area-card">
+            <div>
+              <div class="area-header">
+                <span class="artifact-badge" style="background: rgba(0, 0, 0, 0.08); color: var(--text-main);">ÁREA 6 • ENDGAME</span>
+                <span style="font-size: 0.75rem; color: var(--text-dim); font-weight: 600;">Ameaça Avançada</span>
+              </div>
+              <h3 class="area-title" style="margin-top: 0.5rem;">Núcleo Zero-Day & Ameaças APT</h3>
+              <p style="font-size: 0.82rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 0.6rem;">Ameaças persistentes avançadas e vulnerabilidades desconhecidas de dia zero.</p>
+              <div class="malware-tag-list">
+                <span class="malware-chip">APT Specter</span>
+                <span class="malware-chip">Polymorph</span>
+                <span class="malware-chip">Zero-Day Hunter</span>
+                <span class="malware-chip">Kernel Devourer</span>
+              </div>
+            </div>
+            <div class="ability-box" style="border-left-color: var(--accent-purple);">
+              <i class="fa-solid fa-crown" style="color: var(--accent-purple);"></i> <strong>Desbloqueio Final: Modo Boss-Rush</strong><br>
+              Desbloqueia arena de combate sequencial contra todos os chefes para teste de habilidade e fixação de conceitos.
+            </div>
+          </div>
+        </div>
+
+        <!-- O MECANISMO DO BESTIÁRIO -->
+        <div class="callout-box callout-green" style="margin-top: 2rem;">
+          <div class="callout-header" style="color: var(--ifsc-green);">
+            <i class="fa-solid fa-book-open"></i> O Coração Pedagógico do Jogo: O Bestiário Digital
+          </div>
+          Ao derrotar qualquer tipo de malware um número pré-definido de vezes, a entrada correspondente é desbloqueada no Bestiário. A página exibe:
+          <ul style="margin: 0.5rem 0 0 1.5rem; font-size: 0.84rem; line-height: 1.6;">
+            <li><strong>Descrição Técnica:</strong> O que é a ameaça e qual sua taxonomia de acordo com o CERT.br;</li>
+            <li><strong>Vetor de Infecção:</strong> Como o usuário é contaminado no mundo real (links, anexos, downloads piratas);</li>
+            <li><strong>Dano Causado:</strong> Sequestro de dados, roubo de senhas, lentidão ou espionagem;</li>
+            <li><strong>Boas Práticas de Prevenção:</strong> Atualização de SO, senhas fortes, autenticação em duas etapas e antivírus ativo.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 4: METODOLOGIA & PIPELINE -->
+    <div id="tab-cronograma" class="tab-pane">
+      <div class="content-box">
+        <div class="box-title">
+          <i class="fa-solid fa-timeline" style="color: var(--accent-indigo);"></i> Cronograma Metodológico das 4 Fases (2026-2)
+        </div>
+        <div class="box-desc">
+          Estrutura sequencial de desenvolvimento ágil e protocolo de validação empírica estabelecidos no pré-projeto de TCC.
+        </div>
+
+        <div style="overflow-x: auto;">
+          <table style="width: 100%; border-collapse: collapse; font-size: 0.85rem; margin-top: 1rem;">
+            <thead>
+              <tr style="background: var(--bg-surface); border-bottom: 2px solid var(--border-color);">
+                <th style="padding: 10px; text-align: left;">Fase Metodológica</th>
+                <th style="padding: 10px; text-align: left;">Atividades Principais</th>
+                <th style="padding: 10px; text-align: center;">Período</th>
+                <th style="padding: 10px; text-align: left;">Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style="border-bottom: 1px solid var(--border-color); background: rgba(22, 163, 74, 0.03);">
+                <td style="padding: 10px;"><strong>1ª Fase: Levantamento</strong></td>
+                <td style="padding: 10px; color: var(--text-muted);">Pesquisa bibliográfica sobre GBL (Kapp e Prensky), análise de jogos correlatos (CodeCombat) e aprovação na pré-banca.</td>
+                <td style="padding: 10px; text-align: center;"><span class="artifact-badge badge-autoral">Mar–Jun</span></td>
+                <td style="padding: 10px; color: var(--ifsc-green); font-weight: 700;"><i class="fa-solid fa-check-double"></i> Concluída</td>
+              </tr>
+              <tr style="border-bottom: 1px solid var(--border-color); background: rgba(2, 132, 199, 0.03);">
+                <td style="padding: 10px;"><strong>2ª Fase: Concepção GDD</strong></td>
+                <td style="padding: 10px; color: var(--text-muted);">Design pedagógico, modelagem de UIs no Figma e arquitetura das 6 áreas temáticas com balanceamento do Bestiário.</td>
+                <td style="padding: 10px; text-align: center;"><span class="artifact-badge badge-blue">Jul–Ago</span></td>
+                <td style="padding: 10px; color: var(--accent-blue); font-weight: 700;"><i class="fa-solid fa-spinner fa-spin"></i> Em Andamento</td>
+              </tr>
+              <tr style="border-bottom: 1px solid var(--border-color);">
+                <td style="padding: 10px;"><strong>3ª Fase: Desenvolvimento</strong></td>
+                <td style="padding: 10px; color: var(--text-muted);">Programação na Godot 4 em GDScript: movimentação 2D, colisões, combate com espada, nós de inimigos e tela do Bestiário.</td>
+                <td style="padding: 10px; text-align: center;"><span class="artifact-badge badge-purple">Ago–Out</span></td>
+                <td style="padding: 10px; font-weight: 600;">Iniciada</td>
+              </tr>
+              <tr style="border-bottom: 1px solid var(--border-color);">
+                <td style="padding: 10px;"><strong>4ª Fase: Validação Empírica</strong></td>
+                <td style="padding: 10px; color: var(--text-muted);">Sessão de playtesting com 10 alunos do Ensino Médio, aplicação de pré-teste, aplicação do formulário GEQ e pós-teste com Teste t.</td>
+                <td style="padding: 10px; text-align: center;"><span class="artifact-badge badge-amber">Out–Nov</span></td>
+                <td style="padding: 10px; font-weight: 600;">Planejada</td>
+              </tr>
+              <tr>
+                <td style="padding: 10px;"><strong>5ª Fase: Monografia & Defesa</strong></td>
+                <td style="padding: 10px; color: var(--text-muted);">Tabulação estatística dos resultados, escrita dos capítulos finais da monografia e defesa perante a banca examinadora.</td>
+                <td style="padding: 10px; text-align: center;"><span class="artifact-badge" style="background: rgba(220, 38, 38, 0.12); color: var(--ifsc-red);">Nov–Dez</span></td>
+                <td style="padding: 10px; font-weight: 700; color: var(--text-dim);">Aguardando</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 5: ATAS & DELIBERAÇÕES DA BANCA -->
+    <div id="tab-reunioes" class="tab-pane">
+      <div class="content-box">
+        <div class="box-title">
+          <i class="fa-solid fa-handshake-simple" style="color: var(--accent-amber);"></i> Atas de Qualificação e Reuniões de Orientação
+        </div>
+        <div class="box-desc">Registros formais das decisões acadêmicas e deliberações da banca examinadora.</div>
+
+        <div class="banca-section">
+          <div class="banca-header" onclick="toggleBanca(this)">
+            <span class="badge-status-item resolvido">Ata da Pré-Banca</span>
+            <span class="banca-title">Apresentação da Pré-Banca de TCC (11/06/2026 às 20h00)</span>
+            <i class="fa-solid fa-chevron-down banca-chevron open"></i>
+          </div>
+          <div class="banca-body open">
+            <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.5rem;">
+              <strong>Banca Examinadora:</strong> Prof. Ryan Marcos Fragnani Cardoso e Profª. Fabiana de Agapito Kangerski.<br>
+              <strong>Orientador:</strong> Prof. André Moraes
+            </p>
+            <div style="background: rgba(22, 163, 74, 0.05); padding: 0.9rem; border-radius: 8px; border-left: 3px solid var(--ifsc-green); font-size: 0.84rem; line-height: 1.5;">
+              <strong>Parecer da Banca & Deliberações:</strong><br>
+              1. <em>Apresentação finalizada com sucesso.</em> A proposta foi considerada relevante e alinhada com as demandas de conscientização da sociedade digital.<br>
+              2. <em>Fundamentação Teórica:</em> Reforçar os pilares de aprendizagem baseada em jogos (Kapp e Prensky) para dar solidez à transposição didática das ameaças.<br>
+              3. <em>Delimitação do Escopo:</em> Focar em áreas representativas jogáveis totalmente polidas, evitando que o escopo de 6 áreas comprometa a profundidade da avaliação pedagógica.<br>
+              4. <em>Próximos Passos:</em> Realizar a leitura minuciosa de cada item observado pelos docentes da banca para definir a fatia vertical do jogo na Godot.
+            </div>
+          </div>
+        </div>
+
+        <div class="banca-section">
+          <div class="banca-header" onclick="toggleBanca(this)">
+            <span class="badge-status-item pendente">Diretriz da Orientação</span>
+            <span class="banca-title">Alinhamento de Escopo & Arquitetura na Godot Engine (Pós-Qualificação)</span>
+            <i class="fa-solid fa-chevron-down banca-chevron"></i>
+          </div>
+          <div class="banca-body">
+            <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.5rem;"><strong>Pauta:</strong> Fatiamento vertical do jogo e criação do protótipo jogável.</p>
+            <div style="background: rgba(2, 132, 199, 0.05); padding: 0.9rem; border-radius: 8px; border-left: 3px solid var(--accent-blue); font-size: 0.84rem; line-height: 1.5;">
+              <strong>Deliberações Firmadas:</strong><br>
+              - Estruturar o projeto Godot com nós desacoplados (State Machine para o jogador, nó reutilizável de detecção de colisão para inimigos);<br>
+              - Focar primeiramente na Área 1 (Adware/Popup) e Área 2 (Phishing) com as habilidades <em>Firewall Dash</em> e <em>Integrity Scanner</em>;<br>
+              - Criar o protótipo da tela do Bestiário no Figma para validação prévia antes de codificar na Godot.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 6: DOCUMENTOS, LINKS & RECURSOS -->
+    <div id="tab-links" class="tab-pane">
+      <div class="content-box">
+        <div class="box-title">
+          <i class="fa-solid fa-link" style="color: var(--accent-blue);"></i> Documentos Oficiais, Links & Recursos Externos
+        </div>
+        <div class="box-desc">Ecossistema de referências acadêmicas e ferramentas do TCC de Michel David de Souza.</div>
+
+        <div class="artifacts-grid">
+          <div class="artifact-card">
+            <span class="artifact-badge badge-autoral">GOOGLE DOCS OFICIAL</span>
+            <div>
+              <div class="artifact-title">Pré-projeto no Google Docs</div>
+              <div class="artifact-desc">Documento completo editável compartilhado com o orientador, com texto acadêmico e referências ABNT.</div>
+            </div>
+            <a href="https://docs.google.com/document/d/1864vcIG5rm-wlRfFDzcveGBOgZHxTUCTNqrzIBPG9EQ/edit?usp=share_link" target="_blank" class="btn-nav"><i class="fa-solid fa-file-word"></i> Acessar Google Docs</a>
+          </div>
+
+          <div class="artifact-card">
+            <span class="artifact-badge badge-amber">SLIDES DA BANCA</span>
+            <div>
+              <div class="artifact-title">Apresentação da Pré-Banca</div>
+              <div class="artifact-desc">Conjunto de lâminas utilizado na arguição de 11/06 perante a banca examinadora.</div>
+            </div>
+            <a href="https://docs.google.com/presentation/d/1o1OSCnHlCH7t4UPvyvyP-Al_j_Mey2tAVV1Vx99rL4k/edit#slide=id.p" target="_blank" class="btn-nav"><i class="fa-solid fa-file-powerpoint"></i> Acessar Slides</a>
+          </div>
+
+          <div class="artifact-card">
+            <span class="artifact-badge badge-blue">ENGINE & FERRAMENTAS</span>
+            <div>
+              <div class="artifact-title">Documentação da Godot 4 (2D)</div>
+              <div class="artifact-desc">Manual oficial e guias de nós 2D, física de corpos cinemáticos (CharacterBody2D) e Tilemaps na Godot.</div>
+            </div>
+            <a href="https://docs.godotengine.org/pt-br/4.x/" target="_blank" class="btn-nav"><i class="fa-solid fa-book"></i> Manual Godot 4</a>
+          </div>
+
+          <div class="artifact-card">
+            <span class="artifact-badge badge-purple">METODOLOGIA GBL</span>
+            <div>
+              <div class="artifact-title">Game Experience Questionnaire (GEQ)</div>
+              <div class="artifact-desc">Formulário validado internacionalmente para mensurar fluxo, imersão, competência e desafio em jogos digitais.</div>
+            </div>
+            <a href="https://pure.tue.nl/ws/files/2166699/Metis252769.pdf" target="_blank" class="btn-nav"><i class="fa-solid fa-flask"></i> Artigo Original GEQ</a>
+          </div>
+
+          <div class="artifact-card">
+            <span class="artifact-badge" style="background: rgba(220, 38, 38, 0.12); color: var(--ifsc-red);">SEGURANÇA DA INFORMAÇÃO</span>
+            <div>
+              <div class="artifact-title">Cartilha de Segurança do CERT.br</div>
+              <div class="artifact-desc">Guia nacional de referência para conceitos de códigos maliciosos, golpes e práticas de proteção digital.</div>
+            </div>
+            <a href="https://cartilha.cert.br/malware/" target="_blank" class="btn-nav"><i class="fa-solid fa-shield-virus"></i> Cartilha CERT.br</a>
+          </div>
+
+          <div class="artifact-card">
+            <span class="artifact-badge badge-autoral">COMUNICAÇÃO INSTITUCIONAL</span>
+            <div>
+              <div class="artifact-title">E-mail do Orientando</div>
+              <div class="artifact-desc">Contato oficial do estudante para alinhamentos técnicos: <code>michelbatata23@gmail.com</code>.</div>
+            </div>
+            <a href="mailto:michelbatata23@gmail.com" class="btn-nav"><i class="fa-solid fa-envelope"></i> Enviar Mensagem</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <footer>
+    <div class="container">
+      <p><strong>Instituto Federal de Santa Catarina (IFSC) — Câmpus Garopaba</strong></p>
+      <p style="margin-top: 4px;">Curso Superior de Tecnologia em Sistemas para a Internet • Orientação de TCC • Prof. André Moraes • 2026</p>
+    </div>
+  </footer>
+
+  <script>
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+      document.querySelectorAll('.tab-pane').forEach(pane => pane.classList.remove('active'));
+
+      const activeBtn = Array.from(document.querySelectorAll('.tab-btn')).find(b => b.getAttribute('onclick').includes(tabId));
+      if (activeBtn) activeBtn.classList.add('active');
+
+      const target = document.getElementById(tabId);
+      if (target) target.classList.add('active');
+    }
+
+    function toggleBanca(headerEl) {
+      const chevron = headerEl.querySelector('.banca-chevron');
+      const body = headerEl.nextElementSibling;
+      if (chevron) chevron.classList.toggle('open');
+      if (body) body.classList.toggle('open');
+    }
+
+    // Theme Switcher (Padrão: Claro)
+    function toggleTheme() {
+      const html = document.documentElement;
+      const current = html.getAttribute('data-theme') || 'light';
+      const next = current === 'light' ? 'dark' : 'light';
+      html.setAttribute('data-theme', next);
+      localStorage.setItem('michel-tcc-theme', next);
+      updateThemeUI(next);
+    }
+
+    function updateThemeUI(theme) {
+      const icon = document.getElementById('themeIcon');
+      const label = document.getElementById('themeLabel');
+      if (theme === 'dark') {
+        if (icon) icon.className = 'fa-solid fa-sun';
+        if (label) label.textContent = 'Modo Claro';
+      } else {
+        if (icon) icon.className = 'fa-solid fa-moon';
+        if (label) label.textContent = 'Modo Escuro';
+      }
+    }
+
+    (function initTheme() {
+      const saved = localStorage.getItem('michel-tcc-theme') || 'light';
+      document.documentElement.setAttribute('data-theme', saved);
+      updateThemeUI(saved);
+    })();
+  </script>
+</body>
+</html>
