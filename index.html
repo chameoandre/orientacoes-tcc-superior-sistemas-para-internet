@@ -1794,6 +1794,13 @@ tectonic -Z shell-escape document.tex</pre>
             <input type="text" id="meetingProximosInput" class="form-control" placeholder="Ex: Entregar diagramas até sexta-feira">
           </div>
 
+          <div class="form-group" style="background: rgba(22, 163, 74, 0.05); border: 1px solid var(--border-color); border-radius: 8px; padding: 0.75rem 1rem; margin-top: 0.75rem;">
+            <label style="display: flex; align-items: center; gap: 0.65rem; cursor: pointer; text-transform: none; font-size: 0.84rem; color: var(--text-main); font-weight: 500; margin: 0;">
+              <input type="checkbox" id="meetingEnviarEmailCheck" checked style="width: 17px; height: 17px; accent-color: var(--ifsc-green); cursor: pointer;">
+              <span><strong><i class="fa-solid fa-paper-plane" style="color: var(--ifsc-green);"></i> Encaminhar registro por e-mail</strong> ao orientando(a)</span>
+            </label>
+          </div>
+
           <div style="display: flex; justify-content: flex-end; gap: 0.75rem; margin-top: 1.5rem;">
             <button type="button" class="btn btn-outline" onclick="closeModal('newMeetingModal')">Cancelar</button>
             <button type="submit" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i> Salvar Reunião</button>
@@ -2242,8 +2249,11 @@ tectonic -Z shell-escape document.tex</pre>
             ${m.proximosPassos ? `<p style="margin-top: 6px; font-size: 0.78rem; color: var(--accent-cyan);"><strong><i class="fa-solid fa-forward-step"></i> Próxima Entrega:</strong> ${m.proximosPassos}</p>` : ''}
           </div>
 
-          <div style="display: flex; justify-content: flex-end; margin-top: 0.75rem;">
-            <button class="btn-link-action" onclick="deleteMeeting(${m.id})" style="font-size: 0.7rem; color: var(--ifsc-red); border-color: rgba(220, 38, 38, 0.3);">
+          <div style="display: flex; justify-content: flex-end; align-items: center; gap: 0.6rem; margin-top: 0.75rem; flex-wrap: wrap;">
+            <button class="btn-link-action" onclick="enviarNotificacaoEmailIndividual(${m.id})" style="font-size: 0.72rem; color: var(--ifsc-green); border-color: rgba(22, 163, 74, 0.3);">
+              <i class="fa-solid fa-paper-plane"></i> Enviar por E-mail
+            </button>
+            <button class="btn-link-action" onclick="deleteMeeting(${m.id})" style="font-size: 0.72rem; color: var(--ifsc-red); border-color: rgba(220, 38, 38, 0.3);">
               <i class="fa-solid fa-trash-can"></i> Excluir
             </button>
           </div>
@@ -2277,6 +2287,57 @@ tectonic -Z shell-escape document.tex</pre>
     // Google Apps Script Web App URL para inclusão remota
     const GOOGLE_SCRIPT_WEBAPP_URL = 'https://script.google.com/macros/s/AKfycbyXQEKRxt3YK1T5nVUcXtq1TXvC2qwiLvsGPE_-ZMGYca01ET0nk4HIhqVy2S0rr18/exec';
 
+    // Helper para obter e-mail institucional do estudante
+    function getStudentEmail(alunoNome) {
+      if (!alunoNome) return '';
+      const s = studentsData.find(item => item.nome.toLowerCase().includes(alunoNome.toLowerCase().split(' ')[0]));
+      return s && s.email ? s.email : '';
+    }
+
+    // Disparar notificação por e-mail de reunião individual
+    async function enviarNotificacaoEmailIndividual(id) {
+      const m = meetingsData.find(item => item.id === id);
+      if (!m) return;
+      const email = getStudentEmail(m.alunoNome);
+
+      const confirmMsg = email
+        ? `Deseja enviar a ata desta reunião (${formatDateBR(m.data)}) por e-mail para ${m.alunoNome} (${email})?`
+        : `Deseja enviar a notificação desta reunião (${formatDateBR(m.data)}) para ${m.alunoNome}?`;
+
+      if (!confirm(confirmMsg)) return;
+
+      showToast(`Enviando notificação por e-mail para ${m.alunoNome}...`, 'info');
+
+      if (GOOGLE_SCRIPT_WEBAPP_URL) {
+        try {
+          await fetch(GOOGLE_SCRIPT_WEBAPP_URL, {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: {
+              'Content-Type': 'text/plain;charset=utf-8'
+            },
+            body: JSON.stringify({
+              acao: 'enviar_email',
+              alunoNome: m.alunoNome,
+              alunoEmail: email,
+              data: formatDateBR(m.data),
+              hora: m.hora,
+              tipo: m.tipo,
+              pauta: m.pauta,
+              deliberacoes: m.deliberacoes,
+              proximosPassos: m.proximosPassos
+            })
+          });
+          showToast(`Notificação enviada com sucesso para ${m.alunoNome}!`, 'success');
+        } catch (err) {
+          console.warn('Erro ao disparar e-mail:', err);
+          showToast(`Erro ao disparar e-mail via Apps Script.`, 'warning');
+        }
+      } else {
+        showToast('URL do Web App não configurada.', 'warning');
+      }
+    }
+
     // Save new meeting
     async function saveNewMeeting(e) {
       e.preventDefault();
@@ -2293,10 +2354,14 @@ tectonic -Z shell-escape document.tex</pre>
       const pauta = document.getElementById('meetingPautaInput').value;
       const deliberacoes = document.getElementById('meetingDelibInput').value;
       const proximosPassos = document.getElementById('meetingProximosInput').value;
+      const enviarEmail = document.getElementById('meetingEnviarEmailCheck') ? document.getElementById('meetingEnviarEmailCheck').checked : false;
+      const alunoEmail = getStudentEmail(alunoNome);
 
       const newMeeting = {
         id: Date.now(),
         alunoNome,
+        alunoEmail,
+        enviarEmail,
         data: dataFormatada,
         hora,
         tipo,
@@ -2313,7 +2378,7 @@ tectonic -Z shell-escape document.tex</pre>
       renderMeetings();
       renderProjects(studentsData);
       switchTab('tab-reunioes');
-      showToast(`Reunião de ${alunoNome} salva localmente! Sincronizando com a planilha...`, 'info');
+      showToast(`Reunião de ${alunoNome} salva! Sincronizando com a planilha...`, 'info');
 
       // Envia ao Google Apps Script Web App
       if (GOOGLE_SCRIPT_WEBAPP_URL) {
@@ -2326,7 +2391,7 @@ tectonic -Z shell-escape document.tex</pre>
             },
             body: JSON.stringify(newMeeting)
           });
-          showToast(`Reunião enviada para a planilha Google com sucesso!`, 'success');
+          showToast(`Reunião enviada para a planilha!` + (enviarEmail ? ` E-mail enviado para o aluno.` : ''), 'success');
           // Recarrega dados da planilha após 2.5s para unificar IDs
           setTimeout(() => {
             loadMeetingsFromSheet();
