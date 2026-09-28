@@ -1,0 +1,1964 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard Executivo — Luísa Narvaz Blankenburg | IFSC Garopaba</title>
+  
+  <!-- Fonts & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Outfit:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <style>
+    /* ==========================================================================
+       THEME VARIABLES: LIGHT & DARK MODE
+       ========================================================================== */
+    :root, [data-theme="light"] {
+      --ifsc-green: #16a34a;
+      --ifsc-green-dark: #15803d;
+      --ifsc-green-light: #22c55e;
+      --ifsc-red: #dc2626;
+      --bg-dark: #f8fafc;
+      --bg-surface: #ffffff;
+      --bg-card: #ffffff;
+      --bg-card-hover: #f1f5f9;
+      --border-color: #e2e8f0;
+      --border-focus: #16a34a;
+      --text-main: #0f172a;
+      --text-muted: #475569;
+      --text-dim: #64748b;
+      --header-bg: rgba(255, 255, 255, 0.92);
+      --hero-bg: linear-gradient(135deg, #ffffff 0%, #f0fdf4 50%, #eff6ff 100%);
+      --hero-border: #bbf7d0;
+      --chip-bg: rgba(22, 163, 74, 0.08);
+      --progress-bg: rgba(0, 0, 0, 0.08);
+      
+      --accent-blue: #0284c7;
+      --accent-indigo: #4f46e5;
+      --accent-emerald: #059669;
+      --accent-purple: #7c3aed;
+      --accent-amber: #d97706;
+      --accent-rose: #e11d48;
+      --accent-cyan: #0891b2;
+      
+      --radius-lg: 16px;
+      --radius-md: 10px;
+      --radius-sm: 6px;
+      --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
+      --shadow-card: 0 4px 14px rgba(0, 0, 0, 0.04);
+      --shadow-glow: 0 4px 20px rgba(22, 163, 74, 0.1);
+      --shadow-hover: 0 10px 25px -4px rgba(0, 0, 0, 0.08);
+    }
+
+    [data-theme="dark"] {
+      --ifsc-green: #22c55e;
+      --ifsc-green-dark: #16a34a;
+      --ifsc-green-light: #4ade80;
+      --ifsc-red: #ef4444;
+      --bg-dark: #090d16;
+      --bg-surface: #0f172a;
+      --bg-card: #131b2e;
+      --bg-card-hover: #1c2742;
+      --border-color: rgba(255, 255, 255, 0.1);
+      --border-focus: #22c55e;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --text-dim: #64748b;
+      --header-bg: rgba(19, 27, 46, 0.92);
+      --hero-bg: linear-gradient(135deg, rgba(19, 27, 46, 0.95) 0%, rgba(15, 23, 42, 0.98) 60%, rgba(17, 30, 24, 0.9) 100%);
+      --hero-border: rgba(34, 197, 94, 0.25);
+      --chip-bg: rgba(255, 255, 255, 0.05);
+      --progress-bg: rgba(255, 255, 255, 0.1);
+      
+      --accent-blue: #38bdf8;
+      --accent-indigo: #818cf8;
+      --accent-emerald: #34d399;
+      --accent-purple: #c084fc;
+      --accent-amber: #fbbf24;
+      --accent-rose: #fb7185;
+      --accent-cyan: #06b6d4;
+      
+      --radius-lg: 16px;
+      --radius-md: 10px;
+      --radius-sm: 6px;
+      --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+      --shadow-card: 0 4px 14px rgba(0, 0, 0, 0.2);
+      --shadow-glow: 0 0 25px rgba(34, 197, 94, 0.18);
+      --shadow-hover: 0 12px 30px rgba(0, 0, 0, 0.4);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      line-height: 1.6;
+      min-height: 100vh;
+      padding-bottom: 3.5rem;
+      transition: background-color 0.25s ease, color 0.25s ease;
+    }
+
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    /* HEADER */
+    header {
+      background: var(--header-bg);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-color);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      padding: 0.85rem 0;
+      transition: background-color 0.25s ease;
+    }
+
+    .nav-wrapper {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .brand-group {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .brand-logo-img {
+      height: 38px;
+      width: auto;
+      object-fit: contain;
+    }
+
+    .brand-meta {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .brand-badge {
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: var(--ifsc-green);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .brand-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .nav-actions {
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .btn-nav {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.45rem 0.85rem;
+      border-radius: var(--radius-md);
+      font-size: 0.82rem;
+      font-weight: 600;
+      text-decoration: none;
+      color: var(--text-main);
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+
+    .btn-nav:hover {
+      background: var(--bg-card-hover);
+      border-color: var(--ifsc-green);
+      transform: translateY(-1px);
+    }
+
+    .btn-nav-primary {
+      background: var(--ifsc-green);
+      color: #ffffff !important;
+      border-color: var(--ifsc-green);
+    }
+
+    .btn-nav-primary:hover {
+      background: var(--ifsc-green-dark);
+      border-color: var(--ifsc-green-dark);
+    }
+
+    .btn-nav-accent {
+      background: var(--accent-purple);
+      color: #ffffff !important;
+      border-color: var(--accent-purple);
+    }
+
+    .btn-nav-accent:hover {
+      background: #6b21a8;
+      border-color: #6b21a8;
+    }
+
+    /* HERO BANNER */
+    .hero-banner {
+      background: var(--hero-bg);
+      border: 1px solid var(--hero-border);
+      border-radius: var(--radius-lg);
+      padding: 2.2rem;
+      margin: 2rem 0 1.5rem 0;
+      box-shadow: var(--shadow-glow);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-banner::before {
+      content: '';
+      position: absolute;
+      top: -50px;
+      right: -50px;
+      width: 250px;
+      height: 250px;
+      background: radial-gradient(circle, rgba(34, 197, 94, 0.15) 0%, transparent 70%);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .badge-ribbon-group {
+      display: flex;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+      margin-bottom: 1rem;
+    }
+
+    .hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(22, 163, 74, 0.12);
+      color: var(--ifsc-green);
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 0.35rem 0.8rem;
+      border-radius: 999px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      border: 1px solid rgba(22, 163, 74, 0.25);
+    }
+
+    .hero-tag.tag-celebration {
+      background: linear-gradient(135deg, rgba(124, 58, 237, 0.15) 0%, rgba(6, 182, 212, 0.15) 100%);
+      color: var(--accent-purple);
+      border-color: rgba(124, 58, 237, 0.3);
+    }
+
+    .hero-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 2rem;
+      font-weight: 900;
+      line-height: 1.2;
+      margin-bottom: 0.85rem;
+      color: var(--text-main);
+    }
+
+    .hero-subtitle {
+      font-size: 0.98rem;
+      color: var(--text-muted);
+      max-width: 1040px;
+      margin-bottom: 1.5rem;
+      line-height: 1.65;
+    }
+
+    .meta-info-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1rem;
+      padding-top: 1.2rem;
+      border-top: 1px solid var(--border-color);
+    }
+
+    .meta-item {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .meta-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: var(--chip-bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.15rem;
+      flex-shrink: 0;
+    }
+
+    .meta-text label {
+      display: block;
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: var(--text-dim);
+    }
+
+    .meta-text span {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    /* BARRA DE PROGRESSO GERAL */
+    .overall-progress-box {
+      margin-top: 1.5rem;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 1.1rem 1.3rem;
+    }
+
+    .progress-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.84rem;
+      font-weight: 700;
+      margin-bottom: 0.6rem;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .progress-bar-bg {
+      height: 11px;
+      background: var(--progress-bg);
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--ifsc-green) 0%, var(--accent-cyan) 60%, var(--accent-purple) 100%);
+      border-radius: 999px;
+      transition: width 0.8s ease;
+    }
+
+    /* KPI CARDS */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.1rem;
+      margin-bottom: 2rem;
+    }
+
+    .kpi-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 1.3rem 1.4rem;
+      box-shadow: var(--shadow-card);
+      position: relative;
+      overflow: hidden;
+      transition: all 0.25s ease;
+    }
+
+    .kpi-card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-hover);
+      border-color: var(--accent);
+    }
+
+    .kpi-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: var(--accent, var(--ifsc-green));
+    }
+
+    .kpi-icon-wrap {
+      position: absolute;
+      top: 1rem;
+      right: 1.2rem;
+      font-size: 1.6rem;
+      opacity: 0.18;
+      color: var(--accent);
+    }
+
+    .kpi-title {
+      font-size: 0.74rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-dim);
+      margin-bottom: 0.35rem;
+    }
+
+    .kpi-value {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.55rem;
+      font-weight: 800;
+      color: var(--text-main);
+      margin-bottom: 0.35rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .kpi-desc {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    /* TABS BAR */
+    .tabs-nav {
+      display: flex;
+      gap: 0.5rem;
+      border-bottom: 1px solid var(--border-color);
+      margin-bottom: 2rem;
+      overflow-x: auto;
+      padding-bottom: 0.4rem;
+      scrollbar-width: thin;
+    }
+
+    .tab-btn {
+      background: transparent;
+      border: 1px solid transparent;
+      color: var(--text-muted);
+      padding: 0.7rem 1.2rem;
+      border-radius: 8px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.55rem;
+      white-space: nowrap;
+      transition: all 0.2s ease;
+    }
+
+    .tab-btn:hover {
+      color: var(--text-main);
+      background: var(--chip-bg);
+    }
+
+    .tab-btn.active {
+      color: var(--ifsc-green);
+      background: rgba(22, 163, 74, 0.12);
+      border-color: rgba(22, 163, 74, 0.25);
+    }
+
+    .tab-btn.tab-btn-purple.active {
+      color: var(--accent-purple);
+      background: rgba(124, 58, 237, 0.12);
+      border-color: rgba(124, 58, 237, 0.25);
+    }
+
+    .tab-btn.tab-btn-cyan.active {
+      color: var(--accent-cyan);
+      background: rgba(8, 145, 178, 0.12);
+      border-color: rgba(8, 145, 178, 0.25);
+    }
+
+    .tab-pane {
+      display: none;
+      animation: fadeIn 0.3s ease forwards;
+    }
+    .tab-pane.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* CONTENT BOX */
+    .content-box {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 1.8rem;
+      box-shadow: var(--shadow-card);
+      margin-bottom: 2rem;
+    }
+
+    .box-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .box-desc {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      margin-bottom: 1.5rem;
+      line-height: 1.6;
+    }
+
+    /* PAPER HIGHLIGHT CARD (WEBMEDIA & COTB) */
+    .paper-spotlight {
+      background: linear-gradient(135deg, rgba(8, 145, 178, 0.05) 0%, rgba(124, 58, 237, 0.06) 100%);
+      border: 2px solid rgba(8, 145, 178, 0.35);
+      border-radius: var(--radius-lg);
+      padding: 1.8rem;
+      margin-bottom: 1.8rem;
+      position: relative;
+      overflow: hidden;
+      box-shadow: var(--shadow-card);
+    }
+
+    .paper-spotlight.spotlight-webmedia {
+      border-color: rgba(124, 58, 237, 0.4);
+      background: linear-gradient(135deg, rgba(124, 58, 237, 0.08) 0%, rgba(6, 182, 212, 0.06) 100%);
+    }
+
+    .paper-spotlight.spotlight-cotb {
+      border-color: rgba(22, 163, 74, 0.35);
+      background: linear-gradient(135deg, rgba(22, 163, 74, 0.06) 0%, rgba(8, 145, 178, 0.05) 100%);
+    }
+
+    .paper-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 1rem;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .paper-badge-track {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.72rem;
+      font-weight: 800;
+      padding: 0.3rem 0.7rem;
+      border-radius: 999px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .badge-approved {
+      background: rgba(22, 163, 74, 0.15);
+      color: var(--ifsc-green);
+      border: 1px solid rgba(22, 163, 74, 0.3);
+    }
+
+    .badge-webmedia {
+      background: linear-gradient(135deg, #7c3aed 0%, #0891b2 100%);
+      color: #ffffff;
+      box-shadow: 0 2px 8px rgba(124, 58, 237, 0.3);
+    }
+
+    .badge-cotb {
+      background: linear-gradient(135deg, #15803d 0%, #059669 100%);
+      color: #ffffff;
+    }
+
+    .badge-snct {
+      background: #0284c7;
+      color: #ffffff;
+    }
+
+    .paper-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: var(--text-main);
+      margin-bottom: 0.6rem;
+      line-height: 1.35;
+    }
+
+    .paper-authors {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      margin-bottom: 0.85rem;
+    }
+
+    .paper-authors strong {
+      color: var(--text-main);
+    }
+
+    .paper-abstract {
+      font-size: 0.88rem;
+      color: var(--text-main);
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 1rem 1.25rem;
+      margin-bottom: 1.2rem;
+      line-height: 1.6;
+    }
+
+    .paper-meta-row {
+      display: flex;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      margin-bottom: 1.2rem;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+    }
+
+    .paper-meta-item {
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+    }
+
+    .paper-tags {
+      display: flex;
+      gap: 0.4rem;
+      flex-wrap: wrap;
+      margin-bottom: 1.2rem;
+    }
+
+    .tag-chip {
+      font-size: 0.72rem;
+      font-weight: 600;
+      background: var(--chip-bg);
+      border: 1px solid var(--border-color);
+      padding: 0.25rem 0.6rem;
+      border-radius: 6px;
+      color: var(--text-muted);
+    }
+
+    .paper-actions {
+      display: flex;
+      gap: 0.65rem;
+      flex-wrap: wrap;
+    }
+
+    /* EXPERIMENT CARDS (4 EXPERIMENTOS) */
+    .experiments-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+      gap: 1.3rem;
+    }
+
+    .exp-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 1.1rem;
+      box-shadow: var(--shadow-sm);
+      transition: all 0.25s ease;
+      position: relative;
+    }
+
+    .exp-card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-hover);
+      border-color: var(--ifsc-green);
+    }
+
+    .exp-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 0.8rem;
+    }
+
+    .exp-number {
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.76rem;
+      font-weight: 800;
+      padding: 0.25rem 0.65rem;
+      border-radius: 6px;
+      background: rgba(22, 163, 74, 0.12);
+      color: var(--ifsc-green);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .exp-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-top: 0.35rem;
+      line-height: 1.3;
+    }
+
+    .exp-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.8rem;
+      margin: 0.5rem 0;
+    }
+
+    .exp-table td {
+      padding: 0.5rem 0.6rem;
+      border-bottom: 1px solid var(--border-color);
+      vertical-align: top;
+    }
+
+    .exp-table td.var-label {
+      font-weight: 700;
+      white-space: nowrap;
+      width: 32%;
+    }
+
+    .var-label.iv { color: var(--accent-blue); }
+    .var-label.dv { color: var(--accent-purple); }
+    .var-label.cv { color: var(--accent-emerald); }
+
+    .exp-status-box {
+      background: var(--chip-bg);
+      border-radius: var(--radius-sm);
+      padding: 0.6rem 0.8rem;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    /* CALLOUT BOX */
+    .callout-box {
+      border-radius: var(--radius-md);
+      padding: 1.1rem 1.35rem;
+      margin: 1.2rem 0 1.5rem 0;
+      font-size: 0.88rem;
+      line-height: 1.6;
+      border-left: 4px solid var(--accent-purple);
+      background: rgba(124, 58, 237, 0.05);
+    }
+
+    .callout-box.callout-green {
+      border-left-color: var(--ifsc-green);
+      background: rgba(22, 163, 74, 0.05);
+    }
+
+    .callout-box.callout-cyan {
+      border-left-color: var(--accent-cyan);
+      background: rgba(8, 145, 178, 0.05);
+    }
+
+    .callout-header {
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 0.4rem;
+      color: var(--text-main);
+    }
+
+    /* CODE & TERMINAL SNIPPET */
+    .code-terminal {
+      background: #0f172a;
+      color: #38bdf8;
+      border-radius: var(--radius-md);
+      padding: 1.1rem 1.3rem;
+      font-family: 'Fira Code', monospace;
+      font-size: 0.82rem;
+      line-height: 1.6;
+      overflow-x: auto;
+      margin: 0.8rem 0;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .code-terminal .comment { color: #64748b; }
+    .code-terminal .cmd { color: #4ade80; }
+    .code-terminal .param { color: #facc15; }
+
+    /* ASSET GALLERY */
+    .asset-gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 1rem;
+      margin: 1.2rem 0;
+    }
+
+    .asset-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 0.6rem;
+      transition: all 0.2s ease;
+    }
+
+    .asset-card:hover {
+      transform: translateY(-2px);
+      border-color: var(--ifsc-green);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .asset-img-wrap {
+      width: 100%;
+      height: 110px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0, 0, 0, 0.03);
+      border-radius: 8px;
+      overflow: hidden;
+      padding: 0.5rem;
+    }
+
+    .asset-img-wrap img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+    }
+
+    .asset-name {
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .asset-role {
+      font-size: 0.72rem;
+      color: var(--text-dim);
+    }
+
+    /* TIMELINE */
+    .timeline-container {
+      position: relative;
+      padding-left: 2rem;
+      margin: 1.5rem 0;
+    }
+
+    .timeline-container::before {
+      content: '';
+      position: absolute;
+      left: 7px;
+      top: 5px;
+      bottom: 5px;
+      width: 2px;
+      background: var(--border-color);
+    }
+
+    .timeline-item {
+      position: relative;
+      margin-bottom: 1.8rem;
+    }
+
+    .timeline-dot {
+      position: absolute;
+      left: -2rem;
+      top: 4px;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: var(--ifsc-green);
+      border: 3px solid var(--bg-card);
+      box-shadow: 0 0 0 2px var(--ifsc-green);
+    }
+
+    .timeline-dot.dot-celebration {
+      background: var(--accent-purple);
+      box-shadow: 0 0 0 2px var(--accent-purple);
+    }
+
+    .timeline-dot.dot-pending {
+      background: var(--accent-amber);
+      box-shadow: 0 0 0 2px var(--accent-amber);
+    }
+
+    .timeline-content {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 1.1rem 1.3rem;
+    }
+
+    .timeline-date {
+      font-size: 0.74rem;
+      font-weight: 700;
+      color: var(--accent-cyan);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 0.25rem;
+    }
+
+    .timeline-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 0.35rem;
+    }
+
+    .timeline-text {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      line-height: 1.55;
+    }
+
+    /* TUTORIALS ACCORDION / GRID */
+    .tutorials-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+      gap: 1rem;
+    }
+
+    .tutorial-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 1.1rem 1.25rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 0.7rem;
+      transition: all 0.2s ease;
+    }
+
+    .tutorial-card:hover {
+      border-color: var(--ifsc-green);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .tutorial-number {
+      font-size: 0.72rem;
+      font-weight: 800;
+      color: var(--accent-blue);
+      text-transform: uppercase;
+    }
+
+    .tutorial-title {
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .tutorial-desc {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    /* FOOTER */
+    footer {
+      margin-top: 3rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border-color);
+      text-align: center;
+      font-size: 0.82rem;
+      color: var(--text-dim);
+    }
+
+    @media (max-width: 768px) {
+      .hero-banner { padding: 1.5rem; }
+      .hero-title { font-size: 1.5rem; }
+      .kpi-grid { grid-template-columns: 1fr; }
+      .experiments-grid { grid-template-columns: 1fr; }
+      .nav-actions { width: 100%; justify-content: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <div class="container nav-wrapper">
+      <div class="brand-group">
+        <img src="figures/garopaba_horizontal_marca2015_PNG.png" alt="IFSC Garopaba" class="brand-logo-img" onerror="this.style.display='none'">
+        <div class="brand-meta">
+          <span class="brand-badge">IFSC GAROPABA • TÉCNICO INTEGRADO EM INFORMÁTICA</span>
+          <div class="brand-title">Luísa Narvaz Blankenburg — Painel Executivo de Produção</div>
+        </div>
+      </div>
+      <div class="nav-actions">
+        <button id="themeToggleBtn" onclick="toggleTheme()" class="btn-nav" title="Alternar tema Claro / Escuro">
+          <i class="fa-solid fa-moon" id="themeIcon"></i> <span id="themeLabel">Modo Escuro</span>
+        </button>
+        <a href="../../dashboard-orientacoes-tcc.html" class="btn-nav" title="Voltar ao Painel Geral de Orientações">
+          <i class="fa-solid fa-arrow-left"></i> Painel Geral
+        </a>
+        <a href="https://webmedia.org.br/2026/?page_id=38" target="_blank" class="btn-nav btn-nav-accent" title="Site Oficial do WebMedia 2026">
+          <i class="fa-solid fa-trophy"></i> WebMedia 2026
+        </a>
+        <a href="COTB_2026_final_version.pdf" target="_blank" class="btn-nav btn-nav-primary" title="Abrir Artigo COTB 2026 (PDF)">
+          <i class="fa-solid fa-file-pdf"></i> Artigo COTB (PDF)
+        </a>
+        <a href="https://github.com/luisablankenburg08/jogo_pygame.git" target="_blank" class="btn-nav">
+          <i class="fa-brands fa-github"></i> GitHub Aluna
+        </a>
+        <a href="https://www.overleaf.com/read/fxhzcxmbwsqw#b139ac" target="_blank" class="btn-nav" style="color: var(--ifsc-green); border-color: rgba(22, 163, 74, 0.4);">
+          <i class="fa-solid fa-leaf"></i> Overleaf Artigo
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <!-- HERO BANNER -->
+    <section class="hero-banner">
+      <div class="badge-ribbon-group">
+        <div class="hero-tag tag-celebration">
+          <i class="fa-solid fa-award"></i> NOVO PAPER APROVADO: WEBMEDIA 2026 (SBC / UFLA)
+        </div>
+        <div class="hero-tag">
+          <i class="fa-solid fa-circle-check"></i> COTB 2026: VERSÃO FINAL ENTREGUE
+        </div>
+        <div class="hero-tag">
+          <i class="fa-solid fa-microchip"></i> RASPBERRY PI 4 + PYGAME MODULAR
+        </div>
+      </div>
+
+      <h1 class="hero-title">
+        Música, Jogo e Atenção: Ambiente Tangível com Hardware Embarcado e Estimulação Multissensorial
+      </h1>
+      <p class="hero-subtitle">
+        Desenvolvimento de jogo educacional em Python/Pygame integrado a botões físicos e sintetização sonora no <strong>Raspberry Pi 4</strong> para estimulação de atenção, memória e reconhecimento de padrões em crianças. Projeto com rigor experimental padrão-ouro (4 experimentos com variáveis isoladas), tramitação ética no CEP (Plataforma Brasil) e <strong>dupla aprovação em simpósios de nível nacional da Sociedade Brasileira de Computação (COTB 2026 e WebMedia 2026)</strong>.
+      </p>
+
+      <div class="meta-info-grid">
+        <div class="meta-item">
+          <div class="meta-icon" style="color: var(--ifsc-green);"><i class="fa-solid fa-user-graduate"></i></div>
+          <div class="meta-text">
+            <label>Pesquisadora / Estudante</label>
+            <span>Luísa Narvaz Blankenburg</span>
+          </div>
+        </div>
+
+        <div class="meta-item">
+          <div class="meta-icon" style="color: var(--accent-blue);"><i class="fa-solid fa-chalkboard-user"></i></div>
+          <div class="meta-text">
+            <label>Professor Orientador</label>
+            <span>Prof. Dr. André Luiz Silva de Moraes</span>
+          </div>
+        </div>
+
+        <div class="meta-item">
+          <div class="meta-icon" style="color: var(--accent-purple);"><i class="fa-solid fa-book-bookmark"></i></div>
+          <div class="meta-text">
+            <label>Unidade Curricular / Edital</label>
+            <span>PI-II • Iniciação Científica (IFSC)</span>
+          </div>
+        </div>
+
+        <div class="meta-item">
+          <div class="meta-icon" style="color: var(--accent-amber);"><i class="fa-solid fa-trophy"></i></div>
+          <div class="meta-text">
+            <label>Publicações Aprovadas</label>
+            <span>WebMedia 2026 + COTB 2026</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Barra de Progresso Geral -->
+      <div class="overall-progress-box">
+        <div class="progress-header">
+          <span><i class="fa-solid fa-bars-progress" style="color: var(--ifsc-green);"></i> Progresso Geral da Pesquisa & Desenvolvimento</span>
+          <span style="color: var(--ifsc-green);">92% Concluído — Artigos Aprovados • Fase 1 & Trilha Funcionais • Protocolo Ético Instruído</span>
+        </div>
+        <div class="progress-bar-bg">
+          <div class="progress-bar-fill" style="width: 92%;"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- KPI CARDS -->
+    <div class="kpi-grid">
+      <div class="kpi-card" style="--accent: var(--accent-purple);">
+        <div class="kpi-icon-wrap"><i class="fa-solid fa-award"></i></div>
+        <div class="kpi-title">Produção Científica</div>
+        <div class="kpi-value">3 Publicações</div>
+        <div class="kpi-desc">WebMedia 2026 (Aprovado), COTB 2026 (Aprovado/Final) e SNCT 2025 (Publicado).</div>
+      </div>
+
+      <div class="kpi-card" style="--accent: var(--ifsc-green);">
+        <div class="kpi-icon-wrap"><i class="fa-solid fa-flask-vial"></i></div>
+        <div class="kpi-title">Desenho Experimental</div>
+        <div class="kpi-value">4 Experimentos</div>
+        <div class="kpi-desc">Variáveis independentes, dependentes e de controle formalizadas no modelo padrão-ouro.</div>
+      </div>
+
+      <div class="kpi-card" style="--accent: var(--accent-cyan);">
+        <div class="kpi-icon-wrap"><i class="fa-solid fa-gamepad"></i></div>
+        <div class="kpi-title">Jogo Pygame & Hardware</div>
+        <div class="kpi-value">Fase 1 + Áudio</div>
+        <div class="kpi-desc">Código modular (`fase1.py`), persistência em `dados.json` e execução embarcada no Raspberry Pi 4.</div>
+      </div>
+
+      <div class="kpi-card" style="--accent: var(--accent-amber);">
+        <div class="kpi-icon-wrap"><i class="fa-solid fa-scale-balanced"></i></div>
+        <div class="kpi-title">Comitê de Ética (CEP)</div>
+        <div class="kpi-value">Documentado</div>
+        <div class="kpi-desc">Declaração de pesquisa não iniciada e Folha de Rosto Plataforma Brasil preenchidas e assinadas.</div>
+      </div>
+    </div>
+
+    <!-- TABS BAR -->
+    <div class="tabs-nav">
+      <button class="tab-btn tab-btn-purple active" onclick="switchTab('tab-artigos')">
+        <i class="fa-solid fa-award" style="color: var(--accent-purple);"></i> Artigos & Publicações Aprovadas
+      </button>
+      <button class="tab-btn" onclick="switchTab('tab-experimentos')">
+        <i class="fa-solid fa-flask-vial" style="color: var(--ifsc-green);"></i> Os 4 Experimentos Científicos
+      </button>
+      <button class="tab-btn tab-btn-cyan" onclick="switchTab('tab-jogo')">
+        <i class="fa-solid fa-gamepad" style="color: var(--accent-cyan);"></i> Jogo Pygame & Raspberry Pi
+      </button>
+      <button class="tab-btn" onclick="switchTab('tab-etica')">
+        <i class="fa-solid fa-scale-balanced" style="color: var(--accent-amber);"></i> Comitê de Ética (CEP)
+      </button>
+      <button class="tab-btn" onclick="switchTab('tab-tutoriais')">
+        <i class="fa-solid fa-book-open-reader" style="color: var(--accent-blue);"></i> Tutoriais Pedagógicos (15 Notas)
+      </button>
+      <button class="tab-btn" onclick="switchTab('tab-cronograma')">
+        <i class="fa-solid fa-timeline" style="color: var(--accent-indigo);"></i> Cronograma & Pipeline (2025-2026)
+      </button>
+      <button class="tab-btn" onclick="switchTab('tab-links')">
+        <i class="fa-solid fa-folder-open" style="color: var(--accent-cyan);"></i> Central de Recursos & Links
+      </button>
+    </div>
+
+    <!-- ==========================================================================
+         TAB 1: ARTIGOS & PUBLICAÇÕES APROVADAS
+         ========================================================================== -->
+    <div id="tab-artigos" class="tab-pane active">
+      
+      <!-- SPOTLIGHT WEBMEDIA 2026 (NOVA CONQUISTA) -->
+      <div class="paper-spotlight spotlight-webmedia">
+        <div class="paper-header">
+          <div style="display: flex; gap: 0.6rem; align-items: center; flex-wrap: wrap;">
+            <span class="paper-badge-track badge-webmedia"><i class="fa-solid fa-crown"></i> WEBMEDIA 2026 • 32º SIMPÓSIO BRASILEIRO</span>
+            <span class="paper-badge-track badge-approved"><i class="fa-solid fa-check-double"></i> SUBMETIDO E APROVADO!</span>
+          </div>
+          <span style="font-size: 0.8rem; font-weight: 700; color: var(--accent-purple);">Sociedade Brasileira de Computação (SBC) • UFLA</span>
+        </div>
+
+        <h2 class="paper-title">
+          Estímulos Multissensoriais e Interatividade em Sistemas Multimídia Educacionais Embarcados
+        </h2>
+
+        <div class="paper-authors">
+          <strong>Autores:</strong> Luísa Narvaz Blankenburg, André Luiz Silva de Moraes
+          <br><strong>Filiação:</strong> Instituto Federal de Santa Catarina (IFSC Câmpus Garopaba)
+        </div>
+
+        <div class="paper-abstract">
+          <strong>Contexto & Relevância:</strong> O WebMedia é o principal evento de Sistemas Multimídia, Hipermídia e Web no Brasil. Realizado anualmente pela Sociedade Brasileira de Computação (SBC), sua 32ª edição ocorrerá em Lavras – MG, de 27 a 30 de outubro de 2026, com organização da Universidade Federal de Lavras (UFLA). A aprovação deste trabalho consolida a trajetória de excelência acadêmica de Luísa, demonstrando a maturidade na aplicação de feedback multissensorial sonoro e visual em plataformas computacionais interativas.
+        </div>
+
+        <div class="paper-meta-row">
+          <div class="paper-meta-item"><i class="fa-solid fa-calendar-days text-purple"></i> <strong>Data do Evento:</strong> 27 a 30 de Outubro de 2026</div>
+          <div class="paper-meta-item"><i class="fa-solid fa-location-dot text-cyan"></i> <strong>Local:</strong> Lavras – MG (Universidade Federal de Lavras - UFLA)</div>
+          <div class="paper-meta-item"><i class="fa-solid fa-building-columns text-green"></i> <strong>Chancela:</strong> Sociedade Brasileira de Computação (SBC)</div>
+        </div>
+
+        <div class="paper-tags">
+          <span class="tag-chip">Sistemas Multimídia</span>
+          <span class="tag-chip">Interatividade Web & IoT</span>
+          <span class="tag-chip">Feedback Sonoro</span>
+          <span class="tag-chip">Hardware Embarcado</span>
+          <span class="tag-chip">WebMedia 2026</span>
+          <span class="tag-chip">SBC</span>
+        </div>
+
+        <div class="paper-actions">
+          <a href="https://webmedia.org.br/2026/?page_id=38" target="_blank" class="btn-nav btn-nav-accent">
+            <i class="fa-solid fa-globe"></i> Página Oficial WebMedia 2026
+          </a>
+          <a href="https://www.linkedin.com/showcase/webmedia2026/" target="_blank" class="btn-nav">
+            <i class="fa-brands fa-linkedin"></i> LinkedIn do Evento
+          </a>
+        </div>
+      </div>
+
+      <!-- SPOTLIGHT COTB 2026 (ARTIGO COMPLETO APROVADO) -->
+      <div class="paper-spotlight spotlight-cotb">
+        <div class="paper-header">
+          <div style="display: flex; gap: 0.6rem; align-items: center; flex-wrap: wrap;">
+            <span class="paper-badge-track badge-cotb"><i class="fa-solid fa-laptop-code"></i> COTB 2026 • COMPUTER ON THE BEACH</span>
+            <span class="paper-badge-track badge-approved"><i class="fa-solid fa-circle-check"></i> APROVADO & VERSÃO FINAL ENTREGUE</span>
+          </div>
+          <span style="font-size: 0.8rem; font-weight: 700; color: var(--ifsc-green);">Evento Nacional SBC • 6 Páginas</span>
+        </div>
+
+        <h2 class="paper-title">
+          Música, Jogo e Atenção: uma proposta educacional com Raspberry Pi
+        </h2>
+
+        <div class="paper-authors">
+          <strong>Autores:</strong> Luísa Narvaz Blankenburg, André Luiz Silva de Moraes
+          <br><strong>Filiação:</strong> Instituto Federal de Santa Catarina (IFSC Câmpus Garopaba)
+        </div>
+
+        <div class="paper-abstract">
+          <strong>Resumo do Artigo:</strong> O uso de tecnologias digitais no contexto educacional vem se popularizando nos últimos anos, uma vez que apresenta contribuições positivas no aprendizado. No entanto, dificuldades relacionadas ao foco atencional e funções executivas afetam estudantes na infância. Este trabalho integra o uso das tecnologias digitais com as propriedades da estimulação sonora/musicoterapia, através de um jogo educacional que utiliza estímulos auditivos para aprimorar habilidades cognitivas, destacando-se a ativação da atenção. O jogo apresenta ferramentas lúdicas e de fácil compreensão, com interação através de push buttons integrados ao microcomputador Raspberry Pi 4.
+        </div>
+
+        <div class="paper-meta-row">
+          <div class="paper-meta-item"><i class="fa-solid fa-file-lines text-green"></i> <strong>Extensão:</strong> Artigo Completo (6 páginas no template oficial SBC)</div>
+          <div class="paper-meta-item"><i class="fa-solid fa-code-compare text-blue"></i> <strong>Arquivo PDF:</strong> `COTB_2026_final_version.pdf`</div>
+          <div class="paper-meta-item"><i class="fa-solid fa-cloud-arrow-up text-amber"></i> <strong>Repositório de Redação:</strong> Overleaf Ativo</div>
+        </div>
+
+        <div class="paper-tags">
+          <span class="tag-chip">Jogos Educacionais</span>
+          <span class="tag-chip">Música & Atenção</span>
+          <span class="tag-chip">Raspberry Pi</span>
+          <span class="tag-chip">Python/Pygame</span>
+          <span class="tag-chip">COTB 2026</span>
+          <span class="tag-chip">SBC</span>
+        </div>
+
+        <div class="paper-actions">
+          <a href="COTB_2026_final_version.pdf" target="_blank" class="btn-nav btn-nav-primary">
+            <i class="fa-solid fa-file-pdf"></i> Abrir Artigo Completo (PDF)
+          </a>
+          <a href="https://www.overleaf.com/read/fxhzcxmbwsqw#b139ac" target="_blank" class="btn-nav">
+            <i class="fa-solid fa-leaf text-green"></i> Overleaf do Artigo
+          </a>
+          <a href="document.pdf" target="_blank" class="btn-nav">
+            <i class="fa-solid fa-book"></i> Notas de Orientação Compiladas (LaTeX)
+          </a>
+        </div>
+      </div>
+
+      <!-- SPOTLIGHT SNCT 2025 -->
+      <div class="content-box">
+        <div class="paper-header">
+          <div style="display: flex; gap: 0.6rem; align-items: center;">
+            <span class="paper-badge-track badge-snct"><i class="fa-solid fa-atom"></i> SNCT 2025</span>
+            <span class="paper-badge-track badge-approved"><i class="fa-solid fa-check"></i> PUBLICADO</span>
+          </div>
+          <span style="font-size: 0.8rem; color: var(--text-dim);">Semana Nacional de Ciência e Tecnologia</span>
+        </div>
+
+        <h3 style="font-size: 1.15rem; font-weight: 700; margin-bottom: 0.4rem;">
+          Música, Jogo e Atenção: uma proposta educacional com Raspberry Pi
+        </h3>
+        <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.8rem;">
+          Publicação inicial da proposta na Semana Nacional de Ciência e Tecnologia, apresentando o conceito do ambiente educacional tangível com sensores táteis e feedback musical.
+        </p>
+      </div>
+
+    </div>
+
+    <!-- ==========================================================================
+         TAB 2: OS 4 EXPERIMENTOS CIENTÍFICOS (RIGOR EXEMPLAR)
+         ========================================================================== -->
+    <div id="tab-experimentos" class="tab-pane">
+      
+      <div class="content-box">
+        <div class="box-title">
+          <i class="fa-solid fa-microscope" style="color: var(--ifsc-green);"></i> Rigor Metodológico: Os 4 Experimentos do Projeto
+        </div>
+        <div class="box-desc">
+          O projeto de Luísa é referência na turma de Projeto Integrador II pelo delineamento científico impecável. Cada experimento isola com precisão matemática a <strong>Variável Independente (VI)</strong>, as <strong>Variáveis Dependentes (VD)</strong> e a <strong>Variável de Controle (VC)</strong>, garantindo reprodutibilidade e base empírica sólida para as publicações.
+        </div>
+
+        <div class="experiments-grid">
+          
+          <!-- EXPERIMENTO 1 -->
+          <div class="exp-card">
+            <div>
+              <div class="exp-header">
+                <span class="exp-number">EXPERIMENTO #01</span>
+                <span class="badge-approved" style="font-size: 0.7rem; padding: 0.2rem 0.5rem; border-radius: 4px;"><i class="fa-solid fa-check"></i> Validado</span>
+              </div>
+              <h3 class="exp-title">Menu Principal & Persistência de Dados de Jogadores</h3>
+              
+              <table class="exp-table">
+                <tr>
+                  <td class="var-label iv"><i class="fa-solid fa-sliders"></i> Var. Independente (VI):</td>
+                  <td>Quantidade de perfis de usuários cadastrados no sistema.</td>
+                </tr>
+                <tr>
+                  <td class="var-label dv"><i class="fa-solid fa-chart-line"></i> Var. Dependente (VD):</td>
+                  <td>Integridade dos registros gravados em <code>dados.json</code> e tempo de I/O de escrita.</td>
+                </tr>
+                <tr>
+                  <td class="var-label cv"><i class="fa-solid fa-lock"></i> Var. de Controle (VC):</td>
+                  <td>Mecanismo central do jogo (arquivo principal) mantido constante para múltiplos usuários.</td>
+                </tr>
+              </table>
+            </div>
+
+            <div class="exp-status-box">
+              <strong>Status:</strong> Implementado e verificado no script <code>game_test-3-main-menu.py</code> com carregamento dinâmico e salvamento consistente.
+            </div>
+          </div>
+
+          <!-- EXPERIMENTO 2 -->
+          <div class="exp-card">
+            <div>
+              <div class="exp-header">
+                <span class="exp-number">EXPERIMENTO #02</span>
+                <span class="badge-approved" style="font-size: 0.7rem; padding: 0.2rem 0.5rem; border-radius: 4px;"><i class="fa-solid fa-check"></i> Em Refinamento</span>
+              </div>
+              <h3 class="exp-title">Registro de Respostas, Sons & Relatório de Desempenho</h3>
+              
+              <table class="exp-table">
+                <tr>
+                  <td class="var-label iv"><i class="fa-solid fa-sliders"></i> Var. Independente (VI):</td>
+                  <td>Volume e sequência de estímulos/respostas submetidos pelo participante.</td>
+                </tr>
+                <tr>
+                  <td class="var-label dv"><i class="fa-solid fa-chart-line"></i> Var. Dependente (VD):</td>
+                  <td>Latência dos efeitos sonoros, acurácia no cômputo de acertos/erros e fidelidade do relatório final.</td>
+                </tr>
+                <tr>
+                  <td class="var-label cv"><i class="fa-solid fa-lock"></i> Var. de Controle (VC):</td>
+                  <td>Trilhas e amostras sonoras idênticas em cada fase; motor central de avaliação padronizado.</td>
+                </tr>
+              </table>
+            </div>
+
+            <div class="exp-status-box">
+              <strong>Status:</strong> Trilha da Fase 1 acoplada com sons de acerto (<code>victory_sound.wav</code>) e erro (<code>fail_sound.mp3</code>).
+            </div>
+          </div>
+
+          <!-- EXPERIMENTO 3 -->
+          <div class="exp-card">
+            <div>
+              <div class="exp-header">
+                <span class="exp-number">EXPERIMENTO #03</span>
+                <span style="font-size: 0.7rem; padding: 0.2rem 0.5rem; border-radius: 4px; background: rgba(8, 145, 178, 0.12); color: var(--accent-cyan); font-weight: 700;"><i class="fa-solid fa-clock"></i> Fase de Expansão</span>
+              </div>
+              <h3 class="exp-title">IDs Automáticos, Internacionalização & Otimização Visual</h3>
+              
+              <table class="exp-table">
+                <tr>
+                  <td class="var-label iv"><i class="fa-solid fa-sliders"></i> Var. Independente (VI):</td>
+                  <td>Capacidade de geração de identificadores únicos e alternância de idioma (Português / Espanhol).</td>
+                </tr>
+                <tr>
+                  <td class="var-label dv"><i class="fa-solid fa-chart-line"></i> Var. Dependente (VD):</td>
+                  <td>Conectividade relacional do ID às respostas, tempo de chaveamento de idioma e footprint de memória dos assets.</td>
+                </tr>
+                <tr>
+                  <td class="var-label cv"><i class="fa-solid fa-lock"></i> Var. de Controle (VC):</td>
+                  <td>Rotina central do jogo gerenciando o ciclo de vida dos identificadores de forma autônoma.</td>
+                </tr>
+              </table>
+            </div>
+
+            <div class="exp-status-box">
+              <strong>Status:</strong> Modelagem de dados concluída; bandeira de idiomas adicionada na pasta de assets.
+            </div>
+          </div>
+
+          <!-- EXPERIMENTO 4 -->
+          <div class="exp-card">
+            <div>
+              <div class="exp-header">
+                <span class="exp-number">EXPERIMENTO #04</span>
+                <span class="badge-approved" style="font-size: 0.7rem; padding: 0.2rem 0.5rem; border-radius: 4px;"><i class="fa-solid fa-bullseye"></i> Validação Científica</span>
+              </div>
+              <h3 class="exp-title">Testes Comparativos em Hardware Real (Desktop vs. Raspberry Pi 4)</h3>
+              
+              <table class="exp-table">
+                <tr>
+                  <td class="var-label iv"><i class="fa-solid fa-sliders"></i> Var. Independente (VI):</td>
+                  <td>Ambiente de execução computacional (Desktop Linux/macOS vs. Raspberry Pi 4 embarcado) e tamanho amostral.</td>
+                </tr>
+                <tr>
+                  <td class="var-label dv"><i class="fa-solid fa-chart-line"></i> Var. Dependente (VD):</td>
+                  <td>Tempo de reação ao estímulo, curva de acertos/erros ao longo das fases e fluidez de reprodução de áudio.</td>
+                </tr>
+                <tr>
+                  <td class="var-label cv"><i class="fa-solid fa-lock"></i> Var. de Controle (VC):</td>
+                  <td>Mesma versão binária do jogo executada com o protocolo padronizado de estímulos.</td>
+                </tr>
+              </table>
+            </div>
+
+            <div class="exp-status-box">
+              <strong>Status:</strong> Protocolo experimental base para os artigos aceitos no COTB 2026 e WebMedia 2026.
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ==========================================================================
+         TAB 3: JOGO PYGAME & HARDWARE EMBARCADO
+         ========================================================================== -->
+    <div id="tab-jogo" class="tab-pane">
+      
+      <div class="content-box">
+        <div class="box-title">
+          <i class="fa-solid fa-gamepad" style="color: var(--accent-cyan);"></i> Arquitetura Técnica do Jogo (Python / Pygame)
+        </div>
+        <div class="box-desc">
+          O jogo foi arquitetado para ser leve, responsivo e modular. Ele é desacoplado em módulos independentes com máquina de estados clara entre o menu principal, as fases de desafios cognitivos e a persistência em arquivo.
+        </div>
+
+        <div class="callout-box callout-cyan">
+          <div class="callout-header"><i class="fa-solid fa-cubes"></i> Estrutura Modular de Arquivos</div>
+          <div style="font-family: 'Fira Code', monospace; font-size: 0.82rem; line-height: 1.8;">
+            game_test-3-main-menu.py &nbsp;&nbsp;&nbsp;&nbsp;# Controlador principal, tela de título e gerenciamento de estado<br>
+            ├── fase1.py &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# Fase 1: Estímulos musicais e reconhecimento auditivo (Desbloqueada)<br>
+            ├── fase2.py &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# Fase 2: Padrões rítmicos e discriminação melódica<br>
+            ├── fase3.py &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# Fase 3: Desafios compostos de memória operacional<br>
+            ├── dados.json &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# Persistência de jogadores, acertos, erros e tempos<br>
+            ├── sounds/ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# Amostras de som WAV/MP3 (soundtrack, vitória, falha)<br>
+            └── images/ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# Sprites gráficos (bichinho cursor, botões, cadeados)
+          </div>
+        </div>
+
+        <h3 style="font-size: 1.1rem; font-weight: 700; margin: 1.5rem 0 0.8rem 0;">Galeria de Elementos Visuais Autênticos do Jogo</h3>
+        <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem;">Recursos gráficos desenhados e organizados por Luísa para a interface infantil:</p>
+        
+        <div class="asset-gallery">
+          <div class="asset-card">
+            <div class="asset-img-wrap">
+              <img src="figures/game/bichinho2.png" alt="Personagem Cursor">
+            </div>
+            <div class="asset-name">bichinho2.png</div>
+            <div class="asset-role">Personagem / Cursor do Jogador</div>
+          </div>
+
+          <div class="asset-card">
+            <div class="asset-img-wrap">
+              <img src="figures/game/botao_jogar_menu.png" alt="Botão Jogar">
+            </div>
+            <div class="asset-name">botao_jogar_menu.png</div>
+            <div class="asset-role">Ação Principal de Início</div>
+          </div>
+
+          <div class="asset-card">
+            <div class="asset-img-wrap">
+              <img src="figures/game/cadeadoaberto.png" alt="Cadeado Aberto">
+            </div>
+            <div class="asset-name">cadeadoaberto.png</div>
+            <div class="asset-role">Indicador de Fase Desbloqueada</div>
+          </div>
+
+          <div class="asset-card">
+            <div class="asset-img-wrap">
+              <img src="figures/game/cadeado.png" alt="Cadeado Fechado">
+            </div>
+            <div class="asset-name">cadeado.png</div>
+            <div class="asset-role">Fases Subsequentes Bloqueadas</div>
+          </div>
+
+          <div class="asset-card">
+            <div class="asset-img-wrap">
+              <img src="figures/game/som.png" alt="Ícone de Som">
+            </div>
+            <div class="asset-name">som.png</div>
+            <div class="asset-role">Controle de Feedback Acústico</div>
+          </div>
+
+          <div class="asset-card">
+            <div class="asset-img-wrap">
+              <img src="figures/game/bandeira.png" alt="Bandeira Idiomas">
+            </div>
+            <div class="asset-name">bandeira.png</div>
+            <div class="asset-role">Chaveamento Espanhol / PT-BR</div>
+          </div>
+        </div>
+
+        <h3 style="font-size: 1.1rem; font-weight: 700; margin: 1.8rem 0 0.8rem 0;">Execução em Hardware: Raspberry Pi 4</h3>
+        <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.6;">
+          Para garantir acessibilidade e portabilidade em feiras escolares e apresentações científicas, o jogo é executado diretamente em um <strong>Raspberry Pi 4 Model B</strong>, com saída de vídeo HDMI 1080p, interface de som nativa ALSA via conector P2/HDMI e push-buttons conectados à barra de pinos GPIO para entrada tangível sem necessidade de mouse/teclado complexo.
+        </p>
+
+        <div class="code-terminal">
+          <span class="comment"># Como clonar e executar o ambiente do jogo localmente:</span><br>
+          <span class="cmd">git clone</span> <span class="param">https://github.com/luisablankenburg08/jogo_pygame.git</span><br>
+          <span class="cmd">cd</span> jogo_pygame<br>
+          <span class="cmd">python3</span> -m venv venv_game<br>
+          <span class="cmd">source</span> venv_game/bin/activate<br>
+          <span class="cmd">pip install</span> pygame<br>
+          <span class="cmd">python3</span> game_test-3-main-menu.py
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ==========================================================================
+         TAB 4: COMITÊ DE ÉTICA EM PESQUISA (CEP)
+         ========================================================================== -->
+    <div id="tab-etica" class="tab-pane">
+      
+      <div class="content-box">
+        <div class="box-title">
+          <i class="fa-solid fa-scale-balanced" style="color: var(--accent-amber);"></i> Conformidade Ética: Comitê de Ética em Pesquisa (CEP)
+        </div>
+        <div class="box-desc">
+          Por envolver a interação voluntária de estudantes da educação básica em ambiente escolar, o projeto de Luísa seguiu todos os preceitos éticos da <strong>Resolução CNS nº 466/2012 e nº 510/2016</strong>. Toda a documentação mandatória foi instruída com suporte do orientador.
+        </div>
+
+        <div class="callout-box callout-green">
+          <div class="callout-header"><i class="fa-solid fa-shield-halved"></i> Garantia de Integridade e Proteção aos Participantes</div>
+          O foco da pesquisa foi delimitado cientificamente em <strong>desenvolvimento cognitivo infantil de forma geral</strong>, sem caráter clínico, diagnóstico ou terapêutico, garantindo total adequação aos princípios de beneficência, não maleficência e proteção à infância.
+        </div>
+
+        <div class="artifacts-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.2rem; margin-top: 1.5rem;">
+          
+          <div class="exp-card">
+            <div>
+              <span class="badge-approved" style="font-size: 0.72rem; padding: 0.25rem 0.6rem; border-radius: 4px; display: inline-block; margin-bottom: 0.6rem;">
+                <i class="fa-solid fa-signature"></i> ASSINADO PELO ORIENTADOR
+              </span>
+              <h3 style="font-size: 1.05rem; font-weight: 700; color: var(--text-main); margin-bottom: 0.4rem;">
+                Declaração de Pesquisa Não Iniciada e Responsabilidade Ética
+              </h3>
+              <p style="font-size: 0.82rem; color: var(--text-muted); line-height: 1.55;">
+                Documento formal atestando o compromisso de não iniciar a coleta de dados de campo antes da emissão do parecer consubstanciado do CEP, assegurando a responsabilidade científica de André e Luísa.
+              </p>
+            </div>
+            <div style="font-size: 0.75rem; color: var(--text-dim);">
+              <i class="fa-solid fa-file-pdf text-red"></i> <code>DECLARACAO-DE_PESQUISA-_NAO-INICIADA-E-RESPONSABILIDADE-ETICA_assinado.pdf</code>
+            </div>
+          </div>
+
+          <div class="exp-card">
+            <div>
+              <span class="badge-approved" style="font-size: 0.72rem; padding: 0.25rem 0.6rem; border-radius: 4px; display: inline-block; margin-bottom: 0.6rem;">
+                <i class="fa-solid fa-stamp"></i> CHANCELA INSTITUCIONAL
+              </span>
+              <h3 style="font-size: 1.05rem; font-weight: 700; color: var(--text-main); margin-bottom: 0.4rem;">
+                Folha de Rosto da Plataforma Brasil
+              </h3>
+              <p style="font-size: 0.82rem; color: var(--text-muted); line-height: 1.55;">
+                Instrumento gerado pela Plataforma Brasil do Ministério da Saúde com os dados da instituição proponente (IFSC Câmpus Garopaba), patrocinador e termo de concordância institucional.
+              </p>
+            </div>
+            <div style="font-size: 0.75rem; color: var(--text-dim);">
+              <i class="fa-solid fa-file-pdf text-red"></i> <code>folhaDeRosto_ajustado_assinado.pdf</code>
+            </div>
+          </div>
+
+          <div class="exp-card">
+            <div>
+              <span class="badge-approved" style="font-size: 0.72rem; padding: 0.25rem 0.6rem; border-radius: 4px; display: inline-block; margin-bottom: 0.6rem;">
+                <i class="fa-solid fa-child"></i> TCLE & TALE
+              </span>
+              <h3 style="font-size: 1.05rem; font-weight: 700; color: var(--text-main); margin-bottom: 0.4rem;">
+                Termos de Consentimento e Assentimento
+              </h3>
+              <p style="font-size: 0.82rem; color: var(--text-muted); line-height: 1.55;">
+                TCLE para anuência esclarecida dos pais ou responsáveis legais e TALE com linguagem ilustrada e acessível para o assentimento direto das crianças participantes.
+              </p>
+            </div>
+            <div style="font-size: 0.75rem; color: var(--text-dim);">
+              <i class="fa-solid fa-check-circle text-green"></i> Em conformidade com as diretrizes do CONEP
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ==========================================================================
+         TAB 5: TUTORIAIS PEDAGÓGICOS (15 NOTAS)
+         ========================================================================== -->
+    <div id="tab-tutoriais" class="tab-pane">
+      
+      <div class="content-box">
+        <div class="box-title">
+          <i class="fa-solid fa-book-open-reader" style="color: var(--accent-blue);"></i> Registro Formativo: Os 15 Tutoriais de Orientação
+        </div>
+        <div class="box-desc">
+          Durante o percurso de pesquisa, o professor orientador redigiu <strong>15 tutoriais técnicos e pedagógicos completos</strong> em LaTeX para fundamentar a aluna desde o versionamento de código até a arquitetura de áudio no Linux. Todo esse material está consolidado na monografia oficial (<code>document.pdf</code> - 1,5 MB).
+        </div>
+
+        <div style="margin-bottom: 1.5rem;">
+          <a href="document.pdf" target="_blank" class="btn-nav btn-nav-primary" style="padding: 0.6rem 1.2rem; font-size: 0.9rem;">
+            <i class="fa-solid fa-file-pdf"></i> Abrir Monografia & Tutoriais Compilados (PDF)
+          </a>
+        </div>
+
+        <div class="tutorials-grid">
+          <div class="tutorial-card">
+            <span class="tutorial-number">TUTORIAL 01</span>
+            <div class="tutorial-title">Escrita Científica no Overleaf & LaTeX</div>
+            <div class="tutorial-desc">Introdução à tipografia técnica, formatação de fórmulas e citações bibliográficas com BibTeX.</div>
+          </div>
+
+          <div class="tutorial-card">
+            <span class="tutorial-number">TUTORIAL 02</span>
+            <div class="tutorial-title">Design do Jogo & Feedback Musical</div>
+            <div class="tutorial-desc">Mapeamento de estímulos sonoros a tarefas cognitivas com auxílio das ferramentas BeepBox e Soundtrap.</div>
+          </div>
+
+          <div class="tutorial-card">
+            <span class="tutorial-number">TUTORIAL 03</span>
+            <div class="tutorial-title">Configuração e Programação no Raspberry Pi</div>
+            <div class="tutorial-desc">Fundamentos do Python 3, manipulação do subsistema de áudio e bibliotecas de síntese.</div>
+          </div>
+
+          <div class="tutorial-card">
+            <span class="tutorial-number">TUTORIAL 04</span>
+            <div class="tutorial-title">Virtualização & VNC no VirtualBox/UTM</div>
+            <div class="tutorial-desc">Emulação do Raspbian no macOS/Windows para desenvolvimento preliminar sem necessidade da placa física.</div>
+          </div>
+
+          <div class="tutorial-card">
+            <span class="tutorial-number">TUTORIAL 05</span>
+            <div class="tutorial-title">Git & GitHub para Pesquisa Acadêmica</div>
+            <div class="tutorial-desc">Fluxo de commits, branches, sincronização remota com Diagrama TikZ explicativo.</div>
+          </div>
+
+          <div class="tutorial-card">
+            <span class="tutorial-number">TUTORIAL 06</span>
+            <div class="tutorial-title">Pygame Mixer, ALSA & Sound Engine</div>
+            <div class="tutorial-desc">Solução de incompatibilidades de drivers de áudio ALSA, execução em loop e canais simultâneos.</div>
+          </div>
+
+          <div class="tutorial-card">
+            <span class="tutorial-number">TUTORIAL 07</span>
+            <div class="tutorial-title">Construção do Menu Principal e Event Loop</div>
+            <div class="tutorial-desc">Lógica de interface gráfica, detecção de colisão do cursor (bichinho) e troca de telas.</div>
+          </div>
+
+          <div class="tutorial-card">
+            <span class="tutorial-number">TUTORIAL 08</span>
+            <div class="tutorial-title">Modularização de Fases com Imports</div>
+            <div class="tutorial-desc">Isolamento da lógica do jogo em arquivos <code>fase1.py</code>, <code>fase2.py</code> e <code>fase3.py</code>.</div>
+          </div>
+
+          <div class="tutorial-card">
+            <span class="tutorial-number">TUTORIAL 09</span>
+            <div class="tutorial-title">Score, Estímulo-Resposta e Feedback</div>
+            <div class="tutorial-desc">Cálculo de pontuação em tempo real, recompensas visuais e sonoras para reforço positivo.</div>
+          </div>
+
+          <div class="tutorial-card">
+            <span class="tutorial-number">TUTORIAL 10</span>
+            <div class="tutorial-title">Interação com Botões Push Buttons via GPIO</div>
+            <div class="tutorial-desc">Circuito eletrônico de entrada digital, resistores pull-up internos e tratamento de bouncing.</div>
+          </div>
+
+          <div class="tutorial-card">
+            <span class="tutorial-number">TUTORIAL 11</span>
+            <div class="tutorial-title">Persistência Estruturada em JSON</div>
+            <div class="tutorial-desc">Gravação e leitura de perfis de estudantes e logs de resposta em <code>dados.json</code>.</div>
+          </div>
+
+          <div class="tutorial-card">
+            <span class="tutorial-number">TUTORIAL 12</span>
+            <div class="tutorial-title">Métricas de Avaliação Atencional</div>
+            <div class="tutorial-desc">Construção de indicadores de tempo de resposta e variabilidade de acertos.</div>
+          </div>
+
+          <div class="tutorial-card">
+            <span class="tutorial-number">TUTORIAL 13</span>
+            <div class="tutorial-title">Seção de Trabalhos Relacionados</div>
+            <div class="tutorial-desc">Levantamento bibliográfico comparativo contrastando 4 artigos nacionais recentes (2015 a 2025).</div>
+          </div>
+
+          <div class="tutorial-card">
+            <span class="tutorial-number">TUTORIAL 14</span>
+            <div class="tutorial-title">Acesso Remoto por Rede RJ45 & Zeroconf</div>
+            <div class="tutorial-desc">Conexão direta cabo a cabo ao Raspberry Pi com resolução de nomes <code>raspberrypi.local</code>.</div>
+          </div>
+
+          <div class="tutorial-card">
+            <span class="tutorial-number">TUTORIAL 15</span>
+            <div class="tutorial-title">Modo Kiosk & Ajustes Finais de Exibição</div>
+            <div class="tutorial-desc">Execução em tela cheia (1920x1080) sem bordas para montagem de quiosque educacional.</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ==========================================================================
+         TAB 6: CRONOGRAMA & PIPELINE (2025-2026)
+         ========================================================================== -->
+    <div id="tab-cronograma" class="tab-pane">
+      
+      <div class="content-box">
+        <div class="box-title">
+          <i class="fa-solid fa-timeline" style="color: var(--accent-indigo);"></i> Pipeline Histórico e Cronograma de Conclusão
+        </div>
+        <div class="box-desc">
+          Evolução temporal do projeto desde sua concepção inicial em 2025 até as consagrações científicas de 2026:
+        </div>
+
+        <div class="timeline-container">
+          
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+              <div class="timeline-date">Julho a Agosto / 2025 • Concepção & Fundamentação</div>
+              <div class="timeline-title">Formulação da Ideia e Início dos Tutoriais</div>
+              <div class="timeline-text">
+                Definição da temática de estímulos musicais e atenção infantil. Planejamento pedagógico dos tutoriais de escrita em LaTeX, VNC e preparação do repositório Git.
+              </div>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+              <div class="timeline-date">Setembro a Outubro / 2025 • Engenharia de Software</div>
+              <div class="timeline-title">Desenvolvimento do Protótipo em Pygame</div>
+              <div class="timeline-text">
+                Implementação do menu principal, cursor interativo, trilha sonora em loop (<code>soundtrack.wav</code>) e solução de reprodução fora de containers para integração direta ao Raspberry Pi 4.
+              </div>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+              <div class="timeline-date">Novembro / 2025 • Submissão & Ética</div>
+              <div class="timeline-title">Submissão ao COTB 2026 & Tramitação Ética</div>
+              <div class="timeline-text">
+                Ajuste do escopo para desenvolvimento cognitivo geral infantil; elaboração da Folha de Rosto e Declaração de Pesquisa Não Iniciada para o Comitê de Ética. Submissão formal do paper ao COTB 2026.
+              </div>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+              <div class="timeline-date">Março / 2026 • 1ª Grande Conquista</div>
+              <div class="timeline-title">Aprovação no COTB 2026 & Versão Final Entregue</div>
+              <div class="timeline-text">
+                Notificação de aceite e entrega da versão final completa de 6 páginas no template oficial da SBC (<code>COTB_2026_final_version.pdf</code>).
+              </div>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-dot dot-celebration"></div>
+            <div class="timeline-content" style="border-color: rgba(124, 58, 237, 0.4); background: rgba(124, 58, 237, 0.03);">
+              <div class="timeline-date" style="color: var(--accent-purple);">Setembro / 2026 • 2ª Grande Conquista Científica</div>
+              <div class="timeline-title" style="color: var(--accent-purple);">Aprovação no WebMedia 2026 (SBC / UFLA)</div>
+              <div class="timeline-text">
+                Submissão do novo paper aceita no 32º Simpósio Brasileiro de Sistemas Multimídia e Web, maior congresso nacional da especialidade.
+              </div>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-dot dot-pending"></div>
+            <div class="timeline-content">
+              <div class="timeline-date">Outubro / 2026 • Apresentação Nacional</div>
+              <div class="timeline-title">Realização do WebMedia 2026 (Lavras – MG)</div>
+              <div class="timeline-text">
+                Apresentação e divulgação dos resultados de pesquisa no simpósio nacional da SBC sediado na UFLA.
+              </div>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-dot dot-pending"></div>
+            <div class="timeline-content">
+              <div class="timeline-date">Novembro a Dezembro / 2026 • Fechamento do Ciclo Técnico</div>
+              <div class="timeline-title">Banca de Avaliação Final de PI-II</div>
+              <div class="timeline-text">
+                Apresentação perante a banca examinadora do IFSC Câmpus Garopaba com demonstração física funcional no Raspberry Pi 4 e entrega do relatório final do Projeto Integrador II.
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ==========================================================================
+         TAB 7: CENTRAL DE LINKS & RECURSOS OFICIAIS
+         ========================================================================== -->
+    <div id="tab-links" class="tab-pane">
+      
+      <div class="content-box">
+        <div class="box-title">
+          <i class="fa-solid fa-folder-open" style="color: var(--accent-cyan);"></i> Central de Documentos, Repositórios & Links Oficiais
+        </div>
+        <div class="box-desc">
+          Acesso unificado a todos os artefatos digitais, links externos de produção e repositórios oficiais de Luísa Narvaz:
+        </div>
+
+        <div class="artifacts-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.2rem;">
+          
+          <div class="exp-card">
+            <div>
+              <span class="badge-approved" style="font-size: 0.72rem; padding: 0.25rem 0.6rem; border-radius: 4px; display: inline-block; margin-bottom: 0.5rem;">
+                <i class="fa-solid fa-trophy"></i> WEBMEDIA 2026
+              </span>
+              <h3 style="font-size: 1.1rem; font-weight: 700; color: var(--text-main);">Página Oficial WebMedia 2026</h3>
+              <p style="font-size: 0.84rem; color: var(--text-muted); margin: 0.4rem 0 1rem 0;">
+                Portal oficial do 32º Simpósio Brasileiro de Sistemas Multimídia e Web organizado pela SBC na Universidade Federal de Lavras (UFLA).
+              </p>
+            </div>
+            <a href="https://webmedia.org.br/2026/?page_id=38" target="_blank" class="btn-nav btn-nav-accent">
+              <i class="fa-solid fa-arrow-up-right-from-square"></i> Acessar Site do Evento
+            </a>
+          </div>
+
+          <div class="exp-card">
+            <div>
+              <span class="badge-approved" style="font-size: 0.72rem; padding: 0.25rem 0.6rem; border-radius: 4px; display: inline-block; margin-bottom: 0.5rem;">
+                <i class="fa-solid fa-file-pdf"></i> ARTIGO COMPLETO (PDF)
+              </span>
+              <h3 style="font-size: 1.1rem; font-weight: 700; color: var(--text-main);">Versão Final COTB 2026 (PDF)</h3>
+              <p style="font-size: 0.84rem; color: var(--text-muted); margin: 0.4rem 0 1rem 0;">
+                Documento acadêmico aprovado de 6 páginas com introdução, fundamentação teórica, metodologia dos 4 experimentos e conclusões.
+              </p>
+            </div>
+            <a href="COTB_2026_final_version.pdf" target="_blank" class="btn-nav btn-nav-primary">
+              <i class="fa-solid fa-file-pdf"></i> Baixar / Visualizar PDF
+            </a>
+          </div>
+
+          <div class="exp-card">
+            <div>
+              <span class="badge-approved" style="font-size: 0.72rem; padding: 0.25rem 0.6rem; border-radius: 4px; display: inline-block; margin-bottom: 0.5rem;">
+                <i class="fa-solid fa-leaf"></i> OVERLEAF ARTIGO
+              </span>
+              <h3 style="font-size: 1.1rem; font-weight: 700; color: var(--text-main);">Link de Leitura Overleaf (SBC)</h3>
+              <p style="font-size: 0.84rem; color: var(--text-muted); margin: 0.4rem 0 1rem 0;">
+                Link público de leitura com as fontes LaTeX e bibliografia em sincronia com os templates da SBC.
+              </p>
+            </div>
+            <a href="https://www.overleaf.com/read/fxhzcxmbwsqw#b139ac" target="_blank" class="btn-nav">
+              <i class="fa-solid fa-leaf text-green"></i> Abrir no Overleaf
+            </a>
+          </div>
+
+          <div class="exp-card">
+            <div>
+              <span class="badge-approved" style="font-size: 0.72rem; padding: 0.25rem 0.6rem; border-radius: 4px; display: inline-block; margin-bottom: 0.5rem;">
+                <i class="fa-brands fa-github"></i> REPOSITÓRIO ALUNA
+              </span>
+              <h3 style="font-size: 1.1rem; font-weight: 700; color: var(--text-main);">GitHub do Jogo (Pygame)</h3>
+              <p style="font-size: 0.84rem; color: var(--text-muted); margin: 0.4rem 0 1rem 0;">
+                Repositório oficial onde Luísa desenvolve o código do jogo em Python, fases, assets de imagem e trilhas sonoras.
+              </p>
+            </div>
+            <a href="https://github.com/luisablankenburg08/jogo_pygame.git" target="_blank" class="btn-nav">
+              <i class="fa-brands fa-github"></i> Acessar GitHub da Aluna
+            </a>
+          </div>
+
+          <div class="exp-card">
+            <div>
+              <span class="badge-approved" style="font-size: 0.72rem; padding: 0.25rem 0.6rem; border-radius: 4px; display: inline-block; margin-bottom: 0.5rem;">
+                <i class="fa-solid fa-graduation-cap"></i> PAINEL GERAL PI-II
+              </span>
+              <h3 style="font-size: 1.1rem; font-weight: 700; color: var(--text-main);">Dashboard da Turma PI-II (2026-2)</h3>
+              <p style="font-size: 0.84rem; color: var(--text-muted); margin: 0.4rem 0 1rem 0;">
+                Painel institucional da turma onde o projeto de Luísa figura como modelo padrão-ouro de rigor científico.
+              </p>
+            </div>
+            <a href="https://chameoandre.github.io/TEC-INF-UC-projeto-integrador-II/2026-2/" target="_blank" class="btn-nav">
+              <i class="fa-solid fa-chart-line"></i> Acessar Painel PI-II
+            </a>
+          </div>
+
+          <div class="exp-card">
+            <div>
+              <span class="badge-approved" style="font-size: 0.72rem; padding: 0.25rem 0.6rem; border-radius: 4px; display: inline-block; margin-bottom: 0.5rem;">
+                <i class="fa-brands fa-youtube"></i> PITCH VÍDEO
+              </span>
+              <h3 style="font-size: 1.1rem; font-weight: 700; color: var(--text-main);">Pitch em Vídeo do Projeto</h3>
+              <p style="font-size: 0.84rem; color: var(--text-muted); margin: 0.4rem 0 1rem 0;">
+                Apresentação audiovisual sucinta demonstrando o propósito pedagógico do jogo e os estímulos musicais.
+              </p>
+            </div>
+            <a href="https://youtu.be/Wm4SfQHkzHI?si=lWNC7QELy9D_ZZpT" target="_blank" class="btn-nav">
+              <i class="fa-brands fa-youtube text-red"></i> Assistir Pitch no YouTube
+            </a>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+  </main>
+
+  <footer>
+    <div class="container">
+      <p style="font-weight: 600; color: var(--text-main); margin-bottom: 0.3rem;">
+        Instituto Federal de Santa Catarina (IFSC) — Câmpus Garopaba
+      </p>
+      <p>
+        Curso Técnico Integrado em Informática • Projeto Integrador II • Orientação: Prof. Dr. André Luiz Silva de Moraes
+      </p>
+      <p style="font-size: 0.75rem; margin-top: 0.4rem; color: var(--text-dim);">
+        Painel Executivo atualizado com as conquistas do COTB 2026 e WebMedia 2026 (SBC).
+      </p>
+    </div>
+  </footer>
+
+  <!-- JAVASCRIPT: TABS & THEME TOGGLE -->
+  <script>
+    // Tab switching logic
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-pane').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+
+      const targetPane = document.getElementById(tabId);
+      if (targetPane) targetPane.classList.add('active');
+
+      const clickedBtn = Array.from(document.querySelectorAll('.tab-btn')).find(b => {
+        const onclickAttr = b.getAttribute('onclick') || '';
+        return onclickAttr.includes(tabId);
+      });
+      if (clickedBtn) clickedBtn.classList.add('active');
+
+      // Scroll to top of tab smoothly if needed
+      window.scrollTo({ top: 380, behavior: 'smooth' });
+    }
+
+    // Theme toggle logic (Light / Dark)
+    function toggleTheme() {
+      const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+      const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+      
+      document.documentElement.setAttribute('data-theme', newTheme);
+      localStorage.setItem('ifsc_luisa_theme', newTheme);
+      updateThemeButton(newTheme);
+    }
+
+    function updateThemeButton(theme) {
+      const icon = document.getElementById('themeIcon');
+      const label = document.getElementById('themeLabel');
+      if (!icon || !label) return;
+
+      if (theme === 'dark') {
+        icon.className = 'fa-solid fa-sun';
+        label.textContent = 'Modo Claro';
+      } else {
+        icon.className = 'fa-solid fa-moon';
+        label.textContent = 'Modo Escuro';
+      }
+    }
+
+    // Initial theme check
+    (function initTheme() {
+      const savedTheme = localStorage.getItem('ifsc_luisa_theme') || 'light';
+      document.documentElement.setAttribute('data-theme', savedTheme);
+      updateThemeButton(savedTheme);
+    })();
+  </script>
+
+</body>
+</html>
