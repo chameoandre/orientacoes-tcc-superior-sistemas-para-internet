@@ -1653,6 +1653,8 @@
                 <td><span class="badge-status em-andamento" style="background: rgba(220, 38, 38, 0.12); color: #dc2626; border-color: #dc2626;">Alta</span></td>
                 <td>
                   <a href="https://chameoandre.github.io/Marilias-notes-and-Implementation-plan/" target="_blank" class="btn-link-action dashboard"><i class="fa-solid fa-chart-line"></i> Dashboard</a>
+                  <a href="https://www.overleaf.com/project/69dc15ab48a033923b88b451" target="_blank" class="btn-link-action overleaf" title="Abrir Artigo TCC no Overleaf"><i class="fa-solid fa-leaf"></i> Artigo TCC</a>
+                  <a href="https://www.overleaf.com/project/69e6315c530c90e2824c26aa" target="_blank" class="btn-link-action overleaf" title="Abrir Tutorial no Overleaf"><i class="fa-solid fa-leaf"></i> Tutorial</a>
                   <a href="https://docs.google.com/document/d/1MIw-_lGgw37u-OHouxF43dwNrWBOI5vmaJwJW3S0Jzw/edit?tab=t.0" target="_blank" class="btn-link-action"><i class="fa-solid fa-comments"></i> Ata</a>
                 </td>
               </tr>
@@ -1998,12 +2000,13 @@ tectonic -Z shell-escape document.tex</pre>
         bancaData: "12/06 às 20h00",
         progresso: 75,
         fase: "Fase 4: Validação com Ramon (3 Diagramas) & Painel Admin de Demandas",
-        linkPreProjeto: "https://docs.google.com/document/d/1qnvYJ0fRcCAY4pdhvVL27W4Wnwjt18eZnLQ8VTj7WLg/edit?usp=sharing",
+        linkPreProjeto: "https://docs.google.com/document/d/1qnvYJ0fRcCAY4pdhvVL27W4Wnwjt18eZnLQ8VTj7WLg/edit?tab=t.0",
         linkSlides: "",
         linkDashboard: "https://chameoandre.github.io/Marilias-notes-and-Implementation-plan/",
         linkComentariosBanca: "https://docs.google.com/document/d/1MIw-_lGgw37u-OHouxF43dwNrWBOI5vmaJwJW3S0Jzw/edit?tab=t.0",
         linkOverleaf: "https://www.overleaf.com/read/dbcswpzjpnhs#55b18d",
         linkOverleafProject: "https://www.overleaf.com/project/69dc15ab48a033923b88b451",
+        linkOverleafNotes: "https://www.overleaf.com/project/69e6315c530c90e2824c26aa",
         linkGithub: "https://github.com/marilia79/tcc",
         tags: ["Chatbot", "PLN", "LLMs", "Secretaria Acadêmica", "SBC", "Painel Demandas"]
       },
@@ -2264,8 +2267,13 @@ tectonic -Z shell-escape document.tex</pre>
         if (s.linkDashboardLocal) {
           linkButtons += `<a href="${s.linkDashboardLocal}" target="_blank" class="btn-link-action dashboard" title="Abrir Dashboard Localmente" style="border-color: rgba(22, 163, 74, 0.4); color: var(--ifsc-green);"><i class="fa-solid fa-folder-tree"></i> Dashboard (Local)</a>`;
         }
-        if (s.linkOverleaf) {
+        if (s.linkOverleafProject) {
+          linkButtons += `<a href="${s.linkOverleafProject}" target="_blank" class="btn-link-action overleaf" title="Abrir Artigo TCC no Overleaf"><i class="fa-solid fa-leaf"></i> Artigo TCC</a>`;
+        } else if (s.linkOverleaf) {
           linkButtons += `<a href="${s.linkOverleaf}" target="_blank" class="btn-link-action overleaf" title="Visualizar Artigo no Overleaf"><i class="fa-solid fa-leaf"></i> Overleaf</a>`;
+        }
+        if (s.linkOverleafNotes) {
+          linkButtons += `<a href="${s.linkOverleafNotes}" target="_blank" class="btn-link-action overleaf" title="Abrir Tutorial no Overleaf"><i class="fa-solid fa-leaf"></i> Tutorial</a>`;
         }
         if (s.linkGithub) {
           linkButtons += `<a href="${s.linkGithub}" target="_blank" class="btn-link-action github" title="Abrir Repositório no GitHub"><i class="fa-brands fa-github"></i> GitHub</a>`;
@@ -2617,7 +2625,9 @@ tectonic -Z shell-escape document.tex</pre>
       if (s.linkPreProjeto) linksHtml += `<a href="${s.linkPreProjeto}" target="_blank" class="btn btn-outline btn-sm"><i class="fa-solid fa-file-lines"></i> Abrir Pré-projeto</a>`;
       if (s.linkSlides) linksHtml += `<a href="${s.linkSlides}" target="_blank" class="btn btn-outline btn-sm" style="color: var(--accent-amber);"><i class="fa-solid fa-file-powerpoint"></i> Slides</a>`;
       if (s.linkDashboard) linksHtml += `<a href="${s.linkDashboard}" target="_blank" class="btn btn-outline btn-sm" style="color: var(--accent-cyan);"><i class="fa-solid fa-chart-line"></i> Dashboard Web</a>`;
-      if (s.linkOverleaf) linksHtml += `<a href="${s.linkOverleaf}" target="_blank" class="btn btn-outline btn-sm" style="color: #16a34a;"><i class="fa-solid fa-leaf"></i> Paper Overleaf</a>`;
+      if (s.linkOverleafProject) linksHtml += `<a href="${s.linkOverleafProject}" target="_blank" class="btn btn-outline btn-sm" style="color: #16a34a;"><i class="fa-solid fa-leaf"></i> Artigo TCC</a>`;
+      if (s.linkOverleafNotes) linksHtml += `<a href="${s.linkOverleafNotes}" target="_blank" class="btn btn-outline btn-sm" style="color: #16a34a;"><i class="fa-solid fa-leaf"></i> Tutorial</a>`;
+      if (s.linkOverleaf && !s.linkOverleafProject) linksHtml += `<a href="${s.linkOverleaf}" target="_blank" class="btn btn-outline btn-sm" style="color: #16a34a;"><i class="fa-solid fa-leaf"></i> Paper Overleaf</a>`;
       if (s.linkGithub) linksHtml += `<a href="${s.linkGithub}" target="_blank" class="btn btn-outline btn-sm" style="color: #9333ea;"><i class="fa-brands fa-github"></i> Repositório GitHub</a>`;
       if (s.linkComentariosBanca) linksHtml += `<a href="${s.linkComentariosBanca}" target="_blank" class="btn btn-outline btn-sm"><i class="fa-solid fa-comments"></i> Ata da Banca</a>`;
 
@@ -2832,6 +2842,8 @@ tectonic -Z shell-escape document.tex</pre>
         const progresso = existing ? existing.progresso : (status === 'PARADO' ? 35 : (status === 'Concluído' ? 95 : 65));
         const tags = existing ? existing.tags : [tipo, "IFSC Garopaba"];
 
+        const isMarilia = nome.toLowerCase().includes('marília') || nome.toLowerCase().includes('marilia');
+
         newStudents.push({
           id: idCounter++,
           nome: nome,
@@ -2840,18 +2852,20 @@ tectonic -Z shell-escape document.tex</pre>
           nivel: tipo === 'TCC' ? 'Superior • Sistemas para Internet' : 'Técnico Integrado em Informática',
           titulo: titulo,
           status: status,
-          statusDetalhe: existing && existing.nome.includes('Marília') ? existing.statusDetalhe : statusDetalhe,
+          statusDetalhe: existing && isMarilia ? existing.statusDetalhe : statusDetalhe,
           prazoEntrega: prazo,
           bancaMembros: bancaMembros,
           bancaData: bancaData,
           progresso: progresso,
           fase: existing ? existing.fase : 'Em andamento',
-          linkPreProjeto: linkPreProjeto,
+          linkPreProjeto: isMarilia ? "https://docs.google.com/document/d/1qnvYJ0fRcCAY4pdhvVL27W4Wnwjt18eZnLQ8VTj7WLg/edit?tab=t.0" : (linkPreProjeto || (existing ? existing.linkPreProjeto : '')),
           linkSlides: slides,
-          linkDashboard: dashboard,
-          linkComentariosBanca: comentarios,
+          linkDashboard: dashboard || (existing ? existing.linkDashboard : ''),
+          linkComentariosBanca: comentarios || (existing ? existing.linkComentariosBanca : ''),
           linkOverleaf: overleaf,
-          linkGithub: github,
+          linkOverleafProject: isMarilia ? "https://www.overleaf.com/project/69dc15ab48a033923b88b451" : (existing ? existing.linkOverleafProject : ''),
+          linkOverleafNotes: isMarilia ? "https://www.overleaf.com/project/69e6315c530c90e2824c26aa" : (existing ? existing.linkOverleafNotes : ''),
+          linkGithub: github || (existing ? existing.linkGithub : ''),
           tags: tags
         });
       }
