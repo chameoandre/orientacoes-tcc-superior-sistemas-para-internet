@@ -1865,7 +1865,7 @@ tectonic -Z shell-escape document.tex</pre>
         <form id="meetingForm" onsubmit="saveNewMeeting(event)">
           <div class="form-group">
             <label>Orientando *</label>
-            <select id="meetingAlunoSelect" class="form-control" required>
+            <select id="meetingAlunoSelect" class="form-control" onchange="onMeetingAlunoChange()" required>
               <option value="">Selecione o aluno...</option>
               <option value="Marília Stefenon">Marília Stefenon</option>
               <option value="Guilherme Londero">Guilherme Londero</option>
@@ -1874,6 +1874,11 @@ tectonic -Z shell-escape document.tex</pre>
               <option value="Luísa Narvaz">Luísa Narvaz</option>
               <option value="Rodrigo, Eluney, João">Rodrigo, Eluney, João</option>
             </select>
+          </div>
+
+          <div class="form-group">
+            <label>E-mail para Notificação (Aluno ou Teste)</label>
+            <input type="email" id="meetingEmailInput" class="form-control" placeholder="ex: aluno@aluno.ifsc.edu.br ou chameoandre@gmail.com">
           </div>
 
           <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
@@ -2406,6 +2411,7 @@ tectonic -Z shell-escape document.tex</pre>
     function quickRegisterMeeting(alunoNome) {
       document.getElementById('meetingAlunoSelect').value = alunoNome;
       document.getElementById('meetingDateInput').value = new Date().toISOString().split('T')[0];
+      onMeetingAlunoChange();
       document.getElementById('newMeetingModal').classList.add('active');
     }
 
@@ -2415,6 +2421,7 @@ tectonic -Z shell-escape document.tex</pre>
         document.getElementById('meetingAlunoSelect').value = currentStudentForMeeting.nome;
       }
       document.getElementById('meetingDateInput').value = new Date().toISOString().split('T')[0];
+      onMeetingAlunoChange();
       closeModal('studentModal');
       document.getElementById('newMeetingModal').classList.add('active');
     }
@@ -2422,7 +2429,18 @@ tectonic -Z shell-escape document.tex</pre>
     function openNewMeetingModal() {
       document.getElementById('meetingForm').reset();
       document.getElementById('meetingDateInput').value = new Date().toISOString().split('T')[0];
+      const emailInput = document.getElementById('meetingEmailInput');
+      if (emailInput) emailInput.value = '';
       document.getElementById('newMeetingModal').classList.add('active');
+    }
+
+    function onMeetingAlunoChange() {
+      const alunoNome = document.getElementById('meetingAlunoSelect').value;
+      const email = getStudentEmail(alunoNome);
+      const emailInput = document.getElementById('meetingEmailInput');
+      if (emailInput) {
+        emailInput.value = email || '';
+      }
     }
 
     // Google Apps Script Web App URL para inclusão remota
@@ -2439,15 +2457,12 @@ tectonic -Z shell-escape document.tex</pre>
     async function enviarNotificacaoEmailIndividual(id) {
       const m = meetingsData.find(item => item.id === id);
       if (!m) return;
-      const email = getStudentEmail(m.alunoNome);
+      const defaultEmail = m.alunoEmail || getStudentEmail(m.alunoNome) || 'chameoandre@gmail.com';
 
-      const confirmMsg = email
-        ? `Deseja enviar a ata desta reunião (${formatDateBR(m.data)}) por e-mail para ${m.alunoNome} (${email})?`
-        : `Deseja enviar a notificação desta reunião (${formatDateBR(m.data)}) para ${m.alunoNome}?`;
+      const targetEmail = prompt(`Deseja enviar a ata desta reunião (${formatDateBR(m.data)}) por e-mail para ${m.alunoNome}?\n\nConfirme ou informe o e-mail de destino:`, defaultEmail);
+      if (!targetEmail) return;
 
-      if (!confirm(confirmMsg)) return;
-
-      showToast(`Enviando notificação por e-mail para ${m.alunoNome}...`, 'info');
+      showToast(`Enviando notificação por e-mail para ${targetEmail}...`, 'info');
 
       if (GOOGLE_SCRIPT_WEBAPP_URL) {
         try {
@@ -2460,7 +2475,7 @@ tectonic -Z shell-escape document.tex</pre>
             body: JSON.stringify({
               acao: 'enviar_email',
               alunoNome: m.alunoNome,
-              alunoEmail: email,
+              alunoEmail: targetEmail.trim(),
               data: formatDateBR(m.data),
               hora: m.hora,
               tipo: m.tipo,
@@ -2469,7 +2484,7 @@ tectonic -Z shell-escape document.tex</pre>
               proximosPassos: m.proximosPassos
             })
           });
-          showToast(`Notificação enviada com sucesso para ${m.alunoNome}!`, 'success');
+          showToast(`Notificação enviada com sucesso para ${targetEmail}!`, 'success');
         } catch (err) {
           console.warn('Erro ao disparar e-mail:', err);
           showToast(`Erro ao disparar e-mail via Apps Script.`, 'warning');
@@ -2496,7 +2511,8 @@ tectonic -Z shell-escape document.tex</pre>
       const deliberacoes = document.getElementById('meetingDelibInput').value;
       const proximosPassos = document.getElementById('meetingProximosInput').value;
       const enviarEmail = document.getElementById('meetingEnviarEmailCheck') ? document.getElementById('meetingEnviarEmailCheck').checked : false;
-      const alunoEmail = getStudentEmail(alunoNome);
+      const emailField = document.getElementById('meetingEmailInput');
+      const alunoEmail = (emailField && emailField.value.trim()) ? emailField.value.trim() : getStudentEmail(alunoNome);
 
       const newMeeting = {
         id: Date.now(),
