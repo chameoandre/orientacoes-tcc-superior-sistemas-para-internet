@@ -2429,8 +2429,7 @@ tectonic -Z shell-escape document.tex</pre>
     function openNewMeetingModal() {
       document.getElementById('meetingForm').reset();
       document.getElementById('meetingDateInput').value = new Date().toISOString().split('T')[0];
-      const emailInput = document.getElementById('meetingEmailInput');
-      if (emailInput) emailInput.value = '';
+      onMeetingAlunoChange();
       document.getElementById('newMeetingModal').classList.add('active');
     }
 
@@ -2707,35 +2706,60 @@ tectonic -Z shell-escape document.tex</pre>
       }
     }
 
+    function parseCSVToRows(text) {
+      const rows = [];
+      let currentRow = [];
+      let currentVal = '';
+      let inQuotes = false;
+      const len = text.length;
+
+      for (let i = 0; i < len; i++) {
+        const char = text[i];
+        const nextChar = text[i + 1];
+
+        if (char === '"') {
+          if (inQuotes && nextChar === '"') {
+            currentVal += '"';
+            i++;
+          } else {
+            inQuotes = !inQuotes;
+          }
+        } else if (char === ',' && !inQuotes) {
+          currentRow.push(currentVal.trim());
+          currentVal = '';
+        } else if ((char === '\r' || char === '\n') && !inQuotes) {
+          if (char === '\r' && nextChar === '\n') {
+            i++;
+          }
+          currentRow.push(currentVal.trim());
+          if (currentRow.length > 1 || (currentRow.length === 1 && currentRow[0] !== '')) {
+            rows.push(currentRow);
+          }
+          currentRow = [];
+          currentVal = '';
+        } else {
+          currentVal += char;
+        }
+      }
+      if (currentVal || currentRow.length > 0) {
+        currentRow.push(currentVal.trim());
+        if (currentRow.length > 1 || (currentRow.length === 1 && currentRow[0] !== '')) {
+          rows.push(currentRow);
+        }
+      }
+      return rows;
+    }
+
     function parseMeetingsCsvAndUpdate(csvText) {
-      const lines = csvText.split(String.fromCharCode(10));
-      if (lines.length < 2) return;
+      const rows = parseCSVToRows(csvText);
+      if (rows.length < 2) return;
       
       const parsedMeetings = [];
       let idCounter = 100;
 
-      for (let i = 1; i < lines.length; i++) {
-        const line = lines[i].trim();
-        if (!line) continue;
-
-        // Parse CSV columns handling quotes
-        const row = [];
-        let inQuotes = false;
-        let curVal = '';
-        for (let j = 0; j < line.length; j++) {
-          const char = line[j];
-          if (char === '"') {
-            inQuotes = !inQuotes;
-          } else if (char === ',' && !inQuotes) {
-            row.push(curVal.trim().replace(/^"|"$/g, ''));
-            curVal = '';
-          } else {
-            curVal += char;
-          }
-        }
-        row.push(curVal.trim().replace(/^"|"$/g, ''));
-
-        if (row.length < 3 || !row[0] || !row[2]) continue;
+      for (let i = 1; i < rows.length; i++) {
+        const row = rows[i];
+        if (!row || row.length < 3 || !row[0] || !row[2]) continue;
 
         parsedMeetings.push({
           id: idCounter++,
