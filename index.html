@@ -621,6 +621,46 @@
       color: var(--accent-cyan);
       border: 1px solid rgba(8, 145, 178, 0.3);
     }
+    .badge-status.desistente,
+    .badge-status.inativo {
+      background: rgba(239, 68, 68, 0.12);
+      color: #ef4444;
+      border: 1px solid rgba(239, 68, 68, 0.35);
+    }
+    .flag-orientacao {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 0.22rem 0.6rem;
+      border-radius: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      white-space: nowrap;
+    }
+    .flag-orientacao.ativo {
+      background: rgba(22, 163, 74, 0.14);
+      color: #16a34a;
+      border: 1px solid rgba(22, 163, 74, 0.35);
+    }
+    .flag-orientacao.inativo {
+      background: rgba(239, 68, 68, 0.14);
+      color: #ef4444;
+      border: 1px solid rgba(239, 68, 68, 0.35);
+    }
+    .flag-orientacao.concluido {
+      background: rgba(8, 145, 178, 0.14);
+      color: var(--accent-cyan);
+      border: 1px solid rgba(8, 145, 178, 0.35);
+    }
+    .project-card.card-inativo {
+      border-color: rgba(239, 68, 68, 0.3);
+      background: linear-gradient(180deg, rgba(239, 68, 68, 0.02) 0%, var(--bg-card) 100%);
+    }
+    .project-card.card-inativo:hover {
+      border-color: rgba(239, 68, 68, 0.5);
+    }
 
     .project-title {
       font-size: 0.96rem;
@@ -1331,10 +1371,26 @@
         </div>
       </div>
 
+      <div class="kpi-card" style="--accent-color: var(--ifsc-green);">
+        <div class="kpi-icon"><i class="fa-solid fa-user-check"></i></div>
+        <div class="kpi-info">
+          <div class="kpi-val" id="kpi-orientacoes-ativas">3</div>
+          <div class="kpi-label">Orientações Ativas</div>
+        </div>
+      </div>
+
+      <div class="kpi-card" style="--accent-color: #ef4444;">
+        <div class="kpi-icon"><i class="fa-solid fa-user-xmark"></i></div>
+        <div class="kpi-info">
+          <div class="kpi-val" id="kpi-orientacoes-inativas" style="color: #ef4444;">2</div>
+          <div class="kpi-label">Inativos (Desistência / Pausa)</div>
+        </div>
+      </div>
+
       <div class="kpi-card" style="--accent-color: var(--accent-cyan);">
         <div class="kpi-icon"><i class="fa-solid fa-code-branch"></i></div>
         <div class="kpi-info">
-          <div class="kpi-val" id="kpi-tcc-ativos">3</div>
+          <div class="kpi-val" id="kpi-tcc-ativos">2</div>
           <div class="kpi-label">TCCs Ativos (Em Andamento)</div>
         </div>
       </div>
@@ -1369,19 +1425,25 @@
 
           <div class="chip-group">
             <button class="filter-chip active" data-filter="all" onclick="setFilterChip(this, 'all')">
-              <i class="fa-solid fa-border-all"></i> Todos (6)
+              <i class="fa-solid fa-border-all"></i> Todos (<span id="chip-count-all">6</span>)
+            </button>
+            <button class="filter-chip" data-filter="ativo" onclick="setFilterChip(this, 'ativo')">
+              <i class="fa-solid fa-circle-check" style="color: var(--ifsc-green);"></i> Ativos (<span id="chip-count-ativo">3</span>)
+            </button>
+            <button class="filter-chip" data-filter="inativo" onclick="setFilterChip(this, 'inativo')">
+              <i class="fa-solid fa-circle-xmark" style="color: #ef4444;"></i> Inativos / Desistentes (<span id="chip-count-inativo">2</span>)
             </button>
             <button class="filter-chip" data-filter="tcc" onclick="setFilterChip(this, 'tcc')">
-              <i class="fa-solid fa-user-graduate"></i> TCC Superior (4)
+              <i class="fa-solid fa-user-graduate"></i> TCC Superior (<span id="chip-count-tcc">4</span>)
             </button>
             <button class="filter-chip" data-filter="pi" onclick="setFilterChip(this, 'pi')">
-              <i class="fa-solid fa-diagram-project"></i> Projeto Integrador (2)
+              <i class="fa-solid fa-diagram-project"></i> Projeto Integrador (<span id="chip-count-pi">2</span>)
             </button>
             <button class="filter-chip" data-filter="em-andamento" onclick="setFilterChip(this, 'em-andamento')">
-              <i class="fa-solid fa-spinner"></i> Em Andamento (3)
+              <i class="fa-solid fa-spinner"></i> Em Andamento (<span id="chip-count-andamento">3</span>)
             </button>
             <button class="filter-chip" data-filter="parado" onclick="setFilterChip(this, 'parado')">
-              <i class="fa-solid fa-pause"></i> 2027 / Pausado (1)
+              <i class="fa-solid fa-pause"></i> 2027 / Pausado (<span id="chip-count-parado">1</span>)
             </button>
           </div>
         </div>
@@ -1496,6 +1558,7 @@
               <tr>
                 <th>Orientando</th>
                 <th>Tema / Trabalho</th>
+                <th>Situação da Orientação</th>
                 <th>Data & Horário</th>
                 <th>Banca Examinadora</th>
                 <th>Status Atual</th>
@@ -1503,12 +1566,13 @@
               </tr>
             </thead>
             <tbody>
-              <tr>
+              <tr style="opacity: 0.85;">
                 <td><strong>Guilherme Londero</strong></td>
                 <td>Lista de Chamada com RFID e Rastreamento em Transporte</td>
+                <td><span class="flag-orientacao inativo"><i class="fa-solid fa-user-xmark"></i> Inativo (Desistência)</span></td>
                 <td>10/06 às 20h00</td>
                 <td>Prof. Ignácio Ramirez<br>Prof. Luiz Antonio Pacheco</td>
-                <td><span class="badge-status em-andamento">Aguardando correções pós-banca</span></td>
+                <td><span class="badge-status desistente"><i class="fa-solid fa-ban"></i> Desistência Notificada</span></td>
                 <td>
                   <a href="https://docs.google.com/presentation/d/1yv32VLyXsRgQX9URjhIafPXQf-q5c-tbkisyW8Fsh34/edit#slide=id.g50448e8ad77b6eb9_9" target="_blank" class="btn-link-action slides"><i class="fa-solid fa-file-powerpoint"></i> Slides</a>
                 </td>
@@ -1516,6 +1580,7 @@
               <tr>
                 <td><strong>Michel David de Souza</strong></td>
                 <td>Jogo de Ensino sobre Vírus de Computador</td>
+                <td><span class="flag-orientacao ativo"><i class="fa-solid fa-user-check"></i> Ativo</span></td>
                 <td>11/06 às 20h00</td>
                 <td>Prof. Ryan Marcos Cardoso<br>Profª. Fabiana de Agapito</td>
                 <td><span class="badge-status em-andamento">Leitura das observações da banca</span></td>
@@ -1527,6 +1592,7 @@
               <tr>
                 <td><strong>Marília Stefenon</strong></td>
                 <td>Chatbot para Secretaria Acadêmica com Framework Leve</td>
+                <td><span class="flag-orientacao ativo"><i class="fa-solid fa-user-check"></i> Ativo</span></td>
                 <td>12/06 às 20h00</td>
                 <td>Prof. Thiago Lipinski Paes<br>Prof. Ignácio Ramirez</td>
                 <td><span class="badge-status em-andamento">Recuperar comentários e qualificar proposta</span></td>
@@ -1537,6 +1603,7 @@
               <tr>
                 <td><strong>Higor Rodrigues</strong></td>
                 <td>Plataforma Web para Gestão Financeira Pessoal e Empresarial</td>
+                <td><span class="flag-orientacao inativo"><i class="fa-solid fa-pause"></i> Inativo (2027)</span></td>
                 <td>12/06 às 21h00</td>
                 <td>Prof. Thiago Lipinski Paes<br>Profª. Fabiana de Agapito</td>
                 <td><span class="badge-status parado">Pausado (Apresentará em 2027)</span></td>
@@ -1658,15 +1725,20 @@
                   <a href="https://docs.google.com/document/d/1MIw-_lGgw37u-OHouxF43dwNrWBOI5vmaJwJW3S0Jzw/edit?tab=t.0" target="_blank" class="btn-link-action"><i class="fa-solid fa-comments"></i> Ata</a>
                 </td>
               </tr>
-              <tr>
-                <td><strong>Guilherme Londero</strong></td>
+              <tr style="opacity: 0.85;">
+                <td>
+                  <strong>Guilherme Londero</strong><br>
+                  <span class="flag-orientacao inativo" style="margin-top: 4px;">
+                    <i class="fa-solid fa-user-xmark"></i> Inativo • Desistência
+                  </span>
+                </td>
                 <td>
                   Pré-projeto entregue e apresentado perante banca; cronograma de pipeline modelado.
                 </td>
                 <td>
-                  Aplicar correções da banca de Ignácio Ramirez e Luiz Antonio Pacheco; validar comunicação de RFID com ESP32/Node.js.
+                  <strong style="color: #ef4444;">Orientação Encerrada:</strong> O orientando comunicou formalmente a desistência da orientação do TCC neste ciclo. Processo e registros arquivados.
                 </td>
-                <td><span class="badge-status em-andamento" style="background: rgba(220, 38, 38, 0.12); color: #dc2626; border-color: #dc2626;">Alta</span></td>
+                <td><span class="badge-status desistente"><i class="fa-solid fa-ban"></i> Desistente</span></td>
                 <td>
                   <a href="https://chameoandre.github.io/orientacoes-tcc-superior-sistemas-para-internet/2026/guilherme-londero/cronograma-pipeline.html" target="_blank" class="btn-link-action dashboard"><i class="fa-solid fa-timeline"></i> Pipeline</a>
                   <a href="https://docs.google.com/document/d/10V7QZhYb327OKufUG-YbnVdaYrTbcGIpP7pJDV7n44o/edit?usp=sharing" target="_blank" class="btn-link-action"><i class="fa-solid fa-file-word"></i> Pré-projeto</a>
@@ -1723,12 +1795,15 @@
 tectonic -Z shell-escape document.tex</pre>
           </div>
 
-          <div class="progress-box">
-            <h4 style="color: var(--accent-cyan); margin-bottom: 0.5rem;"><i class="fa-solid fa-folder"></i> Guilherme Londero (TCC Superior 2026)</h4>
+          <div class="progress-box" style="border-left: 3px solid #ef4444; opacity: 0.85;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+              <h4 style="color: var(--accent-cyan); margin: 0;"><i class="fa-solid fa-folder"></i> Guilherme Londero (TCC Superior 2026)</h4>
+              <span class="flag-orientacao inativo"><i class="fa-solid fa-user-xmark"></i> Inativo • Desistência</span>
+            </div>
             <code style="font-size: 0.78rem; display: block; background: rgba(0,0,0,0.04); border: 1px solid var(--chip-border); padding: 0.6rem; border-radius: 6px; margin-bottom: 0.7rem;">
               /Users/chameoandre/Google-Drive-chameoandre/INSTITUTO-FEDERAL-SANTA-CATARINA/ORIENTACOES-ALUNOS/2026/superior/2026-guilherme-londero
             </code>
-            <p style="font-size: 0.8rem; color: var(--text-muted);">Repositório público com cronograma e análise:</p>
+            <p style="font-size: 0.8rem; color: #ef4444; margin-bottom: 0.3rem;"><i class="fa-solid fa-circle-exclamation"></i> Orientação encerrada por desistência comunicada pelo orientando.</p>
             <a href="https://chameoandre.github.io/orientacoes-tcc-superior-sistemas-para-internet/2026/guilherme-londero/cronograma-pipeline.html" target="_blank" style="font-size: 0.78rem; word-break: break-all;">
               https://chameoandre.github.io/orientacoes-tcc-superior-sistemas-para-internet/...
             </a>
@@ -1867,13 +1942,14 @@ tectonic -Z shell-escape document.tex</pre>
             <label>Orientando *</label>
             <select id="meetingAlunoSelect" class="form-control" onchange="onMeetingAlunoChange()" required>
               <option value="">Selecione o aluno...</option>
-              <option value="Marília Stefenon">Marília Stefenon</option>
-              <option value="Guilherme Londero">Guilherme Londero</option>
-              <option value="Michel David de Souza">Michel David de Souza</option>
-              <option value="Higor Rodrigues">Higor Rodrigues</option>
-              <option value="Luísa Narvaz">Luísa Narvaz</option>
-              <option value="Rodrigo, Eluney, João">Rodrigo, Eluney, João</option>
+              <option value="Marília Stefenon">Marília Stefenon [Ativo]</option>
+              <option value="Michel David de Souza">Michel David de Souza [Ativo]</option>
+              <option value="Luísa Narvaz">Luísa Narvaz [Ativo]</option>
+              <option value="Guilherme Londero">Guilherme Londero [Inativo • Desistência]</option>
+              <option value="Higor Rodrigues">Higor Rodrigues [Inativo • Pausado 2027]</option>
+              <option value="Rodrigo, Eluney, João">Rodrigo, Eluney, João [Concluído]</option>
             </select>
+            <div id="meetingAlunoInactiveAlert" style="display: none; margin-top: 0.5rem; font-size: 0.8rem; color: #ef4444; background: rgba(239, 68, 68, 0.08); border: 1px solid rgba(239, 68, 68, 0.25); border-radius: 6px; padding: 0.4rem 0.6rem;"></div>
           </div>
 
           <div class="form-group">
@@ -1975,13 +2051,15 @@ tectonic -Z shell-escape document.tex</pre>
         tipo: "TCC",
         nivel: "Superior • Sistemas para Internet",
         titulo: "Sistema de Lista de Chamada no Transporte Escolar com RFID: Notificações automáticas e rastreamento em tempo real",
-        status: "Em andamento",
-        statusDetalhe: "APRESENTAÇÃO FINALIZADA, AGUARDANDO CORREÇÕES E PREPARAÇÃO PARA PRÓXIMA APRESENTAÇÃO",
-        prazoEntrega: "29/05/2026",
+        status: "Desistente",
+        statusOrientacao: "Inativo",
+        motivoStatus: "Desistência comunicada",
+        statusDetalhe: "DESISTÊNCIA NOTIFICADA: O orientando comunicou formalmente a desistência da orientação do TCC neste ciclo letivo. Processo e registros arquivados.",
+        prazoEntrega: "Desistente",
         bancaMembros: "Ignácio Kirhiako Sepulveda Ramirez e Luiz Antonio Schalata Pacheco",
         bancaData: "10/06 às 20h00",
         progresso: 65,
-        fase: "Revisão Pós-Banca & Implementação RFID",
+        fase: "Orientação Encerrada (Desistência)",
         linkPreProjeto: "https://docs.google.com/document/d/10V7QZhYb327OKufUG-YbnVdaYrTbcGIpP7pJDV7n44o/edit?usp=sharing",
         linkSlides: "https://docs.google.com/presentation/d/1yv32VLyXsRgQX9URjhIafPXQf-q5c-tbkisyW8Fsh34/edit#slide=id.g50448e8ad77b6eb9_9",
         linkDashboard: "https://chameoandre.github.io/orientacoes-tcc-superior-sistemas-para-internet/2026/guilherme-londero/index.html",
@@ -1989,7 +2067,7 @@ tectonic -Z shell-escape document.tex</pre>
         linkNotes: "https://docs.google.com/document/d/1vktbGULallqievWISoteulKw6XUyyJyczY6VBUcoB24/edit?usp=sharing",
         linkOverleaf: "",
         linkGithub: "",
-        tags: ["RFID", "IoT", "Transporte Escolar", "Node.js", "Tempo Real", "Mobile/Web"]
+        tags: ["RFID", "IoT", "Transporte Escolar", "Node.js", "Desistência", "Inativo"]
       },
       {
         id: 2,
@@ -1999,6 +2077,8 @@ tectonic -Z shell-escape document.tex</pre>
         nivel: "Superior • Sistemas para Internet",
         titulo: "Chatbot para atendimento na secretaria acadêmica utilizando framework leve",
         status: "Em andamento",
+        statusOrientacao: "Ativo",
+        motivoStatus: "",
         statusDetalhe: "1) Elaborar 3 diagramas numerados do atendimento para validação com Ramon; 2) Iniciar implementação do painel administrativo de demandas (atendimento 100% bot vs. interação com atendente).",
         prazoEntrega: "29/05/2026",
         bancaMembros: "Thiago Lipinski Paes e Ignácio Kirhiako Sepulveda Ramirez",
@@ -2023,6 +2103,8 @@ tectonic -Z shell-escape document.tex</pre>
         nivel: "Superior • Sistemas para Internet",
         titulo: "Jogo de Ensino sobre Vírus de Computador",
         status: "Em andamento",
+        statusOrientacao: "Ativo",
+        motivoStatus: "",
         statusDetalhe: "E-mail de cobrança encaminhado em 26/09/2026 solicitando status atualizado das atividades pós-pré-banca; aguardando retorno do aluno para alinhamento dos próximos passos na Godot.",
         prazoEntrega: "29/05/2026",
         bancaMembros: "Ryan Marcos Fragnani Cardoso e Fabiana de Agapito Kangerski",
@@ -2044,6 +2126,8 @@ tectonic -Z shell-escape document.tex</pre>
         nivel: "Superior • Sistemas para Internet",
         titulo: "Plataforma web responsiva para gestão financeira pessoal e empresarial",
         status: "PARADO",
+        statusOrientacao: "Inativo",
+        motivoStatus: "Pausado (Retomada em 2027)",
         statusDetalhe: "Apresentará em 2027",
         prazoEntrega: "29/05/2026",
         bancaMembros: "Thiago Lipinski Paes e Fabiana de Agapito Kangerski",
@@ -2065,6 +2149,8 @@ tectonic -Z shell-escape document.tex</pre>
         nivel: "Técnico Integrado em Informática • 2026-2",
         titulo: "Música, Jogo e Atenção: Jogo Educacional em Python/Pygame e Raspberry Pi",
         status: "Em andamento",
+        statusOrientacao: "Ativo",
+        motivoStatus: "",
         statusDetalhe: "Desenvolvimento exemplar no PI-II: Jogo em Python/Pygame com áudio e Raspberry Pi 4. Dois artigos aprovados em eventos nacionais da SBC: COTB 2026 (versão final entregue) e WebMedia 2026 (32º Simpósio Brasileiro de Sistemas Multimídia e Web, UFLA). 4 experimentos metodológicos estruturados e protocolo CEP instruído.",
         prazoEntrega: "10/12/2026",
         bancaMembros: "Prof. Dr. André Moraes e Comissão Avaliadora PI-II",
@@ -2088,6 +2174,8 @@ tectonic -Z shell-escape document.tex</pre>
         nivel: "Técnico Integrado em Informática",
         titulo: "JIFTv (Streaming Adaptativo nos jogos Escolares)",
         status: "Concluído",
+        statusOrientacao: "Concluído",
+        motivoStatus: "Trabalho Concluído",
         statusDetalhe: "Transmissão adaptativa nos jogos escolares do IFSC; artigos submetidos a eventos.",
         prazoEntrega: "Concluído",
         bancaMembros: "Comissão de Avaliação PI • IFSC Garopaba",
@@ -2223,14 +2311,16 @@ tectonic -Z shell-escape document.tex</pre>
       const q = document.getElementById('searchInput').value.toLowerCase().trim();
       const filtered = studentsData.filter(s => {
         // Chip filter
+        if (currentFilter === 'ativo' && s.statusOrientacao !== 'Ativo') return false;
+        if (currentFilter === 'inativo' && s.statusOrientacao !== 'Inativo') return false;
         if (currentFilter === 'tcc' && s.tipo !== 'TCC') return false;
         if (currentFilter === 'pi' && !s.tipo.toLowerCase().includes('projeto integrador')) return false;
-        if (currentFilter === 'em-andamento' && s.status !== 'Em andamento') return false;
-        if (currentFilter === 'parado' && s.status !== 'PARADO') return false;
+        if (currentFilter === 'em-andamento' && (s.status !== 'Em andamento' || s.statusOrientacao !== 'Ativo')) return false;
+        if (currentFilter === 'parado' && s.status !== 'PARADO' && s.statusOrientacao !== 'Inativo') return false;
 
         // Search text
         if (!q) return true;
-        const text = (s.nome + ' ' + s.titulo + ' ' + (s.tags ? s.tags.join(' ') : '') + ' ' + s.bancaMembros).toLowerCase();
+        const text = (s.nome + ' ' + s.titulo + ' ' + (s.statusOrientacao || '') + ' ' + (s.motivoStatus || '') + ' ' + (s.tags ? s.tags.join(' ') : '') + ' ' + s.bancaMembros).toLowerCase();
         return text.includes(q);
       });
 
@@ -2253,7 +2343,10 @@ tectonic -Z shell-escape document.tex</pre>
 
       container.innerHTML = list.map(s => {
         const initials = s.nome.split(' ').map(n => n[0]).slice(0, 2).join('');
-        const statusClass = s.status === 'Em andamento' ? 'em-andamento' : (s.status === 'PARADO' ? 'parado' : 'concluido');
+        const isInactive = s.statusOrientacao === 'Inativo';
+        const isConcluido = s.statusOrientacao === 'Concluído';
+        const statusClass = isInactive ? 'inativo' : (s.status === 'Em andamento' ? 'em-andamento' : (s.status === 'PARADO' ? 'parado' : 'concluido'));
+        const flagClass = isInactive ? 'inativo' : (isConcluido ? 'concluido' : 'ativo');
         
         // Count meetings for this student
         const studentMeetings = meetingsData.filter(m => m.alunoNome.toLowerCase().includes(s.nome.toLowerCase().split(' ')[0]));
@@ -2290,10 +2383,10 @@ tectonic -Z shell-escape document.tex</pre>
         const tagsHtml = s.tags ? s.tags.map(t => `<span class="tag-badge">${t}</span>`).join('') : '';
 
         return `
-          <div class="project-card">
+          <div class="project-card ${isInactive ? 'card-inativo' : ''}">
             <div class="card-top">
               <div class="student-identity">
-                <div class="student-avatar">${initials}</div>
+                <div class="student-avatar" style="${isInactive ? 'background: rgba(239, 68, 68, 0.12); color: #ef4444; border-color: rgba(239, 68, 68, 0.35);' : ''}">${initials}</div>
                 <div class="student-meta">
                   <h3>${s.nome}</h3>
                   <div class="email-link">
@@ -2301,23 +2394,29 @@ tectonic -Z shell-escape document.tex</pre>
                   </div>
                 </div>
               </div>
-              <span class="badge-status ${statusClass}">${s.status}</span>
+              <div style="display: flex; flex-direction: column; align-items: flex-end; gap: 5px;">
+                <span class="flag-orientacao ${flagClass}" title="Situação da Orientação: ${s.statusOrientacao}">
+                  <i class="fa-solid ${isInactive ? 'fa-user-xmark' : (isConcluido ? 'fa-circle-check' : 'fa-user-check')}"></i>
+                  ${s.statusOrientacao} ${s.motivoStatus ? `• ${s.motivoStatus}` : ''}
+                </span>
+                <span class="badge-status ${statusClass}">${s.status}</span>
+              </div>
             </div>
 
             <h4 class="project-title">${s.titulo}</h4>
 
-            <div class="progress-box">
+            <div class="progress-box" style="${isInactive ? 'background: rgba(239, 68, 68, 0.03); border-color: rgba(239, 68, 68, 0.2);' : ''}">
               <div class="progress-header">
                 <span><strong>${s.fase || 'Em desenvolvimento'}</strong></span>
                 <span><strong>${s.progresso}%</strong></span>
               </div>
               <div class="progress-bar-bg">
-                <div class="progress-bar-fill" style="width: ${s.progresso}%;"></div>
+                <div class="progress-bar-fill" style="width: ${s.progresso}%; ${isInactive ? 'background: #ef4444;' : ''}"></div>
               </div>
             </div>
 
-            <div class="banca-alert-box">
-              <strong>Situação / Próximos Passos:</strong> ${s.statusDetalhe || 'Aguardando novas instruções.'}
+            <div class="banca-alert-box" style="${isInactive ? 'background: rgba(239, 68, 68, 0.06); border-left-color: #ef4444;' : ''}">
+              <strong style="${isInactive ? 'color: #ef4444;' : ''}">Situação / Próximos Passos:</strong> ${s.statusDetalhe || 'Aguardando novas instruções.'}
             </div>
 
             <div class="banca-meta">
@@ -2336,7 +2435,7 @@ tectonic -Z shell-escape document.tex</pre>
 
             <div class="links-grid" style="margin-top: 0.5rem; align-items: center;">
               ${linkButtons}
-              <button class="btn-link-action" onclick="quickRegisterMeeting('${s.nome}')" style="color: var(--ifsc-green);" title="Registrar Reunião com este aluno">
+              <button class="btn-link-action" onclick="quickRegisterMeeting('${s.nome}')" style="${isInactive ? 'color: #ef4444; border-color: rgba(239, 68, 68, 0.3);' : 'color: var(--ifsc-green);'}" title="Registrar Reunião com este aluno">
                 <i class="fa-solid fa-plus"></i> Reunião
               </button>
               <button class="btn-link-action" onclick="openStudentModal(${s.id})" style="background: rgba(22, 163, 74, 0.12); border-color: var(--ifsc-green); color: var(--ifsc-green); margin-left: auto;">
@@ -2435,10 +2534,20 @@ tectonic -Z shell-escape document.tex</pre>
 
     function onMeetingAlunoChange() {
       const alunoNome = document.getElementById('meetingAlunoSelect').value;
-      const email = getStudentEmail(alunoNome);
+      const s = studentsData.find(item => item.nome.toLowerCase().includes(alunoNome.toLowerCase().split(' ')[0]));
+      const email = s && s.email ? s.email : '';
       const emailInput = document.getElementById('meetingEmailInput');
       if (emailInput) {
         emailInput.value = email || '';
+      }
+      const alertBox = document.getElementById('meetingAlunoInactiveAlert');
+      if (alertBox) {
+        if (s && s.statusOrientacao === 'Inativo') {
+          alertBox.style.display = 'block';
+          alertBox.innerHTML = `<i class="fa-solid fa-triangle-exclamation"></i> <strong>Aviso:</strong> A orientação deste aluno consta como <strong>Inativa (${s.motivoStatus || s.status})</strong>.`;
+        } else {
+          alertBox.style.display = 'none';
+        }
       }
     }
 
@@ -2588,7 +2697,16 @@ tectonic -Z shell-escape document.tex</pre>
       currentStudentForMeeting = s;
 
       document.getElementById('modalStudentName').textContent = s.nome;
-      document.getElementById('modalStudentType').textContent = s.tipo + (s.nivel ? ' • ' + s.nivel : '');
+      const isInactive = s.statusOrientacao === 'Inativo';
+      const isConcluido = s.statusOrientacao === 'Concluído';
+      const flagClass = isInactive ? 'inativo' : (isConcluido ? 'concluido' : 'ativo');
+      document.getElementById('modalStudentType').innerHTML = `
+        ${s.tipo} ${s.nivel ? '• ' + s.nivel : ''} &nbsp;
+        <span class="flag-orientacao ${flagClass}">
+          <i class="fa-solid ${isInactive ? 'fa-user-xmark' : (isConcluido ? 'fa-circle-check' : 'fa-user-check')}"></i>
+          Orientação: ${s.statusOrientacao} ${s.motivoStatus ? `(${s.motivoStatus})` : ''}
+        </span>
+      `;
       document.getElementById('modalProjectTitle').textContent = s.titulo;
       document.getElementById('modalStatusDetail').textContent = s.statusDetalhe;
       document.getElementById('modalProgressVal').textContent = s.progresso + '%';
@@ -2828,36 +2946,60 @@ tectonic -Z shell-escape document.tex</pre>
       }
     }
 
+    // KPI Updater
+    function updateKpiCounts() {
+      const total = studentsData.length;
+      const ativos = studentsData.filter(s => s.statusOrientacao === 'Ativo').length;
+      const inativos = studentsData.filter(s => s.statusOrientacao === 'Inativo').length;
+      const tccAtivos = studentsData.filter(s => s.tipo === 'TCC' && s.statusOrientacao === 'Ativo').length;
+      const tccTotal = studentsData.filter(s => s.tipo === 'TCC').length;
+      const piTotal = studentsData.filter(s => s.tipo.toLowerCase().includes('projeto integrador')).length;
+      const emAndamento = studentsData.filter(s => s.status === 'Em andamento' && s.statusOrientacao === 'Ativo').length;
+      const pausados = studentsData.filter(s => s.status === 'PARADO' || s.statusOrientacao === 'Inativo').length;
+
+      const elTotal = document.getElementById('kpi-total-alunos');
+      if (elTotal) elTotal.textContent = total;
+      const elNav = document.getElementById('count-total-nav');
+      if (elNav) elNav.textContent = total;
+      const elTccAtivos = document.getElementById('kpi-tcc-ativos');
+      if (elTccAtivos) elTccAtivos.textContent = tccAtivos;
+      const elAtivos = document.getElementById('kpi-orientacoes-ativas');
+      if (elAtivos) elAtivos.textContent = ativos;
+      const elInativos = document.getElementById('kpi-orientacoes-inativas');
+      if (elInativos) elInativos.textContent = inativos;
+
+      // Update chip labels
+      const chipAll = document.getElementById('chip-count-all');
+      if (chipAll) chipAll.textContent = total;
+      const chipAtivo = document.getElementById('chip-count-ativo');
+      if (chipAtivo) chipAtivo.textContent = ativos;
+      const chipInativo = document.getElementById('chip-count-inativo');
+      if (chipInativo) chipInativo.textContent = inativos;
+      const chipTcc = document.getElementById('chip-count-tcc');
+      if (chipTcc) chipTcc.textContent = tccTotal;
+      const chipPi = document.getElementById('chip-count-pi');
+      if (chipPi) chipPi.textContent = piTotal;
+      const chipAndamento = document.getElementById('chip-count-andamento');
+      if (chipAndamento) chipAndamento.textContent = emAndamento;
+      const chipParado = document.getElementById('chip-count-parado');
+      if (chipParado) chipParado.textContent = pausados;
+    }
+
     // Parse CSV Text from Google Sheets
     function parseCsvAndUpdate(csvText) {
-      const lines = csvText.split(String.fromCharCode(10));
+      const rows = parseCSVToRows(csvText);
       let headerPassed = false;
       let newStudents = [];
       let idCounter = 1;
 
-      for (let line of lines) {
-        if (line.includes('Nome do Aluno') && line.includes('Título do Projeto')) {
+      for (let row of rows) {
+        if (!row || !row[0]) continue;
+        const lineStr = row.join(' ');
+        if (lineStr.includes('Nome do Aluno') && lineStr.includes('Título do Projeto')) {
           headerPassed = true;
           continue;
         }
         if (!headerPassed) continue;
-
-        // Manual CSV tokenizer
-        const row = [];
-        let inQuotes = false;
-        let curVal = '';
-        for (let i = 0; i < line.length; i++) {
-          const char = line[i];
-          if (char === '"') {
-            inQuotes = !inQuotes;
-          } else if (char === ',' && !inQuotes) {
-            row.push(curVal.trim());
-            curVal = '';
-          } else {
-            curVal += char;
-          }
-        }
-        row.push(curVal.trim());
 
         if (row.length < 5 || !row[0]) continue;
 
@@ -2883,6 +3025,14 @@ tectonic -Z shell-escape document.tex</pre>
         const tags = existing ? existing.tags : [tipo, "IFSC Garopaba"];
 
         const isMarilia = nome.toLowerCase().includes('marília') || nome.toLowerCase().includes('marilia');
+        const isGuilherme = nome.toLowerCase().includes('guilherme');
+        const statusOrientacao = isGuilherme ? 'Inativo' : (existing ? (existing.statusOrientacao || 'Ativo') : (status === 'PARADO' ? 'Inativo' : (status === 'Concluído' ? 'Concluído' : 'Ativo')));
+        const motivoStatus = isGuilherme ? 'Desistência comunicada' : (existing ? (existing.motivoStatus || '') : '');
+        const finalStatus = isGuilherme ? 'Desistente' : status;
+        const finalStatusDetalhe = isGuilherme 
+          ? 'DESISTÊNCIA NOTIFICADA: O orientando comunicou formalmente a desistência da orientação do TCC neste ciclo letivo. Processo e registros arquivados.' 
+          : (existing && isMarilia ? existing.statusDetalhe : statusDetalhe);
+        const finalFase = isGuilherme ? 'Orientação Encerrada (Desistência)' : (existing ? existing.fase : 'Em andamento');
 
         newStudents.push({
           id: idCounter++,
@@ -2891,13 +3041,15 @@ tectonic -Z shell-escape document.tex</pre>
           tipo: tipo,
           nivel: tipo === 'TCC' ? 'Superior • Sistemas para Internet' : 'Técnico Integrado em Informática',
           titulo: titulo,
-          status: status,
-          statusDetalhe: existing && isMarilia ? existing.statusDetalhe : statusDetalhe,
-          prazoEntrega: prazo,
+          status: finalStatus,
+          statusOrientacao: statusOrientacao,
+          motivoStatus: motivoStatus,
+          statusDetalhe: finalStatusDetalhe,
+          prazoEntrega: isGuilherme ? 'Desistente' : prazo,
           bancaMembros: bancaMembros,
           bancaData: bancaData,
           progresso: progresso,
-          fase: existing ? existing.fase : 'Em andamento',
+          fase: finalFase,
           linkPreProjeto: isMarilia ? "https://docs.google.com/document/d/1qnvYJ0fRcCAY4pdhvVL27W4Wnwjt18eZnLQ8VTj7WLg/edit?tab=t.0" : (linkPreProjeto || (existing ? existing.linkPreProjeto : '')),
           linkSlides: slides,
           linkDashboard: dashboard || (existing ? existing.linkDashboard : ''),
@@ -2912,8 +3064,7 @@ tectonic -Z shell-escape document.tex</pre>
 
       if (newStudents.length > 0) {
         studentsData = newStudents;
-        document.getElementById('kpi-total-alunos').textContent = studentsData.length;
-        document.getElementById('count-total-nav').textContent = studentsData.length;
+        updateKpiCounts();
         filterProjects();
       }
     }
@@ -3141,6 +3292,7 @@ tectonic -Z shell-escape document.tex</pre>
     }
 
       // Initial render
+      updateKpiCounts();
       renderProjects(studentsData);
       renderMeetings();
       renderPapers();
