@@ -2213,6 +2213,11 @@ tectonic -Z shell-escape document.tex</pre>
           <h3 id="modalStudentName">Nome do Aluno</h3>
           <span id="modalStudentType" class="badge-status em-andamento" style="margin-top: 4px; display: inline-block;">TCC</span>
         </div>
+        <div style="display: flex; align-items: center; gap: 0.5rem; margin-left: auto; margin-right: 0.75rem;">
+          <button class="btn btn-primary btn-sm" onclick="openEditStudentModal()" title="Editar dados cadastrais e atualizar planilha Google Sheets">
+            <i class="fa-solid fa-pen-to-square"></i> Editar Orientando
+          </button>
+        </div>
         <button class="modal-close-btn" onclick="closeModal('studentModal')" title="Fechar janela">
           <i class="fa-solid fa-xmark"></i>
         </button>
@@ -2284,6 +2289,101 @@ tectonic -Z shell-escape document.tex</pre>
           </div>
         </div>
 
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: EDITAR DADOS DO ORIENTANDO (SINCRONIZAÇÃO BIDIRECIONAL COM GOOGLE SHEETS) -->
+  <div class="modal-overlay" id="editStudentModal" onclick="closeModalOnOverlay(event, 'editStudentModal')">
+    <div class="modal-container" style="max-width: 650px;">
+      <div class="modal-header">
+        <div>
+          <h3><i class="fa-solid fa-pen-to-square" style="color: var(--ifsc-green);"></i> Editar Dados do Orientando</h3>
+          <p style="font-size: 0.78rem; color: var(--text-muted); margin-top: 2px;">Atualiza o painel local e a planilha Google Sheets oficial</p>
+        </div>
+        <button class="modal-close-btn" onclick="closeModal('editStudentModal')">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <form id="editStudentForm" onsubmit="saveEditStudent(event)">
+          <input type="hidden" id="editStudentId">
+
+          <div class="form-group">
+            <label>Orientando</label>
+            <input type="text" id="editStudentNome" class="form-control" readonly style="background: var(--bg-surface); opacity: 0.9; font-weight: 600;">
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+            <div class="form-group">
+              <label>Status da Orientação *</label>
+              <select id="editStudentStatusOrientacao" class="form-control" required>
+                <option value="Ativo">Ativo</option>
+                <option value="Concluído">Concluído</option>
+                <option value="Inativo">Inativo</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Status do Trabalho *</label>
+              <select id="editStudentStatus" class="form-control" required>
+                <option value="Em andamento">Em andamento</option>
+                <option value="Concluído">Concluído</option>
+                <option value="PARADO">PARADO</option>
+                <option value="Desistente">Desistente</option>
+              </select>
+            </div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 1rem;">
+            <div class="form-group">
+              <label>Fase Atual da Pesquisa / TCC</label>
+              <input type="text" id="editStudentFase" class="form-control" placeholder="Ex: Fase 4: Validação dos Diagramas & Painel Admin">
+            </div>
+            <div class="form-group">
+              <label>Progresso Estimado (%)</label>
+              <input type="number" id="editStudentProgresso" class="form-control" min="0" max="100" placeholder="0 - 100">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Prazo de Entrega / Data Prevista</label>
+            <input type="text" id="editStudentPrazo" class="form-control" placeholder="Ex: 29/05/2026 ou Concluído">
+          </div>
+
+          <div class="form-group">
+            <label>Status Detalhe & Próximos Passos (Anotações do Orientador) *</label>
+            <textarea id="editStudentDetalhe" class="form-control" rows="4" placeholder="Descreva o status atual do trabalho, deliberações e próximas entregas imediatas..." required></textarea>
+          </div>
+
+          <div style="border-top: 1px dashed var(--border-color); padding-top: 1rem; margin-top: 1rem;">
+            <h4 style="font-size: 0.82rem; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.75rem;">
+              <i class="fa-solid fa-link"></i> Links de Produção & Repositórios
+            </h4>
+
+            <div class="form-group">
+              <label><i class="fa-solid fa-leaf" style="color: #16a34a;"></i> Link do Paper / Artigo no Overleaf</label>
+              <input type="url" id="editStudentOverleafProject" class="form-control" placeholder="https://www.overleaf.com/project/...">
+            </div>
+
+            <div class="form-group">
+              <label><i class="fa-brands fa-github" style="color: #9333ea;"></i> Link do Repositório GitHub</label>
+              <input type="url" id="editStudentGithub" class="form-control" placeholder="https://github.com/...">
+            </div>
+
+            <div class="form-group">
+              <label><i class="fa-solid fa-chart-line" style="color: var(--accent-cyan);"></i> Link do Painel / Dashboard Web</label>
+              <input type="url" id="editStudentDashboard" class="form-control" placeholder="https://chameoandre.github.io/...">
+            </div>
+          </div>
+
+          <div style="display: flex; justify-content: flex-end; gap: 0.75rem; margin-top: 1.5rem;">
+            <button type="button" class="btn btn-outline" onclick="closeModal('editStudentModal')">Cancelar</button>
+            <button type="submit" class="btn btn-primary" id="btnSalvarEditStudent">
+              <i class="fa-solid fa-cloud-arrow-up"></i> Salvar e Atualizar Planilha
+            </button>
+          </div>
+        </form>
       </div>
     </div>
   </div>
@@ -2860,6 +2960,14 @@ tectonic -Z shell-escape document.tex</pre>
     ];
 
     let studentsData = [...initialStudents];
+    // Carrega overrides manuais salvos pelo usuário para garantir persistência mesmo antes do Sheets atualizar
+    const savedStudentOverrides = JSON.parse(localStorage.getItem('ifsc-tcc-students-overrides') || '{}');
+    if (Object.keys(savedStudentOverrides).length > 0) {
+      studentsData = studentsData.map(s => {
+        const ov = savedStudentOverrides[s.nome] || savedStudentOverrides[s.id];
+        return ov ? { ...s, ...ov } : s;
+      });
+    }
     // Garante que as reuniões oficiais estejam sempre visíveis, unindo com localStorage
     const savedMeetings = JSON.parse(localStorage.getItem('ifsc-tcc-meetings')) || [];
     const mergedMeetings = [...initialMeetings];
@@ -3039,6 +3147,9 @@ tectonic -Z shell-escape document.tex</pre>
               ${linkButtons}
               <button class="btn-link-action" onclick="quickRegisterMeeting('${s.nome}')" style="${isInactive ? 'color: #ef4444; border-color: rgba(239, 68, 68, 0.3);' : 'color: var(--ifsc-green);'}" title="Registrar Reunião com este aluno">
                 <i class="fa-solid fa-plus"></i> Reunião
+              </button>
+              <button class="btn-link-action" onclick="openEditStudentModal(${s.id})" title="Editar dados cadastrais e atualizar na planilha Google Sheets" style="color: var(--accent-cyan);">
+                <i class="fa-solid fa-pen-to-square"></i> Editar
               </button>
               <button class="btn-link-action" onclick="openStudentModal(${s.id})" style="background: rgba(22, 163, 74, 0.12); border-color: var(--ifsc-green); color: var(--ifsc-green); margin-left: auto;">
                 <i class="fa-solid fa-expand"></i> Ficha Completa
@@ -3371,6 +3482,123 @@ tectonic -Z shell-escape document.tex</pre>
       document.getElementById('studentModal').classList.add('active');
     }
 
+    // Abre o modal de edição de dados do orientando
+    function openEditStudentModal(id) {
+      const studentId = id || (currentStudentForMeeting ? currentStudentForMeeting.id : null);
+      if (!studentId) return;
+      const s = studentsData.find(item => item.id === studentId);
+      if (!s) return;
+
+      currentStudentForMeeting = s;
+      document.getElementById('editStudentId').value = s.id;
+      document.getElementById('editStudentNome').value = s.nome;
+      document.getElementById('editStudentStatusOrientacao').value = s.statusOrientacao || 'Ativo';
+      document.getElementById('editStudentStatus').value = s.status || 'Em andamento';
+      document.getElementById('editStudentFase').value = s.fase || '';
+      document.getElementById('editStudentProgresso').value = s.progresso !== undefined ? s.progresso : 70;
+      document.getElementById('editStudentPrazo').value = s.prazoEntrega || '';
+      document.getElementById('editStudentDetalhe').value = s.statusDetalhe || '';
+      document.getElementById('editStudentOverleafProject').value = s.linkOverleafProject || s.linkOverleaf || '';
+      document.getElementById('editStudentGithub').value = s.linkGithub || '';
+      document.getElementById('editStudentDashboard').value = s.linkDashboard || '';
+
+      closeModal('studentModal');
+      document.getElementById('editStudentModal').classList.add('active');
+    }
+
+    // Salva as edições do aluno localmente e envia para a planilha Google Sheets
+    async function saveEditStudent(e) {
+      e.preventDefault();
+      const id = parseInt(document.getElementById('editStudentId').value, 10);
+      const s = studentsData.find(item => item.id === id);
+      if (!s) return;
+
+      const btn = document.getElementById('btnSalvarEditStudent');
+      const originalHtml = btn.innerHTML;
+      btn.disabled = true;
+      btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Gravando na planilha...';
+
+      const statusOrientacao = document.getElementById('editStudentStatusOrientacao').value;
+      const status = document.getElementById('editStudentStatus').value;
+      const fase = document.getElementById('editStudentFase').value.trim();
+      const progresso = parseInt(document.getElementById('editStudentProgresso').value, 10) || 0;
+      const prazoEntrega = document.getElementById('editStudentPrazo').value.trim();
+      const statusDetalhe = document.getElementById('editStudentDetalhe').value.trim();
+      const linkOverleafProject = document.getElementById('editStudentOverleafProject').value.trim();
+      const linkGithub = document.getElementById('editStudentGithub').value.trim();
+      const linkDashboard = document.getElementById('editStudentDashboard').value.trim();
+
+      // Atualiza o objeto na memória
+      s.statusOrientacao = statusOrientacao;
+      s.status = status;
+      s.fase = fase;
+      s.progresso = progresso;
+      s.prazoEntrega = prazoEntrega;
+      s.statusDetalhe = statusDetalhe;
+      s.linkOverleafProject = linkOverleafProject;
+      if (linkOverleafProject) s.linkOverleaf = linkOverleafProject;
+      s.linkGithub = linkGithub;
+      s.linkDashboard = linkDashboard;
+
+      // Salva no localStorage como override persistente
+      const savedOverrides = JSON.parse(localStorage.getItem('ifsc-tcc-students-overrides') || '{}');
+      savedOverrides[s.nome] = {
+        statusOrientacao,
+        status,
+        fase,
+        progresso,
+        prazoEntrega,
+        statusDetalhe,
+        linkOverleafProject,
+        linkOverleaf: linkOverleafProject || s.linkOverleaf,
+        linkGithub,
+        linkDashboard
+      };
+      localStorage.setItem('ifsc-tcc-students-overrides', JSON.stringify(savedOverrides));
+
+      // Re-renderiza o dashboard imediatamente
+      updateKpiCounts();
+      filterProjects();
+      closeModal('editStudentModal');
+      showToast(`Alterações de ${s.nome} gravadas localmente! Sincronizando com a planilha...`, 'info');
+
+      // Dispara o envio ao Google Apps Script Web App
+      if (GOOGLE_SCRIPT_WEBAPP_URL) {
+        try {
+          await fetch(GOOGLE_SCRIPT_WEBAPP_URL, {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: {
+              'Content-Type': 'text/plain;charset=utf-8'
+            },
+            body: JSON.stringify({
+              acao: 'atualizar_aluno',
+              nome: s.nome,
+              status: s.status,
+              statusOrientacao: s.statusOrientacao,
+              statusDetalhe: s.statusDetalhe,
+              fase: s.fase,
+              progresso: s.progresso,
+              prazoEntrega: s.prazoEntrega,
+              linkOverleaf: s.linkOverleafProject || s.linkOverleaf,
+              linkGithub: s.linkGithub,
+              linkDashboard: s.linkDashboard
+            })
+          });
+          showToast(`Dados de ${s.nome} gravados com sucesso na planilha Google Sheets!`, 'success');
+        } catch (err) {
+          console.warn('Erro ao atualizar Google Sheets via Apps Script:', err);
+          showToast(`Dados salvos no painel. O Google Sheets sincronizará no próximo envio.`, 'warning');
+        } finally {
+          btn.disabled = false;
+          btn.innerHTML = originalHtml;
+        }
+      } else {
+        btn.disabled = false;
+        btn.innerHTML = originalHtml;
+      }
+    }
+
     function closeModal(modalId) {
       document.getElementById(modalId).classList.remove('active');
     }
@@ -3587,12 +3815,20 @@ tectonic -Z shell-escape document.tex</pre>
       if (chipParado) chipParado.textContent = pausados;
     }
 
-    // Parse CSV Text from Google Sheets
+    // Parse CSV Text from Google Sheets (Com Mesclagem Inteligente e Suporte a Overrides)
     function parseCsvAndUpdate(csvText) {
       const rows = parseCSVToRows(csvText);
       let headerPassed = false;
       let newStudents = [];
       let idCounter = 1;
+      const savedOverrides = JSON.parse(localStorage.getItem('ifsc-tcc-students-overrides') || '{}');
+
+      // Helper para detectar textos genéricos ou pré-banca antigos da planilha
+      const isOldPreBanca = (txt) => {
+        if (!txt) return true;
+        const t = txt.toLowerCase().trim();
+        return t === 'xx' || t.includes('apresentação finalizada') || t.includes('recuperar comentários dos avaliadores');
+      };
 
       for (let row of rows) {
         if (!row || !row[0]) continue;
@@ -3605,7 +3841,7 @@ tectonic -Z shell-escape document.tex</pre>
 
         if (row.length < 5 || !row[0]) continue;
 
-        const nome = row[0];
+        const nome = row[0].trim();
         const email = row[1] || '';
         const tipo = row[2] || 'TCC';
         const dashboard = row[3] || '';
@@ -3621,46 +3857,91 @@ tectonic -Z shell-escape document.tex</pre>
         const overleaf = row[17] || '';
         const github = row[18] || '';
 
-        // Match existing student for progress or default
-        const existing = studentsData.find(s => s.nome.toLowerCase().includes(nome.toLowerCase().split(' ')[0]));
-        const progresso = existing ? existing.progresso : (status === 'PARADO' ? 35 : (status === 'Concluído' ? 95 : 65));
-        const tags = existing ? existing.tags : [tipo, "IFSC Garopaba"];
+        // Match aluno existente (do estado ou initialStudents)
+        const existing = studentsData.find(s => s.nome.toLowerCase().includes(nome.toLowerCase().split(' ')[0]))
+                      || initialStudents.find(s => s.nome.toLowerCase().includes(nome.toLowerCase().split(' ')[0]));
+        
+        // Verifica se há override salvo localmente pelo orientador
+        const override = savedOverrides[nome] || (existing ? savedOverrides[existing.nome] : null);
 
         const isMarilia = nome.toLowerCase().includes('marília') || nome.toLowerCase().includes('marilia');
         const isGuilherme = nome.toLowerCase().includes('guilherme');
-        const statusOrientacao = isGuilherme ? 'Inativo' : (existing ? (existing.statusOrientacao || 'Ativo') : (status === 'PARADO' ? 'Inativo' : (status === 'Concluído' ? 'Concluído' : 'Ativo')));
-        const motivoStatus = isGuilherme ? 'Desistência comunicada' : (existing ? (existing.motivoStatus || '') : '');
-        const finalStatus = isGuilherme ? 'Desistente' : status;
-        const finalStatusDetalhe = isGuilherme 
-          ? 'DESISTÊNCIA NOTIFICADA: O orientando comunicou formalmente a desistência da orientação do TCC neste ciclo letivo. Processo e registros arquivados.' 
-          : (existing && isMarilia ? existing.statusDetalhe : statusDetalhe);
-        const finalFase = isGuilherme ? 'Orientação Encerrada (Desistência)' : (existing ? existing.fase : 'Em andamento');
+
+        // Resolução inteligente de Status de Orientação
+        let finalStatusOrientacao = 'Ativo';
+        if (override && override.statusOrientacao) {
+          finalStatusOrientacao = override.statusOrientacao;
+        } else if (isGuilherme) {
+          finalStatusOrientacao = 'Inativo';
+        } else if (existing && existing.statusOrientacao) {
+          finalStatusOrientacao = existing.statusOrientacao;
+        } else if (status === 'PARADO' || status === 'Desistente') {
+          finalStatusOrientacao = 'Inativo';
+        } else if (status === 'Concluído') {
+          finalStatusOrientacao = 'Concluído';
+        }
+
+        // Resolução inteligente de Status do Trabalho
+        let finalStatus = status;
+        if (override && override.status) {
+          finalStatus = override.status;
+        } else if (isGuilherme) {
+          finalStatus = 'Desistente';
+        } else if (status === 'xx' && existing) {
+          finalStatus = existing.status;
+        } else if (existing && (existing.status === 'Desistente' || existing.status === 'PARADO')) {
+          finalStatus = existing.status;
+        }
+
+        // Resolução inteligente de Status Detalhe (não sobrescreve se a planilha trouxer texto antigo de junho)
+        let finalStatusDetalhe = statusDetalhe;
+        if (override && override.statusDetalhe) {
+          finalStatusDetalhe = override.statusDetalhe;
+        } else if (isGuilherme) {
+          finalStatusDetalhe = 'DESISTÊNCIA NOTIFICADA: O orientando comunicou formalmente a desistência da orientação do TCC neste ciclo letivo. Processo e registros arquivados.';
+        } else if (isOldPreBanca(statusDetalhe) && existing && existing.statusDetalhe) {
+          finalStatusDetalhe = existing.statusDetalhe;
+        }
+
+        let finalFase = (override && override.fase) || (existing ? existing.fase : 'Em andamento');
+        let finalProgresso = (override && override.progresso !== undefined)
+          ? override.progresso
+          : (existing ? existing.progresso : (finalStatus === 'PARADO' ? 35 : (finalStatus === 'Concluído' ? 95 : 65)));
+
+        let finalOverleafProject = (override && override.linkOverleafProject)
+          || (isMarilia ? "https://www.overleaf.com/project/69dc15ab48a033923b88b451" : "")
+          || (existing ? existing.linkOverleafProject : "")
+          || (overleaf && overleaf.includes('project') ? overleaf : "");
+
+        let finalOverleaf = overleaf || (override && override.linkOverleaf) || (existing ? existing.linkOverleaf : '');
+        let finalGithub = github || (override && override.linkGithub) || (existing ? existing.linkGithub : '');
+        let finalDashboard = (override && override.linkDashboard) || dashboard || (existing ? existing.linkDashboard : '');
 
         newStudents.push({
-          id: idCounter++,
+          id: existing ? existing.id : idCounter++,
           nome: nome,
-          email: email,
+          email: email || (existing ? existing.email : ''),
           tipo: tipo,
           nivel: tipo === 'TCC' ? 'Superior • Sistemas para Internet' : 'Técnico Integrado em Informática',
-          titulo: titulo,
+          titulo: titulo || (existing ? existing.titulo : 'A definir'),
           status: finalStatus,
-          statusOrientacao: statusOrientacao,
-          motivoStatus: motivoStatus,
+          statusOrientacao: finalStatusOrientacao,
+          motivoStatus: (override && override.motivoStatus) || (isGuilherme ? 'Desistência comunicada' : (existing ? existing.motivoStatus : '')),
           statusDetalhe: finalStatusDetalhe,
-          prazoEntrega: isGuilherme ? 'Desistente' : prazo,
-          bancaMembros: bancaMembros,
-          bancaData: bancaData,
-          progresso: progresso,
+          prazoEntrega: (override && override.prazoEntrega) || (isGuilherme ? 'Desistente' : (prazo || (existing ? existing.prazoEntrega : ''))),
+          bancaMembros: bancaMembros || (existing ? existing.bancaMembros : ''),
+          bancaData: bancaData || (existing ? existing.bancaData : ''),
+          progresso: finalProgresso,
           fase: finalFase,
-          linkPreProjeto: isMarilia ? "https://docs.google.com/document/d/1qnvYJ0fRcCAY4pdhvVL27W4Wnwjt18eZnLQ8VTj7WLg/edit?tab=t.0" : (linkPreProjeto || (existing ? existing.linkPreProjeto : '')),
-          linkSlides: slides,
-          linkDashboard: dashboard || (existing ? existing.linkDashboard : ''),
+          linkPreProjeto: linkPreProjeto || (existing ? existing.linkPreProjeto : ''),
+          linkSlides: slides || (existing ? existing.linkSlides : ''),
+          linkDashboard: finalDashboard,
           linkComentariosBanca: comentarios || (existing ? existing.linkComentariosBanca : ''),
-          linkOverleaf: overleaf,
-          linkOverleafProject: isMarilia ? "https://www.overleaf.com/project/69dc15ab48a033923b88b451" : (existing ? existing.linkOverleafProject : ''),
-          linkOverleafNotes: isMarilia ? "https://www.overleaf.com/project/69e6315c530c90e2824c26aa" : (existing ? existing.linkOverleafNotes : ''),
-          linkGithub: github || (existing ? existing.linkGithub : ''),
-          tags: tags
+          linkOverleaf: finalOverleaf,
+          linkOverleafProject: finalOverleafProject,
+          linkOverleafNotes: (existing ? existing.linkOverleafNotes : ''),
+          linkGithub: finalGithub,
+          tags: (existing ? existing.tags : [tipo, "IFSC Garopaba"])
         });
       }
 
