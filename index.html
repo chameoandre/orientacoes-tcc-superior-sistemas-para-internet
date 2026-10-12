@@ -2438,7 +2438,11 @@ tectonic -Z shell-escape document.tex</pre>
     ];
     const SESSION_STORAGE_KEY = 'ifsc_orientador_session';
     const SESSION_DURATION_DAYS = 7; // Sessão mantida válida por 7 dias no localStorage
-    let GOOGLE_CLIENT_ID = localStorage.getItem('ifsc_custom_google_client_id') || '387258327129-e85d9m5b5l504958n85u6o4o4o3l4.apps.googleusercontent.com';
+    const REAL_GOOGLE_CLIENT_ID = '827223670130-f312ur39hg8bamvbce5noc0iaajq8b1a.apps.googleusercontent.com';
+    if (localStorage.getItem('ifsc_custom_google_client_id') && localStorage.getItem('ifsc_custom_google_client_id').includes('387258327129')) {
+      localStorage.removeItem('ifsc_custom_google_client_id');
+    }
+    let GOOGLE_CLIENT_ID = localStorage.getItem('ifsc_custom_google_client_id') || REAL_GOOGLE_CLIENT_ID;
     const MASTER_PIN = 'ifsc2026';
 
     // Desbloqueio direto com chave institucional do orientador
