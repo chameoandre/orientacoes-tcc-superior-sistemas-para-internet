@@ -1637,48 +1637,10 @@
       <!-- Caixa de Status / Alertas Dinâmicos -->
       <div id="authStatusMessage" class="auth-status-box"></div>
 
-      <!-- Formulário de Desbloqueio Institucional Seguro (Sem dependência externa) -->
-      <form id="authLoginForm" onsubmit="handleDirectLogin(event)" style="margin-bottom: 1.4rem;">
-        <div style="margin-bottom: 0.85rem; text-align: left;">
-          <label style="font-size: 0.78rem; font-weight: 700; color: var(--text-muted); display: block; margin-bottom: 4px;">
-            Identidade Institucional Autorizada:
-          </label>
-          <select id="authSelectedEmail" class="form-control" style="width: 100%; padding: 0.65rem 0.85rem; border-radius: 8px; border: 1px solid var(--border-color); background: var(--bg-surface); color: var(--text-main); font-weight: 600; font-size: 0.84rem;">
-            <option value="chameoandre@gmail.com">chameoandre@gmail.com (Conta Principal)</option>
-            <option value="andre.moraes@ifsc.edu.br">andre.moraes@ifsc.edu.br (IFSC Institucional)</option>
-          </select>
-        </div>
-
-        <div style="margin-bottom: 1rem; text-align: left;">
-          <label style="font-size: 0.78rem; font-weight: 700; color: var(--text-muted); display: block; margin-bottom: 4px;">
-            Chave de Acesso do Orientador:
-          </label>
-          <input type="password" id="authSecurityKey" placeholder="Digite a chave..." value="ifsc2026" class="form-control" style="width: 100%; padding: 0.65rem 0.85rem; border-radius: 8px; border: 1px solid var(--border-color); background: var(--bg-surface); color: var(--text-main); font-size: 0.84rem;" required>
-          <div style="font-size: 0.72rem; color: var(--text-dim); margin-top: 4px;">
-            Chave padrão: <code>ifsc2026</code> &bull; Sessão segura mantida por 7 dias no seu navegador.
-          </div>
-        </div>
-
-        <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center; padding: 0.75rem; font-size: 0.9rem; font-weight: 700;">
-          <i class="fa-solid fa-unlock-keyhole"></i> Desbloquear Painel (Sessão de 7 Dias)
-        </button>
-      </form>
-
-      <div style="display: flex; align-items: center; gap: 0.85rem; margin-bottom: 1.2rem; color: var(--text-dim); font-size: 0.75rem;">
-        <div style="flex: 1; height: 1px; background: var(--border-color);"></div>
-        <span>OU AUTENTICAÇÃO GOOGLE</span>
-        <div style="flex: 1; height: 1px; background: var(--border-color);"></div>
-      </div>
-
       <!-- CTA Oficial do Google Identity Services -->
-      <div class="auth-google-cta">
+      <div class="auth-google-cta" style="margin-top: 1.2rem;">
         <div id="googleSignInBtnContainer"></div>
-        <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; justify-content: center; margin-top: 0.4rem;">
-          <button type="button" class="btn btn-outline" style="font-size: 0.72rem; padding: 0.25rem 0.6rem;" onclick="promptConfigureClientId()" title="Inserir seu Client ID do Google Cloud Console">
-            <i class="fa-solid fa-gear"></i> Configurar Google Client ID
-          </button>
-        </div>
-        <div class="auth-ttl-pill" style="margin-top: 0.6rem;">
+        <div class="auth-ttl-pill" style="margin-top: 0.8rem;">
           <i class="fa-solid fa-clock-rotate-left"></i> Sessão persistente de 7 dias com auto-renovação
         </div>
       </div>
@@ -2438,57 +2400,7 @@ tectonic -Z shell-escape document.tex</pre>
     ];
     const SESSION_STORAGE_KEY = 'ifsc_orientador_session';
     const SESSION_DURATION_DAYS = 7; // Sessão mantida válida por 7 dias no localStorage
-    const REAL_GOOGLE_CLIENT_ID = '827223670130-f312ur39hg8bamvbce5noc0iaajq8b1a.apps.googleusercontent.com';
-    if (localStorage.getItem('ifsc_custom_google_client_id') && localStorage.getItem('ifsc_custom_google_client_id').includes('387258327129')) {
-      localStorage.removeItem('ifsc_custom_google_client_id');
-    }
-    let GOOGLE_CLIENT_ID = localStorage.getItem('ifsc_custom_google_client_id') || REAL_GOOGLE_CLIENT_ID;
-    const MASTER_PIN = 'ifsc2026';
-
-    // Desbloqueio direto com chave institucional do orientador
-    function handleDirectLogin(e) {
-      if (e) e.preventDefault();
-      const email = document.getElementById('authSelectedEmail').value;
-      const key = document.getElementById('authSecurityKey').value.trim();
-      const authStatus = document.getElementById('authStatusMessage');
-      const expectedPin = localStorage.getItem('ifsc_orientador_pin') || MASTER_PIN;
-
-      if (key === expectedPin || key === 'ifsc2026') {
-        const session = saveSession(email, email.includes('ifsc') ? 'Prof. André Moraes (IFSC)' : 'Prof. André Moraes', '');
-        if (authStatus) {
-          authStatus.className = 'auth-status-box success';
-          authStatus.innerHTML = `<i class="fa-solid fa-circle-check"></i> Chave validada com sucesso para <strong>${email}</strong>! Sessão ativa por 7 dias.`;
-          authStatus.style.display = 'block';
-        }
-        setTimeout(() => {
-          unlockDashboard(session);
-          showToast(`Bem-vindo, Prof. André! Sessão salva por 7 dias.`, 'success');
-        }, 300);
-      } else {
-        if (authStatus) {
-          authStatus.className = 'auth-status-box error';
-          authStatus.innerHTML = `<i class="fa-solid fa-circle-exclamation"></i> Chave incorreta para o orientador. Tente novamente.`;
-          authStatus.style.display = 'block';
-        }
-        showToast('Chave de acesso incorreta.', 'error');
-      }
-    }
-
-    // Configuração amigável do Google Client ID
-    function promptConfigureClientId() {
-      const currentId = localStorage.getItem('ifsc_custom_google_client_id') || '';
-      const newId = prompt('Insira o seu OAuth Client ID do Google Cloud Console (ex: xxxxx.apps.googleusercontent.com):\n\nOu deixe em branco para restaurar o padrão.', currentId);
-      if (newId !== null) {
-        if (newId.trim() === '') {
-          localStorage.removeItem('ifsc_custom_google_client_id');
-          showToast('Client ID redefinido.', 'info');
-        } else {
-          localStorage.setItem('ifsc_custom_google_client_id', newId.trim());
-          showToast('Google Client ID salvo com sucesso!', 'success');
-        }
-        location.reload();
-      }
-    }
+    const GOOGLE_CLIENT_ID = '827223670130-f312ur39hg8bamvbce5noc0iaajq8b1a.apps.googleusercontent.com';
 
     // Decodifica o JWT retornado pela API do Google
     function parseJwt(token) {
@@ -2673,33 +2585,8 @@ tectonic -Z shell-escape document.tex</pre>
       }
     }
 
-    // Validação direta para ambiente local (file://) ou contingência
-    function loginLocalDirect(email) {
-      const emailNorm = String(email).trim().toLowerCase();
-      if (!AUTHORIZED_EMAILS.includes(emailNorm)) {
-        showToast('E-mail não autorizado.', 'error');
-        return;
-      }
-      const session = saveSession(emailNorm, emailNorm.includes('ifsc') ? 'Prof. André Moraes (IFSC)' : 'Prof. André Moraes', '');
-      const authStatus = document.getElementById('authStatusMessage');
-      if (authStatus) {
-        authStatus.className = 'auth-status-box success';
-        authStatus.innerHTML = `<i class="fa-solid fa-circle-check"></i> Sessão local validada para <strong>${emailNorm}</strong> (TTL 7 dias). Liberando...`;
-        authStatus.style.display = 'block';
-      }
-      setTimeout(() => {
-        unlockDashboard(session);
-        showToast(`Sessão iniciada como ${emailNorm} (Válida por 7 dias).`, 'success');
-      }, 350);
-    }
-
     // Inicialização do Google Identity Services Button
     function setupGoogleAuthUI() {
-      // Sempre ativa o bloco de contingência caso seja protocolo local file://
-      if (window.location.protocol === 'file:') {
-        const devBox = document.getElementById('authLocalDevBox');
-        if (devBox) devBox.style.display = 'block';
-      }
 
       function renderGsiButton() {
         if (window.google && google.accounts && google.accounts.id) {
