@@ -847,6 +847,208 @@
       box-shadow: 0 4px 12px rgba(22, 163, 74, 0.25);
     }
 
+    /* Google Meet Button */
+    .btn-link-action.meet {
+      background: rgba(16, 185, 129, 0.12);
+      border-color: rgba(16, 185, 129, 0.4);
+      color: #059669;
+      font-weight: 700;
+    }
+    [data-theme="dark"] .btn-link-action.meet {
+      background: rgba(16, 185, 129, 0.18);
+      border-color: rgba(52, 211, 153, 0.45);
+      color: #34d399;
+    }
+    .btn-link-action.meet:hover {
+      background: #059669;
+      color: #ffffff !important;
+      border-color: #059669;
+      box-shadow: 0 4px 12px rgba(5, 150, 105, 0.35);
+      transform: translateY(-2px);
+    }
+
+    /* Custom Button Color Palettes */
+    .btn-link-action.color-green:hover { border-color: var(--ifsc-green); color: var(--ifsc-green); }
+    .btn-link-action.color-blue:hover { border-color: var(--accent-blue); color: var(--accent-blue); }
+    .btn-link-action.color-cyan:hover { border-color: var(--accent-cyan); color: var(--accent-cyan); }
+    .btn-link-action.color-purple:hover { border-color: var(--accent-purple); color: var(--accent-purple); }
+    .btn-link-action.color-amber:hover { border-color: var(--accent-amber); color: var(--accent-amber); }
+    .btn-link-action.color-red:hover { border-color: var(--ifsc-red); color: var(--ifsc-red); }
+
+    /* Action items / Pendências in Meetings & Modal */
+    .meeting-items-container {
+      margin-top: 0.6rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      background: rgba(0, 0, 0, 0.02);
+      border: 1px dashed var(--border-color);
+      border-radius: 8px;
+      padding: 0.65rem;
+    }
+    [data-theme="dark"] .meeting-items-container {
+      background: rgba(255, 255, 255, 0.02);
+    }
+    .meeting-item-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.5rem;
+      padding: 0.35rem 0.5rem;
+      border-radius: 6px;
+      transition: background 0.15s ease;
+    }
+    .meeting-item-row:hover {
+      background: rgba(0, 0, 0, 0.04);
+    }
+    [data-theme="dark"] .meeting-item-row:hover {
+      background: rgba(255, 255, 255, 0.04);
+    }
+    .meeting-item-checkbox {
+      margin-top: 3px;
+      cursor: pointer;
+      accent-color: var(--ifsc-green);
+      width: 15px;
+      height: 15px;
+    }
+    .meeting-item-content {
+      flex: 1;
+      font-size: 0.8rem;
+      line-height: 1.35;
+    }
+    .meeting-item-text.resolvido {
+      text-decoration: line-through;
+      color: var(--text-dim);
+    }
+    .meeting-item-badge {
+      font-size: 0.68rem;
+      font-weight: 700;
+      padding: 0.15rem 0.45rem;
+      border-radius: 999px;
+      white-space: nowrap;
+    }
+    .meeting-item-badge.pendente {
+      background: rgba(245, 158, 11, 0.15);
+      color: #d97706;
+      border: 1px solid rgba(245, 158, 11, 0.3);
+    }
+    .meeting-item-badge.resolvido {
+      background: rgba(22, 163, 74, 0.15);
+      color: #16a34a;
+      border: 1px solid rgba(22, 163, 74, 0.3);
+    }
+
+    /* Demand Cards, Scope Tags & Badges */
+    .demand-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 1.25rem;
+      margin-bottom: 1rem;
+      box-shadow: var(--shadow-glass);
+      transition: transform 0.2s ease, border-color 0.2s ease;
+      position: relative;
+    }
+    .demand-card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-hover);
+      border-color: var(--accent-blue);
+    }
+    .demand-card.concluida {
+      opacity: 0.9;
+      border-left: 4px solid var(--ifsc-green);
+    }
+    .demand-card.pendente {
+      border-left: 4px solid var(--accent-blue);
+    }
+    .demand-card.atrasada {
+      border-left: 4px solid #ef4444;
+    }
+    .demand-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .demand-scope-badge {
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 0.25rem 0.65rem;
+      border-radius: 999px;
+      background: rgba(59, 130, 246, 0.12);
+      color: var(--accent-blue);
+      border: 1px solid rgba(59, 130, 246, 0.25);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+    .demand-scope-badge.broadcast {
+      background: rgba(147, 51, 234, 0.12);
+      color: var(--accent-purple);
+      border-color: rgba(147, 51, 234, 0.25);
+    }
+    .demand-meta-box {
+      background: rgba(0, 0, 0, 0.02);
+      border: 1px solid var(--chip-border);
+      border-radius: 8px;
+      padding: 0.75rem 1rem;
+      margin: 0.75rem 0;
+      font-size: 0.82rem;
+      line-height: 1.45;
+    }
+    [data-theme="dark"] .demand-meta-box {
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    /* Icon selector grid in custom buttons modal */
+    .icon-picker-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(42px, 1fr));
+      gap: 0.4rem;
+      max-height: 150px;
+      overflow-y: auto;
+      padding: 0.5rem;
+      background: var(--bg-surface);
+      border: 1px solid var(--input-border);
+      border-radius: 6px;
+      margin-top: 0.4rem;
+    }
+    .icon-picker-btn {
+      height: 38px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--chip-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 1.05rem;
+      color: var(--text-main);
+      transition: all 0.15s ease;
+    }
+    .icon-picker-btn:hover, .icon-picker-btn.selected {
+      background: var(--ifsc-green);
+      color: #ffffff;
+      border-color: var(--ifsc-green);
+      transform: scale(1.08);
+    }
+
+    /* Preformatted Message Preview Box */
+    .message-preview-box {
+      background: #0f172a;
+      color: #f1f5f9;
+      font-family: 'Fira Code', monospace;
+      font-size: 0.8rem;
+      line-height: 1.5;
+      padding: 1rem;
+      border-radius: 8px;
+      white-space: pre-wrap;
+      word-break: break-word;
+      max-height: 260px;
+      overflow-y: auto;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
     /* ==========================================================================
        PAPER SHOWCASE & VITRINE STYLING
        ========================================================================== */
@@ -1597,6 +1799,32 @@
       color: #dc2626;
       border-color: rgba(220, 38, 38, 0.25);
     }
+
+    /* ==========================================================================
+       RBAC: REGRAS VISUAIS PARA O PORTAL DO ORIENTANDO (ESTUDANTE)
+       ========================================================================== */
+    body.student-portal-mode .admin-only {
+      display: none !important;
+    }
+
+    .student-welcome-banner {
+      background: linear-gradient(135deg, rgba(22, 163, 74, 0.12), rgba(6, 182, 212, 0.08));
+      border: 1px solid rgba(22, 163, 74, 0.35);
+      border-radius: 12px;
+      padding: 1.1rem 1.4rem;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04);
+      animation: fadeIn 0.3s ease-out;
+    }
+
+    .student-welcome-banner .banner-icon {
+      font-size: 2.2rem;
+      color: var(--ifsc-green);
+      flex-shrink: 0;
+    }
   </style>
 </head>
 <body>
@@ -1626,11 +1854,17 @@
       </div>
 
       <div class="auth-security-box">
-        <div><strong><i class="fa-solid fa-lock" style="color: var(--ifsc-green);"></i> Área Restrita ao Orientador:</strong></div>
-        <div style="margin-top: 4px;">Para preservar a privacidade e o sigilo dos estudantes, o acesso a este painel é protegido por política de segurança Google e liberado exclusivamente para as contas:</div>
-        <div class="auth-emails-list">
-          <div class="auth-email-chip"><i class="fa-solid fa-envelope"></i> chameoandre@gmail.com</div>
-          <div class="auth-email-chip"><i class="fa-solid fa-building-columns"></i> andre.moraes@ifsc.edu.br</div>
+        <div><strong><i class="fa-solid fa-lock" style="color: var(--ifsc-green);"></i> Portal de Acesso Individual e Seguro:</strong></div>
+        <div style="margin-top: 4px; font-size: 0.85rem; line-height: 1.45;">
+          Para garantir o sigilo das orientações, o acesso é protegido por autenticação Google com visão personalizada por perfil:
+        </div>
+        <div class="auth-emails-list" style="margin-top: 8px;">
+          <div class="auth-email-chip" style="border-color: var(--ifsc-green); color: var(--ifsc-green);">
+            <i class="fa-solid fa-user-tie"></i> <strong>Orientador:</strong> Visão Geral Completa de Todos os Alunos
+          </div>
+          <div class="auth-email-chip" style="border-color: var(--accent-cyan); color: var(--accent-cyan);">
+            <i class="fa-solid fa-user-graduate"></i> <strong>Orientando(a):</strong> Acesso Exclusivo e Confidencial ao Próprio Trabalho
+          </div>
         </div>
       </div>
 
@@ -1677,21 +1911,36 @@
 
     <div class="header-actions">
       <!-- Live Sync Button -->
-      <button class="btn btn-primary" id="liveSyncBtn" onclick="liveSyncFromSheet()" title="Sincronizar dados em tempo real da planilha Google Sheets">
+      <button class="btn btn-primary admin-only" id="liveSyncBtn" onclick="liveSyncFromSheet()" title="Sincronizar dados em tempo real da planilha Google Sheets">
         <i class="fa-solid fa-rotate" id="liveSyncIcon"></i> Sincronizar Planilha
       </button>
 
       <!-- Google Sheets Direct Link -->
-      <a href="https://docs.google.com/spreadsheets/d/193Uemkt_-eAkzlQxUuAznmwLxzzO4FW6mjw1e_DURhA/edit?gid=0#gid=0" target="_blank" class="btn btn-outline" title="Abrir Google Planilha Oficial">
+      <a href="https://docs.google.com/spreadsheets/d/193Uemkt_-eAkzlQxUuAznmwLxzzO4FW6mjw1e_DURhA/edit?gid=0#gid=0" target="_blank" class="btn btn-outline admin-only" title="Abrir Google Planilha Oficial">
         <i class="fa-solid fa-table"></i> Planilha Oficial
       </a>
 
+      <!-- Google Meet Direct Room -->
+      <a href="https://meet.google.com/cej-kkio-bpw?pli=1&authuser=1" target="_blank" class="btn btn-outline" style="border-color: #10b981; color: #10b981; font-weight: 700;" title="Abrir Sala Virtual do Google Meet">
+        <i class="fa-solid fa-video"></i> Sala Meet
+      </a>
+
+      <!-- Quick Action: Nova Demanda Docente -->
+      <button class="btn btn-primary admin-only" onclick="openNewDemandModal('*')" style="background: var(--accent-blue); border-color: var(--accent-blue); color: #fff;" title="Criar Nova Demanda Docente ou Broadcast para Turma">
+        <i class="fa-solid fa-bullhorn"></i> + Nova Demanda
+      </button>
+
+      <!-- Quick Action: Personalizar Botões dos Cards -->
+      <button class="btn btn-outline admin-only" onclick="openCardButtonsModal()" title="Adicionar ou remover botões de acesso rápido nos cards dos estudantes">
+        <i class="fa-solid fa-sliders"></i> Botões dos Cards
+      </button>
+
       <!-- Quick Tab Action: Nova Reunião -->
-      <button class="btn btn-outline" onclick="openNewMeetingModal()" title="Registrar Nova Reunião de Orientação">
+      <button class="btn btn-outline admin-only" onclick="openNewMeetingModal()" title="Registrar Nova Reunião de Orientação">
         <i class="fa-solid fa-calendar-plus" style="color: var(--ifsc-green);"></i> + Registrar Reunião
       </button>
 
-      <!-- Perfil do Orientador Logado -->
+      <!-- Perfil do Usuário Logado -->
       <div id="userSessionHeader"></div>
 
       <!-- Theme Switcher Button -->
@@ -1706,6 +1955,9 @@
     <button class="tab-btn active" onclick="switchTab('tab-projetos')">
       <i class="fa-solid fa-users-viewfinder"></i> Painel de Orientandos <span class="badge-count" id="count-total-nav">6</span>
     </button>
+    <button class="tab-btn" onclick="switchTab('tab-demandas')">
+      <i class="fa-solid fa-bullhorn" style="color: var(--accent-blue);"></i> Demandas & Checkpoints <span class="badge-count" id="count-demandas-nav">0</span>
+    </button>
     <button class="tab-btn" onclick="switchTab('tab-reunioes')">
       <i class="fa-solid fa-handshake-simple" style="color: var(--ifsc-green);"></i> Registro de Reuniões & Atas <span class="badge-count" id="count-reunioes-nav">5</span>
     </button>
@@ -1718,7 +1970,7 @@
     <button class="tab-btn" onclick="switchTab('tab-avancos')">
       <i class="fa-solid fa-list-check" style="color: var(--ifsc-green);"></i> Avanços & Checkpoints
     </button>
-    <button class="tab-btn" onclick="switchTab('tab-repos')">
+    <button class="tab-btn admin-only" onclick="switchTab('tab-repos')">
       <i class="fa-solid fa-folder-tree" style="color: var(--accent-purple);"></i> Estrutura Local & Comandos
     </button>
   </nav>
@@ -1726,13 +1978,24 @@
   <!-- Main Content Area -->
   <main>
 
+    <!-- BANNER DINÂMICO PARA VISÃO DO ORIENTANDO -->
+    <div id="studentWelcomeBanner" class="student-welcome-banner" style="display: none;">
+      <div class="banner-icon"><i class="fa-solid fa-graduation-cap"></i></div>
+      <div style="flex: 1;">
+        <h3 id="studentBannerTitle" style="font-size: 1.15rem; margin-bottom: 4px; color: var(--text-main); font-weight: 700;">Olá, Orientando(a)!</h3>
+        <p id="studentBannerSubtitle" style="font-size: 0.86rem; color: var(--text-muted); margin: 0; line-height: 1.45;">
+          Você está no seu painel individual de acompanhamento. Aqui você visualiza exclusivamente as deliberações, atas de reuniões, checklist de etapas e links de produção do seu projeto.
+        </p>
+      </div>
+    </div>
+
     <!-- KPI Metric Cards -->
     <div class="kpi-grid">
       <div class="kpi-card" style="--accent-color: var(--ifsc-green);">
         <div class="kpi-icon"><i class="fa-solid fa-graduation-cap"></i></div>
         <div class="kpi-info">
           <div class="kpi-val" id="kpi-total-alunos">6</div>
-          <div class="kpi-label">Total de Orientandos Mapeados</div>
+          <div class="kpi-label" id="kpi-label-1">Total de Orientandos Mapeados</div>
         </div>
       </div>
 
@@ -1740,7 +2003,7 @@
         <div class="kpi-icon"><i class="fa-solid fa-user-check"></i></div>
         <div class="kpi-info">
           <div class="kpi-val" id="kpi-orientacoes-ativas">3</div>
-          <div class="kpi-label">Orientações Ativas</div>
+          <div class="kpi-label" id="kpi-label-2">Orientações Ativas</div>
         </div>
       </div>
 
@@ -1748,7 +2011,7 @@
         <div class="kpi-icon"><i class="fa-solid fa-user-xmark"></i></div>
         <div class="kpi-info">
           <div class="kpi-val" id="kpi-orientacoes-inativas" style="color: #ef4444;">2</div>
-          <div class="kpi-label">Inativos (Desistência / Pausa)</div>
+          <div class="kpi-label" id="kpi-label-3">Inativos (Desistência / Pausa)</div>
         </div>
       </div>
 
@@ -1756,7 +2019,7 @@
         <div class="kpi-icon"><i class="fa-solid fa-code-branch"></i></div>
         <div class="kpi-info">
           <div class="kpi-val" id="kpi-tcc-ativos">2</div>
-          <div class="kpi-label">TCCs Ativos (Em Andamento)</div>
+          <div class="kpi-label" id="kpi-label-4">TCCs Ativos (Em Andamento)</div>
         </div>
       </div>
 
@@ -1764,7 +2027,7 @@
         <div class="kpi-icon"><i class="fa-solid fa-comments"></i></div>
         <div class="kpi-info">
           <div class="kpi-val" id="kpi-reunioes-count">5</div>
-          <div class="kpi-label">Reuniões / Bancas Registradas</div>
+          <div class="kpi-label" id="kpi-label-5">Reuniões / Bancas Registradas</div>
         </div>
       </div>
 
@@ -1772,7 +2035,7 @@
         <div class="kpi-icon"><i class="fa-solid fa-newspaper"></i></div>
         <div class="kpi-info">
           <div class="kpi-val" id="kpi-artigos">5+</div>
-          <div class="kpi-label">Publicações / Artigos Alvo</div>
+          <div class="kpi-label" id="kpi-label-6">Publicações / Artigos Alvo</div>
         </div>
       </div>
     </div>
@@ -1788,7 +2051,7 @@
             <input type="text" id="searchInput" class="search-input" placeholder="Pesquisar por orientando, tema, tecnologia ou membro da banca..." oninput="filterProjects()">
           </div>
 
-          <div class="chip-group">
+          <div class="chip-group admin-only">
             <button class="filter-chip active" data-filter="all" onclick="setFilterChip(this, 'all')">
               <i class="fa-solid fa-border-all"></i> Todos (<span id="chip-count-all">6</span>)
             </button>
@@ -1810,6 +2073,9 @@
             <button class="filter-chip" data-filter="parado" onclick="setFilterChip(this, 'parado')">
               <i class="fa-solid fa-pause"></i> 2027 / Pausado (<span id="chip-count-parado">1</span>)
             </button>
+            <button class="filter-chip" style="margin-left: auto; border-color: var(--accent-cyan); color: var(--accent-cyan);" onclick="openCardButtonsModal()" title="Personalizar botões dos cards">
+              <i class="fa-solid fa-sliders"></i> Personalizar Botões dos Cards
+            </button>
           </div>
         </div>
       </div>
@@ -1817,6 +2083,77 @@
       <!-- Projects Grid -->
       <div class="projects-grid" id="projectsContainer">
         <!-- Rendered dynamically via JavaScript -->
+      </div>
+    </section>
+
+    <!-- TAB: DEMANDAS & CHECKPOINTS (TCC & PROJETOS INTEGRADORES) -->
+    <section id="tab-demandas" class="tab-content">
+      <div class="timeline-wrapper">
+        <div class="meetings-header-bar">
+          <div>
+            <h2><i class="fa-solid fa-bullhorn" style="color: var(--accent-blue);"></i> Gestão de Demandas & Checkpoints (TCC & PI)</h2>
+            <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 4px;">Atribuição de metas docentes individuais e por turma, com geração automática de mensagens para WhatsApp/E-mail.</p>
+          </div>
+          <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+            <button class="btn btn-primary admin-only" onclick="openNewDemandModal('*')" style="background: var(--accent-blue); border-color: var(--accent-blue); color: #fff;">
+              <i class="fa-solid fa-plus"></i> + Nova Demanda
+            </button>
+            <a href="https://meet.google.com/cej-kkio-bpw?pli=1&authuser=1" target="_blank" class="btn btn-outline" style="border-color: #10b981; color: #10b981;">
+              <i class="fa-solid fa-video"></i> Sala Meet da Turma
+            </a>
+          </div>
+        </div>
+
+        <!-- KPI Demandas -->
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 1.5rem;">
+          <div class="kpi-card" style="--accent-color: var(--accent-blue); padding: 1rem;">
+            <div class="kpi-icon" style="font-size: 1.3rem;"><i class="fa-solid fa-bullhorn"></i></div>
+            <div class="kpi-info">
+              <div class="kpi-val" id="kpi-dem-total" style="font-size: 1.5rem;">0</div>
+              <div class="kpi-label">Total de Demandas</div>
+            </div>
+          </div>
+          <div class="kpi-card" style="--accent-color: #d97706; padding: 1rem;">
+            <div class="kpi-icon" style="font-size: 1.3rem;"><i class="fa-solid fa-hourglass-half"></i></div>
+            <div class="kpi-info">
+              <div class="kpi-val" id="kpi-dem-pendentes" style="font-size: 1.5rem; color: #d97706;">0</div>
+              <div class="kpi-label">Pendentes</div>
+            </div>
+          </div>
+          <div class="kpi-card" style="--accent-color: var(--ifsc-green); padding: 1rem;">
+            <div class="kpi-icon" style="font-size: 1.3rem;"><i class="fa-solid fa-circle-check"></i></div>
+            <div class="kpi-info">
+              <div class="kpi-val" id="kpi-dem-concluidas" style="font-size: 1.5rem; color: var(--ifsc-green);">0</div>
+              <div class="kpi-label">Concluídas</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Filters for Demandas -->
+        <div style="display: flex; gap: 0.75rem; align-items: center; margin-bottom: 1.25rem; flex-wrap: wrap;">
+          <span style="font-size: 0.82rem; font-weight: 600; color: var(--text-muted);"><i class="fa-solid fa-filter"></i> Filtrar Alvo:</span>
+          <select id="demandaFilterSelect" class="form-control" style="max-width: 260px; padding: 0.45rem 0.8rem;" onchange="renderDemandas()">
+            <option value="all">Todas as Demandas</option>
+            <option value="*">📣 Broadcast Geral (Todos os Alunos)</option>
+            <option value="Marília Stefenon">Marília Stefenon</option>
+            <option value="Michel David de Souza">Michel David de Souza</option>
+            <option value="Luísa Narvaz Blankenburg">Luísa Narvaz Blankenburg</option>
+            <option value="Guilherme Londero">Guilherme Londero</option>
+            <option value="Higor Rodrigues">Higor Rodrigues</option>
+          </select>
+
+          <div style="display: flex; gap: 0.4rem; margin-left: auto;">
+            <button class="filter-chip active" id="demChipAll" onclick="setDemandaStatusFilter('all')">Todas</button>
+            <button class="filter-chip" id="demChipPendentes" onclick="setDemandaStatusFilter('pendentes')">⏳ Pendentes</button>
+            <button class="filter-chip" id="demChipConcluidas" onclick="setDemandaStatusFilter('concluidas')">✅ Concluídas</button>
+          </div>
+        </div>
+
+        <!-- Demands List Container -->
+        <div id="demandasListContainer">
+          <!-- Rendered dynamically -->
+        </div>
+
       </div>
     </section>
 
@@ -1829,17 +2166,17 @@
             <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 4px;">Histórico de encontros, alinhamentos, pré-bancas e compromissos firmados com cada aluno.</p>
           </div>
           <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
-            <button class="btn btn-primary" onclick="openNewMeetingModal()">
+            <button class="btn btn-primary admin-only" onclick="openNewMeetingModal()">
               <i class="fa-solid fa-plus"></i> Nova Reunião
             </button>
-            <button class="btn btn-outline" onclick="exportMeetingsJSON()" title="Baixar histórico em arquivo JSON">
+            <button class="btn btn-outline admin-only" onclick="exportMeetingsJSON()" title="Baixar histórico em arquivo JSON">
               <i class="fa-solid fa-file-export"></i> Exportar Dados
             </button>
           </div>
         </div>
 
         <!-- Filter meetings by student -->
-        <div style="display: flex; gap: 0.75rem; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap;">
+        <div class="admin-only" style="display: flex; gap: 0.75rem; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap;">
           <span style="font-size: 0.82rem; font-weight: 600; color: var(--text-muted);"><i class="fa-solid fa-filter"></i> Filtrar Aluno:</span>
           <select id="meetingFilterSelect" class="form-control" style="max-width: 260px; padding: 0.45rem 0.8rem;" onchange="renderMeetings()">
             <option value="all">Todos os Orientandos</option>
@@ -2214,7 +2551,7 @@ tectonic -Z shell-escape document.tex</pre>
           <span id="modalStudentType" class="badge-status em-andamento" style="margin-top: 4px; display: inline-block;">TCC</span>
         </div>
         <div style="display: flex; align-items: center; gap: 0.5rem; margin-left: auto; margin-right: 0.75rem;">
-          <button class="btn btn-primary btn-sm" onclick="openEditStudentModal()" title="Editar dados cadastrais e atualizar planilha Google Sheets">
+          <button class="btn btn-primary btn-sm admin-only" id="modalBtnEditStudent" onclick="openEditStudentModal()" title="Editar dados cadastrais e atualizar planilha Google Sheets">
             <i class="fa-solid fa-pen-to-square"></i> Editar Orientando
           </button>
         </div>
@@ -2267,15 +2604,32 @@ tectonic -Z shell-escape document.tex</pre>
         </div>
 
         <div>
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.6rem; flex-wrap: wrap; gap: 0.5rem;">
+            <h4 style="color: var(--text-muted); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.04em;">
+              <i class="fa-solid fa-handshake-simple" style="color: var(--ifsc-green);"></i> Reuniões de Orientação & Gestão de Pendências
+            </h4>
+            <div style="display: flex; gap: 0.4rem;">
+              <button class="btn btn-outline btn-sm admin-only" id="modalBtnNewDemandForStudent" onclick="openNewDemandFromStudentModal()" style="font-size: 0.72rem; padding: 0.25rem 0.6rem; color: var(--accent-blue); border-color: rgba(59, 130, 246, 0.35);">
+                <i class="fa-solid fa-bullhorn"></i> + Demanda
+              </button>
+              <button class="btn btn-primary btn-sm admin-only" id="modalBtnNewMeeting" onclick="openMeetingFromStudentModal()" style="font-size: 0.72rem; padding: 0.25rem 0.6rem;">
+                <i class="fa-solid fa-plus"></i> + Reunião
+              </button>
+            </div>
+          </div>
+          <div id="modalStudentMeetingsList" style="display: flex; flex-direction: column; gap: 0.75rem;">
+            <!-- Rendered by JS -->
+          </div>
+        </div>
+
+        <!-- Demandas & Checkpoints deste Orientando -->
+        <div style="margin-top: 1rem;">
           <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.6rem;">
             <h4 style="color: var(--text-muted); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.04em;">
-              <i class="fa-solid fa-handshake-simple"></i> Reuniões Realizadas com este Aluno
+              <i class="fa-solid fa-bullhorn" style="color: var(--accent-blue);"></i> Demandas Docentes Atribuídas a este Aluno
             </h4>
-            <button class="btn btn-primary btn-sm" id="modalBtnNewMeeting" onclick="openMeetingFromStudentModal()">
-              <i class="fa-solid fa-plus"></i> + Reunião
-            </button>
           </div>
-          <div id="modalStudentMeetingsList" style="display: flex; flex-direction: column; gap: 0.6rem;">
+          <div id="modalStudentDemandsList" style="display: flex; flex-direction: column; gap: 0.5rem;">
             <!-- Rendered by JS -->
           </div>
         </div>
@@ -2456,6 +2810,20 @@ tectonic -Z shell-escape document.tex</pre>
           </div>
 
           <div class="form-group">
+            <label><i class="fa-solid fa-list-check" style="color: var(--accent-amber);"></i> Pendências & Ações Pactuadas para o Próximo Encontro (uma por linha)</label>
+            <textarea id="meetingPendenciasInput" class="form-control" rows="3" placeholder="Ex:
+1) Elaborar 3 diagramas numerados do fluxo
+2) Iniciar protótipo do painel administrativo de demandas
+3) Validar mapeamento com Ramon"></textarea>
+            <span style="font-size: 0.73rem; color: var(--text-dim);">Cada linha digitada será transformada em um item interativo com status "Pendente" na ficha do aluno.</span>
+          </div>
+
+          <div class="form-group">
+            <label><i class="fa-solid fa-circle-check" style="color: var(--ifsc-green);"></i> O que foi resolvido da reunião anterior?</label>
+            <textarea id="meetingResolvidosInput" class="form-control" rows="2" placeholder="Ex: Entrega dos slides no Drive, aprovação do roteiro metodológico..."></textarea>
+          </div>
+
+          <div class="form-group">
             <label>Próximos Passos & Entregas Imediatas</label>
             <input type="text" id="meetingProximosInput" class="form-control" placeholder="Ex: Entregar diagramas até sexta-feira">
           </div>
@@ -2476,6 +2844,211 @@ tectonic -Z shell-escape document.tex</pre>
     </div>
   </div>
 
+  <!-- MODAL: CRIAR NOVA DEMANDA DOCENTE (TCC & PI) -->
+  <div class="modal-overlay" id="newDemandModal" onclick="closeModalOnOverlay(event, 'newDemandModal')">
+    <div class="modal-container" style="max-width: 640px;">
+      <div class="modal-header">
+        <div>
+          <h3><i class="fa-solid fa-bullhorn" style="color: var(--accent-blue);"></i> Criar Nova Demanda Docente</h3>
+          <p style="font-size: 0.78rem; color: var(--text-muted); margin-top: 2px;">Atribua metas ou checkpoints para orientandos ou broadcast para a turma</p>
+        </div>
+        <button class="modal-close-btn" onclick="closeModal('newDemandModal')">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <form id="newDemandForm" onsubmit="saveNewDemand(event)">
+          <div class="form-group">
+            <label>Escopo da Demanda (Alvo) *</label>
+            <select id="demandAlunoSelect" class="form-control" required>
+              <option value="*">📣 TODOS OS ORIENTANDOS (Broadcast Geral)</option>
+              <option value="Marília Stefenon">Marília Stefenon (TCC Superior)</option>
+              <option value="Michel David de Souza">Michel David de Souza (TCC Superior)</option>
+              <option value="Luísa Narvaz Blankenburg">Luísa Narvaz Blankenburg (PI-II)</option>
+              <option value="Guilherme Londero">Guilherme Londero (TCC Superior)</option>
+              <option value="Higor Rodrigues">Higor Rodrigues (TCC Superior)</option>
+            </select>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 1rem;">
+            <div class="form-group">
+              <label>Categoria do Trabalho</label>
+              <select id="demandCategoriaSelect" class="form-control">
+                <option value="TCC Superior">TCC Superior (Sistemas para Internet)</option>
+                <option value="Projeto Integrador II">Projeto Integrador II (Técnico)</option>
+                <option value="Projeto Integrador I">Projeto Integrador I (Técnico)</option>
+                <option value="Artigo SBC / Publicação">Artigo SBC / Publicação</option>
+                <option value="Protótipo / Código">Protótipo / Código</option>
+                <option value="Banca & Administrativo">Banca & Administrativo</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Prazo Limite / Data *</label>
+              <input type="date" id="demandPrazoInput" class="form-control" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Título da Demanda / Meta *</label>
+            <input type="text" id="demandTituloInput" class="form-control" placeholder="Ex: Validação dos 3 diagramas numerados do fluxo de atendimento" required>
+          </div>
+
+          <div class="form-group">
+            <label><i class="fa-solid fa-clipboard-check" style="color: var(--accent-cyan);"></i> Critérios de Aceite & Rubrica Avaliada</label>
+            <textarea id="demandCriteriosInput" class="form-control" rows="2" placeholder="Ex: 1. Diagramas numerados no Miro/Figma; 2. Validação presencial ou remota com a secretaria; 3. Sem links privados..."></textarea>
+          </div>
+
+          <div class="form-group">
+            <label>Orientações Gerais & Instruções</label>
+            <textarea id="demandDescricaoInput" class="form-control" rows="3" placeholder="Descreva em detalhes os requisitos para conclusão desta demanda..."></textarea>
+          </div>
+
+          <div class="form-group">
+            <label><i class="fa-solid fa-video" style="color: #10b981;"></i> Sala Google Meet para Dúvidas / Alinhamento</label>
+            <input type="url" id="demandLinkMeetInput" class="form-control" value="https://meet.google.com/cej-kkio-bpw?pli=1&authuser=1" required>
+          </div>
+
+          <div class="form-group" style="background: rgba(59, 130, 246, 0.06); border: 1px solid rgba(59, 130, 246, 0.25); border-radius: 8px; padding: 0.75rem 1rem;">
+            <label style="display: flex; align-items: center; gap: 0.65rem; cursor: pointer; text-transform: none; font-size: 0.84rem; color: var(--text-main); font-weight: 500; margin: 0;">
+              <input type="checkbox" id="demandEnviarEmailCheck" checked style="width: 17px; height: 17px; accent-color: var(--accent-blue); cursor: pointer;">
+              <span><strong><i class="fa-solid fa-paper-plane" style="color: var(--accent-blue);"></i> Enviar e-mail de notificação</strong> aos estudantes selecionados</span>
+            </label>
+          </div>
+
+          <div style="display: flex; justify-content: flex-end; gap: 0.75rem; margin-top: 1.5rem;">
+            <button type="button" class="btn btn-outline" onclick="closeModal('newDemandModal')">Cancelar</button>
+            <button type="submit" class="btn btn-primary" style="background: var(--accent-blue); border-color: var(--accent-blue); color: #fff;">
+              <i class="fa-solid fa-paper-plane"></i> Publicar & Gerar Mensagem
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: VISUALIZAR & COPIAR MENSAGEM DA DEMANDA (WHATSAPP / DISCORD / E-MAIL) -->
+  <div class="modal-overlay" id="demandMessageModal" onclick="closeModalOnOverlay(event, 'demandMessageModal')">
+    <div class="modal-container" style="max-width: 620px;">
+      <div class="modal-header">
+        <div>
+          <h3><i class="fa-solid fa-comments" style="color: var(--accent-blue);"></i> Mensagem da Demanda para Alunos / Equipe</h3>
+          <p style="font-size: 0.78rem; color: var(--text-muted); margin-top: 2px;">Texto pré-formatado pronto para colar no WhatsApp, Discord ou e-mail</p>
+        </div>
+        <button class="modal-close-btn" onclick="closeModal('demandMessageModal')">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <div class="message-preview-box" id="demandMessagePreview"></div>
+
+        <div style="display: flex; gap: 0.6rem; flex-wrap: wrap; margin-top: 1.25rem;">
+          <button class="btn btn-primary" id="btnCopyDemandMsg" onclick="copyDemandMessage()" style="background: var(--accent-blue); border-color: var(--accent-blue); color: #fff;">
+            <i class="fa-solid fa-copy"></i> Copiar Mensagem
+          </button>
+          <button class="btn btn-outline" id="btnWhatsAppDemandMsg" onclick="openWhatsAppDemandMessage()" style="color: #10b981; border-color: rgba(16, 185, 129, 0.4);">
+            <i class="fa-brands fa-whatsapp"></i> Abrir WhatsApp Web
+          </button>
+          <button class="btn btn-outline" id="btnEmailDemandMsg" onclick="sendDemandEmail()" style="color: var(--ifsc-green);">
+            <i class="fa-solid fa-paper-plane"></i> Enviar por E-mail
+          </button>
+          <button class="btn btn-outline" style="margin-left: auto;" onclick="closeModal('demandMessageModal')">
+            Fechar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: PERSONALIZAR BOTÕES DOS CARDS DE ORIENTANDOS -->
+  <div class="modal-overlay" id="cardButtonsModal" onclick="closeModalOnOverlay(event, 'cardButtonsModal')">
+    <div class="modal-container" style="max-width: 680px;">
+      <div class="modal-header">
+        <div>
+          <h3><i class="fa-solid fa-sliders" style="color: var(--accent-cyan);"></i> Personalizar Botões dos Cards</h3>
+          <p style="font-size: 0.78rem; color: var(--text-muted); margin-top: 2px;">Adicione, altere ou remova botões rápidos de acesso (Google Meet, Overleaf, GitHub, etc.)</p>
+        </div>
+        <button class="modal-close-btn" onclick="closeModal('cardButtonsModal')">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        
+        <div>
+          <h4 style="font-size: 0.8rem; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.6rem;">
+            <i class="fa-solid fa-list"></i> Botões Atuais nos Cards dos Estudantes
+          </h4>
+          <div id="cardButtonsList" style="display: flex; flex-direction: column; gap: 0.5rem; max-height: 240px; overflow-y: auto; padding-right: 0.3rem;">
+            <!-- Preenchido via JavaScript -->
+          </div>
+        </div>
+
+        <div style="margin-top: 1.5rem; border-top: 1px dashed var(--border-color); padding-top: 1.25rem;">
+          <h4 style="font-size: 0.85rem; font-weight: 700; color: var(--ifsc-green); margin-bottom: 0.75rem;">
+            <i class="fa-solid fa-plus-circle"></i> Adicionar Novo Botão de Ação Rápida
+          </h4>
+
+          <form id="newCustomButtonForm" onsubmit="saveNewCustomButton(event)">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
+              <div class="form-group">
+                <label>Rótulo do Botão *</label>
+                <input type="text" id="custBtnLabel" class="form-control" placeholder="Ex: Discord, Miro, Drive de Artigos..." required>
+              </div>
+              <div class="form-group">
+                <label>Cor / Estilo Visual</label>
+                <select id="custBtnColor" class="form-control">
+                  <option value="meet">Verde Google Meet / Esmeralda</option>
+                  <option value="green">Verde IFSC</option>
+                  <option value="cyan">Azul Ciano</option>
+                  <option value="blue">Azul Royal</option>
+                  <option value="purple">Roxo / Violeta</option>
+                  <option value="amber">Âmbar / Laranja</option>
+                  <option value="red">Vermelho</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>URL / Link de Acesso *</label>
+              <input type="text" id="custBtnUrl" class="form-control" placeholder="https://... ou use tags como {linkPreProjeto}, {linkGithub}, {email}" required>
+              <span style="font-size: 0.72rem; color: var(--text-dim);">Dica: Insira URLs fixas (como o Meet) ou dinâmicas ({linkPreProjeto}, {linkSlides}, {linkDashboard}, {linkOverleafProject}, {linkGithub}, {email}).</span>
+            </div>
+
+            <div class="form-group">
+              <label>Selecione um Ícone para Representar o Botão:</label>
+              <div class="icon-picker-grid" id="iconPickerGrid">
+                <!-- Ícones gerados via JS -->
+              </div>
+              <div style="display: flex; align-items: center; gap: 0.5rem; margin-top: 0.4rem;">
+                <span style="font-size: 0.75rem; color: var(--text-muted);">Ícone selecionado:</span>
+                <span id="selectedIconPreview" style="font-size: 1.1rem; color: var(--ifsc-green);"><i class="fa-solid fa-video"></i></span>
+                <input type="text" id="custBtnIcon" class="form-control" style="font-size: 0.75rem; padding: 0.25rem 0.5rem; max-width: 180px;" value="fa-solid fa-video" title="Você também pode digitar qualquer classe FontAwesome">
+              </div>
+            </div>
+
+            <div style="display: flex; justify-content: flex-end; gap: 0.6rem; margin-top: 1rem;">
+              <button type="submit" class="btn btn-primary" style="font-size: 0.8rem; padding: 0.45rem 1rem;">
+                <i class="fa-solid fa-plus"></i> Adicionar Botão ao Card
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 1.5rem; border-top: 1px solid var(--border-color); padding-top: 1rem;">
+          <button type="button" class="btn btn-outline btn-sm" onclick="restoreDefaultCardButtons()" style="color: var(--ifsc-red); border-color: rgba(220, 38, 38, 0.3);">
+            <i class="fa-solid fa-rotate-left"></i> Restaurar Botões Padrões
+          </button>
+          <button type="button" class="btn btn-primary btn-sm" onclick="closeModal('cardButtonsModal')">
+            Concluir & Salvar
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
   <!-- TOAST CONTAINER -->
   <div class="toast-container" id="toastContainer"></div>
 
@@ -2492,15 +3065,59 @@ tectonic -Z shell-escape document.tex</pre>
        ========================================================================== -->
   <script>
     // ==========================================================================
-    // SEGURANÇA INSTITUCIONAL & AUTENTICAÇÃO GOOGLE (OAUTH 2.0 / GIS)
+    // SEGURANÇA INSTITUCIONAL & AUTENTICAÇÃO GOOGLE (OAUTH 2.0 / GIS) COM RBAC
     // ==========================================================================
-    const AUTHORIZED_EMAILS = [
+    // Contas de Administrador / Orientador Geral (Acesso Total)
+    const ADMIN_EMAILS = [
       'chameoandre@gmail.com',
       'andre.moraes@ifsc.edu.br'
     ];
     const SESSION_STORAGE_KEY = 'ifsc_orientador_session';
     const SESSION_DURATION_DAYS = 7; // Sessão mantida válida por 7 dias no localStorage
     const GOOGLE_CLIENT_ID = '827223670130-f312ur39hg8bamvbce5noc0iaajq8b1a.apps.googleusercontent.com';
+
+    let currentSessionUser = null;
+    let isStudentView = false;
+    let loggedStudent = null;
+
+    // Helper: Localiza o estudante a partir de qualquer e-mail cadastrado (institucional, secundário, grupo)
+    function findStudentByEmail(email) {
+      if (!email) return null;
+      const clean = String(email).trim().toLowerCase();
+
+      // Mapeamento explícito de aliases conhecidos para máxima confiabilidade
+      const knownAliases = {
+        'stefenon79.marilia@gmail.com': 2,
+        'marilia.sr@aluno.ifsc.edu.br': 2,
+        'michelbatata23@gmail.com': 3,
+        'luisa.n08@aluno.ifsc.edu.br': 5,
+        'luisa.blankenburg@ifsc.edu.br': 5,
+        'higor.e11@aluno.ifsc.edu.br': 4,
+        'guilherme.l05@aluno.ifsc.edu.br': 1,
+        'rodrigo.dz@aluno.ifsc.edu.br': 6,
+        'eluney.e@aluno.ifsc.edu.br': 6,
+        'joao.brasil.crescencio@gmail.com': 6
+      };
+
+      const list = (typeof studentsData !== 'undefined' && studentsData.length) ? studentsData : initialStudents;
+
+      if (knownAliases[clean]) {
+        const found = list.find(s => s.id === knownAliases[clean]);
+        if (found) return found;
+      }
+
+      // Procura em todos os campos de e-mail do aluno
+      for (const s of list) {
+        const emailFields = [s.email, s.emailSecundario, s.alunoEmail].filter(Boolean);
+        for (const field of emailFields) {
+          const parts = String(field).toLowerCase().split(/[;, ]+/).map(p => p.trim());
+          if (parts.includes(clean) || String(field).toLowerCase().trim() === clean) {
+            return s;
+          }
+        }
+      }
+      return null;
+    }
 
     // Decodifica o JWT retornado pela API do Google
     function parseJwt(token) {
@@ -2529,7 +3146,11 @@ tectonic -Z shell-escape document.tex</pre>
         if (!session || !session.email) return null;
 
         const emailNorm = String(session.email).trim().toLowerCase();
-        if (!AUTHORIZED_EMAILS.includes(emailNorm)) {
+        const isAdmin = ADMIN_EMAILS.includes(emailNorm);
+        const student = !isAdmin ? findStudentByEmail(emailNorm) : null;
+
+        // Se o e-mail não for do orientador nem de orientando cadastrado, invalida
+        if (!isAdmin && !student) {
           localStorage.removeItem(SESSION_STORAGE_KEY);
           return null;
         }
@@ -2540,6 +3161,10 @@ tectonic -Z shell-escape document.tex</pre>
           return { expired: true, email: emailNorm };
         }
 
+        session.role = isAdmin ? 'admin' : 'student';
+        session.studentId = student ? student.id : null;
+        session.studentName = student ? student.nome : null;
+
         return session;
       } catch (err) {
         console.error('Erro ao ler sessão salva:', err);
@@ -2549,11 +3174,18 @@ tectonic -Z shell-escape document.tex</pre>
 
     // Salva ou renova a sessão no localStorage
     function saveSession(email, name, picture) {
+      const emailNorm = String(email).trim().toLowerCase();
+      const isAdmin = ADMIN_EMAILS.includes(emailNorm);
+      const student = !isAdmin ? findStudentByEmail(emailNorm) : null;
       const expiresAt = Date.now() + (SESSION_DURATION_DAYS * 24 * 60 * 60 * 1000);
+
       const session = {
-        email: email.toLowerCase(),
-        name: name || (email.includes('ifsc') ? 'Prof. André Moraes (IFSC)' : 'Prof. André Moraes'),
+        email: emailNorm,
+        name: name || (isAdmin ? (emailNorm.includes('ifsc') ? 'Prof. André Moraes (IFSC)' : 'Prof. André Moraes') : (student ? student.nome : 'Orientando(a)')),
         picture: picture || '',
+        role: isAdmin ? 'admin' : 'student',
+        studentId: student ? student.id : null,
+        studentName: student ? student.nome : null,
         authenticatedAt: Date.now(),
         expiresAt: expiresAt
       };
@@ -2569,16 +3201,52 @@ tectonic -Z shell-escape document.tex</pre>
       if (gatekeeper) gatekeeper.style.display = 'none';
       if (appContainer) appContainer.style.display = 'block';
 
+      currentSessionUser = session;
+      const userEmail = String(session.email).trim().toLowerCase();
+      const isAdmin = ADMIN_EMAILS.includes(userEmail);
+      isStudentView = !isAdmin;
+      loggedStudent = isStudentView ? (findStudentByEmail(userEmail) || (session.studentId ? studentsData.find(s => s.id === session.studentId) : null)) : null;
+
+      // Configura a visão do orientando vs visão do orientador geral
+      if (isStudentView && loggedStudent) {
+        document.body.classList.add('student-portal-mode');
+        const banner = document.getElementById('studentWelcomeBanner');
+        if (banner) {
+          banner.style.display = 'flex';
+          const titleEl = document.getElementById('studentBannerTitle');
+          if (titleEl) titleEl.textContent = `Olá, ${loggedStudent.nome}!`;
+          const subEl = document.getElementById('studentBannerSubtitle');
+          if (subEl) {
+            subEl.innerHTML = `
+              Você está no seu <strong>Painel Individual de Acompanhamento (${loggedStudent.tipo})</strong>.<br>
+              <em>"${loggedStudent.titulo}"</em> • Aqui você visualiza com total privacidade suas deliberações oficiais de reunião, prazos, checklist de etapas e links de produção.
+            `;
+          }
+        }
+      } else {
+        document.body.classList.remove('student-portal-mode');
+        const banner = document.getElementById('studentWelcomeBanner');
+        if (banner) banner.style.display = 'none';
+      }
+
       renderUserBadge(session);
 
-      // Dispara a renderização dos componentes caso ainda não tenham sido renderizados
+      // Dispara a renderização dos componentes
       if (!window.hasInitializedDashboard) {
         window.hasInitializedDashboard = true;
         updateKpiCounts();
-        renderProjects(studentsData);
+        filterProjects();
         renderMeetings();
+        renderDemandas();
         renderPapers();
-        loadMeetingsFromSheet();
+        if (!isStudentView) {
+          loadMeetingsFromSheet();
+        }
+      } else {
+        updateKpiCounts();
+        filterProjects();
+        renderMeetings();
+        renderDemandas();
       }
     }
 
@@ -2602,30 +3270,40 @@ tectonic -Z shell-escape document.tex</pre>
       }
     }
 
-    // Encerra a sessão do orientador
+    // Encerra a sessão
     function logoutOrientador() {
       localStorage.removeItem(SESSION_STORAGE_KEY);
-      lockDashboard('<i class="fa-solid fa-arrow-right-from-bracket"></i> Sessão encerrada com sucesso. Para acessar o painel, faça login com sua conta Google autorizada.', 'info');
+      currentSessionUser = null;
+      isStudentView = false;
+      loggedStudent = null;
+      document.body.classList.remove('student-portal-mode');
+      lockDashboard('<i class="fa-solid fa-arrow-right-from-bracket"></i> Sessão encerrada com sucesso. Para acessar o painel, faça login com sua conta Google cadastrada.', 'info');
       setupGoogleAuthUI();
       showToast('Sessão encerrada com sucesso.', 'info');
     }
 
-    // Renderiza o badge do orientador autenticado no Header do painel
+    // Renderiza o badge de usuário autenticado no Header do painel
     function renderUserBadge(session) {
       const container = document.getElementById('userSessionHeader');
       if (!container || !session) return;
 
       const remainingMs = Math.max(0, (session.expiresAt || 0) - Date.now());
       const remainingDays = Math.ceil(remainingMs / (1000 * 60 * 60 * 24));
+      const isAdmin = (session.role === 'admin');
+
       const avatarHtml = session.picture
         ? `<div class="user-avatar-circle"><img src="${session.picture}" alt="Avatar" referrerpolicy="no-referrer"></div>`
-        : `<div class="user-avatar-circle"><i class="fa-solid fa-user-tie"></i></div>`;
+        : `<div class="user-avatar-circle"><i class="fa-solid ${isAdmin ? 'fa-user-tie' : 'fa-user-graduate'}"></i></div>`;
+
+      const roleBadge = isAdmin
+        ? `<span class="badge-status concluido" style="font-size: 0.68rem; padding: 2px 7px;"><i class="fa-solid fa-shield-halved"></i> Orientador Geral</span>`
+        : `<span class="badge-status em-andamento" style="font-size: 0.68rem; padding: 2px 7px;"><i class="fa-solid fa-user-graduate"></i> Orientando(a) • Visão Individual</span>`;
 
       container.innerHTML = `
         <div class="user-session-bar" title="Sessão ativa e segura por mais ${remainingDays} dia(s)">
           ${avatarHtml}
           <div class="user-session-meta">
-            <span class="user-session-name"><i class="fa-solid fa-shield-halved" style="color: var(--ifsc-green); font-size: 0.72rem;"></i> ${session.name}</span>
+            <span class="user-session-name">${session.name} ${roleBadge}</span>
             <span class="user-session-email">${session.email} &bull; ${remainingDays}d restantes</span>
           </div>
           <button class="btn-logout" onclick="logoutOrientador()" title="Sair / Encerrar Sessão">
@@ -2649,17 +3327,20 @@ tectonic -Z shell-escape document.tex</pre>
         }
 
         const userEmail = String(payload.email).trim().toLowerCase();
+        const isAdmin = ADMIN_EMAILS.includes(userEmail);
+        const student = !isAdmin ? findStudentByEmail(userEmail) : null;
 
-        if (AUTHORIZED_EMAILS.includes(userEmail)) {
+        if (isAdmin || student) {
+          const roleLabel = isAdmin ? 'Orientador Geral' : `Orientando(a): ${student.nome}`;
           if (authStatus) {
             authStatus.className = 'auth-status-box success';
-            authStatus.innerHTML = `<i class="fa-solid fa-circle-check"></i> Autenticado com sucesso como <strong>${userEmail}</strong>. Liberando painel...`;
+            authStatus.innerHTML = `<i class="fa-solid fa-circle-check"></i> Autenticado com sucesso como <strong>${userEmail}</strong> (${roleLabel}). Liberando painel...`;
             authStatus.style.display = 'block';
           }
           const session = saveSession(userEmail, payload.name, payload.picture);
           setTimeout(() => {
             unlockDashboard(session);
-            showToast(`Bem-vindo, ${payload.name || 'Prof. André'}! Painel liberado.`, 'success');
+            showToast(`Bem-vindo, ${payload.name || (student ? student.nome : 'Prof. André')}!`, 'success');
           }, 450);
         } else {
           // E-mail não autorizado
@@ -2667,9 +3348,12 @@ tectonic -Z shell-escape document.tex</pre>
             authStatus.className = 'auth-status-box error';
             authStatus.innerHTML = `
               <div style="font-weight: 700; margin-bottom: 3px;">
-                <i class="fa-solid fa-ban"></i> Acesso Negado
+                <i class="fa-solid fa-ban"></i> Acesso Não Autorizado
               </div>
-              <div>A conta Google <code>${userEmail}</code> não possui permissão para visualizar este painel. O acesso é exclusivo para o orientador cadastrado.</div>
+              <div>A conta Google <code>${userEmail}</code> não possui cadastro como orientador nem como orientando registrado com o Prof. André Moraes.</div>
+              <div style="margin-top: 6px; font-size: 0.8rem; opacity: 0.85;">
+                Caso seja estudante do IFSC Garopaba, certifique-se de acessar utilizando seu e-mail institucional ou a conta informada no pré-projeto.
+              </div>
             `;
             authStatus.style.display = 'block';
           }
@@ -2741,7 +3425,8 @@ tectonic -Z shell-escape document.tex</pre>
       {
         id: 2,
         nome: "Marília Stefenon",
-        email: "marilia.sr@aluno.ifsc.edu.br",
+        email: "stefenon79.marilia@gmail.com",
+        emailSecundario: "marilia.sr@aluno.ifsc.edu.br",
         tipo: "TCC",
         nivel: "Superior • Sistemas para Internet",
         titulo: "Chatbot para atendimento na secretaria acadêmica utilizando framework leve",
@@ -2791,6 +3476,7 @@ tectonic -Z shell-escape document.tex</pre>
         id: 5,
         nome: "Luísa Narvaz Blankenburg",
         email: "luisa.n08@aluno.ifsc.edu.br",
+        emailSecundario: "luisa.blankenburg@ifsc.edu.br",
         tipo: "Projeto Integrador II",
         nivel: "Técnico Integrado em Informática • 2026-2",
         titulo: "Música, Jogo e Atenção: Jogo Educacional em Python/Pygame e Raspberry Pi",
@@ -2815,7 +3501,7 @@ tectonic -Z shell-escape document.tex</pre>
       {
         id: 6,
         nome: "Rodrigo, Eluney, João",
-        email: "",
+        email: "rodrigo.dz@aluno.ifsc.edu.br; eluney.e@aluno.ifsc.edu.br; joao.brasil.crescencio@gmail.com",
         tipo: "Projeto Integrador",
         nivel: "Técnico Integrado em Informática",
         titulo: "JIFTv (Streaming Adaptativo nos jogos Escolares)",
@@ -2885,7 +3571,7 @@ tectonic -Z shell-escape document.tex</pre>
       }
     ];
 
-    // Initial Meeting Records
+    // Initial Meeting Records com Checklist de Pendências & Ações
     const initialMeetings = [
       {
         id: 7,
@@ -2895,7 +3581,13 @@ tectonic -Z shell-escape document.tex</pre>
         tipo: "Cobrança de Status / Acompanhamento",
         pauta: "Solicitação de status atualizado do andamento das atividades do TCC após a pré-banca",
         deliberacoes: "Encaminhado e-mail formal ao estudante: 'Olá Michel, bom dia. Estou entrando em contato com você para que possamos obter um status atualizado de como estão as suas atividades do TCC. Após a sua pré-banca de TCC não recebi nenhuma atualização do que tem feito e em que ponto o trabalho está.'",
-        proximosPassos: "Aguardar retorno do aluno com o relatório de atividades realizadas desde a pré-banca e dúvidas na Godot."
+        proximosPassos: "Aguardar retorno do aluno com o relatório de atividades realizadas desde a pré-banca e dúvidas na Godot.",
+        pendencias: "1) Responder e-mail com status detalhado das atividades pós-pré-banca\n2) Leitura das observações da banca examinadora (Ryan e Fabiana)",
+        itensResolvidos: "Apresentação da proposta perante pré-banca",
+        items: [
+          { id: "it-7-1", text: "Responder e-mail com relatório de status das atividades pós-pré-banca", status: "pendente", resolvidoEm: null },
+          { id: "it-7-2", text: "Leitura minuciosa dos pareceres da banca (Ryan e Fabiana) para definição de fases", status: "pendente", resolvidoEm: null }
+        ]
       },
       {
         id: 1,
@@ -2905,7 +3597,13 @@ tectonic -Z shell-escape document.tex</pre>
         tipo: "Alinhamento de Orientação",
         pauta: "Validação dos 3 diagramas de atendimento com Ramon e painel administrativo de demandas",
         deliberacoes: "1) Elaborar 3 diagramas contendo as etapas do atendimento (numerados) para que possamos mostrar ao Ramon e ele validar se o atendimento está mapeado corretamente ou precisa de mudanças; 2) Iniciar a implementação do painel administrativo das demandas (checar como fica o procedimento de atendimento para registrar a demanda), categorizando se o atendimento foi sem interação humana do atendente ou não.",
-        proximosPassos: "Entrega dos 3 diagramas sequenciais numerados e início do protótipo da tela administrativa de demandas."
+        proximosPassos: "Entrega dos 3 diagramas sequenciais numerados e início do protótipo da tela administrativa de demandas.",
+        pendencias: "1) Elaborar 3 diagramas contendo as etapas do atendimento (numerados)\n2) Iniciar implementação do painel administrativo das demandas (100% bot vs. atendente humano)",
+        itensResolvidos: "Protótipo 3 com buffer multi-turn e módulo de telemetria científica implementados",
+        items: [
+          { id: "it-1-1", text: "Elaborar 3 diagramas numerados contendo as etapas do atendimento para validação com Ramon", status: "pendente", resolvidoEm: null },
+          { id: "it-1-2", text: "Iniciar implementação do painel administrativo das demandas (100% bot vs. interação com atendente)", status: "pendente", resolvidoEm: null }
+        ]
       },
       {
         id: 6,
@@ -2915,7 +3613,12 @@ tectonic -Z shell-escape document.tex</pre>
         tipo: "Definição de Próximos Passos",
         pauta: "Planejamento dos diagramas de atendimento e módulo administrativo de demandas",
         deliberacoes: "1) Elaborar 3 diagramas contendo as etapas do atendimento (numerados); 2) Iniciar a implementação do painel administrativo das demandas.",
-        proximosPassos: "Estruturar o fluxo de triagem e mapear rotinas com a secretaria."
+        proximosPassos: "Estruturar o fluxo de triagem e mapear rotinas com a secretaria.",
+        pendencias: "Estruturar o fluxo de triagem com a secretaria",
+        itensResolvidos: "Roteiro metodológico e estrutura do TCC definidos",
+        items: [
+          { id: "it-6-1", text: "Estruturar o fluxo de triagem e mapear rotinas com a secretaria acadêmica", status: "resolvido", resolvidoEm: "25/09/2026" }
+        ]
       },
       {
         id: 2,
@@ -2925,7 +3628,13 @@ tectonic -Z shell-escape document.tex</pre>
         tipo: "Pré-Banca",
         pauta: "Apresentação e arguição da proposta de TCC perante a banca",
         deliberacoes: "Apresentação finalizada com sucesso. Pareceristas Thiago Lipinski e Ignácio Ramirez recomendaram recuperar comentários para qualificar a proposta, detalhando a arquitetura dos protótipos de PLN e LLM e alinhamento com a secretaria.",
-        proximosPassos: "Leitura da ata da banca e incorporação das diretrizes no documento LaTeX."
+        proximosPassos: "Leitura da ata da banca e incorporação das diretrizes no documento LaTeX.",
+        pendencias: "Incorporar diretrizes da banca no documento LaTeX",
+        itensResolvidos: "Pré-projeto finalizado e defendido perante banca",
+        items: [
+          { id: "it-2-1", text: "Apresentação e arguição formal da proposta perante banca examinadora", status: "resolvido", resolvidoEm: "12/06/2026" },
+          { id: "it-2-2", text: "Incorporar diretrizes e comentários da banca examinadora no documento LaTeX", status: "resolvido", resolvidoEm: "11/09/2026" }
+        ]
       },
       {
         id: 3,
@@ -2935,7 +3644,12 @@ tectonic -Z shell-escape document.tex</pre>
         tipo: "Pré-Banca",
         pauta: "Arguição do pré-projeto de lista de chamada com RFID no transporte escolar",
         deliberacoes: "Apresentação finalizada. Avaliadores Ignácio Ramirez e Luiz Antonio Pacheco solicitaram ajustes na descrição dos componentes de hardware e no fluxo de notificações em tempo real.",
-        proximosPassos: "Aplicar correções no texto do pré-projeto e iniciar montagem do protótipo com leitor RFID e ESP32."
+        proximosPassos: "Aplicar correções no texto do pré-projeto e iniciar montagem do protótipo com leitor RFID e ESP32.",
+        pendencias: "Aplicar correções no texto do pré-projeto",
+        itensResolvidos: "Defesa do pré-projeto perante a banca",
+        items: [
+          { id: "it-3-1", text: "Arguição e defesa do pré-projeto perante a banca", status: "resolvido", resolvidoEm: "10/06/2026" }
+        ]
       },
       {
         id: 4,
@@ -2945,7 +3659,12 @@ tectonic -Z shell-escape document.tex</pre>
         tipo: "Pré-Banca",
         pauta: "Arguição da proposta de jogo de ensino sobre vírus de computador",
         deliberacoes: "Apresentação finalizada. Docentes Ryan Marcos Cardoso e Fabiana de Agapito enfatizaram a importância de estruturar a fundamentação teórica de aprendizagem baseada em jogos.",
-        proximosPassos: "Realizar a leitura de cada item observado pelos docentes da banca para definir os próximos passos de game design."
+        proximosPassos: "Realizar a leitura de cada item observado pelos docentes da banca para definir os próximos passos de game design.",
+        pendencias: "Leitura dos apontamentos da banca",
+        itensResolvidos: "Apresentação da proposta perante banca examinadora",
+        items: [
+          { id: "it-4-1", text: "Arguição da proposta de jogo de ensino perante banca examinadora", status: "resolvido", resolvidoEm: "11/06/2026" }
+        ]
       },
       {
         id: 5,
@@ -2955,7 +3674,13 @@ tectonic -Z shell-escape document.tex</pre>
         tipo: "Pré-Banca",
         pauta: "Arguição do projeto de plataforma web para gestão financeira",
         deliberacoes: "Apresentação realizada perante Thiago Paes e Fabiana de Agapito. Em comum acordo com o aluno, o projeto foi pausado para conclusão e defesa em 2027.",
-        proximosPassos: "Retomada do desenvolvimento e ajustes no início do calendário 2027."
+        proximosPassos: "Retomada do desenvolvimento e ajustes no início do calendário 2027.",
+        pendencias: "Retomada do projeto no início de 2027",
+        itensResolvidos: "Arguição perante a banca finalizada",
+        items: [
+          { id: "it-5-1", text: "Arguição do projeto perante a banca", status: "resolvido", resolvidoEm: "12/06/2026" },
+          { id: "it-5-2", text: "Retomada do desenvolvimento e novos alinhamentos no início do ciclo 2027", status: "pendente", resolvidoEm: null }
+        ]
       }
     ];
 
@@ -2968,23 +3693,178 @@ tectonic -Z shell-escape document.tex</pre>
         return ov ? { ...s, ...ov } : s;
       });
     }
+
     // Garante que as reuniões oficiais estejam sempre visíveis, unindo com localStorage
     const savedMeetings = JSON.parse(localStorage.getItem('ifsc-tcc-meetings')) || [];
     const mergedMeetings = [...initialMeetings];
     savedMeetings.forEach(s => {
       s.data = formatDateBR(s.data);
-      if (!mergedMeetings.some(m => m.id === s.id)) {
+      const existingIdx = mergedMeetings.findIndex(m => m.id === s.id);
+      if (existingIdx === -1) {
         mergedMeetings.unshift(s);
+      } else {
+        // Se já existe no initialMeetings, mantém os items caso o savedMeetings tenha pendências atualizadas
+        mergedMeetings[existingIdx] = { ...mergedMeetings[existingIdx], ...s };
       }
     });
-    // Atualiza o localStorage higienizado para o formato BR
-    if (savedMeetings.length > 0) {
-      localStorage.setItem('ifsc-tcc-meetings', JSON.stringify(savedMeetings));
-    }
+
     let meetingsData = mergedMeetings;
-    meetingsData.forEach(m => { m.data = formatDateBR(m.data); });
+    meetingsData.forEach(m => { 
+      m.data = formatDateBR(m.data);
+      if (!m.items) m.items = [];
+    });
+    localStorage.setItem('ifsc-tcc-meetings', JSON.stringify(meetingsData));
+
+    // ==========================================================================
+    // CONFIGURAÇÃO DE BOTÕES DOS CARDS (CUSTOMIZÁVEL PELO PROFESSOR)
+    // ==========================================================================
+    const DEFAULT_CARD_BUTTONS = [
+      {
+        id: 'meet',
+        label: 'Google Meet',
+        icon: 'fa-solid fa-video',
+        url: 'https://meet.google.com/cej-kkio-bpw?pli=1&authuser=1',
+        color: 'meet',
+        visible: true,
+        isStatic: true
+      },
+      {
+        id: 'preprojeto',
+        label: 'Pré-projeto',
+        icon: 'fa-solid fa-file-lines',
+        url: '{linkPreProjeto}',
+        color: 'default',
+        visible: true
+      },
+      {
+        id: 'slides',
+        label: 'Slides',
+        icon: 'fa-solid fa-file-powerpoint',
+        url: '{linkSlides}',
+        color: 'slides',
+        visible: true
+      },
+      {
+        id: 'dashboard',
+        label: 'Dashboard',
+        icon: 'fa-solid fa-chart-line',
+        url: '{linkDashboard}',
+        color: 'dashboard',
+        visible: true
+      },
+      {
+        id: 'overleaf',
+        label: 'Overleaf',
+        icon: 'fa-solid fa-leaf',
+        url: '{linkOverleafProject}',
+        color: 'overleaf',
+        visible: true
+      },
+      {
+        id: 'github',
+        label: 'GitHub',
+        icon: 'fa-brands fa-github',
+        url: '{linkGithub}',
+        color: 'github',
+        visible: true
+      },
+      {
+        id: 'ata',
+        label: 'Ata Banca',
+        icon: 'fa-solid fa-comments',
+        url: '{linkComentariosBanca}',
+        color: 'default',
+        visible: true
+      }
+    ];
+
+    let cardButtonsConfig = JSON.parse(localStorage.getItem('ifsc-tcc-card-buttons-v1')) || DEFAULT_CARD_BUTTONS;
+
+    // ==========================================================================
+    // GESTÃO DE DEMANDAS / CHECKPOINTS (ESTILO PI 1 & PI 2)
+    // ==========================================================================
+    const initialDemandas = [
+      {
+        id: 'DEM-001',
+        data: '2026-09-25',
+        escopo: 'Marília Stefenon',
+        alunoNome: 'Marília Stefenon',
+        categoria: 'TCC Superior',
+        titulo: 'Elaboração e validação dos 3 diagramas numerados do fluxo de atendimento',
+        prazo: '2026-10-30',
+        criterios: '1. Diagrama de sequência numerado; 2. Validação junto à secretaria acadêmica (Ramon); 3. Diferenciação clara entre atendimento 100% automatizado vs. com intervenção humana.',
+        descricao: 'Estruturar os fluxogramas sequenciais do bot para checar o protocolo de atendimento da secretaria e instruir o protótipo da tela administrativa.',
+        linkMeet: 'https://meet.google.com/cej-kkio-bpw?pli=1&authuser=1',
+        status: 'Pendente',
+        criadoPor: 'Prof. Dr. André Moraes',
+        concluidaEm: '',
+        evidencia: ''
+      },
+      {
+        id: 'DEM-002',
+        data: '2026-09-26',
+        escopo: 'Michel David de Souza',
+        alunoNome: 'Michel David de Souza',
+        categoria: 'TCC Superior',
+        titulo: 'Relatório de status das atividades pós-pré-banca e dúvidas na Godot',
+        prazo: '2026-10-25',
+        criterios: '1. Resposta ao e-mail formal de cobrança; 2. Levantamento das correções solicitadas pela banca (Ryan e Fabiana); 3. Cronograma de desenvolvimento dos níveis do jogo.',
+        descricao: 'Formalizar os avanços no jogo sobre vírus e agendar reunião de alinhamento metodológico.',
+        linkMeet: 'https://meet.google.com/cej-kkio-bpw?pli=1&authuser=1',
+        status: 'Pendente',
+        criadoPor: 'Prof. Dr. André Moraes',
+        concluidaEm: '',
+        evidencia: ''
+      },
+      {
+        id: 'DEM-003',
+        data: '2026-09-15',
+        escopo: 'Luísa Narvaz Blankenburg',
+        alunoNome: 'Luísa Narvaz Blankenburg',
+        categoria: 'Projeto Integrador II',
+        titulo: 'Submissão da versão final para a câmera SBC / WebMedia 2026',
+        prazo: '2026-10-10',
+        criterios: '1. Adequação da monografia no template LaTeX SBC; 2. Inclusão dos dados de 4 experimentos metodológicos; 3. Diagramas de áudio do Raspberry Pi 4.',
+        descricao: 'Revisão final do paper e submissão dos arquivos de fonte no Overleaf.',
+        linkMeet: 'https://meet.google.com/cej-kkio-bpw?pli=1&authuser=1',
+        status: 'Concluída',
+        criadoPor: 'Prof. Dr. André Moraes',
+        concluidaEm: '2026-10-08',
+        evidencia: 'Artigo aceito no WebMedia 2026 (Lavras-MG) e versão final submetida no Overleaf.'
+      },
+      {
+        id: 'DEM-004',
+        data: '2026-10-01',
+        escopo: '*',
+        alunoNome: 'Todos os Orientandos (Broadcast)',
+        categoria: 'Geral',
+        titulo: 'Preenchimento e atualização dos links do Overleaf e GitHub no painel executivo',
+        prazo: '2026-11-15',
+        criterios: '1. Repositório público ou com acesso concedido ao orientador; 2. Projeto Overleaf configurado com compilação sem erros.',
+        descricao: 'Todos os orientandos de TCC e PI devem verificar se os links na ficha do painel estão atualizados e acessíveis para acompanhamento contínuo.',
+        linkMeet: 'https://meet.google.com/cej-kkio-bpw?pli=1&authuser=1',
+        status: 'Pendente',
+        criadoPor: 'Prof. Dr. André Moraes',
+        concluidaEm: '',
+        evidencia: ''
+      }
+    ];
+
+    let savedDemandas = JSON.parse(localStorage.getItem('ifsc-tcc-demandas')) || [];
+    let demandasData = [...initialDemandas];
+    savedDemandas.forEach(sd => {
+      if (!demandasData.some(d => d.id === sd.id)) {
+        demandasData.unshift(sd);
+      } else {
+        const idx = demandasData.findIndex(d => d.id === sd.id);
+        if (idx !== -1) demandasData[idx] = sd;
+      }
+    });
+
     let currentFilter = 'all';
     let currentStudentForMeeting = null;
+    let currentDemandaStatusFilter = 'all';
+    let currentActiveDemandaForMsg = null;
 
     // Switch between tabs
     function switchTab(tabId) {
@@ -2994,8 +3874,12 @@ tectonic -Z shell-escape document.tex</pre>
       const target = document.getElementById(tabId);
       if (target) target.classList.add('active');
 
-      const activeBtn = Array.from(document.querySelectorAll('.tab-btn')).find(b => b.getAttribute('onclick').includes(tabId));
+      const activeBtn = Array.from(document.querySelectorAll('.tab-btn')).find(b => b.getAttribute('onclick') && b.getAttribute('onclick').includes(tabId));
       if (activeBtn) activeBtn.classList.add('active');
+
+      if (tabId === 'tab-demandas') {
+        renderDemandas();
+      }
 
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
@@ -3010,6 +3894,12 @@ tectonic -Z shell-escape document.tex</pre>
 
     // Filter and Search Projects
     function filterProjects() {
+      // Se for visão do estudante, restringe estritamente ao seu próprio card
+      if (isStudentView && loggedStudent) {
+        renderProjects([loggedStudent]);
+        return;
+      }
+
       const q = document.getElementById('searchInput').value.toLowerCase().trim();
       const filtered = studentsData.filter(s => {
         // Chip filter
@@ -3037,6 +3927,30 @@ tectonic -Z shell-escape document.tex</pre>
       renderProjects(filtered);
     }
 
+    // Renderiza botões customizados configurados pelo professor para o card do aluno
+    function renderCardButtonsForStudent(s) {
+      let html = '';
+      const cfg = (typeof cardButtonsConfig !== 'undefined' && cardButtonsConfig.length) ? cardButtonsConfig : DEFAULT_CARD_BUTTONS;
+      cfg.filter(btn => btn.visible !== false).forEach(btn => {
+        let resolvedUrl = btn.url || '';
+        if (resolvedUrl.includes('{linkPreProjeto}')) resolvedUrl = s.linkPreProjeto || '';
+        else if (resolvedUrl.includes('{linkSlides}')) resolvedUrl = s.linkSlides || '';
+        else if (resolvedUrl.includes('{linkDashboard}')) resolvedUrl = s.linkDashboard || '';
+        else if (resolvedUrl.includes('{linkOverleafProject}')) resolvedUrl = s.linkOverleafProject || s.linkOverleaf || '';
+        else if (resolvedUrl.includes('{linkGithub}')) resolvedUrl = s.linkGithub || '';
+        else if (resolvedUrl.includes('{linkComentariosBanca}')) resolvedUrl = s.linkComentariosBanca || '';
+        else if (resolvedUrl.includes('{email}')) resolvedUrl = s.email ? 'mailto:' + s.email : '';
+
+        if (!resolvedUrl) return;
+
+        const colorClass = (!btn.color || btn.color === 'default') ? '' : btn.color;
+        html += `<a href="${resolvedUrl}" target="_blank" class="btn-link-action ${colorClass}" title="${btn.label}">
+          <i class="${btn.icon || 'fa-solid fa-link'}"></i> ${btn.label}
+        </a>`;
+      });
+      return html;
+    }
+
     // Render Cards in Grid
     function renderProjects(list) {
       const container = document.getElementById('projectsContainer');
@@ -3062,34 +3976,11 @@ tectonic -Z shell-escape document.tex</pre>
         const studentMeetings = meetingsData.filter(m => m.alunoNome.toLowerCase().includes(s.nome.toLowerCase().split(' ')[0]));
         const lastMeeting = studentMeetings[0];
 
-        let linkButtons = '';
-        if (s.linkPreProjeto) {
-          linkButtons += `<a href="${s.linkPreProjeto}" target="_blank" class="btn-link-action" title="Abrir Pré-projeto no Google Docs"><i class="fa-solid fa-file-lines"></i> Pré-projeto</a>`;
-        }
-        if (s.linkSlides) {
-          linkButtons += `<a href="${s.linkSlides}" target="_blank" class="btn-link-action slides" title="Abrir Slides no Google Apresentações"><i class="fa-solid fa-file-powerpoint"></i> Slides</a>`;
-        }
-        if (s.linkDashboard) {
-          linkButtons += `<a href="${s.linkDashboard}" target="_blank" class="btn-link-action dashboard" title="Abrir Dashboard no GitHub Pages"><i class="fa-solid fa-chart-line"></i> Dashboard</a>`;
-        }
-        if (s.linkDashboardLocal) {
-          linkButtons += `<a href="${s.linkDashboardLocal}" target="_blank" class="btn-link-action dashboard" title="Abrir Dashboard Localmente" style="border-color: rgba(22, 163, 74, 0.4); color: var(--ifsc-green);"><i class="fa-solid fa-folder-tree"></i> Dashboard (Local)</a>`;
-        }
-        if (s.linkOverleafProject) {
-          linkButtons += `<a href="${s.linkOverleafProject}" target="_blank" class="btn-link-action overleaf" title="Abrir Artigo TCC no Overleaf"><i class="fa-solid fa-leaf"></i> Artigo TCC</a>`;
-        } else if (s.linkOverleaf) {
-          linkButtons += `<a href="${s.linkOverleaf}" target="_blank" class="btn-link-action overleaf" title="Visualizar Artigo no Overleaf"><i class="fa-solid fa-leaf"></i> Overleaf</a>`;
-        }
-        if (s.linkOverleafNotes) {
-          linkButtons += `<a href="${s.linkOverleafNotes}" target="_blank" class="btn-link-action overleaf" title="Abrir Tutorial no Overleaf"><i class="fa-solid fa-leaf"></i> Tutorial</a>`;
-        }
-        if (s.linkGithub) {
-          linkButtons += `<a href="${s.linkGithub}" target="_blank" class="btn-link-action github" title="Abrir Repositório no GitHub"><i class="fa-brands fa-github"></i> GitHub</a>`;
-        }
-        if (s.linkComentariosBanca) {
-          linkButtons += `<a href="${s.linkComentariosBanca}" target="_blank" class="btn-link-action" title="Ata de Comentários da Banca"><i class="fa-solid fa-comments"></i> Ata Banca</a>`;
-        }
+        // Count demands for this student
+        const studentDemands = (typeof demandasData !== 'undefined' ? demandasData : []).filter(d => d.escopo === '*' || d.escopo.toLowerCase().includes(s.nome.toLowerCase().split(' ')[0]));
+        const pendingDemands = studentDemands.filter(d => d.status === 'pendente').length;
 
+        const linkButtons = renderCardButtonsForStudent(s);
         const tagsHtml = s.tags ? s.tags.map(t => `<span class="tag-badge">${t}</span>`).join('') : '';
 
         return `
@@ -3134,7 +4025,10 @@ tectonic -Z shell-escape document.tex</pre>
                 <i class="fa-solid fa-users"></i> <span><strong>Banca:</strong> ${s.bancaMembros || 'Não cadastrada'}</span>
               </div>
               <div class="banca-meta-item">
-                <i class="fa-solid fa-handshake-simple"></i> <span><strong>Reuniões Registradas:</strong> ${studentMeetings.length} encontro(s)</span>
+                <i class="fa-solid fa-handshake-simple"></i> <span><strong>Reuniões:</strong> ${studentMeetings.length} encontro(s)</span>
+              </div>
+              <div class="banca-meta-item" style="${pendingDemands > 0 ? 'color: var(--accent-amber); font-weight: 600;' : ''}">
+                <i class="fa-solid fa-bullseye"></i> <span><strong>Demandas:</strong> ${studentDemands.length} (${pendingDemands} pendente${pendingDemands === 1 ? '' : 's'})</span>
               </div>
               ${lastMeeting ? `<div class="banca-meta-item" style="color: var(--accent-cyan);"><i class="fa-solid fa-clock"></i> <span><strong>Último registro:</strong> ${lastMeeting.data} (${lastMeeting.tipo})</span></div>` : ''}
             </div>
@@ -3145,12 +4039,17 @@ tectonic -Z shell-escape document.tex</pre>
 
             <div class="links-grid" style="margin-top: 0.5rem; align-items: center;">
               ${linkButtons}
-              <button class="btn-link-action" onclick="quickRegisterMeeting('${s.nome}')" style="${isInactive ? 'color: #ef4444; border-color: rgba(239, 68, 68, 0.3);' : 'color: var(--ifsc-green);'}" title="Registrar Reunião com este aluno">
-                <i class="fa-solid fa-plus"></i> Reunião
-              </button>
-              <button class="btn-link-action" onclick="openEditStudentModal(${s.id})" title="Editar dados cadastrais e atualizar na planilha Google Sheets" style="color: var(--accent-cyan);">
-                <i class="fa-solid fa-pen-to-square"></i> Editar
-              </button>
+              ${!isStudentView ? `
+                <button class="btn-link-action admin-only" onclick="quickRegisterMeeting('${s.nome}')" style="${isInactive ? 'color: #ef4444; border-color: rgba(239, 68, 68, 0.3);' : 'color: var(--ifsc-green);'}" title="Registrar Reunião com este aluno">
+                  <i class="fa-solid fa-plus"></i> Reunião
+                </button>
+                <button class="btn-link-action admin-only" onclick="openNewDemandModal('${s.nome}')" style="color: var(--accent-purple); border-color: rgba(147, 51, 234, 0.3);" title="Criar Nova Demanda para este orientando">
+                  <i class="fa-solid fa-bullseye"></i> Demanda
+                </button>
+                <button class="btn-link-action admin-only" onclick="openEditStudentModal(${s.id})" title="Editar dados cadastrais e atualizar na planilha Google Sheets" style="color: var(--accent-cyan);">
+                  <i class="fa-solid fa-pen-to-square"></i> Editar
+                </button>
+              ` : ''}
               <button class="btn-link-action" onclick="openStudentModal(${s.id})" style="background: rgba(22, 163, 74, 0.12); border-color: var(--ifsc-green); color: var(--ifsc-green); margin-left: auto;">
                 <i class="fa-solid fa-expand"></i> Ficha Completa
               </button>
@@ -3163,34 +4062,47 @@ tectonic -Z shell-escape document.tex</pre>
     // Render Meetings List
     function renderMeetings() {
       const container = document.getElementById('meetingsListContainer');
-      const filter = document.getElementById('meetingFilterSelect').value;
+      const filter = document.getElementById('meetingFilterSelect') ? document.getElementById('meetingFilterSelect').value : 'all';
 
       let list = [...meetingsData];
-      if (filter !== 'all') {
+
+      if (isStudentView && loggedStudent) {
+        const studentFirst = loggedStudent.nome.toLowerCase().split(' ')[0];
+        list = list.filter(m => (m.alunoNome && (m.alunoNome.toLowerCase().includes(studentFirst) || loggedStudent.nome.toLowerCase().includes(m.alunoNome.toLowerCase()))));
+      } else if (filter !== 'all') {
         list = list.filter(m => m.alunoNome === filter);
       }
 
       // Update KPI
-      document.getElementById('kpi-reunioes-count').textContent = meetingsData.length;
-      document.getElementById('count-reunioes-nav').textContent = meetingsData.length;
+      const totalMeetings = isStudentView && loggedStudent ? list.length : meetingsData.length;
+      const kpiReunioesEl = document.getElementById('kpi-reunioes-count');
+      if (kpiReunioesEl) kpiReunioesEl.textContent = totalMeetings;
+      const navReunioesEl = document.getElementById('count-reunioes-nav');
+      if (navReunioesEl) navReunioesEl.textContent = totalMeetings;
 
       if (!list.length) {
         container.innerHTML = `
           <div style="text-align: center; padding: 3rem 1.5rem; background: var(--bg-card); border-radius: 12px; border: 1px dashed var(--border-color);">
             <i class="fa-solid fa-calendar-xmark" style="font-size: 2rem; color: var(--text-dim); margin-bottom: 0.75rem;"></i>
-            <p style="color: var(--text-muted); font-size: 0.9rem;">Nenhuma reunião registrada para este filtro.</p>
+            <p style="color: var(--text-muted); font-size: 0.9rem;">Nenhuma reunião registrada ${isStudentView ? 'para o seu projeto até o momento.' : 'para este filtro.'}</p>
           </div>
         `;
         return;
       }
 
-      container.innerHTML = list.map(m => `
+      container.innerHTML = list.map(m => {
+        const hasItems = m.items && m.items.length;
+        const pendingCount = hasItems ? m.items.filter(it => it.status !== 'resolvido').length : 0;
+        const resolvedCount = hasItems ? m.items.filter(it => it.status === 'resolvido').length : 0;
+
+        return `
         <div class="meeting-card">
           <div class="meeting-top-row">
             <div>
               <div style="display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap;">
                 <strong style="font-size: 1.05rem; color: var(--text-main); font-family: 'Outfit', sans-serif;">${m.alunoNome}</strong>
                 <span class="meeting-badge-type">${m.tipo}</span>
+                ${hasItems ? `<span class="meeting-badge-type" style="background: rgba(147, 51, 234, 0.12); color: var(--accent-purple); border-color: rgba(147, 51, 234, 0.3);"><i class="fa-solid fa-list-check"></i> ${pendingCount} pendente(s) • ${resolvedCount} resolvido(s)</span>` : ''}
               </div>
               <div style="font-size: 0.82rem; color: var(--text-muted); margin-top: 3px;">
                 <strong>Pauta:</strong> ${m.pauta}
@@ -3207,20 +4119,62 @@ tectonic -Z shell-escape document.tex</pre>
             ${m.proximosPassos ? `<p style="margin-top: 6px; font-size: 0.78rem; color: var(--accent-cyan);"><strong><i class="fa-solid fa-forward-step"></i> Próxima Entrega:</strong> ${m.proximosPassos}</p>` : ''}
           </div>
 
+          ${m.itensResolvidos ? `
+            <div style="margin-top: 0.6rem; padding: 0.5rem 0.75rem; background: rgba(34, 197, 94, 0.08); border-left: 3px solid #22c55e; border-radius: 6px; font-size: 0.8rem;">
+              <strong style="color: #16a34a;"><i class="fa-solid fa-circle-check"></i> O que foi resolvido nesta reunião:</strong>
+              <p style="margin-top: 2px; color: var(--text-main);">${m.itensResolvidos}</p>
+            </div>
+          ` : ''}
+
+          ${hasItems ? `
+            <div class="meeting-items-container" style="margin-top: 0.65rem;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                <span style="font-size: 0.76rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">
+                  <i class="fa-solid fa-list-check"></i> Ações & Pendências Pactuadas:
+                </span>
+                ${!isStudentView ? `<span style="font-size: 0.7rem; color: var(--text-dim);">Clique para marcar resolvido</span>` : ''}
+              </div>
+              ${m.items.map(it => `
+                <div class="meeting-item-row" ${!isStudentView ? `onclick="toggleMeetingItemStatus(${m.id}, '${it.id}')" title="Clique para alternar entre Pendente e Resolvido"` : ''}>
+                  <span class="meeting-item-checkbox ${it.status === 'resolvido' ? 'checked' : ''}">
+                    <i class="fa-solid ${it.status === 'resolvido' ? 'fa-check' : ''}"></i>
+                  </span>
+                  <span class="meeting-item-text ${it.status === 'resolvido' ? 'completed' : ''}">${it.text}</span>
+                  <span class="meeting-item-badge ${it.status === 'resolvido' ? 'resolvido' : 'pendente'}">
+                    ${it.status === 'resolvido' ? 'Resolvido' : 'Pendente'}
+                  </span>
+                </div>
+              `).join('')}
+            </div>
+          ` : (m.pendencias ? `
+            <div style="margin-top: 0.6rem; padding: 0.5rem 0.75rem; background: rgba(245, 158, 11, 0.08); border-left: 3px solid #f59e0b; border-radius: 6px; font-size: 0.8rem;">
+              <strong style="color: var(--accent-amber);"><i class="fa-solid fa-triangle-exclamation"></i> Pendências Pactuadas:</strong>
+              <p style="margin-top: 2px; color: var(--text-main);">${m.pendencias}</p>
+            </div>
+          ` : '')}
+
           <div style="display: flex; justify-content: flex-end; align-items: center; gap: 0.6rem; margin-top: 0.75rem; flex-wrap: wrap;">
-            <button class="btn-link-action" onclick="enviarNotificacaoEmailIndividual(${m.id})" style="font-size: 0.72rem; color: var(--ifsc-green); border-color: rgba(22, 163, 74, 0.3);">
+            <button class="btn-link-action" onclick="copiarResumoReuniao(${m.id})" style="font-size: 0.72rem; color: var(--accent-cyan); border-color: rgba(6, 182, 212, 0.3);" title="Copiar Ata de Reunião formatada para WhatsApp">
+              <i class="fa-brands fa-whatsapp"></i> Copiar para WhatsApp
+            </button>
+            <button class="btn-link-action admin-only" onclick="promptAddMeetingItem(${m.id})" style="font-size: 0.72rem; color: var(--accent-purple); border-color: rgba(147, 51, 234, 0.3);" title="Adicionar nova pendência/ação pactuada para esta reunião">
+              <i class="fa-solid fa-plus"></i> Pendência
+            </button>
+            <button class="btn-link-action admin-only" onclick="enviarNotificacaoEmailIndividual(${m.id})" style="font-size: 0.72rem; color: var(--ifsc-green); border-color: rgba(22, 163, 74, 0.3);">
               <i class="fa-solid fa-paper-plane"></i> Enviar por E-mail
             </button>
-            <button class="btn-link-action" onclick="deleteMeeting(${m.id})" style="font-size: 0.72rem; color: var(--ifsc-red); border-color: rgba(220, 38, 38, 0.3);">
+            <button class="btn-link-action admin-only" onclick="deleteMeeting(${m.id})" style="font-size: 0.72rem; color: var(--ifsc-red); border-color: rgba(220, 38, 38, 0.3);">
               <i class="fa-solid fa-trash-can"></i> Excluir
             </button>
           </div>
         </div>
-      `).join('');
+      `;
+      }).join('');
     }
 
     // Quick register meeting from student card
     function quickRegisterMeeting(alunoNome) {
+      if (isStudentView) return;
       document.getElementById('meetingAlunoSelect').value = alunoNome;
       document.getElementById('meetingDateInput').value = new Date().toISOString().split('T')[0];
       onMeetingAlunoChange();
@@ -3229,6 +4183,7 @@ tectonic -Z shell-escape document.tex</pre>
 
     // Open meeting from student modal
     function openMeetingFromStudentModal() {
+      if (isStudentView) return;
       if (currentStudentForMeeting) {
         document.getElementById('meetingAlunoSelect').value = currentStudentForMeeting.nome;
       }
@@ -3239,6 +4194,7 @@ tectonic -Z shell-escape document.tex</pre>
     }
 
     function openNewMeetingModal() {
+      if (isStudentView) return;
       document.getElementById('meetingForm').reset();
       document.getElementById('meetingDateInput').value = new Date().toISOString().split('T')[0];
       onMeetingAlunoChange();
@@ -3267,15 +4223,18 @@ tectonic -Z shell-escape document.tex</pre>
     // Google Apps Script Web App URL para inclusão remota
     const GOOGLE_SCRIPT_WEBAPP_URL = 'https://script.google.com/macros/s/AKfycbyXQEKRxt3YK1T5nVUcXtq1TXvC2qwiLvsGPE_-ZMGYca01ET0nk4HIhqVy2S0rr18/exec';
 
-    // Helper para obter e-mail institucional do estudante
+    // Helper para obter e-mail institucional/notificação do estudante
     function getStudentEmail(alunoNome) {
       if (!alunoNome) return '';
+      const isMarilia = alunoNome.toLowerCase().includes('marília') || alunoNome.toLowerCase().includes('marilia');
+      if (isMarilia) return 'stefenon79.marilia@gmail.com';
       const s = studentsData.find(item => item.nome.toLowerCase().includes(alunoNome.toLowerCase().split(' ')[0]));
       return s && s.email ? s.email : '';
     }
 
     // Disparar notificação por e-mail de reunião individual
     async function enviarNotificacaoEmailIndividual(id) {
+      if (isStudentView) return;
       const m = meetingsData.find(item => item.id === id);
       if (!m) return;
       const defaultEmail = m.alunoEmail || getStudentEmail(m.alunoNome) || 'chameoandre@gmail.com';
@@ -3302,7 +4261,9 @@ tectonic -Z shell-escape document.tex</pre>
               tipo: m.tipo,
               pauta: m.pauta,
               deliberacoes: m.deliberacoes,
-              proximosPassos: m.proximosPassos
+              proximosPassos: m.proximosPassos,
+              pendencias: m.pendencias || (m.items ? m.items.map(i => (i.status === 'resolvido' ? '✅ ' : '⏳ ') + i.text).join('\n') : ''),
+              itensResolvidos: m.itensResolvidos || ''
             })
           });
           showToast(`Notificação enviada com sucesso para ${targetEmail}!`, 'success');
@@ -3318,6 +4279,7 @@ tectonic -Z shell-escape document.tex</pre>
     // Save new meeting
     async function saveNewMeeting(e) {
       e.preventDefault();
+      if (isStudentView) return;
 
       const alunoNome = document.getElementById('meetingAlunoSelect').value;
       let rawData = document.getElementById('meetingDateInput').value;
@@ -3331,9 +4293,24 @@ tectonic -Z shell-escape document.tex</pre>
       const pauta = document.getElementById('meetingPautaInput').value;
       const deliberacoes = document.getElementById('meetingDelibInput').value;
       const proximosPassos = document.getElementById('meetingProximosInput').value;
+      const pendenciasRaw = document.getElementById('meetingPendenciasInput') ? document.getElementById('meetingPendenciasInput').value.trim() : '';
+      const itensResolvidos = document.getElementById('meetingResolvidosInput') ? document.getElementById('meetingResolvidosInput').value.trim() : '';
       const enviarEmail = document.getElementById('meetingEnviarEmailCheck') ? document.getElementById('meetingEnviarEmailCheck').checked : false;
       const emailField = document.getElementById('meetingEmailInput');
       const alunoEmail = (emailField && emailField.value.trim()) ? emailField.value.trim() : getStudentEmail(alunoNome);
+
+      // Decompõe pendências em itens interativos com checkbox
+      const items = [];
+      if (pendenciasRaw) {
+        pendenciasRaw.split('\n').map(l => l.trim()).filter(l => l.length > 0).forEach((line, idx) => {
+          items.push({
+            id: 'item-' + Date.now() + '-' + (idx + 1),
+            text: line.replace(/^[-*•\d.]+\s*/, ''),
+            status: 'pendente',
+            resolvidoEm: ''
+          });
+        });
+      }
 
       const newMeeting = {
         id: Date.now(),
@@ -3345,7 +4322,10 @@ tectonic -Z shell-escape document.tex</pre>
         tipo,
         pauta,
         deliberacoes,
-        proximosPassos
+        proximosPassos,
+        pendencias: pendenciasRaw,
+        itensResolvidos: itensResolvidos,
+        items: items
       };
 
       // Inclusão imediata no estado local e interface
@@ -3356,7 +4336,7 @@ tectonic -Z shell-escape document.tex</pre>
       renderMeetings();
       renderProjects(studentsData);
       switchTab('tab-reunioes');
-      showToast(`Reunião de ${alunoNome} salva! Sincronizando com a planilha...`, 'info');
+      showToast(`Reunião de ${alunoNome} salva com registro de pendências!`, 'success');
 
       // Envia ao Google Apps Script Web App
       if (GOOGLE_SCRIPT_WEBAPP_URL) {
@@ -3367,22 +4347,25 @@ tectonic -Z shell-escape document.tex</pre>
             headers: {
               'Content-Type': 'text/plain;charset=utf-8'
             },
-            body: JSON.stringify(newMeeting)
+            body: JSON.stringify({
+              acao: 'registrar_reuniao',
+              ...newMeeting
+            })
           });
-          showToast(`Reunião enviada para a planilha!` + (enviarEmail ? ` E-mail enviado para o aluno.` : ''), 'success');
-          // Recarrega dados da planilha após 2.5s para unificar IDs
+          showToast(`Reunião sincronizada com a planilha!` + (enviarEmail ? ` E-mail enviado.` : ''), 'success');
           setTimeout(() => {
             loadMeetingsFromSheet();
           }, 2500);
         } catch (err) {
           console.warn('Erro ao sincronizar com Google Apps Script:', err);
-          showToast(`Salvo localmente no navegador. Verifique a implantação do Apps Script.`, 'warning');
+          showToast(`Salvo localmente no navegador.`, 'warning');
         }
       }
     }
 
     // Delete meeting
     function deleteMeeting(id) {
+      if (isStudentView) return;
       if (!confirm('Deseja realmente remover este registro de reunião?')) return;
       meetingsData = meetingsData.filter(m => m.id !== id);
       localStorage.setItem('ifsc-tcc-meetings', JSON.stringify(meetingsData));
@@ -3394,6 +4377,7 @@ tectonic -Z shell-escape document.tex</pre>
 
     // Export Meetings JSON
     function exportMeetingsJSON() {
+      if (isStudentView) return;
       const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(meetingsData, null, 2));
       const dlAnchor = document.createElement('a');
       dlAnchor.setAttribute("href", dataStr);
@@ -3402,8 +4386,245 @@ tectonic -Z shell-escape document.tex</pre>
       showToast('Histórico de reuniões exportado em JSON!', 'success');
     }
 
+    // Alterna o status de um item de pendência de reunião (Pendente <-> Resolvido)
+    function toggleMeetingItemStatus(meetingId, itemId) {
+      if (isStudentView) {
+        showToast('Apenas o orientador pode alterar pendências oficiais.', 'info');
+        return;
+      }
+      const m = meetingsData.find(item => item.id == meetingId);
+      if (!m || !m.items) return;
+      const it = m.items.find(i => i.id == itemId);
+      if (!it) return;
+
+      if (it.status === 'resolvido') {
+        it.status = 'pendente';
+        it.resolvidoEm = '';
+        showToast(`Item marcado como PENDENTE.`, 'info');
+      } else {
+        it.status = 'resolvido';
+        it.resolvidoEm = new Date().toISOString().split('T')[0];
+        showToast(`Item marcado como RESOLVIDO!`, 'success');
+      }
+
+      localStorage.setItem('ifsc-tcc-meetings', JSON.stringify(meetingsData));
+      renderMeetings();
+      if (currentStudentForMeeting) {
+        renderStudentModalMeetings(currentStudentForMeeting);
+      }
+    }
+
+    // Adiciona uma nova pendência/ação pactuada a uma reunião existente
+    function promptAddMeetingItem(meetingId) {
+      if (isStudentView) return;
+      const m = meetingsData.find(item => item.id == meetingId);
+      if (!m) return;
+      const texto = prompt(`Adicionar nova pendência/ação acordada para a reunião de ${m.alunoNome} (${formatDateBR(m.data)}):`);
+      if (!texto || !texto.trim()) return;
+
+      if (!m.items) m.items = [];
+      m.items.push({
+        id: 'item-' + Date.now(),
+        text: texto.trim(),
+        status: 'pendente',
+        resolvidoEm: ''
+      });
+
+      localStorage.setItem('ifsc-tcc-meetings', JSON.stringify(meetingsData));
+      renderMeetings();
+      if (currentStudentForMeeting) {
+        renderStudentModalMeetings(currentStudentForMeeting);
+      }
+      showToast('Nova pendência adicionada com sucesso!', 'success');
+    }
+
+    // Copia ata e resumo estruturado da reunião para envio via WhatsApp
+    function copiarResumoReuniao(meetingId) {
+      const m = meetingsData.find(item => item.id == meetingId);
+      if (!m) return;
+
+      let msg = `*RESUMO DE ORIENTAÇÃO - IFSC GAROPABA*\n`;
+      msg += `*Aluno:* ${m.alunoNome}\n`;
+      msg += `*Data:* ${formatDateBR(m.data)} ${m.hora ? 'às ' + m.hora : ''} (${m.tipo})\n`;
+      msg += `*Pauta:* ${m.pauta}\n\n`;
+      msg += `*Deliberações & Acordos:*\n${m.deliberacoes}\n\n`;
+      if (m.itensResolvidos) {
+        msg += `*Itens Resolvidos Nesta Reunião:*\n${m.itensResolvidos}\n\n`;
+      }
+      if (m.items && m.items.length) {
+        msg += `*Pendências Pactuadas:*\n`;
+        m.items.forEach(it => {
+          msg += `${it.status === 'resolvido' ? '✅' : '⏳'} ${it.text}\n`;
+        });
+        msg += `\n`;
+      } else if (m.pendencias) {
+        msg += `*Pendências Pactuadas:*\n${m.pendencias}\n\n`;
+      }
+      if (m.proximosPassos) {
+        msg += `*Próximos Passos:* ${m.proximosPassos}\n\n`;
+      }
+      msg += `*Sala Google Meet:* https://meet.google.com/cej-kkio-bpw?pli=1&authuser=1\n`;
+
+      navigator.clipboard.writeText(msg).then(() => {
+        showToast('Resumo da reunião copiado para a área de transferência! Cole no WhatsApp do aluno.', 'success');
+      }).catch(() => {
+        showToast('Não foi possível copiar automaticamente.', 'warning');
+      });
+    }
+
+    // Renderiza a lista de reuniões com pendências e itens resolvidos na ficha do aluno
+    function renderStudentModalMeetings(s) {
+      const container = document.getElementById('modalStudentMeetingsList');
+      if (!container) return;
+      const studentMeetings = meetingsData.filter(m => m.alunoNome.toLowerCase().includes(s.nome.toLowerCase().split(' ')[0]));
+
+      if (!studentMeetings.length) {
+        container.innerHTML = '<span style="font-size: 0.82rem; color: var(--text-dim);"><i class="fa-solid fa-calendar-xmark"></i> Nenhuma reunião específica cadastrada ainda para este orientando.</span>';
+        return;
+      }
+
+      container.innerHTML = studentMeetings.map(m => {
+        const hasItems = m.items && m.items.length;
+        const pendingCount = hasItems ? m.items.filter(it => it.status !== 'resolvido').length : 0;
+        const resolvedCount = hasItems ? m.items.filter(it => it.status === 'resolvido').length : 0;
+
+        return `
+          <div style="background: rgba(22, 163, 74, 0.04); border-left: 3px solid var(--ifsc-green); border-radius: 8px; padding: 0.85rem; font-size: 0.82rem; border: 1px solid var(--chip-border); margin-bottom: 0.75rem;">
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem;">
+              <div style="display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
+                <strong style="color: var(--text-main); font-size: 0.95rem;">${m.tipo}</strong>
+                <span class="meeting-badge-type">${formatDateBR(m.data)} ${m.hora ? 'às ' + m.hora : ''}</span>
+                ${hasItems ? `<span class="meeting-badge-type" style="background: rgba(147, 51, 234, 0.12); color: var(--accent-purple); border-color: rgba(147, 51, 234, 0.3);"><i class="fa-solid fa-list-check"></i> ${pendingCount} pendente(s) • ${resolvedCount} resolvido(s)</span>` : ''}
+              </div>
+              <div style="display: flex; gap: 0.4rem;">
+                <button class="btn-link-action" onclick="copiarResumoReuniao(${m.id})" style="font-size: 0.7rem; color: var(--accent-cyan); border-color: rgba(6, 182, 212, 0.3);" title="Copiar Ata para WhatsApp">
+                  <i class="fa-brands fa-whatsapp"></i> Copiar
+                </button>
+                <button class="btn-link-action admin-only" onclick="promptAddMeetingItem(${m.id})" style="font-size: 0.7rem; color: var(--accent-purple); border-color: rgba(147, 51, 234, 0.3);" title="Adicionar pendência">
+                  <i class="fa-solid fa-plus"></i> Pendência
+                </button>
+              </div>
+            </div>
+
+            <div style="margin-top: 6px; color: var(--text-muted);">
+              <strong>Pauta:</strong> ${m.pauta}
+            </div>
+
+            <div style="margin-top: 6px; color: var(--text-main); line-height: 1.45;">
+              <strong style="color: var(--ifsc-green);"><i class="fa-solid fa-clipboard-check"></i> Deliberações:</strong> ${m.deliberacoes}
+            </div>
+
+            ${m.itensResolvidos ? `
+              <div style="margin-top: 6px; padding: 0.45rem 0.65rem; background: rgba(34, 197, 94, 0.08); border-left: 3px solid #22c55e; border-radius: 6px;">
+                <strong style="color: #16a34a;"><i class="fa-solid fa-circle-check"></i> O que foi resolvido nesta reunião:</strong>
+                <p style="margin-top: 2px; color: var(--text-main);">${m.itensResolvidos}</p>
+              </div>
+            ` : ''}
+
+            ${hasItems ? `
+              <div class="meeting-items-container" style="margin-top: 8px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                  <span style="font-size: 0.72rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">
+                    <i class="fa-solid fa-list-check"></i> Pendências & Itens Resolvidos:
+                  </span>
+                </div>
+                ${m.items.map(it => `
+                  <div class="meeting-item-row" ${!isStudentView ? `onclick="toggleMeetingItemStatus(${m.id}, '${it.id}')" title="Clique para alternar entre Pendente e Resolvido"` : ''}>
+                    <span class="meeting-item-checkbox ${it.status === 'resolvido' ? 'checked' : ''}">
+                      <i class="fa-solid ${it.status === 'resolvido' ? 'fa-check' : ''}"></i>
+                    </span>
+                    <span class="meeting-item-text ${it.status === 'resolvido' ? 'completed' : ''}">${it.text}</span>
+                    <span class="meeting-item-badge ${it.status === 'resolvido' ? 'resolvido' : 'pendente'}">
+                      ${it.status === 'resolvido' ? 'Resolvido' : 'Pendente'}
+                    </span>
+                  </div>
+                `).join('')}
+              </div>
+            ` : (m.pendencias ? `
+              <div style="margin-top: 6px; padding: 0.45rem 0.65rem; background: rgba(245, 158, 11, 0.08); border-left: 3px solid #f59e0b; border-radius: 6px;">
+                <strong style="color: var(--accent-amber);"><i class="fa-solid fa-triangle-exclamation"></i> Pendências:</strong>
+                <p style="margin-top: 2px; color: var(--text-main);">${m.pendencias}</p>
+              </div>
+            ` : '')}
+
+            ${m.proximosPassos ? `
+              <div style="margin-top: 6px; font-size: 0.78rem; color: var(--accent-cyan);">
+                <strong><i class="fa-solid fa-forward-step"></i> Próxima Entrega:</strong> ${m.proximosPassos}
+              </div>
+            ` : ''}
+          </div>
+        `;
+      }).join('');
+    }
+
+    // Renderiza a lista de demandas atribuídas ao aluno na ficha completa
+    function renderStudentModalDemands(s) {
+      const container = document.getElementById('modalStudentDemandsList');
+      if (!container) return;
+      const demands = (typeof demandasData !== 'undefined' ? demandasData : []).filter(d => d.escopo === '*' || d.escopo.toLowerCase().includes(s.nome.toLowerCase().split(' ')[0]));
+
+      if (!demands.length) {
+        container.innerHTML = '<span style="font-size: 0.82rem; color: var(--text-dim);"><i class="fa-solid fa-bullseye"></i> Nenhuma demanda cadastrada para este orientando. Clique em "+ Nova Demanda" acima para criar uma.</span>';
+        return;
+      }
+
+      container.innerHTML = demands.map(d => {
+        const isConcluida = d.status === 'concluida';
+        const isBroadcast = d.escopo === '*';
+        return `
+          <div class="demand-card ${isConcluida ? 'concluida' : ''}" style="margin-bottom: 0.75rem;">
+            <div class="demand-header">
+              <div style="display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
+                <span class="demand-scope-badge ${isBroadcast ? 'geral' : ''}">
+                  <i class="fa-solid ${isBroadcast ? 'fa-bullhorn' : 'fa-user'}"></i>
+                  ${isBroadcast ? 'Geral (Todos)' : d.escopo}
+                </span>
+                <strong style="font-size: 0.95rem; color: var(--text-main);">${d.titulo}</strong>
+              </div>
+              <span class="demand-deadline-badge ${isConcluida ? 'concluida' : ''}">
+                <i class="fa-solid ${isConcluida ? 'fa-check' : 'fa-clock'}"></i>
+                Prazo: ${formatDateBR(d.prazo)}
+              </span>
+            </div>
+
+            <div style="font-size: 0.82rem; color: var(--text-muted); line-height: 1.45; margin-top: 0.4rem;">
+              ${d.descricao}
+            </div>
+
+            ${d.criterios ? `
+              <div style="margin-top: 0.45rem; padding: 0.45rem 0.65rem; background: rgba(147, 51, 234, 0.05); border-left: 3px solid var(--accent-purple); border-radius: 6px; font-size: 0.78rem;">
+                <strong style="color: var(--accent-purple);"><i class="fa-solid fa-list-check"></i> Critérios de Aceite:</strong>
+                <p style="margin-top: 2px; color: var(--text-main); white-space: pre-line;">${d.criterios}</p>
+              </div>
+            ` : ''}
+
+            <div class="demand-actions" style="margin-top: 0.65rem;">
+              <button class="btn-link-action" onclick="openDemandMessageModal('${d.id}')" style="font-size: 0.72rem; color: var(--accent-cyan); border-color: rgba(6, 182, 212, 0.3);">
+                <i class="fa-solid fa-comment-dots"></i> Mensagem da Equipe
+              </button>
+              ${isConcluida ? `
+                <button class="btn-link-action" onclick="reabrirDemanda('${d.id}')" style="font-size: 0.72rem; color: var(--accent-amber); border-color: rgba(245, 158, 11, 0.3);">
+                  <i class="fa-solid fa-rotate-left"></i> Reabrir
+                </button>
+              ` : `
+                <button class="btn-link-action" onclick="concluirDemanda('${d.id}')" style="font-size: 0.72rem; color: var(--ifsc-green); border-color: rgba(22, 163, 74, 0.3);">
+                  <i class="fa-solid fa-check"></i> Concluir
+                </button>
+              `}
+              <button class="btn-link-action" onclick="deleteDemanda('${d.id}')" style="font-size: 0.72rem; color: var(--ifsc-red); border-color: rgba(220, 38, 38, 0.3);">
+                <i class="fa-solid fa-trash-can"></i> Excluir
+              </button>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
     // Open Student Modal
     function openStudentModal(id) {
+      if (isStudentView && loggedStudent && loggedStudent.id !== id) {
+        id = loggedStudent.id;
+      }
       const s = studentsData.find(item => item.id === id);
       if (!s) return;
 
@@ -3425,6 +4646,12 @@ tectonic -Z shell-escape document.tex</pre>
       document.getElementById('modalProgressVal').textContent = s.progresso + '%';
       document.getElementById('modalProgressBar').style.width = s.progresso + '%';
       document.getElementById('modalPhaseLabel').textContent = 'Fase Atual: ' + (s.fase || 'Em andamento');
+
+      // Meet button in student modal
+      const meetBtn = document.getElementById('modalStudentMeetBtn');
+      if (meetBtn) {
+        meetBtn.href = 'https://meet.google.com/cej-kkio-bpw?pli=1&authuser=1';
+      }
 
       // Banca details
       document.getElementById('modalBancaDetails').innerHTML = `
@@ -3450,33 +4677,12 @@ tectonic -Z shell-escape document.tex</pre>
         </div>
       `).join('');
 
-      // Student specific meetings in modal
-      const studentMeetings = meetingsData.filter(m => m.alunoNome.toLowerCase().includes(s.nome.toLowerCase().split(' ')[0]));
-      if (studentMeetings.length) {
-        document.getElementById('modalStudentMeetingsList').innerHTML = studentMeetings.map(m => `
-          <div style="background: rgba(22, 163, 74, 0.04); border-left: 3px solid var(--ifsc-green); border-radius: 6px; padding: 0.55rem 0.8rem; font-size: 0.8rem;">
-            <div style="display: flex; justify-content: space-between;">
-              <strong>${m.tipo}</strong>
-              <span style="color: var(--accent-cyan);">${formatDateBR(m.data)}</span>
-            </div>
-            <p style="color: var(--text-main); margin-top: 3px;">${m.deliberacoes}</p>
-          </div>
-        `).join('');
-      } else {
-        document.getElementById('modalStudentMeetingsList').innerHTML = '<span style="font-size: 0.8rem; color: var(--text-dim);">Nenhuma reunião específica cadastrada ainda.</span>';
-      }
+      // Render meetings and demands in modal
+      renderStudentModalMeetings(s);
+      renderStudentModalDemands(s);
 
-      // Links in modal
-      let linksHtml = '';
-      if (s.linkPreProjeto) linksHtml += `<a href="${s.linkPreProjeto}" target="_blank" class="btn btn-outline btn-sm"><i class="fa-solid fa-file-lines"></i> Abrir Pré-projeto</a>`;
-      if (s.linkSlides) linksHtml += `<a href="${s.linkSlides}" target="_blank" class="btn btn-outline btn-sm" style="color: var(--accent-amber);"><i class="fa-solid fa-file-powerpoint"></i> Slides</a>`;
-      if (s.linkDashboard) linksHtml += `<a href="${s.linkDashboard}" target="_blank" class="btn btn-outline btn-sm" style="color: var(--accent-cyan);"><i class="fa-solid fa-chart-line"></i> Dashboard Web</a>`;
-      if (s.linkOverleafProject) linksHtml += `<a href="${s.linkOverleafProject}" target="_blank" class="btn btn-outline btn-sm" style="color: #16a34a;"><i class="fa-solid fa-leaf"></i> Artigo TCC</a>`;
-      if (s.linkOverleafNotes) linksHtml += `<a href="${s.linkOverleafNotes}" target="_blank" class="btn btn-outline btn-sm" style="color: #16a34a;"><i class="fa-solid fa-leaf"></i> Tutorial</a>`;
-      if (s.linkOverleaf && !s.linkOverleafProject) linksHtml += `<a href="${s.linkOverleaf}" target="_blank" class="btn btn-outline btn-sm" style="color: #16a34a;"><i class="fa-solid fa-leaf"></i> Paper Overleaf</a>`;
-      if (s.linkGithub) linksHtml += `<a href="${s.linkGithub}" target="_blank" class="btn btn-outline btn-sm" style="color: #9333ea;"><i class="fa-brands fa-github"></i> Repositório GitHub</a>`;
-      if (s.linkComentariosBanca) linksHtml += `<a href="${s.linkComentariosBanca}" target="_blank" class="btn btn-outline btn-sm"><i class="fa-solid fa-comments"></i> Ata da Banca</a>`;
-
+      // Links in modal using dynamic card buttons
+      const linksHtml = renderCardButtonsForStudent(s);
       document.getElementById('modalLinksGrid').innerHTML = linksHtml || '<span style="color: var(--text-dim); font-size: 0.8rem;">Nenhum link externo cadastrado.</span>';
 
       document.getElementById('studentModal').classList.add('active');
@@ -3484,6 +4690,7 @@ tectonic -Z shell-escape document.tex</pre>
 
     // Abre o modal de edição de dados do orientando
     function openEditStudentModal(id) {
+      if (isStudentView) return;
       const studentId = id || (currentStudentForMeeting ? currentStudentForMeeting.id : null);
       if (!studentId) return;
       const s = studentsData.find(item => item.id === studentId);
@@ -3509,6 +4716,7 @@ tectonic -Z shell-escape document.tex</pre>
     // Salva as edições do aluno localmente e envia para a planilha Google Sheets
     async function saveEditStudent(e) {
       e.preventDefault();
+      if (isStudentView) return;
       const id = parseInt(document.getElementById('editStudentId').value, 10);
       const s = studentsData.find(item => item.id === id);
       if (!s) return;
@@ -3597,6 +4805,413 @@ tectonic -Z shell-escape document.tex</pre>
         btn.disabled = false;
         btn.innerHTML = originalHtml;
       }
+    }
+
+    // ==========================================================================
+    // GERENCIADOR DE BOTÕES DOS CARDS (CUSTOMIZAÇÃO DINÂMICA)
+    // ==========================================================================
+    function openCardButtonsModal() {
+      renderCardButtonsList();
+      document.getElementById('cardButtonsModal').classList.add('active');
+    }
+
+    function selectIcon(iconClass) {
+      document.querySelectorAll('#iconPickerGrid .icon-picker-btn').forEach(b => b.classList.remove('active'));
+      const activeBtn = Array.from(document.querySelectorAll('#iconPickerGrid .icon-picker-btn')).find(b => b.querySelector(`i.${iconClass.replace(/ /g, '.')}`));
+      if (activeBtn) activeBtn.classList.add('active');
+      const input = document.getElementById('btnCustomIcon');
+      if (input) input.value = iconClass;
+    }
+
+    function renderCardButtonsList() {
+      const container = document.getElementById('cardButtonsListContainer');
+      if (!container) return;
+
+      container.innerHTML = cardButtonsConfig.map(btn => `
+        <div style="display: flex; align-items: center; justify-content: space-between; padding: 0.65rem 0.85rem; background: var(--bg-card); border: 1px solid var(--chip-border); border-radius: 8px; margin-bottom: 0.5rem; gap: 0.75rem;">
+          <div style="display: flex; align-items: center; gap: 0.75rem; flex: 1; min-width: 0;">
+            <div style="width: 32px; height: 32px; border-radius: 6px; display: flex; align-items: center; justify-content: center; background: rgba(22, 163, 74, 0.1); color: var(--ifsc-green); font-size: 1rem;">
+              <i class="${btn.icon || 'fa-solid fa-link'}"></i>
+            </div>
+            <div style="min-width: 0; flex: 1;">
+              <div style="display: flex; align-items: center; gap: 0.5rem;">
+                <strong style="font-size: 0.9rem; color: var(--text-main);">${btn.label}</strong>
+                ${btn.id === 'meet' ? `<span class="meeting-badge-type meet" style="font-size: 0.68rem;"><i class="fa-solid fa-video"></i> Sala Meet Fixa</span>` : ''}
+                ${btn.visible === false ? `<span style="font-size: 0.68rem; color: var(--text-dim); background: var(--bg-body); padding: 1px 6px; border-radius: 4px;">Oculto</span>` : ''}
+              </div>
+              <div style="font-size: 0.72rem; color: var(--text-dim); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" title="${btn.url}">
+                ${btn.url}
+              </div>
+            </div>
+          </div>
+          <div style="display: flex; align-items: center; gap: 0.4rem;">
+            <button type="button" class="btn-link-action" onclick="toggleCardButtonVisibility('${btn.id}')" style="font-size: 0.72rem; color: ${btn.visible === false ? 'var(--text-dim)' : 'var(--ifsc-green)'};" title="${btn.visible === false ? 'Exibir botão' : 'Ocultar botão'}">
+              <i class="fa-solid ${btn.visible === false ? 'fa-eye-slash' : 'fa-eye'}"></i>
+            </button>
+            ${!btn.isStatic ? `
+              <button type="button" class="btn-link-action" onclick="deleteCardButton('${btn.id}')" style="font-size: 0.72rem; color: var(--ifsc-red); border-color: rgba(220, 38, 38, 0.3);" title="Remover botão">
+                <i class="fa-solid fa-trash-can"></i>
+              </button>
+            ` : ''}
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function toggleCardButtonVisibility(btnId) {
+      const btn = cardButtonsConfig.find(b => b.id === btnId);
+      if (!btn) return;
+      btn.visible = btn.visible === false ? true : false;
+      localStorage.setItem('ifsc-tcc-card-buttons-v1', JSON.stringify(cardButtonsConfig));
+      renderCardButtonsList();
+      renderProjects(studentsData);
+      showToast(`Visibilidade do botão "${btn.label}" alterada.`);
+    }
+
+    function deleteCardButton(btnId) {
+      if (!confirm('Deseja realmente remover este botão customizado?')) return;
+      cardButtonsConfig = cardButtonsConfig.filter(b => b.id !== btnId);
+      localStorage.setItem('ifsc-tcc-card-buttons-v1', JSON.stringify(cardButtonsConfig));
+      renderCardButtonsList();
+      renderProjects(studentsData);
+      showToast('Botão removido dos cards.');
+    }
+
+    function saveNewCustomButton(e) {
+      e.preventDefault();
+      const label = document.getElementById('btnCustomLabel').value.trim();
+      const icon = document.getElementById('btnCustomIcon').value.trim() || 'fa-solid fa-link';
+      const url = document.getElementById('btnCustomUrl').value.trim();
+      const color = document.getElementById('btnCustomColor').value;
+
+      if (!label || !url) {
+        showToast('Informe o rótulo e o link de destino.', 'warning');
+        return;
+      }
+
+      const newBtn = {
+        id: 'btn-' + Date.now(),
+        label,
+        icon,
+        url,
+        color: color || 'default',
+        visible: true
+      };
+
+      cardButtonsConfig.push(newBtn);
+      localStorage.setItem('ifsc-tcc-card-buttons-v1', JSON.stringify(cardButtonsConfig));
+
+      document.getElementById('newCardButtonForm').reset();
+      renderCardButtonsList();
+      renderProjects(studentsData);
+      showToast(`Novo botão "${label}" adicionado aos cards dos estudantes!`, 'success');
+    }
+
+    function restoreDefaultCardButtons() {
+      if (!confirm('Restaurar os botões padrão dos cards (incluindo Sala Meet)?')) return;
+      cardButtonsConfig = JSON.parse(JSON.stringify(DEFAULT_CARD_BUTTONS));
+      localStorage.setItem('ifsc-tcc-card-buttons-v1', JSON.stringify(cardButtonsConfig));
+      renderCardButtonsList();
+      renderProjects(studentsData);
+      showToast('Botões restaurados para o padrão!', 'success');
+    }
+
+    // ==========================================================================
+    // CONTROLADOR DE DEMANDAS / CHECKPOINTS (ESTILO PI 1 & PI 2)
+    // ==========================================================================
+    function setDemandaStatusFilter(status, btn) {
+      currentDemandaStatusFilter = status;
+      document.querySelectorAll('#demandaStatusFilters .filter-chip').forEach(b => b.classList.remove('active'));
+      if (btn) btn.classList.add('active');
+      renderDemandas();
+    }
+
+    function renderDemandas() {
+      const container = document.getElementById('demandasListContainer');
+      if (!container) return;
+
+      let allStudentDemands = [...demandasData];
+      if (isStudentView && loggedStudent) {
+        const studentFirst = loggedStudent.nome.toLowerCase().split(' ')[0];
+        allStudentDemands = allStudentDemands.filter(d => {
+          if (d.escopo === '*' || d.alunoAlvo === '*') return true;
+          const esc = (d.escopo || '').toLowerCase();
+          const alvo = (d.alunoAlvo || '').toLowerCase();
+          return esc.includes(studentFirst) || alvo.includes(studentFirst) || loggedStudent.nome.toLowerCase().includes(esc);
+        });
+      }
+
+      let list = [...allStudentDemands];
+      if (currentDemandaStatusFilter !== 'all') {
+        list = list.filter(d => d.status === currentDemandaStatusFilter);
+      }
+
+      // Atualiza KPIs de Demandas
+      const total = allStudentDemands.length;
+      const pendentes = allStudentDemands.filter(d => d.status === 'pendente').length;
+      const concluidas = allStudentDemands.filter(d => d.status === 'concluida').length;
+
+      const elTotal = document.getElementById('kpi-demandas-total');
+      if (elTotal) elTotal.textContent = total;
+      const elPend = document.getElementById('kpi-demandas-pendentes');
+      if (elPend) elPend.textContent = pendentes;
+      const elConc = document.getElementById('kpi-demandas-concluidas');
+      if (elConc) elConc.textContent = concluidas;
+      const elNav = document.getElementById('count-demandas-nav');
+      if (elNav) elNav.textContent = pendentes;
+
+      if (!list.length) {
+        container.innerHTML = `
+          <div style="text-align: center; padding: 3rem 1.5rem; background: var(--bg-card); border-radius: 12px; border: 1px dashed var(--border-color);">
+            <i class="fa-solid fa-bullseye" style="font-size: 2rem; color: var(--text-dim); margin-bottom: 0.75rem;"></i>
+            <p style="color: var(--text-muted); font-size: 0.9rem;">Nenhuma demanda cadastrada ${isStudentView ? 'para o seu projeto até o momento.' : 'para este filtro.'}</p>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = list.map(d => {
+        const isConcluida = d.status === 'concluida';
+        const isBroadcast = d.escopo === '*';
+
+        return `
+          <div class="demand-card ${isConcluida ? 'concluida' : ''}">
+            <div class="demand-header">
+              <div style="display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap;">
+                <span class="demand-scope-badge ${isBroadcast ? 'geral' : ''}">
+                  <i class="fa-solid ${isBroadcast ? 'fa-bullhorn' : 'fa-user'}"></i>
+                  ${isBroadcast ? 'Todos os Orientandos (Geral)' : d.escopo}
+                </span>
+                <strong style="font-size: 1.05rem; color: var(--text-main); font-family: 'Outfit', sans-serif;">${d.titulo}</strong>
+                <span style="font-size: 0.75rem; color: var(--text-dim);"><i class="fa-solid fa-hashtag"></i> ${d.id}</span>
+              </div>
+              <span class="demand-deadline-badge ${isConcluida ? 'concluida' : ''}">
+                <i class="fa-solid ${isConcluida ? 'fa-circle-check' : 'fa-clock'}"></i>
+                ${isConcluida ? 'Concluída' : 'Prazo: ' + formatDateBR(d.prazo)}
+              </span>
+            </div>
+
+            <div style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.5; margin-top: 0.5rem;">
+              ${d.descricao}
+            </div>
+
+            ${d.criterios ? `
+              <div style="margin-top: 0.65rem; padding: 0.55rem 0.75rem; background: rgba(147, 51, 234, 0.05); border-left: 3px solid var(--accent-purple); border-radius: 6px; font-size: 0.82rem;">
+                <strong style="color: var(--accent-purple);"><i class="fa-solid fa-list-check"></i> Critérios de Aceite & Instruções:</strong>
+                <p style="margin-top: 3px; color: var(--text-main); white-space: pre-line;">${d.criterios}</p>
+              </div>
+            ` : ''}
+
+            <div class="demand-actions admin-only">
+              <button class="btn-link-action" onclick="openDemandMessageModal('${d.id}')" style="font-size: 0.74rem; color: var(--accent-cyan); border-color: rgba(6, 182, 212, 0.3);" title="Abrir mensagem pronta para WhatsApp/E-mail">
+                <i class="fa-solid fa-comment-dots"></i> Mensagem para Equipes
+              </button>
+              ${isConcluida ? `
+                <button class="btn-link-action" onclick="reabrirDemanda('${d.id}')" style="font-size: 0.74rem; color: var(--accent-amber); border-color: rgba(245, 158, 11, 0.3);">
+                  <i class="fa-solid fa-rotate-left"></i> Reabrir Demanda
+                </button>
+              ` : `
+                <button class="btn-link-action" onclick="concluirDemanda('${d.id}')" style="font-size: 0.74rem; color: var(--ifsc-green); border-color: rgba(22, 163, 74, 0.3);">
+                  <i class="fa-solid fa-circle-check"></i> Marcar Concluída
+                </button>
+              `}
+              <button class="btn-link-action" onclick="deleteDemanda('${d.id}')" style="font-size: 0.74rem; color: var(--ifsc-red); border-color: rgba(220, 38, 38, 0.3);">
+                <i class="fa-solid fa-trash-can"></i> Excluir
+              </button>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function openNewDemandModal(alunoNome) {
+      if (isStudentView) return;
+      document.getElementById('newDemandForm').reset();
+      document.getElementById('demandDateInput').value = new Date().toISOString().split('T')[0];
+      const nextWeek = new Date();
+      nextWeek.setDate(nextWeek.getDate() + 7);
+      document.getElementById('demandDeadlineInput').value = nextWeek.toISOString().split('T')[0];
+
+      if (alunoNome) {
+        document.getElementById('demandScopeSelect').value = alunoNome;
+      } else {
+        document.getElementById('demandScopeSelect').value = '*';
+      }
+
+      document.getElementById('newDemandModal').classList.add('active');
+    }
+
+    async function saveNewDemand(e) {
+      e.preventDefault();
+      if (isStudentView) return;
+      const escopo = document.getElementById('demandScopeSelect').value;
+      const dataCriacao = document.getElementById('demandDateInput').value;
+      const prazo = document.getElementById('demandDeadlineInput').value;
+      const titulo = document.getElementById('demandTitleInput').value.trim();
+      const descricao = document.getElementById('demandDescriptionInput').value.trim();
+      const criterios = document.getElementById('demandCriteriaInput').value.trim();
+      const notifyWhatsapp = document.getElementById('demandNotifyWhatsapp').checked;
+
+      const newId = 'DEM-' + String(demandasData.length + 1).padStart(3, '0');
+
+      const novaDemanda = {
+        id: newId,
+        data: dataCriacao,
+        escopo: escopo,
+        alunoNome: escopo === '*' ? 'Todos os Orientandos' : escopo,
+        titulo: titulo,
+        descricao: descricao,
+        criterios: criterios,
+        prazo: prazo,
+        status: 'pendente'
+      };
+
+      demandasData.unshift(novaDemanda);
+      localStorage.setItem('ifsc-tcc-demandas-v1', JSON.stringify(demandasData));
+
+      closeModal('newDemandModal');
+      renderDemandas();
+      renderProjects(studentsData);
+      showToast(`Demanda "${titulo}" criada com sucesso!`, 'success');
+
+      // Sincroniza com Google Apps Script
+      if (GOOGLE_SCRIPT_WEBAPP_URL) {
+        try {
+          await fetch(GOOGLE_SCRIPT_WEBAPP_URL, {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+            body: JSON.stringify({
+              acao: 'salvar_demanda',
+              ...novaDemanda
+            })
+          });
+        } catch (err) {
+          console.warn('Erro ao salvar demanda no Apps Script:', err);
+        }
+      }
+
+      // Abre imediatamente o modal de mensagem para envio aos estudantes
+      if (notifyWhatsapp) {
+        setTimeout(() => {
+          openDemandMessageModal(newId);
+        }, 350);
+      }
+    }
+
+    function concluirDemanda(id) {
+      if (isStudentView) return;
+      const d = demandasData.find(item => item.id === id);
+      if (!d) return;
+      d.status = 'concluida';
+      localStorage.setItem('ifsc-tcc-demandas-v1', JSON.stringify(demandasData));
+      renderDemandas();
+      renderProjects(studentsData);
+      if (currentStudentForMeeting) renderStudentModalDemands(currentStudentForMeeting);
+      showToast(`Demanda "${d.titulo}" concluída!`, 'success');
+
+      if (GOOGLE_SCRIPT_WEBAPP_URL) {
+        fetch(GOOGLE_SCRIPT_WEBAPP_URL, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+          body: JSON.stringify({ acao: 'concluir_demanda', id: id, status: 'concluida' })
+        }).catch(err => console.warn(err));
+      }
+    }
+
+    function reabrirDemanda(id) {
+      if (isStudentView) return;
+      const d = demandasData.find(item => item.id === id);
+      if (!d) return;
+      d.status = 'pendente';
+      localStorage.setItem('ifsc-tcc-demandas-v1', JSON.stringify(demandasData));
+      renderDemandas();
+      renderProjects(studentsData);
+      if (currentStudentForMeeting) renderStudentModalDemands(currentStudentForMeeting);
+      showToast(`Demanda "${d.titulo}" reaberta!`, 'info');
+    }
+
+    function deleteDemanda(id) {
+      if (isStudentView) return;
+      if (!confirm('Deseja realmente remover esta demanda?')) return;
+      demandasData = demandasData.filter(d => d.id !== id);
+      localStorage.setItem('ifsc-tcc-demandas-v1', JSON.stringify(demandasData));
+      renderDemandas();
+      renderProjects(studentsData);
+      if (currentStudentForMeeting) renderStudentModalDemands(currentStudentForMeeting);
+      showToast('Demanda excluída.');
+    }
+
+    // Modal de Mensagem de Demanda (estilo PI 1 & PI 2)
+    function openDemandMessageModal(id) {
+      if (isStudentView) return;
+      const d = demandasData.find(item => item.id === id);
+      if (!d) return;
+
+      currentActiveDemandaForMsg = d;
+
+      const isBroadcast = d.escopo === '*';
+      const scopeBadge = document.getElementById('demandMessageScopeBadge');
+      if (scopeBadge) {
+        scopeBadge.textContent = isBroadcast ? 'Broadcast • Todos os Orientandos' : `Orientando: ${d.escopo}`;
+        scopeBadge.className = isBroadcast ? 'demand-scope-badge geral' : 'demand-scope-badge';
+      }
+
+      const deadlineBadge = document.getElementById('demandMessageDeadlineBadge');
+      if (deadlineBadge) {
+        deadlineBadge.textContent = `Prazo: ${formatDateBR(d.prazo)}`;
+      }
+
+      const titleEl = document.getElementById('demandMessageTitle');
+      if (titleEl) titleEl.textContent = d.titulo;
+
+      // Gera mensagem formatada pronta para WhatsApp / E-mail
+      let msg = `*📢 DEMANDA & DIRETRIZES DE ORIENTAÇÃO - IFSC GAROPABA*\n\n`;
+      msg += `*🎯 Demanda:* ${d.titulo}\n`;
+      msg += `*👤 Destinatário:* ${isBroadcast ? 'Todos os Orientandos de TCC / PI' : d.escopo}\n`;
+      msg += `*📅 Prazo Limite de Entrega:* ${formatDateBR(d.prazo)}\n\n`;
+      msg += `*📝 O que deve ser realizado:*\n${d.descricao}\n\n`;
+      if (d.criterios) {
+        msg += `*✅ Critérios de Aceite & Instruções:*\n${d.criterios}\n\n`;
+      }
+      msg += `*💻 Sala de Reunião Google Meet:* https://meet.google.com/cej-kkio-bpw?pli=1&authuser=1\n\n`;
+      msg += `Favor confirmar o recebimento e o planejamento desta entrega. Bons trabalhos!\n`;
+      msg += `_Prof. André Moraes • IFSC Câmpus Garopaba_`;
+
+      const textarea = document.getElementById('demandMessageTextarea');
+      if (textarea) textarea.value = msg;
+
+      document.getElementById('demandMessageModal').classList.add('active');
+    }
+
+    function copyDemandMessage() {
+      const textarea = document.getElementById('demandMessageTextarea');
+      if (!textarea) return;
+      navigator.clipboard.writeText(textarea.value).then(() => {
+        showToast('Mensagem copiada para a área de transferência! Cole no WhatsApp da equipe.', 'success');
+      }).catch(() => {
+        showToast('Não foi possível copiar automaticamente.', 'warning');
+      });
+    }
+
+    function openWhatsAppDemandMessage() {
+      const textarea = document.getElementById('demandMessageTextarea');
+      if (!textarea) return;
+      const text = encodeURIComponent(textarea.value);
+      window.open(`https://api.whatsapp.com/send?text=${text}`, '_blank');
+    }
+
+    function sendDemandEmail() {
+      if (!currentActiveDemandaForMsg) return;
+      const d = currentActiveDemandaForMsg;
+      let targetEmail = '';
+      if (d.escopo !== '*') {
+        targetEmail = getStudentEmail(d.escopo);
+      }
+      const subject = encodeURIComponent(`[IFSC Orientações] Nova Demanda: ${d.titulo}`);
+      const body = encodeURIComponent(document.getElementById('demandMessageTextarea').value);
+      window.open(`mailto:${targetEmail}?subject=${subject}&body=${body}`, '_blank');
     }
 
     function closeModal(modalId) {
@@ -3778,6 +5393,77 @@ tectonic -Z shell-escape document.tex</pre>
 
     // KPI Updater
     function updateKpiCounts() {
+      if (isStudentView && loggedStudent) {
+        // Encontra os dados atualizados do orientando logado
+        const s = studentsData.find(item => item.id === loggedStudent.id) || loggedStudent;
+        const studentFirst = s.nome.toLowerCase().split(' ')[0];
+        const studentMeetings = meetingsData.filter(m => m.alunoNome && (m.alunoNome.toLowerCase().includes(studentFirst) || s.nome.toLowerCase().includes(m.alunoNome.toLowerCase())));
+        const studentDemands = (typeof demandasData !== 'undefined' ? demandasData : []).filter(d => {
+          if (d.escopo === '*' || d.alunoAlvo === '*') return true;
+          const esc = (d.escopo || '').toLowerCase();
+          return esc.includes(studentFirst) || s.nome.toLowerCase().includes(esc);
+        });
+        const studentPendencias = studentDemands.filter(d => d.status === 'pendente').length;
+
+        // Customiza os KPIs para a visão individual do estudante
+        const elTotal = document.getElementById('kpi-total-alunos');
+        if (elTotal) elTotal.textContent = '1';
+        const elNav = document.getElementById('count-total-nav');
+        if (elNav) elNav.textContent = '1';
+
+        const elAtivos = document.getElementById('kpi-orientacoes-ativas');
+        if (elAtivos) elAtivos.textContent = s.statusOrientacao || 'Ativo';
+
+        const elInativos = document.getElementById('kpi-orientacoes-inativas');
+        if (elInativos) {
+          elInativos.textContent = (s.progresso || 0) + '%';
+          elInativos.style.color = 'var(--ifsc-green)';
+        }
+
+        const elTccAtivos = document.getElementById('kpi-tcc-ativos');
+        if (elTccAtivos) elTccAtivos.textContent = s.tipo || 'TCC';
+
+        const elReunioes = document.getElementById('kpi-reunioes-count');
+        if (elReunioes) elReunioes.textContent = studentMeetings.length;
+
+        const elArtigos = document.getElementById('kpi-artigos');
+        if (elArtigos) elArtigos.textContent = studentPendencias;
+
+        // Rótulos dos KPIs
+        const lbl1 = document.getElementById('kpi-label-1');
+        if (lbl1) lbl1.textContent = 'Seu Projeto / Trabalho';
+        const lbl2 = document.getElementById('kpi-label-2');
+        if (lbl2) lbl2.textContent = 'Status da Orientação';
+        const lbl3 = document.getElementById('kpi-label-3');
+        if (lbl3) lbl3.textContent = 'Seu Progresso Geral';
+        const lbl4 = document.getElementById('kpi-label-4');
+        if (lbl4) lbl4.textContent = 'Modalidade';
+        const lbl5 = document.getElementById('kpi-label-5');
+        if (lbl5) lbl5.textContent = 'Suas Reuniões';
+        const lbl6 = document.getElementById('kpi-label-6');
+        if (lbl6) lbl6.textContent = 'Demandas Pendentes';
+
+        return;
+      }
+
+      // Restaura rótulos normais do administrador
+      const lbl1 = document.getElementById('kpi-label-1');
+      if (lbl1) lbl1.textContent = 'Total de Orientandos Mapeados';
+      const lbl2 = document.getElementById('kpi-label-2');
+      if (lbl2) lbl2.textContent = 'Orientações Ativas';
+      const lbl3 = document.getElementById('kpi-label-3');
+      if (lbl3) {
+        lbl3.textContent = 'Inativos (Desistência / Pausa)';
+        const elInat = document.getElementById('kpi-orientacoes-inativas');
+        if (elInat) elInat.style.color = '#ef4444';
+      }
+      const lbl4 = document.getElementById('kpi-label-4');
+      if (lbl4) lbl4.textContent = 'TCCs Ativos (Em Andamento)';
+      const lbl5 = document.getElementById('kpi-label-5');
+      if (lbl5) lbl5.textContent = 'Reuniões / Bancas Registradas';
+      const lbl6 = document.getElementById('kpi-label-6');
+      if (lbl6) lbl6.textContent = 'Publicações / Artigos Alvo';
+
       const total = studentsData.length;
       const ativos = studentsData.filter(s => s.statusOrientacao === 'Ativo').length;
       const inativos = studentsData.filter(s => s.statusOrientacao === 'Inativo').length;
@@ -3797,6 +5483,10 @@ tectonic -Z shell-escape document.tex</pre>
       if (elAtivos) elAtivos.textContent = ativos;
       const elInativos = document.getElementById('kpi-orientacoes-inativas');
       if (elInativos) elInativos.textContent = inativos;
+      const elReunioes = document.getElementById('kpi-reunioes-count');
+      if (elReunioes) elReunioes.textContent = meetingsData.length;
+      const elArtigos = document.getElementById('kpi-artigos');
+      if (elArtigos) elArtigos.textContent = '5+';
 
       // Update chip labels
       const chipAll = document.getElementById('chip-count-all');
@@ -3920,7 +5610,7 @@ tectonic -Z shell-escape document.tex</pre>
         newStudents.push({
           id: existing ? existing.id : idCounter++,
           nome: nome,
-          email: email || (existing ? existing.email : ''),
+          email: isMarilia ? 'stefenon79.marilia@gmail.com' : (email || (existing ? existing.email : '')),
           tipo: tipo,
           nivel: tipo === 'TCC' ? 'Superior • Sistemas para Internet' : 'Técnico Integrado em Informática',
           titulo: titulo || (existing ? existing.titulo : 'A definir'),
