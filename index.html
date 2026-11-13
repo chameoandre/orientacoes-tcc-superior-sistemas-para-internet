@@ -5034,24 +5034,34 @@ tectonic -Z shell-escape document.tex</pre>
     // Helper para selecionar option em <select> por value ou texto visível
     function setSelectValue(selectEl, targetValue) {
       if (!selectEl || !targetValue) return;
-      // 1. Match exato por value
-      selectEl.value = targetValue;
-      if (selectEl.value === targetValue) return;
+      const targetStr = String(targetValue).trim();
+      const targetLower = targetStr.toLowerCase();
 
-      // 2. Match por texto exato da option
+      // 1. Tenta match exato por value
       for (let i = 0; i < selectEl.options.length; i++) {
-        if (selectEl.options[i].text === targetValue) {
+        if (selectEl.options[i].value === targetStr) {
           selectEl.selectedIndex = i;
+          selectEl.value = selectEl.options[i].value;
           return;
         }
       }
 
-      // 3. Match parcial case-insensitive
-      const targetLower = targetValue.toLowerCase();
+      // 2. Tenta match exato por text (rótulo visível da option)
       for (let i = 0; i < selectEl.options.length; i++) {
-        const opt = selectEl.options[i];
-        if (opt.text.toLowerCase().includes(targetLower) || targetLower.includes(opt.value.toLowerCase())) {
+        if (selectEl.options[i].text.trim() === targetStr) {
           selectEl.selectedIndex = i;
+          selectEl.value = selectEl.options[i].value;
+          return;
+        }
+      }
+
+      // 3. Tenta match parcial case-insensitive
+      for (let i = 0; i < selectEl.options.length; i++) {
+        const optText = selectEl.options[i].text.toLowerCase();
+        const optVal = selectEl.options[i].value.toLowerCase();
+        if (optText.includes(targetLower) || targetLower.includes(optVal) || targetLower.includes(optText)) {
+          selectEl.selectedIndex = i;
+          selectEl.value = selectEl.options[i].value;
           return;
         }
       }
