@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Devolutiva do TCC: DataBreakers (Michel)</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap">
+<style>
+:root{
+  --bg:#f6f7f8; --surface:#ffffff; --fg:#1b2329; --muted:#5a6772; --line:#dde2e6;
+  --accent:#1d4e6b; --accent-soft:#e3eef5;
+  --crit:#b3261e; --crit-soft:#fbe9e7;
+  --imp:#8a5a00; --imp-soft:#fdf3dc;
+  --pos:#1e6b3a; --pos-soft:#e4f3e9;
+  --sug:#4a4a8a; --sug-soft:#ececf9;
+  --font-display:"Space Grotesk",system-ui,sans-serif;
+  --font-body:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#12171b; --surface:#1a2127; --fg:#e8edf0; --muted:#9aa7b1; --line:#2c363e;
+  --accent:#7fb8d8; --accent-soft:#1d2f3b;
+  --crit:#ff8a80; --crit-soft:#3a1f1d;
+  --imp:#f0c060; --imp-soft:#352a12;
+  --pos:#7fd39b; --pos-soft:#17301f;
+  --sug:#aeaef0; --sug-soft:#25253f; color-scheme:dark}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--font-body);font-size:15px;line-height:1.55;
+  padding-block:24px 64px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.wrap{max-width:860px;margin:0 auto;display:flex;flex-direction:column;gap:20px}
+h1,h2,h3{font-family:var(--font-display);text-wrap:balance;margin:0}
+h1{font-size:28px;line-height:1.15}
+h2{font-size:20px}
+.eyebrow{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.lead{color:var(--muted);margin:6px 0 0;max-width:65ch}
+.head{display:flex;flex-direction:column;gap:10px}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px;min-width:0}
+.how{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.how div{min-width:0}
+.how b{font-family:var(--font-display);display:block;margin-bottom:2px}
+.prog{display:flex;flex-direction:column;gap:8px}
+.bar{height:8px;background:var(--line);border-radius:99px;overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:var(--accent);transition:width .25s}
+.prog-row{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:13px;color:var(--muted)}
+.prog-row b{color:var(--fg);font-variant-numeric:tabular-nums}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{font:inherit;font-size:13px;font-weight:500;border:1px solid var(--line);background:var(--surface);color:var(--fg);
+  padding:7px 12px;border-radius:99px;cursor:pointer;display:inline-flex;gap:6px;align-items:center}
+.chip:hover{border-color:var(--accent)}
+.chip[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--bg)}
+.chip:focus-visible,summary:focus-visible,input:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.chip .n{font-variant-numeric:tabular-nums;opacity:.8}
+.list{display:flex;flex-direction:column;gap:10px}
+details.item{background:var(--surface);border:1px solid var(--line);border-radius:10px;border-left-width:5px;min-width:0}
+details.item[data-sev="crit"]{border-left-color:var(--crit)}
+details.item[data-sev="imp"]{border-left-color:var(--imp)}
+details.item[data-sev="pos"]{border-left-color:var(--pos)}
+details.item[data-sev="sug"]{border-left-color:var(--sug)}
+summary{list-style:none;cursor:pointer;padding:14px 16px;display:flex;gap:12px;align-items:flex-start;justify-content:space-between}
+summary::-webkit-details-marker{display:none}
+.s-main{display:flex;flex-direction:column;gap:6px;min-width:0}
+.s-title{font-family:var(--font-display);font-weight:600;font-size:16px;line-height:1.3}
+.meta{display:flex;flex-wrap:wrap;gap:6px;font-size:12px}
+.tag{padding:2px 8px;border-radius:99px;font-weight:600}
+.tag.crit{background:var(--crit-soft);color:var(--crit)}
+.tag.imp{background:var(--imp-soft);color:var(--imp)}
+.tag.pos{background:var(--pos-soft);color:var(--pos)}
+.tag.sug{background:var(--sug-soft);color:var(--sug)}
+.tag.where,.tag.time{background:var(--accent-soft);color:var(--accent);font-weight:500}
+.s-prog{font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap;padding-top:3px}
+details[open] .s-prog::after{content:" ▴"}
+details:not([open]) .s-prog::after{content:" ▾"}
+.body{padding:14px 16px 16px;display:flex;flex-direction:column;gap:14px;border-top:1px solid var(--line)}
+.body h3{font-size:13px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);margin-bottom:4px}
+.body p{margin:0;max-width:70ch}
+.steps{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
+.steps label{display:flex;gap:10px;align-items:flex-start;cursor:pointer}
+.steps input{margin-top:4px;width:17px;height:17px;flex:none;accent-color:var(--accent)}
+.steps input:checked + span{color:var(--muted);text-decoration:line-through}
+.done{background:var(--accent-soft);color:var(--fg);border-radius:8px;padding:10px 12px;font-size:14px}
+.done b{color:var(--accent)}
+.plan{display:flex;flex-direction:column;gap:10px}
+.plan ol{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:10px}
+.plan li{display:grid;grid-template-columns:84px 1fr;gap:12px;align-items:start}
+.plan .d{font-family:var(--font-display);font-weight:700;color:var(--accent)}
+.plan a{color:var(--accent);font-weight:600}
+.note{font-size:13px;color:var(--muted);margin:0}
+.reset{font:inherit;font-size:12px;color:var(--muted);background:none;border:none;text-decoration:underline;cursor:pointer;padding:0;align-self:flex-start}
+@media (max-width:520px){.plan li{grid-template-columns:1fr;gap:2px}h1{font-size:24px}}
+@media (prefers-reduced-motion:reduce){.bar i{transition:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="head">
+    <span class="eyebrow">TCC · Sistemas para Internet · IFSC Garopaba</span>
+    <h1>Devolutiva do TCC: DataBreakers</h1>
+    <p class="lead">Michel, esta página reúne o que está bom, o que precisa mudar e o que fazer em cada ponto, em ordem de prioridade. Ela se baseia na versão do documento “Projeto-de-TCC-Final-Michel-David” de 13/11/2026. O foco é o texto. O formato final do documento será combinado com o André, e as correções daqui valem para qualquer formato.</p>
+  </header>
+
+  <section class="panel how" aria-label="Como usar esta página">
+    <div><b>1. Comece pelos críticos</b>São 4 itens. Sem eles o trabalho não se sustenta diante da banca.</div>
+    <div><b>2. Siga os passos</b>Abra cada item e marque os passos conforme terminar. O progresso fica salvo neste navegador.</div>
+    <div><b>3. Confira o “pronto quando”</b>Cada item diz como saber que está resolvido. Se tiver dúvida, leve para a reunião com o André.</div>
+  </section>
+
+  <section class="panel prog" aria-label="Progresso">
+    <div class="prog-row"><span>Passos concluídos</span><b id="progTxt">0 de 0</b></div>
+    <div class="bar"><i id="progBar"></i></div>
+  </section>
+
+  <nav class="chips" id="chips" aria-label="Filtrar por tipo"></nav>
+
+  <section class="list" id="list"></section>
+
+  <section class="panel plan" id="plano">
+    <h2>Plano para a semana</h2>
+    <p class="note">A data de entrega ainda será confirmada. Mantenha a ordem: primeiro o que define o trabalho (objetivos e avaliação), depois o jogo no texto, depois o acabamento.</p>
+    <ol>
+      <li><span class="d">Dia 1</span><span>Reescrever os objetivos específicos (<a href="#c1">C1</a>) e planejar a avaliação: instrumento, participantes e roteiro (<a href="#c3">C3</a>). Conversar com o André sobre os participantes.</span></li>
+      <li><span class="d">Dia 2</span><span>Mostrar o jogo no texto: figuras, tabela dos chefes, repositório e itch.io (<a href="#c2">C2</a>).</span></li>
+      <li><span class="d">Dia 3</span><span>Aplicar a avaliação e escrever Resultados, Limitações e Considerações Finais (<a href="#c3">C3</a>, <a href="#c4">C4</a>).</span></li>
+      <li><span class="d">Dia 4</span><span>Trabalhos Relacionados e Fundamentação (<a href="#m1">M1</a>, <a href="#m2">M2</a>).</span></li>
+      <li><span class="d">Dia 5</span><span>Introdução, tecnologias, referências e escrita (<a href="#m3">M3</a> a <a href="#m6">M6</a>). Ler o documento inteiro do começo ao fim.</span></li>
+    </ol>
+    <p class="note">Se o tempo apertar, não corte os itens C1 a C4. As melhorias e sugestões que ficarem de fora podem virar “trabalhos futuros” no texto.</p>
+    <button class="reset" id="reset" type="button">Limpar marcações desta página</button>
+  </section>
+</div>
+
+<script>
+var SEV={crit:"Crítico",imp:"Melhoria",pos:"Ponto forte",sug:"Sugestão"};
+var ITEMS=[
+{id:"c1",sev:"crit",title:"Os objetivos específicos estão incompletos",where:"Seção 3.2",time:"1 a 2 horas",
+ why:"A seção 3.2 tem só um item (“coletar a avaliação de professores quanto à qualidade técnica e pedagógica do jogo”). O objetivo geral fala em desenvolver o jogo e avaliar a aprendizagem e a usabilidade, mas os específicos não mostram como isso se divide. Sem eles, a Metodologia e os Resultados não têm o que responder. A banca já apontou que os objetivos do texto e os dos slides não batiam (item 12).",
+ steps:[
+  "Escreva de 3 a 4 objetivos específicos. Cada um diz <b>o quê</b> será entregue ou verificado, e não <b>como</b> (o como fica na Metodologia).",
+  "Cubra as três partes do objetivo geral: o jogo (os 5 chefes e o Datalog), a aprendizagem e a usabilidade.",
+  "Confira que cada objetivo aparece depois na Metodologia (como será feito) e nos Resultados (o que foi encontrado).",
+  "Use os mesmos objetivos nos slides da próxima apresentação."],
+ done:"A 3.2 tem 3 ou 4 objetivos, e cada um tem uma etapa na Metodologia e um item nos Resultados."},
+{id:"c2",sev:"crit",title:"O jogo não aparece no texto",where:"Seção 6 (Proposta)",time:"1 dia",
+ why:"A Proposta descreve o jogo no futuro (“irá apresentar”, “será possível”), mas a Metodologia diz que o desenvolvimento já foi feito em sprints. Quem lê não vê nenhuma tela, não sabe o que está pronto e não tem como jogar. Um TCC com implementação precisa mostrar a implementação.",
+ steps:[
+  "Passe a seção para o passado e descreva o que está implementado hoje. O que ainda não estiver pronto, diga com clareza que não está.",
+  "Inclua de 3 a 5 figuras: tela inicial, combate com um chefe, os dois modos de tiro e o Datalog. Use legenda no padrão ABNT (“Figura 1 – …”), com “Fonte: elaborado pelo autor (2026)”.",
+  "Para cada um dos 5 chefes, explique em uma ou duas frases como o comportamento no jogo representa o malware real. Uma tabela com três colunas (malware, comportamento no jogo, o que o jogador aprende) resolve isso.",
+  "Mostre um exemplo de entrada do Datalog com os campos que você listou (descrição, caso real, meios de infecção, proteção).",
+  "Coloque o projeto Godot em um repositório Git e o executável no itch.io, e ponha os dois links no texto. A banca precisa conseguir jogar."],
+ done:"A seção está no passado, tem figuras do jogo funcionando, a relação entre malware e mecânica de cada chefe e os links do repositório e do itch.io."},
+{id:"c3",sev:"crit",title:"A avaliação ainda não está definida",where:"Seções 5.4 e 7.1",time:"3 a 4 horas para planejar",
+ why:"A 5.4 não diz quantas pessoas vão participar, com qual instrumento, como será a sessão nem quando. A lista tem só o item “1)”. A banca já pediu que a fonte da escala e das notas fosse indicada (itens 11 e 15). Além disso, o texto inclui estudantes do Ensino Médio, que em geral são menores de idade, e pesquisa com menores exige cuidados éticos que levam tempo.",
+ steps:[
+  "Escolha um instrumento publicado e cite a fonte. Sugestão: o MEEGA+ (Petri, Gresse von Wangenheim e Borgatto, 2019, Revista Brasileira de Informática na Educação), criado para avaliar jogos educacionais de computação. Para a educação básica existe a versão MEEGA+KIDS.",
+  "Escreva o procedimento: quem participa (quantos estudantes e quantos professores), como é a sessão (tempo de jogo, se há explicação antes), quando o questionário é respondido e como as respostas serão analisadas.",
+  "Converse com o André sobre participantes menores de idade antes de aplicar. Se não houver tempo para os cuidados éticos, aplique com estudantes do curso superior e professores, e explique essa escolha no texto.",
+  "Complete a lista da 5.4 (hoje só tem o item “1)”) ou transforme em texto corrido."],
+ done:"A 5.4 informa o instrumento com referência, o número e o perfil dos participantes, o roteiro da sessão e a forma de análise."},
+{id:"c4",sev:"crit",title:"Metodologia e Resultados Esperados não combinam, e o texto não tem fechamento",where:"Seções 5 e 7, final do documento",time:"2 a 3 horas",
+ why:"A abertura da Metodologia diz que a pesquisa é qualitativa. Já a 7.1 tem “pré e pós-testes” no título, fala em “impacto educacional mensurável” e termina com dois-pontos, sem continuação. A numeração pula da 7.1 para a 7.3. E o documento termina no cronograma, sem Considerações Finais.",
+ steps:[
+  "Decida se haverá pré e pós-teste. Se não houver, tire do título da 7.1 e troque “mensurável” pelo que o instrumento escolhido (C3) realmente mede.",
+  "Complete ou remova o trecho da 7.1 que termina em dois-pontos e corrija a numeração (7.1, 7.2).",
+  "Diga na Metodologia onde está a parte qualitativa, por exemplo nos comentários abertos dos participantes ou na observação da sessão.",
+  "Quando os testes acontecerem, troque “Resultados Esperados” por “Resultados”, com números e comentários dos participantes. Acrescente uma subseção de Limitações (por exemplo: poucos participantes, um só local de teste).",
+  "Crie as Considerações Finais retomando cada objetivo específico em uma frase, e os Trabalhos Futuros (por exemplo: mais chefes, versão para navegador, testes em escolas)."],
+ done:"Metodologia e Resultados falam do mesmo tipo de avaliação, a numeração está certa e o texto termina com Considerações Finais e Trabalhos Futuros."},
+
+{id:"m1",sev:"imp",title:"Trabalhos Relacionados sem referências e com trechos do projeto antigo",where:"Seção 4",time:"3 a 4 horas",
+ why:"Os três trabalhos são produtos e nenhum tem referência. Não foi possível achar uma fonte para o CyberCops. O Hack ‘n’ Slash é comparado como “jogo de aventura focado em exploração”, o que valia para o Metroidvania, mas não para o shoot’em up atual. A banca espera também trabalhos acadêmicos.",
+ steps:[
+  "Procure 2 ou 3 artigos sobre jogos para ensinar segurança da informação ou conscientização sobre ameaças digitais. Bons lugares: anais do SBGames, SBIE e WEI na SOL (sol.sbc.org.br) e o Google Acadêmico.",
+  "Para cada produto que ficar (CodeCombat, Hack ‘n’ Slash), coloque uma referência (site oficial ou loja, com data de acesso). Se não achar fonte para o CyberCops, troque por outro trabalho.",
+  "Revise as comparações pensando no jogo atual: shoot’em up, 5 chefes e Datalog.",
+  "Feche a seção com um quadro comparativo: trabalho, público, tema, gênero e se teve avaliação com usuários. A última linha é o DataBreakers."],
+ done:"A seção tem pelo menos 2 trabalhos acadêmicos, todos com referência, e um quadro que mostra o diferencial do DataBreakers."},
+{id:"m2",sev:"imp",title:"Malwares descritos sem fonte e gênero do jogo sem base teórica",where:"Seções 2.3 e 6",time:"2 a 3 horas",
+ why:"As descrições do Adware, Spyware, Trojan, RootKit e Ransomware estão na Proposta e não têm citação. Também falta explicar por que um shoot’em up/bullet hell ajuda a aprender (repetição, atenção, dificuldade crescente). Parte das fontes atuais são blogs (FIA, InfoWester).",
+ steps:[
+  "Leve as descrições dos 5 malwares para a 2.3, com citação. A Cartilha de Segurança para Internet, do CERT.br, tem um fascículo sobre códigos maliciosos e é uma boa fonte.",
+  "Na Proposta (ou Desenvolvimento), deixe só como cada malware virou chefe no jogo.",
+  "Acrescente um parágrafo sobre o gênero e a curva de dificuldade, com pelo menos uma referência.",
+  "Onde for possível, troque os blogs por livros ou artigos. O último parágrafo da 2.3 ainda está no futuro (“servirá”): ajuste."],
+ done:"Cada malware é definido na fundamentação com fonte, e a escolha do gênero tem justificativa com citação."},
+{id:"m3",sev:"imp",title:"Introdução: dado sem período e falta a pergunta de pesquisa",where:"Seção 1",time:"1 hora",
+ why:"O número de incidentes do CERT.br aparece como registrado “em um único período”, e a referência é a página inicial do CERT.br, sem data. Quem lê não sabe de que ano é o dado. Também falta dizer qual problema ou pergunta o trabalho responde.",
+ steps:[
+  "Informe o ano do dado e cite a página exata das estatísticas do CERT.br, com data de acesso. Confira se o número está certo.",
+  "Acrescente uma frase com a pergunta de pesquisa, com suas palavras.",
+  "Atualize o último parágrafo, que lista as seções, sempre que a estrutura do texto mudar."],
+ done:"O dado tem ano e fonte exata, e a introdução deixa clara a pergunta que o trabalho responde."},
+{id:"m4",sev:"imp",title:"Tecnologias com afirmações sem fonte",where:"Seção 6.1",time:"1 a 2 horas",
+ why:"Frases como “melhor performance”, a comparação com a Unity e “padrão da indústria” para o Aseprite não têm fonte. A referência da Godot está na lista, mas não é citada no texto. Aseprite, Pixel Studio, Figma e itch.io não têm referência. O Figma aparece aqui, mas não na Metodologia.",
+ steps:[
+  "Cite a Godot no texto e informe a versão usada.",
+  "Para cada afirmação comparativa, cite uma fonte ou reescreva de forma neutra: o que a ferramenta oferece e por que você a escolheu.",
+  "Inclua referência (site oficial, com data de acesso) para Aseprite, Pixel Studio, Figma e itch.io.",
+  "Se o Figma foi usado, mencione-o na 5.3. Junte os parágrafos soltos (a justificativa do desktop e o segundo parágrafo do Figma) aos parágrafos de cima."],
+ done:"Toda ferramenta citada tem referência e nenhuma comparação fica sem fonte."},
+{id:"m5",sev:"imp",title:"Referências e citações desencontradas",where:"Referências",time:"1 hora",
+ why:"A ABNT pede que toda citação esteja na lista e que toda referência seja citada. Hoje a GODOT está na lista e não aparece no texto. A referência de Ratinho e Martins indica o PMC, que é um repositório, e não a revista onde o artigo foi publicado. A do CERT.br aponta só a página inicial.",
+ steps:[
+  "Confira uma a uma: cada citação do texto está na lista, e cada item da lista é citado no texto.",
+  "Na referência de Ratinho e Martins, troque “PMC” pelo nome da revista, com volume, número e DOI.",
+  "Atualize as datas de acesso para o dia em que você conferir os links.",
+  "Inclua as novas referências: instrumento de avaliação, Cartilha do CERT.br, trabalhos relacionados e ferramentas."],
+ done:"A lista e as citações coincidem, e todas as referências estão completas."},
+{id:"m6",sev:"imp",title:"Escrita, termos e formatação",where:"Documento inteiro",time:"1 a 2 horas",
+ why:"O título usa ponto e vírgula. O primeiro parágrafo da Proposta é uma única frase muito longa. A lista de malwares usa ponto e vírgula depois do nome (“Adware;”). O recurso aparece como “Datalog” e também como “Data Logs”. Alguns termos ainda não são explicados na primeira vez em que aparecem (core gameplay loop, sprints, playtesting), e a banca pediu isso (item 3).",
+ steps:[
+  "No título, troque o ponto e vírgula por dois-pontos.",
+  "Divida o primeiro parágrafo da Proposta em frases menores.",
+  "Na lista de malwares, use dois-pontos ou travessão depois do nome e padronize as listas do documento (a), b), c)).",
+  "Escolha um nome só para o recurso (Datalog) e use em todo o texto.",
+  "Explique em poucas palavras cada termo de jogo na primeira vez que ele aparece, e use itálico nas palavras estrangeiras.",
+  "Revise o cronograma: os meses passados devem mostrar o que de fato aconteceu."],
+ done:"Título, listas e nomes estão padronizados, e todos os termos de jogo são explicados."},
+
+{id:"p1",sev:"pos",title:"Você ouviu a banca",where:"Proposta e documento",
+ why:"Trocar o Metroidvania por um shoot’em up com 5 chefes deixou o escopo viável (item 4). O jogo ganhou nome (item 7), a distribuição foi para o itch.io (item 5), a ideia de gamificação saiu do texto (item 10) e os professores entraram na avaliação (item 16)."},
+{id:"p2",sev:"pos",title:"A ideia pedagógica é boa",where:"Proposta",
+ why:"Os chefes seguem a gravidade de cada malware, o Datalog liga cada inimigo a um caso real e às formas de proteção, e o jogador representa o Firewall. A ligação entre a mecânica e o conteúdo é clara."},
+{id:"p3",sev:"pos",title:"Introdução e Fundamentação melhoraram muito",where:"Seções 1 e 2",
+ why:"O público-alvo está definido, as afirmações têm citação e a diferença entre GBL (a abordagem) e jogo educacional (o artefato) está bem explicada."},
+{id:"p4",sev:"pos",title:"A mecânica está bem descrita",where:"Proposta",
+ why:"Os dois modos de tiro e a hitbox estão explicados de um jeito que quem não joga consegue entender."},
+
+{id:"s1",sev:"sug",title:"Grave um vídeo curto do jogo",where:"Desenvolvimento",time:"1 hora",
+ why:"Um vídeo de 1 a 2 minutos ajuda a banca a entender o jogo antes da defesa e serve de reserva se algo falhar na demonstração.",
+ steps:[
+  "Grave uma luta contra um chefe e a abertura do Datalog depois da vitória.",
+  "Publique na página do itch.io ou como vídeo não listado.",
+  "Coloque o link no texto, junto do link do jogo."],
+ done:"O texto tem o link de um vídeo curto do jogo funcionando."},
+{id:"s2",sev:"sug",title:"Formato final do documento",where:"Documento inteiro",
+ why:"O André vai confirmar se há tempo de passar o texto para o modelo de artigo usado pelos outros orientandos. Até lá, continue no documento atual. As correções desta página valem nos dois formatos."}
+];
+
+var KEY="devolutiva-michel-v1", state={};
+try{ state=JSON.parse(localStorage.getItem(KEY)||"{}"); }catch(e){ state={}; }
+function save(){ try{ localStorage.setItem(KEY,JSON.stringify(state)); }catch(e){} }
+
+var filter="all";
+var chipsEl=document.getElementById("chips"), listEl=document.getElementById("list");
+
+function counts(){ var c={all:ITEMS.length,crit:0,imp:0,pos:0,sug:0}; ITEMS.forEach(function(i){c[i.sev]++;}); return c; }
+
+function buildChips(){
+  var c=counts(), defs=[["all","Todos"],["crit","Críticos"],["imp","Melhorias"],["pos","Pontos fortes"],["sug","Sugestões"]];
+  chipsEl.innerHTML="";
+  defs.forEach(function(d){
+    var b=document.createElement("button"); b.type="button"; b.className="chip"; b.setAttribute("aria-pressed",filter===d[0]);
+    b.innerHTML=d[1]+' <span class="n">'+c[d[0]]+'</span>';
+    b.onclick=function(){ filter=d[0]; buildChips(); render(); };
+    chipsEl.appendChild(b);
+  });
+}
+
+function stepKey(id,n){ return id+":"+n; }
+function itemProgress(it){
+  if(!it.steps) return null;
+  var d=0; it.steps.forEach(function(_,n){ if(state[stepKey(it.id,n)]) d++; });
+  return d+"/"+it.steps.length;
+}
+function totalProgress(){
+  var t=0,d=0;
+  ITEMS.forEach(function(it){ if(!it.steps) return; it.steps.forEach(function(_,n){ t++; if(state[stepKey(it.id,n)]) d++; }); });
+  document.getElementById("progTxt").textContent=d+" de "+t;
+  document.getElementById("progBar").style.width=(t?Math.round(100*d/t):0)+"%";
+}
+
+function render(){
+  var openIds={}; listEl.querySelectorAll("details[open]").forEach(function(d){ openIds[d.id]=1; });
+  if(location.hash){ openIds[location.hash.slice(1)]=1; }
+  listEl.innerHTML="";
+  ITEMS.filter(function(i){ return filter==="all"||i.sev===filter; }).forEach(function(it){
+    var d=document.createElement("details"); d.className="item"; d.id=it.id; d.setAttribute("data-sev",it.sev);
+    if(openIds[it.id]) d.open=true;
+    var prog=itemProgress(it);
+    var s=document.createElement("summary");
+    s.innerHTML='<span class="s-main"><span class="meta"><span class="tag '+it.sev+'">'+SEV[it.sev]+(it.sev!=="pos"?" · "+it.id.toUpperCase():"")+'</span><span class="tag where">'+it.where+'</span>'+(it.time?'<span class="tag time">'+it.time+'</span>':'')+'</span><span class="s-title">'+it.title+'</span></span><span class="s-prog" data-prog="'+it.id+'">'+(prog?prog+" passos":"")+'</span>';
+    d.appendChild(s);
+    var b=document.createElement("div"); b.className="body";
+    var html='<div><h3>'+(it.sev==="pos"?"Por que está bom":(it.sev==="sug"?"A ideia":"O problema"))+'</h3><p>'+it.why+'</p></div>';
+    if(it.steps){
+      html+='<div><h3>O que fazer</h3><ul class="steps">';
+      it.steps.forEach(function(st,n){
+        var k=stepKey(it.id,n), id="cb-"+it.id+"-"+n;
+        html+='<li><label for="'+id+'"><input type="checkbox" id="'+id+'" data-k="'+k+'" data-item="'+it.id+'"'+(state[k]?" checked":"")+'><span>'+st+'</span></label></li>';
+      });
+      html+='</ul></div>';
+    }
+    if(it.done) html+='<div class="done"><b>Pronto quando:</b> '+it.done+'</div>';
+    b.innerHTML=html; d.appendChild(b); listEl.appendChild(d);
+  });
+  listEl.querySelectorAll("input[type=checkbox]").forEach(function(cb){
+    cb.onchange=function(){
+      state[cb.getAttribute("data-k")]=cb.checked; save();
+      var it=ITEMS.filter(function(x){return x.id===cb.getAttribute("data-item");})[0];
+      var el=listEl.querySelector('[data-prog="'+it.id+'"]'); if(el) el.textContent=itemProgress(it)+" passos";
+      totalProgress();
+    };
+  });
+  totalProgress();
+}
+
+document.getElementById("reset").onclick=function(){ state={}; save(); render(); };
+document.querySelectorAll("#plano a").forEach(function(a){
+  a.onclick=function(e){
+    var id=a.getAttribute("href").slice(1);
+    var t=document.getElementById(id);
+    if(!t){ filter="all"; buildChips(); render(); t=document.getElementById(id); }
+    if(t){ e.preventDefault(); t.open=true; t.scrollIntoView({behavior:"smooth",block:"start"}); }
+  };
+});
+buildChips(); render();
+</script>
+</body>
+</html>
