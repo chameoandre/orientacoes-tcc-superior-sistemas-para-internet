@@ -3248,6 +3248,13 @@ tectonic -Z shell-escape document.tex</pre>
         renderMeetings();
         renderDemandas();
       }
+
+      // Se for orientador geral (admin), verifica se há preset de demanda na URL
+      if (!isStudentView) {
+        setTimeout(() => {
+          checkUrlPreset();
+        }, 150);
+      }
     }
 
     // Bloqueia o dashboard e exibe a Auth Wall
@@ -5024,33 +5031,164 @@ tectonic -Z shell-escape document.tex</pre>
       }).join('');
     }
 
-    function openNewDemandModal(alunoNome) {
-      if (isStudentView) return;
-      document.getElementById('newDemandForm').reset();
-      document.getElementById('demandDateInput').value = new Date().toISOString().split('T')[0];
-      const nextWeek = new Date();
-      nextWeek.setDate(nextWeek.getDate() + 7);
-      document.getElementById('demandDeadlineInput').value = nextWeek.toISOString().split('T')[0];
+    // Helper para selecionar option em <select> por value ou texto visível
+    function setSelectValue(selectEl, targetValue) {
+      if (!selectEl || !targetValue) return;
+      // 1. Match exato por value
+      selectEl.value = targetValue;
+      if (selectEl.value === targetValue) return;
 
-      if (alunoNome) {
-        document.getElementById('demandScopeSelect').value = alunoNome;
-      } else {
-        document.getElementById('demandScopeSelect').value = '*';
+      // 2. Match por texto exato da option
+      for (let i = 0; i < selectEl.options.length; i++) {
+        if (selectEl.options[i].text === targetValue) {
+          selectEl.selectedIndex = i;
+          return;
+        }
       }
 
-      document.getElementById('newDemandModal').classList.add('active');
+      // 3. Match parcial case-insensitive
+      const targetLower = targetValue.toLowerCase();
+      for (let i = 0; i < selectEl.options.length; i++) {
+        const opt = selectEl.options[i];
+        if (opt.text.toLowerCase().includes(targetLower) || targetLower.includes(opt.value.toLowerCase())) {
+          selectEl.selectedIndex = i;
+          return;
+        }
+      }
+    }
+
+    // Dicionário de Presets de Demandas Docentes (configuráveis via URL ?preset=NOME)
+    const DEMAND_PRESETS = {
+      'marilia-devolutiva-artigo': {
+        aluno: 'Marília Stefenon (TCC Superior)',
+        categoria: 'TCC Superior (Sistemas para Internet)',
+        prazo: '2026-11-15',
+        titulo: 'Devolutiva do artigo do TCC: itens críticos (avaliação, código no repositório, rascunho de limitações)',
+        criterios: 'Entrega até domingo (15/11): (1) Código do chatbot no repositório, com README de como executar e sem dados reais, senhas nem chave secreta (item C3 da devolutiva). (2) Avaliação com números: planilha com 40 a 60 mensagens novas, testadas nos dois modos (com PLN e só palavras-chave), com acertos por modo e análise de 3 ou 4 erros (item C1). (3) Rascunho dos parágrafos \'Por que não RAG ou LLM nesta etapa\' e \'Limitações\' (item C4). (4) Rascunho do novo Resumo/Abstract com ao menos um número da avaliação (item C2). Os itens de melhoria (M1 a M8) e sugestões seguem o plano da semana, com a entrega do texto completo na próxima semana.',
+        descricao: 'Abra a devolutiva (https://chameoandre.github.io/orientacoes-tcc-superior-sistemas-para-internet/devolutivas/marilia-artigo.html) e siga os passos de cada item, começando pelos críticos (C1 a C4). Marque os passos no painel conforme terminar. O artigo fica em artigo_final.tex, único arquivo, sem criar versões novas; cada rodada de revisão vira um commit. Dúvidas: traga na nossa reunião ou escreva para mim antes de sábado.'
+        // linkMeet e enviarEmail permanecem intactos como padrão do formulário
+      }
+    };
+
+    function applyDemandPreset(presetKey) {
+      if (!DEMAND_PRESETS || !DEMAND_PRESETS[presetKey]) return false;
+      const preset = DEMAND_PRESETS[presetKey];
+
+      // Abre o modal de nova demanda
+      openNewDemandModal();
+
+      // Preenche os campos
+      const alunoEl = document.getElementById('demandAlunoSelect') || document.getElementById('demandScopeSelect');
+      if (alunoEl && preset.aluno) {
+        setSelectValue(alunoEl, preset.aluno);
+      }
+      const catEl = document.getElementById('demandCategoriaSelect');
+      if (catEl && preset.categoria) {
+        setSelectValue(catEl, preset.categoria);
+      }
+      const prazoEl = document.getElementById('demandPrazoInput') || document.getElementById('demandDeadlineInput');
+      if (prazoEl && preset.prazo) {
+        prazoEl.value = preset.prazo;
+      }
+      const titEl = document.getElementById('demandTituloInput') || document.getElementById('demandTitleInput');
+      if (titEl && preset.titulo) {
+        titEl.value = preset.titulo;
+      }
+      const critEl = document.getElementById('demandCriteriosInput') || document.getElementById('demandCriteriaInput');
+      if (critEl && preset.criterios) {
+        critEl.value = preset.criterios;
+      }
+      const descEl = document.getElementById('demandDescricaoInput') || document.getElementById('demandDescriptionInput');
+      if (descEl && preset.descricao) {
+        descEl.value = preset.descricao;
+      }
+      if (preset.linkMeet !== undefined) {
+        const meetEl = document.getElementById('demandLinkMeetInput');
+        if (meetEl) meetEl.value = preset.linkMeet;
+      }
+      if (preset.enviarEmail !== undefined) {
+        const emailEl = document.getElementById('demandEnviarEmailCheck') || document.getElementById('demandNotifyWhatsapp');
+        if (emailEl) emailEl.checked = preset.enviarEmail;
+      }
+
+      // Limpa o parâmetro da URL via history.replaceState para o modal não reabrir ao atualizar a página
+      try {
+        const currentUrl = new URL(window.location.href);
+        if (currentUrl.searchParams.has('preset')) {
+          currentUrl.searchParams.delete('preset');
+          const cleanUrl = currentUrl.pathname + (currentUrl.search ? currentUrl.search : '') + currentUrl.hash;
+          window.history.replaceState({}, document.title, cleanUrl);
+        }
+      } catch (err) {
+        console.warn('Erro ao atualizar URL com replaceState:', err);
+      }
+
+      showToast(`Demanda pré-preenchida com o preset "${presetKey}". Confira os campos e clique em Publicar.`, 'info');
+      return true;
+    }
+
+    function checkUrlPreset() {
+      if (window._presetApplied) return;
+      if (isStudentView) return;
+      const appContainer = document.getElementById('dashboardApp');
+      if (appContainer && appContainer.style.display === 'none') {
+        return; // Aguarda liberação do painel
+      }
+      const urlParams = new URLSearchParams(window.location.search);
+      const presetKey = urlParams.get('preset');
+      if (presetKey && DEMAND_PRESETS && DEMAND_PRESETS[presetKey]) {
+        window._presetApplied = true;
+        applyDemandPreset(presetKey);
+      }
+    }
+
+    function openNewDemandModal(alunoNome) {
+      if (isStudentView) return;
+      const form = document.getElementById('newDemandForm');
+      if (form) form.reset();
+
+      const dateEl = document.getElementById('demandDateInput');
+      if (dateEl) dateEl.value = new Date().toISOString().split('T')[0];
+
+      const nextWeek = new Date();
+      nextWeek.setDate(nextWeek.getDate() + 7);
+      const deadlineEl = document.getElementById('demandPrazoInput') || document.getElementById('demandDeadlineInput');
+      if (deadlineEl) deadlineEl.value = nextWeek.toISOString().split('T')[0];
+
+      const scopeEl = document.getElementById('demandAlunoSelect') || document.getElementById('demandScopeSelect');
+      if (scopeEl) {
+        if (alunoNome) {
+          setSelectValue(scopeEl, alunoNome);
+        } else {
+          scopeEl.value = '*';
+        }
+      }
+
+      const modal = document.getElementById('newDemandModal');
+      if (modal) modal.classList.add('active');
     }
 
     async function saveNewDemand(e) {
       e.preventDefault();
       if (isStudentView) return;
-      const escopo = document.getElementById('demandScopeSelect').value;
-      const dataCriacao = document.getElementById('demandDateInput').value;
-      const prazo = document.getElementById('demandDeadlineInput').value;
-      const titulo = document.getElementById('demandTitleInput').value.trim();
-      const descricao = document.getElementById('demandDescriptionInput').value.trim();
-      const criterios = document.getElementById('demandCriteriaInput').value.trim();
-      const notifyWhatsapp = document.getElementById('demandNotifyWhatsapp').checked;
+      const scopeEl = document.getElementById('demandAlunoSelect') || document.getElementById('demandScopeSelect');
+      const escopo = scopeEl ? scopeEl.value : '*';
+      const dataCriacaoEl = document.getElementById('demandDateInput');
+      const dataCriacao = dataCriacaoEl ? dataCriacaoEl.value : new Date().toISOString().split('T')[0];
+      const prazoEl = document.getElementById('demandPrazoInput') || document.getElementById('demandDeadlineInput');
+      const prazo = prazoEl ? prazoEl.value : '';
+      const tituloEl = document.getElementById('demandTituloInput') || document.getElementById('demandTitleInput');
+      const titulo = tituloEl ? tituloEl.value.trim() : '';
+      const descEl = document.getElementById('demandDescricaoInput') || document.getElementById('demandDescriptionInput');
+      const descricao = descEl ? descEl.value.trim() : '';
+      const critEl = document.getElementById('demandCriteriosInput') || document.getElementById('demandCriteriaInput');
+      const criterios = critEl ? critEl.value.trim() : '';
+      const catEl = document.getElementById('demandCategoriaSelect');
+      const categoria = catEl ? catEl.value : '';
+      const meetEl = document.getElementById('demandLinkMeetInput');
+      const linkMeet = meetEl ? meetEl.value.trim() : '';
+      const emailEl = document.getElementById('demandEnviarEmailCheck') || document.getElementById('demandNotifyWhatsapp');
+      const notifyWhatsapp = emailEl ? emailEl.checked : true;
 
       const newId = 'DEM-' + String(demandasData.length + 1).padStart(3, '0');
 
@@ -5058,11 +5196,14 @@ tectonic -Z shell-escape document.tex</pre>
         id: newId,
         data: dataCriacao,
         escopo: escopo,
+        categoria: categoria,
         alunoNome: escopo === '*' ? 'Todos os Orientandos' : escopo,
         titulo: titulo,
         descricao: descricao,
         criterios: criterios,
         prazo: prazo,
+        linkMeet: linkMeet,
+        enviarEmail: notifyWhatsapp,
         status: 'pendente'
       };
 
@@ -5887,6 +6028,11 @@ tectonic -Z shell-escape document.tex</pre>
         }
         setupGoogleAuthUI();
       }
+
+      // Checa preset na URL caso o painel já esteja liberado
+      setTimeout(() => {
+        checkUrlPreset();
+      }, 300);
     });
   </script>
 </body>

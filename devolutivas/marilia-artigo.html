@@ -1,0 +1,355 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Devolutiva do Artigo | Marília Stefenon</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap">
+<style>
+/* Layout: cabeçalho com resumo e barra de progresso, filtros por gravidade, lista de itens em sanfona, plano da semana ao final. */
+:root{
+  --bg:#f6f7f8; --surface:#ffffff; --fg:#1b2329; --muted:#5a6772; --line:#dde2e6;
+  --accent:#1d4e6b; --accent-soft:#e3eef5;
+  --crit:#b3261e; --crit-soft:#fbe9e7;
+  --imp:#8a5a00; --imp-soft:#fdf3dc;
+  --pos:#1e6b3a; --pos-soft:#e4f3e9;
+  --sug:#4a4a8a; --sug-soft:#ececf9;
+  --font-display:"Space Grotesk",system-ui,sans-serif;
+  --font-body:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#12171b; --surface:#1a2127; --fg:#e8edf0; --muted:#9aa7b1; --line:#2c363e;
+  --accent:#7fb8d8; --accent-soft:#1d2f3b;
+  --crit:#ff8a80; --crit-soft:#3a1f1d;
+  --imp:#f0c060; --imp-soft:#352a12;
+  --pos:#7fd39b; --pos-soft:#17301f;
+  --sug:#aeaef0; --sug-soft:#25253f; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#12171b; --surface:#1a2127; --fg:#e8edf0; --muted:#9aa7b1; --line:#2c363e;
+  --accent:#7fb8d8; --accent-soft:#1d2f3b;
+  --crit:#ff8a80; --crit-soft:#3a1f1d;
+  --imp:#f0c060; --imp-soft:#352a12;
+  --pos:#7fd39b; --pos-soft:#17301f;
+  --sug:#aeaef0; --sug-soft:#25253f; color-scheme:dark}
+body{background:var(--bg);color:var(--fg);font-family:var(--font-body);font-size:15px;line-height:1.55;
+  padding-block:24px 64px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.wrap{max-width:860px;margin:0 auto;display:flex;flex-direction:column;gap:20px}
+h1,h2,h3{font-family:var(--font-display);text-wrap:balance;margin:0}
+h1{font-size:28px;line-height:1.15}
+h2{font-size:20px}
+.eyebrow{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.lead{color:var(--muted);margin:6px 0 0;max-width:65ch}
+.head{display:flex;flex-direction:column;gap:10px}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px;min-width:0}
+.how{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.how div{min-width:0}
+.how b{font-family:var(--font-display);display:block;margin-bottom:2px}
+.prog{display:flex;flex-direction:column;gap:8px}
+.bar{height:8px;background:var(--line);border-radius:99px;overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:var(--accent);transition:width .25s}
+.prog-row{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:13px;color:var(--muted)}
+.prog-row b{color:var(--fg);font-variant-numeric:tabular-nums}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{font:inherit;font-size:13px;font-weight:500;border:1px solid var(--line);background:var(--surface);color:var(--fg);
+  padding:7px 12px;border-radius:99px;cursor:pointer;display:inline-flex;gap:6px;align-items:center}
+.chip:hover{border-color:var(--accent)}
+.chip[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--bg)}
+.chip:focus-visible,summary:focus-visible,input:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.chip .n{font-variant-numeric:tabular-nums;opacity:.8}
+.list{display:flex;flex-direction:column;gap:10px}
+details.item{background:var(--surface);border:1px solid var(--line);border-radius:10px;border-left-width:5px;min-width:0}
+details.item[data-sev="crit"]{border-left-color:var(--crit)}
+details.item[data-sev="imp"]{border-left-color:var(--imp)}
+details.item[data-sev="pos"]{border-left-color:var(--pos)}
+details.item[data-sev="sug"]{border-left-color:var(--sug)}
+summary{list-style:none;cursor:pointer;padding:14px 16px;display:flex;gap:12px;align-items:flex-start;justify-content:space-between}
+summary::-webkit-details-marker{display:none}
+.s-main{display:flex;flex-direction:column;gap:6px;min-width:0}
+.s-title{font-family:var(--font-display);font-weight:600;font-size:16px;line-height:1.3}
+.meta{display:flex;flex-wrap:wrap;gap:6px;font-size:12px}
+.tag{padding:2px 8px;border-radius:99px;font-weight:600}
+.tag.crit{background:var(--crit-soft);color:var(--crit)}
+.tag.imp{background:var(--imp-soft);color:var(--imp)}
+.tag.pos{background:var(--pos-soft);color:var(--pos)}
+.tag.sug{background:var(--sug-soft);color:var(--sug)}
+.tag.where,.tag.time{background:var(--accent-soft);color:var(--accent);font-weight:500}
+.s-prog{font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap;padding-top:3px}
+details[open] .s-prog::after{content:" ▴"}
+details:not([open]) .s-prog::after{content:" ▾"}
+.body{padding:0 16px 16px;display:flex;flex-direction:column;gap:14px;border-top:1px solid var(--line);padding-top:14px}
+.body h3{font-size:13px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);margin-bottom:4px}
+.body p{margin:0;max-width:70ch}
+.steps{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
+.steps label{display:flex;gap:10px;align-items:flex-start;cursor:pointer}
+.steps input{margin-top:4px;width:17px;height:17px;flex:none;accent-color:var(--accent)}
+.steps input:checked + span{color:var(--muted);text-decoration:line-through}
+.done{background:var(--accent-soft);color:var(--fg);border-radius:8px;padding:10px 12px;font-size:14px}
+.done b{color:var(--accent)}
+code{font-family:ui-monospace,"SF Mono",Menlo,monospace;font-size:.9em;background:var(--accent-soft);padding:1px 5px;border-radius:4px}
+.plan{display:flex;flex-direction:column;gap:10px}
+.plan ol{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:10px}
+.plan li{display:grid;grid-template-columns:84px 1fr;gap:12px;align-items:start}
+.plan .d{font-family:var(--font-display);font-weight:700;color:var(--accent)}
+.plan a{color:var(--accent);font-weight:600}
+.note{font-size:13px;color:var(--muted)}
+.reset{font:inherit;font-size:12px;color:var(--muted);background:none;border:none;text-decoration:underline;cursor:pointer;padding:0;align-self:flex-start}
+@media (max-width:520px){.plan li{grid-template-columns:1fr;gap:2px}h1{font-size:24px}}
+@media (prefers-reduced-motion:reduce){.bar i{transition:none}}
+</style>
+
+</head>
+<body>
+<div class="wrap">
+  <header class="head">
+    <span class="eyebrow">TCC · Sistemas para Internet · IFSC Garopaba</span>
+    <h1>Devolutiva do artigo: Chatbot para a Secretaria Acadêmica</h1>
+    <p class="lead">Marília, esta página reúne o que está bom, o que precisa mudar e o que fazer em cada ponto, na ordem de prioridade. Baseada na versão atual do <code>artigo_final.tex</code>. A entrega do texto é na semana que vem.</p>
+  </header>
+
+  <section class="panel how" aria-label="Como usar esta página">
+    <div><b>1. Comece pelos críticos</b>São 4 itens. Sem eles o texto não se sustenta diante da banca.</div>
+    <div><b>2. Siga os passos</b>Abra cada item e marque os passos conforme termina. O progresso fica salvo neste navegador.</div>
+    <div><b>3. Confira o "pronto quando"</b>Cada item diz como saber que está resolvido. Se tiver dúvida, traga na reunião.</div>
+  </section>
+
+  <section class="panel prog" aria-label="Progresso">
+    <div class="prog-row"><span>Passos concluídos</span><b id="progTxt">0 de 0</b></div>
+    <div class="bar"><i id="progBar"></i></div>
+  </section>
+
+  <nav class="chips" id="chips" aria-label="Filtrar por tipo"></nav>
+
+  <section class="list" id="list"></section>
+
+  <section class="panel plan" id="plano">
+    <h2>Plano para a semana</h2>
+    <p class="note">Sugestão de ordem. Ajuste os dias conforme sua agenda, mas mantenha a ordem: primeiro o que depende de teste e de código, depois o texto.</p>
+    <ol>
+      <li><span class="d">Dia 1</span><span>Subir o código no repositório (<a href="#c3">C3</a>) e montar a planilha de mensagens de teste (<a href="#c1">C1</a>, passos 1 e 2).</span></li>
+      <li><span class="d">Dia 2</span><span>Rodar os testes nos dois modos e calcular os números (<a href="#c1">C1</a>, passos 3 a 5).</span></li>
+      <li><span class="d">Dia 3</span><span>Escrever a seção de Resultados com a tabela e a análise de erros (<a href="#c1">C1</a>). Escrever Limitações e a justificativa sobre RAG (<a href="#c4">C4</a>).</span></li>
+      <li><span class="d">Dia 4</span><span>Alinhar Abstract, Resumo e Conclusão com o que foi medido (<a href="#c2">C2</a>). Reorganizar a metodologia e acrescentar os requisitos (<a href="#m1">M1</a>).</span></li>
+      <li><span class="d">Dia 5</span><span>Melhorias restantes (<a href="#m2">M2</a> a <a href="#m8">M8</a>), revisão de referências e leitura completa do PDF compilado no Overleaf.</span></li>
+    </ol>
+    <p class="note">Se o tempo apertar, não corte os itens C1 a C4. Os itens de melhoria e sugestão podem virar "trabalhos futuros" no texto.</p>
+    <button class="reset" id="reset" type="button">Limpar marcações desta página</button>
+  </section>
+</div>
+
+<script>
+var SEV={crit:"Crítico",imp:"Melhoria",pos:"Ponto forte",sug:"Sugestão"};
+var ITEMS=[
+{id:"c1",sev:"crit",title:"Falta avaliação com números: compare o modo com PLN e o modo só com palavras-chave",where:"Seção Resultados",time:"1 a 2 dias",
+ why:"Hoje o texto diz que o PLN tem “bom desempenho”, sem nenhum número. O único dado são 23 demandas de uma rodada de teste (22 pendentes e 1 resolvida), que mostram que o registro funciona, não que o chatbot acerta. A banca vai perguntar quanto o PLN melhora, e a comparação já é possível porque o sistema tem os dois modos.",
+ steps:[
+  "Crie uma planilha com 40 a 60 mensagens novas, com duas colunas: <b>mensagem</b> e <b>intenção esperada</b>. Não copie frases de <code>training_data.py</code>: o teste precisa usar frases que o classificador nunca viu.",
+  "Inclua variedade: erros de digitação, gírias, mensagens longas, perguntas sobre cada serviço e cerca de 10 mensagens fora de escopo (por exemplo, perguntas sobre o refeitório).",
+  "Envie cada mensagem no modo <b>com PLN</b> e depois no modo <b>só palavras-chave</b>. Anote, para cada uma, a intenção reconhecida e se a resposta estava certa.",
+  "Calcule acertos ÷ total em cada modo, e também por intenção. Se puder, teste o limiar de similaridade em 0,2, 0,3 e 0,4 e veja o que muda.",
+  "Coloque uma tabela no artigo com os dois modos lado a lado e escolha 3 ou 4 erros para analisar: por que o sistema errou e o que corrigiria. Troque “bom desempenho” pelos números."],
+ done:"A seção Resultados tem uma tabela com acertos nos dois modos, uma análise de erros e uma frase explicando por que o limiar é 0,30. Se o PLN não ganhar em tudo, está certo: escreva o que aconteceu."},
+{id:"c2",sev:"crit",title:"Abstract, Resumo e Conclusão não dizem o que o trabalho fez e mediu",where:"Abstract, Resumo, Considerações Finais",time:"2 a 3 horas",
+ why:"O Abstract e o Resumo falam em Flask e painel, mas não mencionam o PLN nem apresentam resultados. A Conclusão afirma que os objetivos foram cumpridos, mas nenhum foi medido. O leitor decide se vai ler o artigo pelo resumo.",
+ steps:[
+  "Reescreva o Resumo em 5 partes: contexto, problema, o que foi feito (menus, texto livre com TF-IDF, painel), resultado com número e conclusão.",
+  "Traduza a nova versão para o Abstract. Confira que os dois dizem a mesma coisa.",
+  "Na Conclusão, retome cada objetivo específico e diga em uma frase como foi atendido e onde isso aparece no texto.",
+  "Evite afirmar o que não foi medido. Troque “cumpre os objetivos” por algo que corresponda ao que os testes mostraram."],
+ done:"O Resumo e o Abstract citam o PLN e pelo menos um número da avaliação. A Conclusão tem uma frase por objetivo específico."},
+{id:"c3",sev:"crit",title:"O código do sistema não está no repositório",where:"Repositório e Seção de Desenvolvimento",time:"1 hora",
+ why:"O artigo descreve um sistema em Flask, mas o repositório só tem o <code>app.py</code> inicial de abril. A banca e qualquer leitor precisam conseguir ver e executar o que você descreve. Sem o código, os resultados não podem ser conferidos.",
+ steps:[
+  "Crie uma pasta no repositório (por exemplo <code>chatbot/</code>) com todos os arquivos do projeto: <code>app.py</code>, <code>bot.py</code>, <code>content.py</code>, <code>db.py</code>, <code>nlu/</code> e <code>templates/</code>.",
+  "Não envie o arquivo do banco com dados reais, senhas nem a chave secreta de sessão. Use um arquivo de exemplo para a configuração.",
+  "Escreva um <code>README.md</code> curto: como instalar o Flask, como rodar e qual é o usuário inicial do painel.",
+  "No artigo, coloque o link do repositório em uma nota de rodapé ou ao final da seção de Desenvolvimento.",
+  "Se tiver dúvida em como enviar ao Git, peça ajuda ao André antes da entrega."],
+ done:"Qualquer pessoa clona o repositório, segue o README e abre o chatbot no navegador. O link está no artigo."},
+{id:"c4",sev:"crit",title:"Faltam as Limitações e a justificativa de não usar RAG ou LLM",where:"Nova subseção em Resultados ou Considerações Finais",time:"3 a 4 horas",
+ why:"A banca provavelmente vai perguntar por que você não usou RAG ou um modelo de linguagem. Há um argumento no texto (Antico et al. relatam respostas imprecisas e links inexistentes), mas ele está só nos Trabalhos Relacionados. Falta dizer isso como decisão sua, e admitir o que a solução não resolve.",
+ steps:[
+  "Escreva um parágrafo “Por que não RAG ou LLM nesta etapa” com 3 motivos: precisão (respostas revisadas pela secretaria), proteção de dados (LGPD) e custo e infraestrutura.",
+  "Acrescente que RAG é a evolução natural para perguntas fora dos 13 intents, e que o núcleo do chatbot já permite essa troca de módulo.",
+  "Crie a subseção “Limitações” com pelo menos: validação com um único servidor, base de 141 frases, estado da conversa em memória, ausência de identificação do usuário e teste com poucas mensagens.",
+  "Revise a frase em que o artigo diz que a lacuna de métricas “não é abordada” pelos relacionados. Troque por algo que você consiga sustentar, como “não detalham um painel de acompanhamento”."],
+ done:"Existe um parágrafo sobre a escolha frente a RAG e uma lista de limitações escrita por você, sem esconder nada."},
+
+{id:"m1",sev:"imp",title:"A metodologia mistura métodos, desenvolvimento e resultados, e a entrevista não tem protocolo",where:"Metodologia e Entrevista",time:"3 a 4 horas",
+ why:"A lista tem 10 etapas e inclui coisas que são desenvolvimento ou resultado. O Abstract diz que houve levantamento de requisitos, mas não há uma lista de requisitos. A entrevista diz “conversas” sem data, quantidade nem roteiro.",
+ steps:[
+  "Reduza a metodologia a 5 ou 6 etapas: pesquisa bibliográfica, entrevista, mapeamento dos processos, desenvolvimento, avaliação e validação.",
+  "Na Entrevista, informe quando ocorreu, quantas conversas, com quem (cargo, não nome) e quais perguntas guiaram.",
+  "Crie uma tabela curta de requisitos com 6 a 10 linhas, derivados da entrevista. Exemplo: “O sistema deve registrar cada atendimento com data e hora”.",
+  "Ligue cada requisito a uma funcionalidade do sistema, para mostrar que o desenvolvimento respondeu à entrevista."],
+ done:"Há uma tabela de requisitos e a entrevista informa data, número de conversas e roteiro."},
+{id:"m2",sev:"imp",title:"“Demanda” é uma mensagem, mas o artigo fala em atendimentos",where:"Painel de Controle e Resultados",time:"2 horas",
+ why:"Cada mensagem gera uma demanda. Então o painel mede mensagens, não atendimentos completos. A taxa de resolução também considera apenas quem respondeu “sim” ou “não”, e isso enviesa o número. Isso pesa porque seu argumento central é medir atendimentos concluídos.",
+ steps:[
+  "Decida e escreva uma definição: o que é uma demanda e o que é um atendimento. Use a mesma palavra no texto inteiro.",
+  "Se for possível sem refazer o sistema, calcule o número de atendimentos distintos usando o <code>user_id</code> da sessão. Se não for, explique a diferença em Limitações.",
+  "Escreva que a taxa de resolução vem só das respostas dadas, e diga quantas mensagens receberam resposta de satisfação.",
+  "Explique ou retire o corte de 50% usado na cor dos cartões do painel."],
+ done:"O artigo define demanda e atendimento e diz o que a taxa de resolução considera."},
+{id:"m3",sev:"imp",title:"A análise de chatbots da PUC e da Ortoimagem não tem critério nem data",where:"Metodologia, etapa de análise exploratória",time:"1 a 2 horas",
+ why:"O texto diz que o chatbot da PUC travou e que o da Ortoimagem tem alta resolutividade, sem dizer quando, como testou nem o que avaliou. Do jeito que está, parece opinião.",
+ steps:[
+  "Informe a data dos testes e 3 ou 4 critérios usados, por exemplo: quantidade de opções do menu, tratamento de texto livre, validação de dados e encaminhamento a atendente.",
+  "Monte uma tabela pequena com os dois chatbots e esses critérios.",
+  "Se não conseguir repetir o teste, reduza a um parágrafo e diga que foi uma observação informal."],
+ done:"Quem lê sabe quando, o que e como foi observado."},
+{id:"m4",sev:"imp",title:"Há detalhes demais de implementação e pouco espaço para avaliação",where:"Desenvolvimento do Chatbot",time:"2 a 3 horas",
+ why:"As tabelas de rotas, de arquivos e de campos do banco, e os três fluxogramas ocupando cerca de três páginas, tomam o espaço que deveria ser da avaliação.",
+ steps:[
+  "Remova a Tabela de rotas e a Tabela de arquivos do corpo do texto. Diga que estão no repositório (C3).",
+  "Reduza os três fluxogramas dos processos do site do IFSC: um tamanho menor ou um apêndice, e uma frase mostrando o mais longo como exemplo.",
+  "Use o espaço liberado para a avaliação (C1) e as limitações (C4).",
+  "Mantenha a figura da arquitetura e a tabela de campos da demanda, que ajudam a entender o sistema."],
+ done:"O texto compila com menos páginas de implementação e mais de resultados."},
+{id:"m5",sev:"imp",title:"LGPD é só mencionada",where:"Persistência de Dados e Controle de Acesso",time:"1 hora",
+ why:"O sistema guarda tudo o que o aluno escreve, e esses textos podem conter dados pessoais (por exemplo um CPF ou o nome de um colega). O artigo cita a LGPD de passagem e não diz o que o sistema faz a respeito.",
+ steps:[
+  "Escreva o que o sistema coleta e o que não coleta (não pede login, nome nem matrícula).",
+  "Informe que o chatbot deve mostrar um aviso de que as mensagens são registradas, e inclua esse aviso na tela de boas-vindas se ainda não existe.",
+  "Diga quem acessa o painel e que a senha e a chave de sessão padrão precisam ser trocadas antes do uso real.",
+  "Cite a LGPD (Lei nº 13.709/2018) como referência e mencione, em Trabalhos Futuros, uma política de retenção dos dados."],
+ done:"Há um parágrafo de tratamento de dados com a referência da lei."},
+{id:"m6",sev:"imp",title:"Termos sobre aprendizado e IA precisam ser mais precisos",where:"Conceitos (Chatbot e PLN)",time:"1 hora",
+ why:"O texto diz que o chatbot combina fluxo e “IA que aprende com os dados”. O seu classificador compara a mensagem com frases de exemplo e escolhe a mais parecida; ele não aprende. Um membro da banca pode questionar.",
+ steps:[
+  "Descreva a técnica pelo que ela é: classificação de intenções por similaridade textual, com TF-IDF e cosseno.",
+  "Ajuste a frase da Seção de Chatbot sobre as abordagens de design, para não afirmar aprendizado.",
+  "Use “PLN” com cuidado: diga que é uma técnica clássica e leve de PLN, e que não usa modelos de linguagem."],
+ done:"Nenhuma frase sugere que o sistema aprende sozinho."},
+{id:"m7",sev:"imp",title:"Referências citadas de forma desencontrada",where:"Conceitos e Referências",time:"1 hora",
+ why:"ELIZA, A.L.I.C.E., Cleverbot, Watson e Siri aparecem no texto sem referência. Weizenbaum (1966) está na lista, mas não é citado no texto. A ABNT exige que as duas coisas coincidam.",
+ steps:[
+  "Cite Weizenbaum (1966) no trecho sobre a ELIZA.",
+  "Para A.L.I.C.E., Cleverbot, Watson e Siri, acrescente uma referência confiável a cada um ou reduza a frase para o que você consegue sustentar.",
+  "Confira que toda referência da lista é citada e que toda citação está na lista.",
+  "Padronize “Câmpus” no texto inteiro (hoje há “Campus” e “Câmpus”)."],
+ done:"Lista e citações coincidem, e a grafia é uma só."},
+{id:"m8",sev:"imp",title:"Confira como o PDF compila no Overleaf",where:"Arquivo inteiro",time:"30 min",
+ why:"Os arquivos foram reorganizados e o template foi corrigido. É preciso conferir que o texto, as figuras e as referências aparecem como esperado.",
+ steps:[
+  "No Overleaf, use Sync para puxar o repositório e confira que o documento principal é <code>artigo_final.tex</code>.",
+  "Compile e leia o PDF do começo ao fim. Verifique figuras sem aparecer, tabelas cortadas e “??” no lugar das referências.",
+  "Se houver erro, copie o log e leve ao André."],
+ done:"O PDF compila sem erros e todas as figuras aparecem."},
+
+{id:"p1",sev:"pos",title:"Problema real e bem delimitado",where:"Introdução e Entrevista",
+ why:"A falta de métricas no atendimento por WhatsApp é uma lacuna concreta, descrita por quem vive o problema. O texto volta a ela do início ao fim."},
+{id:"p2",sev:"pos",title:"O painel é a contribuição que diferencia o trabalho",where:"Painel de Controle",
+ why:"Os relacionados (Rasa, em Gaspar, e RAG, em Milão) focam em responder perguntas. Seu sistema registra, classifica e permite acompanhar atendimentos. Esse é o seu argumento mais forte."},
+{id:"p3",sev:"pos",title:"Mapeamento dos processos do site",where:"Metodologia",
+ why:"Os três diagramas mostram por que o caminho até a informação é longo (mais de quinze etapas em alguns casos). Isso justifica o chatbot de forma visual."},
+{id:"p4",sev:"pos",title:"Arquitetura clara e honesta sobre limites",where:"Arquitetura e Tecnologias",
+ why:"A separação em camadas e a explicação do núcleo independente do canal estão bem feitas. O texto admite que o estado em memória e as credenciais padrão são limitações do protótipo."},
+{id:"p5",sev:"pos",title:"Escolhas técnicas justificadas e comparação possível",where:"Tratamento de Texto Livre",
+ why:"Python puro, SQLite e TF-IDF com cosseno estão bem argumentados, e a alternância entre os dois modos já permite medir o ganho do PLN."},
+{id:"p6",sev:"pos",title:"Validação com o servidor da Secretaria",where:"Resultados",
+ why:"A apresentação ao futuro usuário gerou uma melhoria real (o exemplo “matrícula” no menu), e o texto deixa claro que é uma validação qualitativa com uma só pessoa."},
+
+{id:"s1",sev:"sug",title:"Se sobrar tempo: um piloto com 5 a 8 pessoas",where:"Resultados",time:"1 a 2 dias",
+ why:"Um teste pequeno com colegas ou outros servidores muda a seção de validação, mesmo com poucas pessoas.",
+ steps:[
+  "Defina 4 ou 5 tarefas fixas, por exemplo: “descobrir como justificar uma falta” e “saber quais cursos têm inscrição aberta”.",
+  "Peça a cada pessoa que use o chatbot sem ajuda, e anote se conseguiu e quantas tentativas fez.",
+  "Peça uma nota de 1 a 5 para a facilidade de uso e um comentário livre.",
+  "Apresente a quantidade de participantes, a taxa de sucesso e os comentários mais repetidos."],
+ done:"Há uma tabela do piloto, com a quantidade de participantes declarada de forma honesta."},
+{id:"s2",sev:"sug",title:"Mostre o painel preenchido com um exemplo realista",where:"Painel de Controle",time:"1 hora",
+ why:"A figura do painel mostra 23 demandas de teste, quase todas pendentes. Depois do piloto ou dos testes de C1, uma captura com dados variados mostra melhor o que a Secretaria veria.",
+ steps:[
+  "Depois dos testes, tire uma nova captura do painel com demandas em estados diferentes.",
+  "Legende dizendo que são dados de teste."],
+ done:"A figura do painel mostra pendentes, em análise e resolvidas."},
+{id:"s3",sev:"sug",title:"Escreva os trabalhos futuros em ordem de prioridade",where:"Considerações Finais",time:"30 min",
+ why:"Hoje a lista de trabalhos futuros mistura itens pequenos e grandes. Uma ordem ajuda a banca a ver o caminho.",
+ steps:[
+  "Separe em curto prazo (mais exemplos, identificação do usuário), médio prazo (canal WhatsApp, política de dados) e longo prazo (RAG para perguntas fora do escopo).",
+  "Ligue cada item às limitações que você descreveu."],
+ done:"Os trabalhos futuros estão em três níveis, ligados às limitações."}
+];
+
+var KEY="devolutiva-marilia-v1", state={};
+try{ state=JSON.parse(localStorage.getItem(KEY)||"{}"); }catch(e){ state={}; }
+function save(){ try{ localStorage.setItem(KEY,JSON.stringify(state)); }catch(e){} }
+
+var filter="all";
+var chipsEl=document.getElementById("chips"), listEl=document.getElementById("list");
+
+function counts(){ var c={all:ITEMS.length,crit:0,imp:0,pos:0,sug:0}; ITEMS.forEach(function(i){c[i.sev]++;}); return c; }
+
+function buildChips(){
+  var c=counts(), defs=[["all","Todos"],["crit","Críticos"],["imp","Melhorias"],["pos","Pontos fortes"],["sug","Sugestões"]];
+  chipsEl.innerHTML="";
+  defs.forEach(function(d){
+    var b=document.createElement("button"); b.type="button"; b.className="chip"; b.setAttribute("aria-pressed",filter===d[0]);
+    b.innerHTML=d[1]+' <span class="n">'+c[d[0]]+'</span>';
+    b.onclick=function(){ filter=d[0]; buildChips(); render(); };
+    chipsEl.appendChild(b);
+  });
+}
+
+function stepKey(id,n){ return id+":"+n; }
+function itemProgress(it){
+  if(!it.steps) return null;
+  var d=0; it.steps.forEach(function(_,n){ if(state[stepKey(it.id,n)]) d++; });
+  return d+"/"+it.steps.length;
+}
+function totalProgress(){
+  var t=0,d=0;
+  ITEMS.forEach(function(it){ if(!it.steps) return; it.steps.forEach(function(_,n){ t++; if(state[stepKey(it.id,n)]) d++; }); });
+  document.getElementById("progTxt").textContent=d+" de "+t;
+  document.getElementById("progBar").style.width=(t?Math.round(100*d/t):0)+"%";
+}
+
+function render(){
+  var openIds={}; listEl.querySelectorAll("details[open]").forEach(function(d){ openIds[d.id]=1; });
+  if(location.hash){ openIds[location.hash.slice(1)]=1; }
+  listEl.innerHTML="";
+  ITEMS.filter(function(i){ return filter==="all"||i.sev===filter; }).forEach(function(it){
+    var d=document.createElement("details"); d.className="item"; d.id=it.id; d.setAttribute("data-sev",it.sev);
+    if(openIds[it.id]) d.open=true;
+    var prog=itemProgress(it);
+    var s=document.createElement("summary");
+    s.innerHTML='<span class="s-main"><span class="meta"><span class="tag '+it.sev+'">'+SEV[it.sev]+(it.sev==="crit"||it.sev==="imp"||it.sev==="sug"?" · "+it.id.toUpperCase():"")+'</span><span class="tag where">'+it.where+'</span>'+(it.time?'<span class="tag time">'+it.time+'</span>':'')+'</span><span class="s-title">'+it.title+'</span></span><span class="s-prog" data-prog="'+it.id+'">'+(prog?prog+" passos":"")+'</span>';
+    d.appendChild(s);
+    var b=document.createElement("div"); b.className="body";
+    var html='<div><h3>'+(it.sev==="pos"?"Por que está bom":"O problema")+'</h3><p>'+it.why+'</p></div>';
+    if(it.steps){
+      html+='<div><h3>O que fazer</h3><ul class="steps">';
+      it.steps.forEach(function(st,n){
+        var k=stepKey(it.id,n), id="cb-"+it.id+"-"+n;
+        html+='<li><label for="'+id+'"><input type="checkbox" id="'+id+'" data-k="'+k+'" data-item="'+it.id+'"'+(state[k]?" checked":"")+'><span>'+st+'</span></label></li>';
+      });
+      html+='</ul></div>';
+    }
+    if(it.done) html+='<div class="done"><b>Pronto quando:</b> '+it.done+'</div>';
+    b.innerHTML=html; d.appendChild(b); listEl.appendChild(d);
+  });
+  listEl.querySelectorAll("input[type=checkbox]").forEach(function(cb){
+    cb.onchange=function(){
+      state[cb.getAttribute("data-k")]=cb.checked; save();
+      var it=ITEMS.filter(function(x){return x.id===cb.getAttribute("data-item");})[0];
+      var el=listEl.querySelector('[data-prog="'+it.id+'"]'); if(el) el.textContent=itemProgress(it)+" passos";
+      totalProgress();
+    };
+  });
+  totalProgress();
+}
+
+document.getElementById("reset").onclick=function(){ state={}; save(); render(); };
+document.querySelectorAll("#plano a").forEach(function(a){
+  a.onclick=function(e){
+    var id=a.getAttribute("href").slice(1);
+    var t=document.getElementById(id);
+    if(!t){ filter="all"; buildChips(); render(); t=document.getElementById(id); }
+    if(t){ e.preventDefault(); t.open=true; t.scrollIntoView({behavior:"smooth",block:"start"}); }
+  };
+});
+buildChips(); render();
+</script>
+
+</body>
+</html>
