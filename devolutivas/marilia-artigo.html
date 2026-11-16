@@ -98,6 +98,10 @@ code{font-family:ui-monospace,"SF Mono",Menlo,monospace;font-size:.9em;backgroun
 .reset{font:inherit;font-size:12px;color:var(--muted);background:none;border:none;text-decoration:underline;cursor:pointer;padding:0;align-self:flex-start}
 @media (max-width:520px){.plan li{grid-template-columns:1fr;gap:2px}h1{font-size:24px}}
 @media (prefers-reduced-motion:reduce){.bar i{transition:none}}
+.section-group{display:flex;flex-direction:column;gap:10px;margin-bottom:14px}
+.section-header{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:9px 14px;background:var(--surface);border:1px solid var(--line);border-radius:10px;font-family:var(--font-display);font-size:15px;font-weight:700;color:var(--accent);margin-top:10px}
+.section-header .sec-title{display:inline-flex;align-items:center;gap:8px}
+.section-badge{font-size:11px;font-weight:600;background:var(--accent-soft);color:var(--accent);padding:2px 8px;border-radius:99px;font-variant-numeric:tabular-nums}
 </style>
 
 </head>
@@ -105,14 +109,14 @@ code{font-family:ui-monospace,"SF Mono",Menlo,monospace;font-size:.9em;backgroun
 <div class="wrap">
   <header class="head">
     <span class="eyebrow">TCC · Sistemas para Internet · IFSC Garopaba</span>
-    <h1>Devolutiva v3: alertas abertos e correções do orientador</h1>
-    <p class="lead">Marília, esta versão foi atualizada em 16/11 às 16h30 com o seu envio de V2. Há dois grupos: o que ainda precisa ser fechado por você (alertas abertos) e o que o orientador já corrigiu no texto (para você ler e conferir). Os itens de segurança continuam aqui até serem resolvidos.</p>
+    <h1>Devolutiva do Artigo: Chatbot para a Secretaria Acadêmica</h1>
+    <p class="lead">Marília, este painel está organizado na <strong>ordem direta das seções do artigo</strong> (Introdução, Referencial Teórico, Trabalhos Relacionados, Metodologia, Desenvolvimento, Resultados, Considerações Finais e Repositório/Revisão Final). Você pode revisar o texto seção por seção, acompanhando os alertas abertos, as correções já aplicadas pelo orientador e os itens concluídos.</p>
   </header>
 
   <section class="panel how" aria-label="Como usar esta página">
-    <div><b>1. Comece pelos alertas abertos</b>São 6 itens (K1 a K6) para fechar hoje, com o tempo estimado de cada um.</div>
-    <div><b>2. Siga os passos</b>Abra cada item e marque os passos conforme termina. O progresso fica salvo neste navegador.</div>
-    <div><b>3. Confira o "pronto quando"</b>Cada item diz como saber que está resolvido. Se tiver dúvida, traga na reunião.</div>
+    <div><b>1. Orientado às seções do artigo</b>Os apontamentos acompanham o texto na ordem de leitura (da Introdução às Considerações Finais).</div>
+    <div><b>2. Foco nos alertas abertos</b>Itens com tarja vermelha (K1 a K6) precisam ser conferidos ou fechados por você hoje.</div>
+    <div><b>3. Marque os passos</b>Abra cada item e marque os passos conforme termina. O progresso fica salvo no navegador.</div>
   </section>
 
   <section class="panel prog" aria-label="Progresso">
@@ -139,34 +143,33 @@ code{font-family:ui-monospace,"SF Mono",Menlo,monospace;font-size:.9em;backgroun
 
 <script>
 var SEV={crit:"Alerta aberto",ori:"Corrigido pelo orientador",imp:"Se der tempo",pos:"Concluído",sug:"Depois da entrega"};
+
+var SECTIONS=[
+  {id:"sec-intro",title:"1. Introdução (com Resumo e Abstract)",icon:"📄"},
+  {id:"sec-conceitos",title:"2. Referencial Teórico (Conceitos: Chatbot, PLN, Flask)",icon:"📚"},
+  {id:"sec-trabalhos",title:"3. Trabalhos Relacionados",icon:"🔍"},
+  {id:"sec-metodologia",title:"4. Metodologia (Entrevista, Requisitos e Processos)",icon:"🧭"},
+  {id:"sec-desenvolvimento",title:"5. Desenvolvimento (Arquitetura, Interface, LGPD e Painel)",icon:"⚙️"},
+  {id:"sec-resultados",title:"6. Resultados (Avaliação, Números, Análise de Erros e Limitações)",icon:"📊"},
+  {id:"sec-conclusao",title:"7. Considerações Finais e Trabalhos Futuros",icon:"🏁"},
+  {id:"sec-geral",title:"8. Repositório, Segurança e Revisão Final",icon:"🚀"}
+];
+
 var ITEMS=[
-{id:"k1",sev:"crit",title:"Compilar no Overleaf e conferir as correções já aplicadas ao texto",where:"Arquivo inteiro",time:"30 min",
- why:"O André e eu corrigimos o <code>artigo_final.tex</code> e já estão no repositório; às 16h30 entraram mais duas (referência da LGPD e “identificador do navegador”). Principais mudanças: o <code>%</code> sem barra em “80,0%” (que escondia uma frase inteira), o erro <code>\\linesskip</code> do template, “sem dependências externas” no Resumo e no Abstract, o texto sobre o identificador do usuário, a LGPD, o parágrafo solto depois das Limitações e uma quarta razão na defesa sobre RAG. Você precisa ler essas mudanças e ver que o PDF compila.",
- steps:[
-  "Depois que o André fizer o merge, no Overleaf use Menu → Sync → GitHub → Pull e confira que o documento principal é <code>artigo_final.tex</code>.",
-  "Compile. Não pode haver erro vermelho no log. Procure “??” no PDF (referência quebrada).",
-  "Leia, no PDF, estes pontos: o Resumo e o Abstract, o fim do primeiro parágrafo depois da Tabela de comparação (Resultados), a Seção 5.2 (identificador), a seção de Persistência e Controle de Acesso (LGPD), as Limitações e o fim das Considerações Finais.",
-  "Se algo estiver errado com o que você fez ou quer dizer, edite no <code>artigo_final.tex</code> e avise o André. Não crie outro arquivo."],
- done:"O PDF compila sem erros e você concorda com cada trecho alterado, escrevendo em suas palavras onde precisar."},
-{id:"k2",sev:"crit",title:"Recontar os números do piloto no painel real e acertar o parágrafo",where:"Resultados, Registro no Painel",time:"30 min",
- why:"Na correção, o parágrafo das “23 demandas” foi trocado pelos números do banco que estava no repositório: 74 demandas, 5 identificadores distintos, 70 pendentes, 4 resolvidas, e respostas de satisfação por modo (PLN: 6 sim e 1 não; palavras-chave: 3 sim e 0 não). Esse banco é uma foto de uma data qualquer. Os números do texto precisam bater com o painel hospedado no dia da entrega, e a banca pode abrir o painel. <b>Atualização de 16/11 às 16h25: ainda aberto.</b> O texto continua com os mesmos números e com o comentário <code>% CONFERIR</code>, e o banco reenviado tem os mesmos 74 registros.",
- steps:[
-  "Entre no painel de administração do protótipo hospedado e anote: total de demandas, quantidade de identificadores distintos, quantas por status e as respostas de satisfação por modo.",
-  "Descubra se as demandas incluem seus próprios testes e os do orientador. Se incluírem, escreva no texto: “inclui testes da autora”.",
-  "Atualize o parágrafo em <b>Registro no Painel e Validação com o Servidor da Secretaria</b> com os números reais.",
-  "Apague a linha de comentário <code>% CONFERIR</code> acima do parágrafo.",
-  "Confira que a Metodologia (etapa 6, testes piloto com voluntários) diz o mesmo que esse parágrafo."],
- done:"Os números do texto são iguais aos do painel hospedado na data da entrega, e o comentário CONFERIR foi removido."},
-{id:"k3",sev:"crit",title:"Tirar o banco de dados do repositório público e trocar a senha do admin",where:"Repositório marilia79/chatbot",time:"20 min",
- why:"O repositório do código é público e tem o arquivo <code>painel.db</code> com mensagens reais de usuários e a senha do administrador (em hash). Há outra cópia do banco dentro do arquivo <code>ifsc_bot_piloto (2).zip</code>. Isso contradiz o que o artigo diz sobre proteção de dados e é o tipo de falha que a banca pode abrir e achar. <b>Atualização de 16/11 às 16h25: ainda aberto.</b> A pasta foi apagada e reenviada às 15h20, e o <code>painel.db</code> e o zip continuam versionados.",
- steps:[
-  "No repositório, rode <code>git rm --cached ifsc_bot_piloto/painel.db</code> e crie um <code>.gitignore</code> com a linha <code>*.db</code>.",
-  "Remova também o <code>ifsc_bot_piloto (2).zip</code> do repositório (<code>git rm</code>). Ele guarda um banco mais antigo.",
-  "Troque a senha do administrador no protótipo hospedado.",
-  "Leia as mensagens que estavam no banco. Se alguma tiver nome, CPF, telefone ou dado de outra pessoa, avise o André antes de enviar o texto: o histórico do Git ainda guarda o arquivo e pode precisar ser limpo.",
-  "Faça commit e push. Confira no GitHub que o arquivo não aparece mais na lista."],
- done:"Nenhum arquivo <code>.db</code> nem o zip aparece no repositório, a senha foi trocada e o André sabe se o histórico precisa de limpeza."},
-{id:"k4",sev:"crit",title:"Preparar a defesa contra a pergunta “por que não RAG?”",where:"Seção de Arquitetura e defesa oral",time:"1 hora",
+// 1. Introdução (com Resumo e Abstract)
+{id:"p2",section:"sec-intro",sev:"pos",title:"C2: Resumo e Abstract com resultados",where:"Abstract e Resumo",
+ why:"Agora citam o PLN e os números. A expressão “sem dependências externas” foi trocada por uma frase exata."},
+
+// 2. Referencial Teórico (Conceitos: Chatbot, PLN, Flask)
+{id:"p6",section:"sec-conceitos",sev:"pos",title:"Conceitos reescritos e referências soltas removidas",where:"Conceitos / Referencial Teórico",
+ why:"A evolução dos chatbots agora cita só o que tem fonte (ELIZA e Filatro), e o texto diz que o PLN deste trabalho é uma técnica clássica e leve, sem modelos de linguagem e sem aprendizado durante o uso."},
+{id:"o2",section:"sec-conceitos",sev:"ori",title:"Correções aplicadas: referência da LGPD e identificador",where:"Persistência e Referências",
+ why:"<ul><li>Acrescentou à lista de referências a Lei nº 13.709/2018 (BRASIL, 2018), que estava citada no texto sem entrada.</li><li>Trocou “identificador aleatório de sessão” por “do navegador”, igual ao resto do texto.</li></ul>",
+ steps:["Conferi a referência da lei na lista e a frase na seção Persistência de Dados e Controle de Acesso."],
+ done:"A lista de referências tem a entrada BRASIL (2018) e o texto está consistente."},
+
+// 3. Trabalhos Relacionados
+{id:"k4",section:"sec-trabalhos",sev:"crit",title:"Preparar a defesa contra a pergunta “por que não RAG?”",where:"Trabalhos Relacionados e Arquitetura",time:"1 hora",
  why:"A banca já sugeriu RAG. O texto agora tem uma quarta razão para a escolha (a sequência de evolução da solução), e você precisa conseguir dizer isso sem ler. O argumento: o problema central é a falta de registro e de métricas sobre o que é pedido e o que é resolvido. Primeiro se organiza e se mede o atendimento. Depois, com os dados do painel e uma base institucional organizada, vem o RAG. Os processos do site do IFSC estão espalhados em vários sistemas, e a qualidade de um RAG depende da base, como mostram os links inexistentes relatados por Antico et al.",
  steps:[
   "Leia o parágrafo “Quarto, a sequência de evolução da solução” na seção de Arquitetura e diga com suas palavras em 1 minuto, sem olhar.",
@@ -175,7 +178,87 @@ var ITEMS=[
   "Na pergunta 5, admita a limitação: o limiar foi comparado no mesmo conjunto de teste (isso está no texto agora).",
   "Na pergunta 6, use: o identificador fica no navegador, as mensagens ficam no banco, e consulta de demandas anteriores com e-mail verificado é trabalho futuro."],
  done:"Você responde as 6 perguntas em voz alta, sem ler, em menos de 1 minuto cada."},
-{id:"k5",sev:"crit",title:"Leitura final completa antes de enviar",where:"Arquivo inteiro",time:"1 a 2 horas",
+
+// 4. Metodologia (Entrevista, Requisitos e Processos)
+{id:"i2",section:"sec-metodologia",sev:"imp",title:"Os requisitos R1 a R5 são perguntas dos usuários, não requisitos",where:"Seção de Entrevista e Levantamento de Requisitos",time:"30 min",
+ why:"R1 a R5 são perguntas frequentes e como o sistema as atende, o que é bom, mas não são requisitos funcionais nem não funcionais. Se a banca perguntar “quais eram os requisitos?”, falta uma resposta curta.",
+ steps:[
+  "Acrescente 4 ou 5 frases de requisitos funcionais (ex.: “registrar cada atendimento com data e hora”) e 2 ou 3 não funcionais (ex.: “não coletar dados pessoais”).",
+  "Se faltar tempo, deixe para a defesa e prepare a resposta oral."],
+ done:"Há uma lista curta de requisitos funcionais e não funcionais, ou uma resposta pronta para a defesa."},
+{id:"p5",section:"sec-metodologia",sev:"pos",title:"Entrevista e análise dos outros chatbots com data e critério",where:"Entrevista e Metodologia",
+ why:"A entrevista tem data, e a observação da PUC e da Ortoimagem tem dias de teste e quatro critérios. A metodologia foi reduzida a seis etapas."},
+
+// 5. Desenvolvimento (Arquitetura, Interface, LGPD e Painel)
+{id:"k6",section:"sec-desenvolvimento",sev:"crit",title:"Conferir se o texto sobre senha e chave de sessão corresponde ao código",where:"Persistência de Dados e Controle de Acesso",time:"20 min",
+ why:"O texto diz que o usuário inicial é criado automaticamente e que a chave de sessão é um valor padrão, que devem ser trocados. No código atual não é assim: a chave é gerada aleatoriamente na primeira execução (ou vem da variável <code>SECRET_KEY</code>), o administrador é criado pelo script <code>criar_admin.py</code> com senha de pelo menos 12 caracteres, e a senha antiga <code>admin123</code> está bloqueada. O artigo descreve algo mais fraco do que o sistema faz, e a banca pode perguntar qual das duas versões vale. Também precisa estar claro que o sistema hospedado usa o cadastro novo.",
+ steps:[
+  "Leia a frase “Por se tratar de um protótipo, o usuário inicial… valores padrão…” na seção Persistência de Dados e Controle de Acesso.",
+  "Reescreva dizendo o que o código faz: chave de sessão aleatória (ou <code>SECRET_KEY</code>), administrador cadastrado por <code>criar_admin.py</code>, senha antiga bloqueada.",
+  "Confirme que no PythonAnywhere o administrador foi criado com <code>criar_admin.py</code> e que a variável <code>FLASK_DEBUG</code> está desligada.",
+  "Depois do novo envio ao GitHub, confira que o arquivo <code>.secret_key</code> não está no repositório."],
+ done:"O texto descreve o que o código realmente faz, e você sabe responder como o administrador do sistema hospedado foi criado."},
+{id:"i4",section:"sec-desenvolvimento",sev:"imp",title:"Defina “demanda” e “atendimento” em uma frase",where:"Painel de Controle",time:"15 min",
+ why:"No sistema, cada mensagem gera uma demanda. O artigo fala em “volume de atendimentos”. Uma frase explicando a diferença evita uma pergunta incômoda.",
+ steps:["Na seção do Painel, escreva: “cada mensagem enviada gera uma demanda; o número de atendimentos distintos pode ser obtido pelo identificador do usuário”."],
+ done:"O texto define demanda e usa a palavra sempre no mesmo sentido."},
+{id:"p7",section:"sec-desenvolvimento",sev:"pos",title:"Aviso de privacidade existe no sistema",where:"Persistência de Dados",
+ why:"O texto diz que a mensagem de boas-vindas avisa que as mensagens são registradas. Conferi no código e na captura de tela atualizada: o aviso existe."},
+{id:"p8",section:"sec-desenvolvimento",sev:"pos",title:"Tabela de rotas mantida e correta",where:"Interface Web e Comunicação",
+ why:"As 9 rotas da tabela (<code>/</code>, <code>/start</code>, <code>/chat</code>, <code>/feedback</code> e as rotas do painel) batem com o <code>app.py</code>. Manter a tabela é uma boa decisão: quem ler o texto com atenção vai conseguir verificá-la."},
+
+// 6. Resultados (Avaliação, Números, Análise de Erros e Limitações)
+{id:"k2",section:"sec-resultados",sev:"crit",title:"Recontar os números do piloto no painel real e acertar o parágrafo",where:"Resultados, Registro no Painel",time:"30 min",
+ why:"Na correção, o parágrafo das “23 demandas” foi trocado pelos números do banco que estava no repositório: 74 demandas, 5 identificadores distintos, 70 pendentes, 4 resolvidas, e respostas de satisfação por modo (PLN: 6 sim e 1 não; palavras-chave: 3 sim e 0 não). Esse banco é uma foto de uma data qualquer. Os números do texto precisam bater com o painel hospedado no dia da entrega, e a banca pode abrir o painel. <b>Atualização de 16/11 às 16h25: ainda aberto.</b> O texto continua com os mesmos números e com o comentário <code>% CONFERIR</code>, e o banco reenviado tem os mesmos 74 registros.",
+ steps:[
+  "Entre no painel de administração do protótipo hospedado e anote: total de demandas, quantidade de identificadores distintos, quantas por status e as respostas de satisfação por modo.",
+  "Descubra se as demandas incluem seus próprios testes e os do orientador. Se incluírem, escreva no texto: “inclui testes da autora”.",
+  "Atualize o parágrafo em <b>Registro no Painel e Validação com o Servidor da Secretaria</b> com os números reais.",
+  "Apague a linha de comentário <code>% CONFERIR</code> acima do parágrafo.",
+  "Confira que a Metodologia (etapa 6, testes piloto com voluntários) diz o mesmo que esse parágrafo."],
+ done:"Os números do texto são iguais aos do painel hospedado na data da entrega, e o comentário CONFERIR foi removido."},
+{id:"p1",section:"sec-resultados",sev:"pos",title:"C1: avaliação com números nos dois modos",where:"Resultados",
+ why:"52 mensagens inéditas, tabela por intenção, comparação de limiares e análise de quatro erros, com as somas da tabela conferidas. Está bem feito."},
+{id:"p4",section:"sec-resultados",sev:"pos",title:"C4: justificativa sobre RAG e subseção de Limitações",where:"Arquitetura e Resultados",
+ why:"Há três razões (precisão, LGPD, custo) e uma subseção de Limitações. A quarta razão (sequência de evolução) foi acrescentada na correção."},
+{id:"o1",section:"sec-resultados",sev:"ori",title:"Correções aplicadas no texto em 16/11",where:"Várias seções",
+ why:"<ul><li>Escapou o <code>%</code> em “80,0%”, que escondia o final de uma frase.</li><li>Corrigiu o erro <code>\\linesskip</code> do template, que dava erro no <code>\\maketitle</code>.</li><li>Trocou “sem dependências externas” no Resumo e no Abstract, porque o Flask é uma dependência.</li><li>Descreveu o identificador do usuário guardado no navegador e o que se perde ao reabrir a página.</li><li>Incluiu o parágrafo sobre LGPD, e a ressalva de que o limiar foi comparado no mesmo conjunto de teste.</li><li>Acrescentou a quarta razão da defesa sobre RAG e o roteiro de evolução nas Considerações Finais.</li><li>Removeu o parágrafo solto depois das Limitações e padronizou “Câmpus”.</li></ul>",
+ steps:["Li essas mudanças no PDF e concordo com elas (ou avisei o André do que ajustar)."],
+ done:"Você leu cada trecho alterado e consegue explicá-lo na defesa."},
+
+// 7. Considerações Finais e Trabalhos Futuros
+{id:"s1",section:"sec-conclusao",sev:"sug",title:"Mostrar o histórico da conversa ao reabrir a página",where:"Trabalho futuro (código)",time:"1 a 2 horas",
+ why:"O identificador já fica no navegador e as mensagens já ficam no banco. Uma rota nova poderia devolver as últimas demandas do usuário, com o status e o parecer, e o chat as mostraria ao abrir. Não precisa de e-mail. Não mexa nisso antes da entrega para não alterar o sistema avaliado.",
+ steps:["Anote como trabalho futuro e use como resposta à pergunta 6 da defesa."],
+ done:"Está descrito em Limitações e em Trabalhos Futuros, que o texto já contém."},
+{id:"s2",section:"sec-conclusao",sev:"sug",title:"Consultar o atendimento de outro aparelho (protocolo ou e-mail verificado)",where:"Trabalho futuro",time:"vários dias",
+ why:"Um e-mail digitado sem verificação não identifica ninguém, e qualquer pessoa poderia ver as demandas de outra. Com código enviado ao e-mail ou com protocolo e código aleatório, a ideia funciona, mas exige LGPD (aviso, finalidade e retenção).",
+ steps:["Deixe descrito como trabalho futuro, como o texto já faz."],
+ done:"O texto menciona os dois caminhos e a LGPD."},
+{id:"s3",section:"sec-conclusao",sev:"sug",title:"Separar conjunto de ajuste e de teste e melhorar o classificador",where:"Trabalho futuro",time:"depois da entrega",
+ why:"O limiar foi comparado no mesmo conjunto de 52 mensagens, e as correções dos quatro erros (saudações curtas, stopwords institucionais, n-gramas de caracteres) ainda não foram aplicadas. Depois da entrega, vale refazer a avaliação com um conjunto separado.",
+ steps:["Aplicar as quatro correções da análise de erros e reavaliar em um conjunto novo, que seria o material de um segundo artigo."],
+ done:"Fica como plano para o próximo artigo."},
+
+// 8. Repositório, Segurança e Revisão Final
+{id:"k3",section:"sec-geral",sev:"crit",title:"Tirar o banco de dados do repositório público e trocar a senha do admin",where:"Repositório marilia79/chatbot",time:"20 min",
+ why:"O repositório do código é público e tem o arquivo <code>painel.db</code> com mensagens reais de usuários e a senha do administrador (em hash). Há outra cópia do banco dentro do arquivo <code>ifsc_bot_piloto (2).zip</code>. Isso contradiz o que o artigo diz sobre proteção de dados e é o tipo de falha que a banca pode abrir e achar. <b>Atualização de 16/11 às 16h25: ainda aberto.</b> A pasta foi apagada e reenviada às 15h20, e o <code>painel.db</code> e o zip continuam versionados.",
+ steps:[
+  "No repositório, rode <code>git rm --cached ifsc_bot_piloto/painel.db</code> e crie um <code>.gitignore</code> com a linha <code>*.db</code>.",
+  "Remova também o <code>ifsc_bot_piloto (2).zip</code> do repositório (<code>git rm</code>). Ele guarda um banco mais antigo.",
+  "Troque a senha do administrador no protótipo hospedado.",
+  "Leia as mensagens que estavam no banco. Se alguma tiver nome, CPF, telefone ou dado de outra pessoa, avise o André antes de enviar o texto: o histórico do Git ainda guarda o arquivo e pode precisar ser limpo.",
+  "Faça commit e push. Confira no GitHub que o arquivo não aparece mais na lista."],
+ done:"Nenhum arquivo <code>.db</code> nem o zip aparece no repositório, a senha foi trocada e o André sabe se o histórico precisa de limpeza."},
+{id:"k1",section:"sec-geral",sev:"crit",title:"Compilar no Overleaf e conferir as correções já aplicadas ao texto",where:"Arquivo inteiro / Overleaf",time:"30 min",
+ why:"O André e eu corrigimos o <code>artigo_final.tex</code> e já estão no repositório; às 16h30 entraram mais duas (referência da LGPD e “identificador do navegador”). Principais mudanças: o <code>%</code> sem barra em “80,0%” (que escondia uma frase inteira), o erro <code>\\linesskip</code> do template, “sem dependências externas” no Resumo e no Abstract, o texto sobre o identificador do usuário, a LGPD, o parágrafo solto depois das Limitações e uma quarta razão na defesa sobre RAG. Você precisa ler essas mudanças e ver que o PDF compila.",
+ steps:[
+  "Depois que o André fizer o merge, no Overleaf use Menu → Sync → GitHub → Pull e confira que o documento principal é <code>artigo_final.tex</code>.",
+  "Compile. Não pode haver erro vermelho no log. Procure “??” no PDF (referência quebrada).",
+  "Leia, no PDF, estes pontos: o Resumo e o Abstract, o fim do primeiro parágrafo depois da Tabela de comparação (Resultados), a Seção 5.2 (identificador), a seção de Persistência e Controle de Acesso (LGPD), as Limitações e o fim das Considerações Finais.",
+  "Se algo estiver errado com o que você fez ou quer dizer, edite no <code>artigo_final.tex</code> e avise o André. Não crie outro arquivo."],
+ done:"O PDF compila sem erros e você concorda com cada trecho alterado, escrevendo em suas palavras onde precisar."},
+{id:"k5",section:"sec-geral",sev:"crit",title:"Leitura final completa antes de enviar",where:"Arquivo inteiro / Envio",time:"1 a 2 horas",
  why:"Com o prazo hoje, o último passo é uma leitura inteira do PDF, de ponta a ponta, só para achar furos. Números que mudam de uma seção para outra são o que a banca mais nota.",
  steps:[
   "Confira que os números são os mesmos em toda parte: 52 mensagens, 65,4% (34/52), 51,9% (27/52), 13,5 p.p., 141 frases, 13 intenções, 43 palavras-chave e os números do piloto.",
@@ -187,66 +270,8 @@ var ITEMS=[
   "Confirme com o André o limite de páginas e o formato exigido para a entrega.",
   "Gere o PDF final e envie. Guarde uma cópia."],
  done:"Você leu o PDF inteiro, os números batem em todas as seções e os links funcionam."},
-
-{id:"k6",sev:"crit",title:"Conferir se o texto sobre senha e chave de sessão corresponde ao código",where:"Persistência de Dados e Controle de Acesso",time:"20 min",
- why:"O texto diz que o usuário inicial é criado automaticamente e que a chave de sessão é um valor padrão, que devem ser trocados. No código atual não é assim: a chave é gerada aleatoriamente na primeira execução (ou vem da variável <code>SECRET_KEY</code>), o administrador é criado pelo script <code>criar_admin.py</code> com senha de pelo menos 12 caracteres, e a senha antiga <code>admin123</code> está bloqueada. O artigo descreve algo mais fraco do que o sistema faz, e a banca pode perguntar qual das duas versões vale. Também precisa estar claro que o sistema hospedado usa o cadastro novo.",
- steps:[
-  "Leia a frase “Por se tratar de um protótipo, o usuário inicial… valores padrão…” na seção Persistência de Dados e Controle de Acesso.",
-  "Reescreva dizendo o que o código faz: chave de sessão aleatória (ou <code>SECRET_KEY</code>), administrador cadastrado por <code>criar_admin.py</code>, senha antiga bloqueada.",
-  "Confirme que no PythonAnywhere o administrador foi criado com <code>criar_admin.py</code> e que a variável <code>FLASK_DEBUG</code> está desligada.",
-  "Depois do novo envio ao GitHub, confira que o arquivo <code>.secret_key</code> não está no repositório."],
- done:"O texto descreve o que o código realmente faz, e você sabe responder como o administrador do sistema hospedado foi criado."},
-
-{id:"i2",sev:"imp",title:"Os requisitos R1 a R5 são perguntas dos usuários, não requisitos",where:"Seção de Entrevista e Levantamento de Requisitos",time:"30 min",
- why:"R1 a R5 são perguntas frequentes e como o sistema as atende, o que é bom, mas não são requisitos funcionais nem não funcionais. Se a banca perguntar “quais eram os requisitos?”, falta uma resposta curta.",
- steps:[
-  "Acrescente 4 ou 5 frases de requisitos funcionais (ex.: “registrar cada atendimento com data e hora”) e 2 ou 3 não funcionais (ex.: “não coletar dados pessoais”).",
-  "Se faltar tempo, deixe para a defesa e prepare a resposta oral."],
- done:"Há uma lista curta de requisitos funcionais e não funcionais, ou uma resposta pronta para a defesa."},
-{id:"i4",sev:"imp",title:"Defina “demanda” e “atendimento” em uma frase",where:"Painel de Controle",time:"15 min",
- why:"No sistema, cada mensagem gera uma demanda. O artigo fala em “volume de atendimentos”. Uma frase explicando a diferença evita uma pergunta incômoda.",
- steps:["Na seção do Painel, escreva: “cada mensagem enviada gera uma demanda; o número de atendimentos distintos pode ser obtido pelo identificador do usuário”."],
- done:"O texto define demanda e usa a palavra sempre no mesmo sentido."},
-
-{id:"o1",sev:"ori",title:"Correções aplicadas em 16/11, de manhã (commit 857effb)",where:"Várias seções",
- why:"<ul><li>Escapou o <code>%</code> em “80,0%”, que escondia o final de uma frase.</li><li>Corrigiu o erro <code>\\linesskip</code> do template, que dava erro no <code>\\maketitle</code>.</li><li>Trocou “sem dependências externas” no Resumo e no Abstract, porque o Flask é uma dependência.</li><li>Descreveu o identificador do usuário guardado no navegador e o que se perde ao reabrir a página.</li><li>Incluiu o parágrafo sobre LGPD, e a ressalva de que o limiar foi comparado no mesmo conjunto de teste.</li><li>Acrescentou a quarta razão da defesa sobre RAG e o roteiro de evolução nas Considerações Finais.</li><li>Removeu o parágrafo solto depois das Limitações e padronizou “Câmpus”.</li></ul>",
- steps:["Li essas mudanças no PDF e concordo com elas (ou avisei o André do que ajustar)."],
- done:"Você leu cada trecho alterado e consegue explicá-lo na defesa."},
-{id:"o2",sev:"ori",title:"Correções aplicadas em 16/11, às 16h30 (commit 8986671)",where:"Persistência e Referências",
- why:"<ul><li>Acrescentou à lista de referências a Lei nº 13.709/2018 (BRASIL, 2018), que estava citada no texto sem entrada.</li><li>Trocou “identificador aleatório de sessão” por “do navegador”, igual ao resto do texto.</li></ul>",
- steps:["Conferi a referência da lei na lista e a frase na seção Persistência de Dados e Controle de Acesso."],
- done:"A lista de referências tem a entrada BRASIL (2018) e o texto está consistente."},
-
-{id:"p1",sev:"pos",title:"C1: avaliação com números nos dois modos",where:"Resultados",
- why:"52 mensagens inéditas, tabela por intenção, comparação de limiares e análise de quatro erros, com as somas da tabela conferidas. Está bem feito."},
-{id:"p2",sev:"pos",title:"C2: Resumo e Abstract com resultados",where:"Abstract e Resumo",
- why:"Agora citam o PLN e os números. A expressão “sem dependências externas” foi trocada por uma frase exata."},
-{id:"p3",sev:"pos",title:"C3: código em repositório público e link no artigo",where:"Desenvolvimento",
- why:"O código está em marilia79/chatbot, com README e testes de segurança. Falta só o item K3 acima, que trata do banco de dados."},
-{id:"p4",sev:"pos",title:"C4: justificativa sobre RAG e subseção de Limitações",where:"Arquitetura e Resultados",
- why:"Há três razões (precisão, LGPD, custo) e uma subseção de Limitações. A quarta razão (sequência de evolução) foi acrescentada na correção."},
-{id:"p5",sev:"pos",title:"Entrevista e análise dos outros chatbots com data e critério",where:"Entrevista e Metodologia",
- why:"A entrevista tem data, e a observação da PUC e da Ortoimagem tem dias de teste e quatro critérios. A metodologia foi reduzida a seis etapas."},
-
-{id:"p6",sev:"pos",title:"Conceitos reescritos e referências soltas removidas",where:"Conceitos",
- why:"A evolução dos chatbots agora cita só o que tem fonte (ELIZA e Filatro), e o texto diz que o PLN deste trabalho é uma técnica clássica e leve, sem modelos de linguagem e sem aprendizado durante o uso."},
-{id:"p7",sev:"pos",title:"Aviso de privacidade existe no sistema",where:"Persistência de Dados",
- why:"O texto diz que a mensagem de boas-vindas avisa que as mensagens são registradas. Conferi no código e na captura de tela atualizada: o aviso existe."},
-{id:"p8",sev:"pos",title:"Tabela de rotas mantida e correta",where:"Interface Web e Comunicação",
- why:"As 9 rotas da tabela (<code>/</code>, <code>/start</code>, <code>/chat</code>, <code>/feedback</code> e as rotas do painel) batem com o <code>app.py</code>. Manter a tabela é uma boa decisão: quem ler o texto com atenção vai conseguir verificá-la."},
-
-{id:"s1",sev:"sug",title:"Mostrar o histórico da conversa ao reabrir a página",where:"Trabalho futuro (código)",time:"1 a 2 horas",
- why:"O identificador já fica no navegador e as mensagens já ficam no banco. Uma rota nova poderia devolver as últimas demandas do usuário, com o status e o parecer, e o chat as mostraria ao abrir. Não precisa de e-mail. Não mexa nisso antes da entrega para não alterar o sistema avaliado.",
- steps:["Anote como trabalho futuro e use como resposta à pergunta 6 da defesa."],
- done:"Está descrito em Limitações e em Trabalhos Futuros, que o texto já contém."},
-{id:"s2",sev:"sug",title:"Consultar o atendimento de outro aparelho (protocolo ou e-mail verificado)",where:"Trabalho futuro",time:"vários dias",
- why:"Um e-mail digitado sem verificação não identifica ninguém, e qualquer pessoa poderia ver as demandas de outra. Com código enviado ao e-mail ou com protocolo e código aleatório, a ideia funciona, mas exige LGPD (aviso, finalidade e retenção).",
- steps:["Deixe descrito como trabalho futuro, como o texto já faz."],
- done:"O texto menciona os dois caminhos e a LGPD."},
-{id:"s3",sev:"sug",title:"Separar conjunto de ajuste e de teste e melhorar o classificador",where:"Trabalho futuro",time:"depois da entrega",
- why:"O limiar foi comparado no mesmo conjunto de 52 mensagens, e as correções dos quatro erros (saudações curtas, stopwords institucionais, n-gramas de caracteres) ainda não foram aplicadas. Depois da entrega, vale refazer a avaliação com um conjunto separado.",
- steps:["Aplicar as quatro correções da análise de erros e reavaliar em um conjunto novo, que seria o material de um segundo artigo."],
- done:"Fica como plano para o próximo artigo."}
+{id:"p3",section:"sec-geral",sev:"pos",title:"C3: código em repositório público e link no artigo",where:"Desenvolvimento / Repositório",
+ why:"O código está em marilia79/chatbot, com README e testes de segurança. Falta só o item K3 acima, que trata do banco de dados."}
 ];
 
 var KEY="devolutiva-marilia-v3", state={};
@@ -286,26 +311,45 @@ function render(){
   var openIds={}; listEl.querySelectorAll("details[open]").forEach(function(d){ openIds[d.id]=1; });
   if(location.hash){ openIds[location.hash.slice(1)]=1; }
   listEl.innerHTML="";
-  ITEMS.filter(function(i){ return filter==="all"||i.sev===filter; }).forEach(function(it){
-    var d=document.createElement("details"); d.className="item"; d.id=it.id; d.setAttribute("data-sev",it.sev);
-    if(openIds[it.id]) d.open=true;
-    var prog=itemProgress(it);
-    var s=document.createElement("summary");
-    s.innerHTML='<span class="s-main"><span class="meta"><span class="tag '+it.sev+'">'+SEV[it.sev]+(it.sev==="crit"||it.sev==="imp"||it.sev==="sug"||it.sev==="ori"?" · "+it.id.toUpperCase():"")+'</span><span class="tag where">'+it.where+'</span>'+(it.time?'<span class="tag time">'+it.time+'</span>':'')+'</span><span class="s-title">'+it.title+'</span></span><span class="s-prog" data-prog="'+it.id+'">'+(prog?prog+" passos":"")+'</span>';
-    d.appendChild(s);
-    var b=document.createElement("div"); b.className="body";
-    var html='<div><h3>'+(it.sev==="pos"?"O que foi feito":it.sev==="ori"?"O que o orientador alterou":"O problema")+'</h3><p>'+it.why+'</p></div>';
-    if(it.steps){
-      html+='<div><h3>O que fazer</h3><ul class="steps">';
-      it.steps.forEach(function(st,n){
-        var k=stepKey(it.id,n), id="cb-"+it.id+"-"+n;
-        html+='<li><label for="'+id+'"><input type="checkbox" id="'+id+'" data-k="'+k+'" data-item="'+it.id+'"'+(state[k]?" checked":"")+'><span>'+st+'</span></label></li>';
-      });
-      html+='</ul></div>';
-    }
-    if(it.done) html+='<div class="done"><b>Pronto quando:</b> '+it.done+'</div>';
-    b.innerHTML=html; d.appendChild(b); listEl.appendChild(d);
+  
+  var filtered = ITEMS.filter(function(i){ return filter==="all"||i.sev===filter; });
+
+  SECTIONS.forEach(function(sec){
+    var secItems = filtered.filter(function(i){ return i.section === sec.id; });
+    if(secItems.length === 0) return;
+
+    var secContainer = document.createElement("div");
+    secContainer.className = "section-group";
+
+    var h = document.createElement("div");
+    h.className = "section-header";
+    h.innerHTML = '<span class="sec-title">' + sec.icon + ' ' + sec.title + '</span><span class="section-badge">' + secItems.length + (secItems.length === 1 ? ' item' : ' itens') + '</span>';
+    secContainer.appendChild(h);
+
+    secItems.forEach(function(it){
+      var d=document.createElement("details"); d.className="item"; d.id=it.id; d.setAttribute("data-sev",it.sev);
+      if(openIds[it.id]) d.open=true;
+      var prog=itemProgress(it);
+      var s=document.createElement("summary");
+      s.innerHTML='<span class="s-main"><span class="meta"><span class="tag '+it.sev+'">'+SEV[it.sev]+(it.sev==="crit"||it.sev==="imp"||it.sev==="sug"||it.sev==="ori"?" · "+it.id.toUpperCase():"")+'</span><span class="tag where">'+it.where+'</span>'+(it.time?'<span class="tag time">'+it.time+'</span>':'')+'</span><span class="s-title">'+it.title+'</span></span><span class="s-prog" data-prog="'+it.id+'">'+(prog?prog+" passos":"")+'</span>';
+      d.appendChild(s);
+      var b=document.createElement("div"); b.className="body";
+      var html='<div><h3>'+(it.sev==="pos"?"O que foi feito":it.sev==="ori"?"O que o orientador alterou":"O problema")+'</h3><p>'+it.why+'</p></div>';
+      if(it.steps){
+        html+='<div><h3>O que fazer</h3><ul class="steps">';
+        it.steps.forEach(function(st,n){
+          var k=stepKey(it.id,n), id="cb-"+it.id+"-"+n;
+          html+='<li><label for="'+id+'"><input type="checkbox" id="'+id+'" data-k="'+k+'" data-item="'+it.id+'"'+(state[k]?" checked":"")+'><span>'+st+'</span></label></li>';
+        });
+        html+='</ul></div>';
+      }
+      if(it.done) html+='<div class="done"><b>Pronto quando:</b> '+it.done+'</div>';
+      b.innerHTML=html; d.appendChild(b); secContainer.appendChild(d);
+    });
+
+    listEl.appendChild(secContainer);
   });
+
   listEl.querySelectorAll("input[type=checkbox]").forEach(function(cb){
     cb.onchange=function(){
       state[cb.getAttribute("data-k")]=cb.checked; save();
