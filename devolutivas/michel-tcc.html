@@ -85,6 +85,16 @@ details:not([open]) .s-prog::after{content:" ▾"}
 .plan a{color:var(--accent);font-weight:600}
 .note{font-size:13px;color:var(--muted);margin:0}
 .reset{font:inherit;font-size:12px;color:var(--muted);background:none;border:none;text-decoration:underline;cursor:pointer;padding:0;align-self:flex-start}
+.tag.st-novo{background:var(--crit);color:var(--surface)}
+.tag.st-parcial{background:var(--imp-soft);color:var(--imp);border:1px solid var(--imp)}
+.tag.st-quase{background:var(--pos-soft);color:var(--pos);border:1px solid var(--pos)}
+.tag.st-pendente{background:var(--line);color:var(--fg)}
+.avanco{background:var(--pos-soft);border-radius:8px;padding:10px 12px;font-size:14px}
+.avanco b{color:var(--pos)}
+.evo{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.evo div{border:1px solid var(--line);border-radius:8px;padding:10px 12px;min-width:0}
+.evo b{display:block;font-family:var(--font-display);font-size:22px;line-height:1.1}
+.evo span{font-size:13px;color:var(--muted)}
 @media (max-width:520px){.plan li{grid-template-columns:1fr;gap:2px}h1{font-size:24px}}
 @media (prefers-reduced-motion:reduce){.bar i{transition:none}}
 </style>
@@ -94,11 +104,19 @@ details:not([open]) .s-prog::after{content:" ▾"}
   <header class="head">
     <span class="eyebrow">TCC · Sistemas para Internet · IFSC Garopaba</span>
     <h1>Devolutiva do TCC: DataBreakers</h1>
-    <p class="lead">Michel, esta página reúne o que está bom, o que precisa mudar e o que fazer em cada ponto, em ordem de prioridade. Ela se baseia na versão do documento “Projeto-de-TCC-Final-Michel-David” de 13/11/2026. O foco é o texto. O formato final do documento será combinado com o André, e as correções daqui valem para qualquer formato.</p>
+    <span class="eyebrow">Versão 3 · 16/11/2026</span>
+    <p class="lead">Michel, esta é a <b>versão 3</b> da devolutiva. Ela compara o documento de 16/11/2026 com a versão de 15/11. Você avançou muito: o trabalho agora tem resultados, limitações e conclusões. Cada item mostra o status, o que já melhorou e o que ainda falta. <b>O envio à banca é hoje, 16/11</b>: comece pelos críticos.</p>
   </header>
 
+  <section class="panel evo" aria-label="Evolução desde 15/11">
+    <div><b>5</b><span>quase resolvidos</span></div>
+    <div><b>5</b><span>com avanço parcial</span></div>
+    <div><b>2</b><span>ainda pendentes</span></div>
+    <div><b>1</b><span>crítico novo (N3)</span></div>
+  </section>
+
   <section class="panel how" aria-label="Como usar esta página">
-    <div><b>1. Comece pelos críticos</b>São 4 itens. Sem eles o trabalho não se sustenta diante da banca.</div>
+    <div><b>1. Comece pelos críticos</b>São 7 itens. O N3 depende de uma conversa com o André, então faça isso primeiro.</div>
     <div><b>2. Siga os passos</b>Abra cada item e marque os passos conforme terminar. O progresso fica salvo neste navegador.</div>
     <div><b>3. Confira o “pronto quando”</b>Cada item diz como saber que está resolvido. Se tiver dúvida, leve para a reunião com o André.</div>
   </section>
@@ -113,129 +131,137 @@ details:not([open]) .s-prog::after{content:" ▾"}
   <section class="list" id="list"></section>
 
   <section class="panel plan" id="plano">
-    <h2>Plano de Ação para a Banca</h2>
-    <p class="note" style="color:var(--crit);font-weight:600;">⚠️ Atenção ao prazo oficial da coordenação: O envio da versão do TCC para a banca e para a coordenação (cst.si.gpb@ifsc.edu.br) é impreterivelmente até segunda-feira, 16/11/2026, junto ao Termo de Aptidão do orientador. As defesas serão entre 23 e 26/11/2026. Prioridade máxima absoluta nos itens críticos C1 a C4.</p>
+    <h2>Plano até o envio de hoje (16/11)</h2>
+    <p class="note" style="color:var(--crit);font-weight:600;">⚠️ Prazo oficial da coordenação: envio da versão do TCC para a banca e para a coordenação (cst.si.gpb@ifsc.edu.br) até hoje, segunda-feira, 16/11/2026, junto com o Termo de Aptidão do orientador. As defesas serão entre 23 e 26/11/2026.</p>
     <ol>
-      <li><span class="d">Dia 1</span><span>Reescrever os objetivos específicos (<a href="#c1">C1</a>) e planejar a avaliação: instrumento, participantes e roteiro (<a href="#c3">C3</a>). Conversar com o André sobre os participantes.</span></li>
-      <li><span class="d">Dia 2</span><span>Mostrar o jogo no texto: figuras, tabela dos chefes, repositório e itch.io (<a href="#c2">C2</a>).</span></li>
-      <li><span class="d">Dia 3</span><span>Aplicar a avaliação e escrever Resultados, Limitações e Considerações Finais (<a href="#c3">C3</a>, <a href="#c4">C4</a>).</span></li>
-      <li><span class="d">Dia 4</span><span>Trabalhos Relacionados e Fundamentação (<a href="#m1">M1</a>, <a href="#m2">M2</a>).</span></li>
-      <li><span class="d">16/11</span><span>Revisão final, conferência com o orientador, emissão do Termo de Aptidão e envio por e-mail para a banca e coordenação.</span></li>
+      <li><span class="d">Agora</span><span>Conversar com o André sobre a participação dos menores de idade (<a href="#n3">N3</a>). Retirar a referência de Silva et al. (<a href="#n2">N2</a>).</span></li>
+      <li><span class="d">Em seguida</span><span>Corrigir os números e reescrever a 7.1 e a 7.2 com base nos dados (<a href="#n1">N1</a>). Ajustar os objetivos (<a href="#c1">C1</a>) e a descrição do formulário (<a href="#c3">C3</a>).</span></li>
+      <li><span class="d">Antes de enviar</span><span>Ajustar as Considerações Finais (<a href="#c4">C4</a>), numerar as figuras (<a href="#c2">C2</a>), conferir as referências (<a href="#m5">M5</a>) e ler o texto inteiro.</span></li>
     </ol>
-    <p class="note">Se o tempo apertar, não corte os itens C1 a C4. As melhorias e sugestões que ficarem de fora podem virar “trabalhos futuros” no texto.</p>
+    <p class="note">As melhorias M1, M2, M4 e M6 podem entrar na versão final, depois da defesa, se não houver tempo hoje.</p>
     <button class="reset" id="reset" type="button">Limpar marcações desta página</button>
   </section>
 </div>
 
 <script>
 var SEV={crit:"Crítico",imp:"Melhoria",pos:"Ponto forte",sug:"Sugestão"};
+var STATUS={novo:"Novo",parcial:"Parcial",quase:"Quase resolvido",pendente:"Pendente"};
 var ITEMS=[
-{id:"c1",sev:"crit",title:"Os objetivos específicos estão incompletos",where:"Seção 3.2",time:"1 a 2 horas",
- why:"A seção 3.2 tem só um item (“coletar a avaliação de professores quanto à qualidade técnica e pedagógica do jogo”). O objetivo geral fala em desenvolver o jogo e avaliar a aprendizagem e a usabilidade, mas os específicos não mostram como isso se divide. Sem eles, a Metodologia e os Resultados não têm o que responder. A banca já apontou que os objetivos do texto e os dos slides não batiam (item 12).",
+{id:"n3",sev:"crit",status:"novo",title:"Participação de menores de idade: explique como foi o consentimento",where:"Seções 5.4 e 7",time:"Conversar com o André hoje",
+ why:"Os Resultados informam que 27 estudantes do Ensino Médio participaram das sessões de 09 e 11/11. A maioria tem menos de 18 anos, e o texto não diz como foi a autorização: se a escola ou o professor responsável autorizou, se houve termo de consentimento dos responsáveis ou de assentimento dos estudantes, e se as respostas foram anônimas. A banca vai perguntar isso.",
  steps:[
-  "Escreva de 3 a 4 objetivos específicos. Cada um diz <b>o quê</b> será entregue ou verificado, e não <b>como</b> (o como fica na Metodologia).",
-  "Cubra as três partes do objetivo geral: o jogo (os 5 chefes e o Datalog), a aprendizagem e a usabilidade.",
-  "Confira que cada objetivo aparece depois na Metodologia (como será feito) e nos Resultados (o que foi encontrado).",
-  "Use os mesmos objetivos nos slides da próxima apresentação."],
- done:"A 3.2 tem 3 ou 4 objetivos, e cada um tem uma etapa na Metodologia e um item nos Resultados."},
-{id:"c2",sev:"crit",title:"O jogo não aparece no texto",where:"Seção 6 (Proposta)",time:"1 dia",
- why:"A Proposta descreve o jogo no futuro (“irá apresentar”, “será possível”), mas a Metodologia diz que o desenvolvimento já foi feito em sprints. Quem lê não vê nenhuma tela, não sabe o que está pronto e não tem como jogar. Um TCC com implementação precisa mostrar a implementação.",
+  "Converse com o André <b>antes do envio</b> e conte exatamente como as sessões foram organizadas (quem autorizou, se houve algum termo, o que o formulário coletou).",
+  "Escreva na 5.4 um parágrafo curto sobre isso: onde as sessões ocorreram, quem autorizou, se houve termo e se os dados são anônimos.",
+  "Se o formulário não pediu nome, e-mail nem outro dado pessoal, diga isso no texto. Apresente apenas resultados agregados, como já está fazendo.",
+  "Siga a orientação do André sobre como registrar o assunto (por exemplo, nas Limitações)."],
+ done:"A 5.4 explica como os participantes foram autorizados e como os dados foram tratados, com o aval do André."},
+{id:"n1",sev:"crit",status:"parcial",title:"Resultados: os dados entraram, mas a análise ainda fala no futuro",where:"Seção 7 e Considerações Finais",time:"2 horas",
+ avanco:"A seção agora se chama Resultados e traz datas (09 e 11/11), número de participantes (56, sendo 29 do Superior e 27 do Médio), 11 respostas completas e as respostas de 6 perguntas. Isso muda o trabalho de patamar.",
+ why:"As subseções 7.1 e 7.2 continuam escritas como expectativa (“espera-se”, “esperou-se”, “projeta-se”) logo depois dos dados. Há também um erro nos números: nas perguntas 1 e 2 a soma das respostas é 12, mas só 11 pessoas responderam. Nenhuma pergunta mede diretamente a aprendizagem, mas as Considerações Finais afirmam que o jogo contribui para ela.",
  steps:[
-  "Passe a seção para o passado e descreva o que está implementado hoje. O que ainda não estiver pronto, diga com clareza que não está.",
-  "Inclua de 3 a 5 figuras: tela inicial, combate com um chefe, os dois modos de tiro e o Datalog. Use legenda no padrão ABNT (“Figura 1 – …”), com “Fonte: elaborado pelo autor (2026)”.",
-  "Para cada um dos 5 chefes, explique em uma ou duas frases como o comportamento no jogo representa o malware real. Uma tabela com três colunas (malware, comportamento no jogo, o que o jogador aprende) resolve isso.",
-  "Mostre um exemplo de entrada do Datalog com os campos que você listou (descrição, caso real, meios de infecção, proteção).",
-  "Coloque o projeto Godot em um repositório Git e o executável no itch.io, e ponha os dois links no texto. A banca precisa conseguir jogar."],
- done:"A seção está no passado, tem figuras do jogo funcionando, a relação entre malware e mecânica de cada chefe e os links do repositório e do itch.io."},
-{id:"c3",sev:"crit",title:"A avaliação ainda não está definida",where:"Seções 5.4 e 7.1",time:"3 a 4 horas para planejar",
- why:"A 5.4 não diz quantas pessoas vão participar, com qual instrumento, como será a sessão nem quando. A lista tem só o item “1)”. A banca já pediu que a fonte da escala e das notas fosse indicada (itens 11 e 15). Além disso, o texto inclui estudantes do Ensino Médio, que em geral são menores de idade, e pesquisa com menores exige cuidados éticos que levam tempo.",
+  "Confira as respostas das perguntas 1 (3+4+5 = 12) e 2 (3+3+6 = 12) na planilha do formulário e corrija os números.",
+  "Apresente as 6 perguntas em uma tabela ou gráfico, com título (“Tabela 1 – …”) e fonte (“Fonte: dados da pesquisa (2026)”). Tire os “(?)” e o plural “Datalogs”.",
+  "Reescreva a 7.1 e a 7.2 no passado, interpretando os dados: o que as respostas mostram sobre o Datalog, a dificuldade e a experiência geral.",
+  "Explique por que só 11 dos 56 participantes responderam (por exemplo: formulário opcional, link enviado depois, falta de tempo na sessão).",
+  "Nas Considerações Finais, troque “contribui para a aprendizagem” por algo que os dados sustentem, como “os resultados indicam boa aceitação e percepção positiva do conteúdo”. A medição da aprendizagem já está nos Trabalhos Futuros."],
+ done:"Os números fecham com 11 respondentes, a 7.1 e a 7.2 interpretam os dados no passado e nenhuma conclusão vai além do que foi medido."},
+{id:"n2",sev:"crit",status:"quase",title:"Referências: falta retirar a que não foi localizada",where:"Trabalhos Relacionados e Referências",time:"30 minutos",
+ avanco:"A referência de DAVIS e WANG saiu, e o CyberCops foi trocado pelo Cyber Threat Defender, que é um jogo real da Universidade do Texas em San Antonio. Boa troca.",
+ why:"SILVA et al. (2020) ainda está na lista de referências, embora não seja mais citada no texto e não tenha sido localizada. O Cyber Threat Defender está na lista (UTSA), mas não é citado no texto. Esse jogo também tem uma versão digital, e não é só um jogo físico de cartas.",
  steps:[
-  "Escolha um instrumento publicado e cite a fonte. Sugestão: o MEEGA+ (Petri, Gresse von Wangenheim e Borgatto, 2019, Revista Brasileira de Informática na Educação), criado para avaliar jogos educacionais de computação. Para a educação básica existe a versão MEEGA+KIDS.",
-  "Escreva o procedimento: quem participa (quantos estudantes e quantos professores), como é a sessão (tempo de jogo, se há explicação antes), quando o questionário é respondido e como as respostas serão analisadas.",
-  "Converse com o André sobre participantes menores de idade antes de aplicar. Se não houver tempo para os cuidados éticos, aplique com estudantes do curso superior e professores, e explique essa escolha no texto.",
-  "Complete a lista da 5.4 (hoje só tem o item “1)”) ou transforme em texto corrido."],
- done:"A 5.4 informa o instrumento com referência, o número e o perfil dos participantes, o roteiro da sessão e a forma de análise."},
-{id:"c4",sev:"crit",title:"Metodologia e Resultados Esperados não combinam, e o texto não tem fechamento",where:"Seções 5 e 7, final do documento",time:"2 a 3 horas",
- why:"A abertura da Metodologia diz que a pesquisa é qualitativa. Já a 7.1 tem “pré e pós-testes” no título, fala em “impacto educacional mensurável” e termina com dois-pontos, sem continuação. A numeração pula da 7.1 para a 7.3. E o documento termina no cronograma, sem Considerações Finais.",
+  "Retire SILVA et al. (2020) da lista de referências.",
+  "Cite o Cyber Threat Defender no texto da 4.3 (UTSA, 2026) e ajuste a frase sobre “jogos físicos de cartas”: o jogo tem versão em cartas e versão digital.",
+  "Termine a última frase da 4.3 com ponto final."],
+ done:"Não há nenhuma referência sem fonte verificável, e o Cyber Threat Defender é citado no texto."},
+{id:"c1",sev:"crit",status:"pendente",title:"Objetivos específicos: ainda sem o objetivo com os estudantes",where:"Seção 3.2",time:"30 minutos",
+ why:"A 3.2 não mudou. O objetivo geral fala em avaliar a aprendizagem e a usabilidade com estudantes, mas os específicos não trazem isso. O objetivo (a) fala em avaliação de professores, e as Considerações dizem que a avaliação formal não foi concluída. A lista ainda termina em ponto e vírgula.",
  steps:[
-  "Decida se haverá pré e pós-teste. Se não houver, tire do título da 7.1 e troque “mensurável” pelo que o instrumento escolhido (C3) realmente mede.",
-  "Complete ou remova o trecho da 7.1 que termina em dois-pontos e corrija a numeração (7.1, 7.2).",
-  "Diga na Metodologia onde está a parte qualitativa, por exemplo nos comentários abertos dos participantes ou na observação da sessão.",
-  "Quando os testes acontecerem, troque “Resultados Esperados” por “Resultados”, com números e comentários dos participantes. Acrescente uma subseção de Limitações (por exemplo: poucos participantes, um só local de teste).",
-  "Crie as Considerações Finais retomando cada objetivo específico em uma frase, e os Trabalhos Futuros (por exemplo: mais chefes, versão para navegador, testes em escolas)."],
- done:"Metodologia e Resultados falam do mesmo tipo de avaliação, a numeração está certa e o texto termina com Considerações Finais e Trabalhos Futuros."},
+  "Reordene: primeiro as mecânicas dos chefes, depois o Datalog, por último a avaliação.",
+  "Troque o objetivo (a) por um que corresponda ao que foi feito, por exemplo, avaliar a percepção de estudantes sobre a experiência, a dificuldade e o Datalog por meio de sessões de jogo e de um formulário.",
+  "Se houve avaliação de professores, diga nos Resultados o que eles responderam. Se não houve, tire os professores dos objetivos e registre isso nas Limitações.",
+  "Termine a lista com ponto final."],
+ done:"Cada objetivo específico corresponde a algo que aparece nos Resultados e é retomado nas Considerações Finais."},
+{id:"c3",sev:"crit",status:"parcial",title:"Avaliação: deixar claro qual foi o instrumento",where:"Seção 5.4",time:"1 hora",
+ avanco:"O MEEGA+ foi citado, a 5.4 entrou no sumário e as datas e o número de participantes foram informados.",
+ why:"O texto diz que o formulário é “similar ao MEEGA+”, mas as perguntas apresentadas nos Resultados não são as do MEEGA+. A 5.4 ainda não mostra as perguntas nem as escalas, não diz como o formulário foi aplicado e não informa o que aconteceu com a avaliação dos professores. A citação está fora do padrão ABNT.",
+ steps:[
+  "Troque “similar ao MEEGA+” por algo exato, como “formulário elaborado pelo autor, inspirado nas dimensões de experiência e usabilidade do MEEGA+”.",
+  "Inclua um quadro com as 6 perguntas e as opções de resposta de cada uma.",
+  "Diga como o formulário foi aplicado (impresso, link, durante ou depois da sessão) e quanto tempo durou cada sessão.",
+  "Mova para a 5.4 as informações sobre datas, local e participantes, deixando nos Resultados só os dados.",
+  "Corrija a citação para (PETRI; GRESSE VON WANGENHEIM; BORGATTO, 2019) e use a mesma grafia do sobrenome na lista de referências."],
+ done:"Quem lê a 5.4 sabe exatamente qual formulário foi usado, como e com quem."},
+{id:"c2",sev:"crit",status:"quase",title:"Jogo no texto: faltam o repositório e a numeração das figuras",where:"Seção 6",time:"1 hora",
+ avanco:"O HUD foi explicado (pontos, vidas, bombas e risco), as legendas melhoraram e entrou uma figura das bombas.",
+ why:"Ainda não há link para o código. Há duas figuras com o número 4 (Bomba e Datalog bloqueado), e uma legenda continua entre aspas. O primeiro parágrafo da Proposta segue como uma única frase longa.",
+ steps:[
+  "Coloque o projeto Godot em um repositório Git e ponha o link ao lado do link do itch.io. Se não der tempo até o envio, leve o link na defesa.",
+  "Renumere as figuras em sequência (1 a 7) e tire as aspas da legenda da bomba. Use travessão: “Figura 1 – Menu inicial”.",
+  "Divida o primeiro parágrafo da Proposta em frases menores."],
+ done:"As figuras estão numeradas em sequência, sem aspas, e o código tem link."},
+{id:"c4",sev:"crit",status:"quase",title:"Fechamento: ajustar o tom das conclusões",where:"Considerações Finais e 7.3",time:"30 minutos",
+ avanco:"Excelente avanço: as Limitações são honestas e bem escritas, as Considerações retomam cada objetivo e respondem à pergunta de pesquisa, e os Trabalhos Futuros estão organizados por prioridade e ligados às limitações.",
+ why:"O terceiro tópico das Considerações diz que a validação foi feita, mas logo depois que “a coleta de avaliação formal não foi concluída”, o que confunde. A resposta à pergunta de pesquisa afirma mais do que os dados mostram (ver N1). Há um erro de concordância: “Embora os resultados iniciais indicam”.",
+ steps:[
+  "No terceiro tópico, diga com clareza o que foi feito (sessões com 56 estudantes, 11 respostas) e o que faltou (por exemplo, a avaliação dos professores).",
+  "Na resposta à pergunta de pesquisa, use termos como “indicam” e “percepção dos participantes”.",
+  "Corrija para “Embora os resultados iniciais indiquem”."],
+ done:"As Considerações Finais dizem exatamente o que foi feito, o que foi encontrado e o que faltou."},
 
-{id:"m1",sev:"imp",title:"Trabalhos Relacionados sem referências e com trechos do projeto antigo",where:"Seção 4",time:"3 a 4 horas",
- why:"Os três trabalhos são produtos e nenhum tem referência. Não foi possível achar uma fonte para o CyberCops. O Hack ‘n’ Slash é comparado como “jogo de aventura focado em exploração”, o que valia para o Metroidvania, mas não para o shoot’em up atual. A banca espera também trabalhos acadêmicos.",
+{id:"m5",sev:"imp",status:"parcial",title:"Citações e lista de referências não coincidem",where:"Texto e Referências",time:"1 hora",
+ avanco:"A lista agora está em ordem alfabética.",
+ why:"Algumas obras são citadas no texto mas não estão na lista: GEE (2007), ALECRIM (2017), CERT.BR (2012), que é a Cartilha, e CERT.BR [s.d.]. Outras estão na lista mas não são citadas: SILVA et al. (ver N2) e UTSA. A referência de Ratinho e Martins ainda indica o PMC em vez da revista.",
  steps:[
-  "Procure 2 ou 3 artigos sobre jogos para ensinar segurança da informação ou conscientização sobre ameaças digitais. Bons lugares: anais do SBGames, SBIE e WEI na SOL (sol.sbc.org.br) e o Google Acadêmico.",
-  "Para cada produto que ficar (CodeCombat, Hack ‘n’ Slash), coloque uma referência (site oficial ou loja, com data de acesso). Se não achar fonte para o CyberCops, troque por outro trabalho.",
-  "Revise as comparações pensando no jogo atual: shoot’em up, 5 chefes e Datalog.",
-  "Feche a seção com um quadro comparativo: trabalho, público, tema, gênero e se teve avaliação com usuários. A última linha é o DataBreakers."],
- done:"A seção tem pelo menos 2 trabalhos acadêmicos, todos com referência, e um quadro que mostra o diferencial do DataBreakers."},
-{id:"m2",sev:"imp",title:"Malwares descritos sem fonte e gênero do jogo sem base teórica",where:"Seções 2.3 e 6",time:"2 a 3 horas",
- why:"As descrições do Adware, Spyware, Trojan, RootKit e Ransomware estão na Proposta e não têm citação. Também falta explicar por que um shoot’em up/bullet hell ajuda a aprender (repetição, atenção, dificuldade crescente). Parte das fontes atuais são blogs (FIA, InfoWester).",
+  "Inclua na lista as referências de GEE (2007) e da Cartilha de Segurança para Internet do CERT.br (2012).",
+  "Na 5.1, troque “ALECRIM, 2017; CERT.BR, [s.d.]” pelas referências que estão na lista (por exemplo, CERT.BR, 2012; CROWDSTRIKE, 2026), ou inclua as que faltam.",
+  "Em Ratinho e Martins, troque “PMC” pelo nome da revista, com volume, número e DOI.",
+  "Confira uma última vez: cada citação do texto está na lista e cada item da lista é citado."],
+ done:"A lista e as citações coincidem uma a uma."},
+{id:"m2",sev:"imp",status:"quase",title:"Fundamentação: dois detalhes",where:"Seção 2",time:"30 minutos",
+ avanco:"Os 5 malwares estão definidos na 2.3 com citação, e o novo parágrafo sobre o bullet hell, com Green e Bavelier (2003), justifica bem o gênero do jogo.",
+ why:"O conceito de fluxo (flow) aparece sem citação. GEE (2007) é citado, mas não está na lista (ver M5).",
  steps:[
-  "Leve as descrições dos 5 malwares para a 2.3, com citação. A Cartilha de Segurança para Internet, do CERT.br, tem um fascículo sobre códigos maliciosos e é uma boa fonte.",
-  "Na Proposta (ou Desenvolvimento), deixe só como cada malware virou chefe no jogo.",
-  "Acrescente um parágrafo sobre o gênero e a curva de dificuldade, com pelo menos uma referência.",
-  "Onde for possível, troque os blogs por livros ou artigos. O último parágrafo da 2.3 ainda está no futuro (“servirá”): ajuste."],
- done:"Cada malware é definido na fundamentação com fonte, e a escolha do gênero tem justificativa com citação."},
-{id:"m3",sev:"imp",title:"Introdução: dado sem período e falta a pergunta de pesquisa",where:"Seção 1",time:"1 hora",
- why:"O número de incidentes do CERT.br aparece como registrado “em um único período”, e a referência é a página inicial do CERT.br, sem data. Quem lê não sabe de que ano é o dado. Também falta dizer qual problema ou pergunta o trabalho responde.",
+  "Cite a fonte do conceito de fluxo (Csikszentmihalyi) ou retire o termo.",
+  "Inclua GEE (2007) na lista de referências."],
+ done:"Todo conceito da Fundamentação tem citação e está na lista."},
+{id:"m1",sev:"imp",status:"parcial",title:"Trabalhos Relacionados: faltam trabalhos acadêmicos e o quadro",where:"Seção 4",time:"2 horas (pode ficar para a versão final)",
+ why:"A seção ainda não tem trabalho acadêmico, quadro comparativo nem parágrafo de abertura.",
  steps:[
-  "Informe o ano do dado e cite a página exata das estatísticas do CERT.br, com data de acesso. Confira se o número está certo.",
-  "Acrescente uma frase com a pergunta de pesquisa, com suas palavras.",
-  "Atualize o último parágrafo, que lista as seções, sempre que a estrutura do texto mudar."],
- done:"O dado tem ano e fonte exata, e a introdução deixa clara a pergunta que o trabalho responde."},
-{id:"m4",sev:"imp",title:"Tecnologias com afirmações sem fonte",where:"Seção 6.1",time:"1 a 2 horas",
- why:"Frases como “melhor performance”, a comparação com a Unity e “padrão da indústria” para o Aseprite não têm fonte. A referência da Godot está na lista, mas não é citada no texto. Aseprite, Pixel Studio, Figma e itch.io não têm referência. O Figma aparece aqui, mas não na Metodologia.",
+  "Inclua pelo menos 1 trabalho acadêmico, por exemplo a revisão de Roepke e Schroeder (2019) sobre jogos sérios para educação em cibersegurança (DOI 10.5220/0007706100580066).",
+  "Acrescente um parágrafo curto de abertura.",
+  "Feche com um quadro comparativo: trabalho, público, tema, formato e se houve avaliação com usuários."],
+ done:"A seção tem ao menos um trabalho acadêmico e termina com o quadro comparativo."},
+{id:"m4",sev:"imp",status:"pendente",title:"Tecnologias: comparações sem fonte",where:"Seção 6.1",time:"30 minutos",
+ why:"A seção não mudou: a comparação com a Unity, “melhor performance” e “padrão da indústria” continuam sem fonte independente, falta a versão da Godot e o Figma não aparece na Metodologia.",
  steps:[
-  "Cite a Godot no texto e informe a versão usada.",
-  "Para cada afirmação comparativa, cite uma fonte ou reescreva de forma neutra: o que a ferramenta oferece e por que você a escolheu.",
-  "Inclua referência (site oficial, com data de acesso) para Aseprite, Pixel Studio, Figma e itch.io.",
-  "Se o Figma foi usado, mencione-o na 5.3. Junte os parágrafos soltos (a justificativa do desktop e o segundo parágrafo do Figma) aos parágrafos de cima."],
- done:"Toda ferramenta citada tem referência e nenhuma comparação fica sem fonte."},
-{id:"m5",sev:"imp",title:"Referências e citações desencontradas",where:"Referências",time:"1 hora",
- why:"A ABNT pede que toda citação esteja na lista e que toda referência seja citada. Hoje a GODOT está na lista e não aparece no texto. A referência de Ratinho e Martins indica o PMC, que é um repositório, e não a revista onde o artigo foi publicado. A do CERT.br aponta só a página inicial.",
+  "Informe a versão da Godot.",
+  "Reescreva as comparações de forma neutra (o que a ferramenta oferece e por que você a escolheu).",
+  "Mencione o Figma na 5.3."],
+ done:"Nenhuma comparação sem fonte e a versão da Godot está informada."},
+{id:"m6",sev:"imp",status:"parcial",title:"Revisão final da escrita",where:"Documento inteiro",time:"30 minutos",
+ avanco:"O dado do CERT.br agora tem número e ano corretos, “Datalog” foi padronizado e os erros de digitação apontados antes foram corrigidos.",
+ why:"Ainda há frases e concordâncias para ajustar: a frase “Com intuito de reduzir a vulnerabilidade desse público…” não tem verbo principal; “gerencie” deveria ser “gerenciem” (4.3); e há “(?)” nas perguntas dos Resultados.",
  steps:[
-  "Confira uma a uma: cada citação do texto está na lista, e cada item da lista é citado no texto.",
-  "Na referência de Ratinho e Martins, troque “PMC” pelo nome da revista, com volume, número e DOI.",
-  "Atualize as datas de acesso para o dia em que você conferir os links.",
-  "Inclua as novas referências: instrumento de avaliação, Cartilha do CERT.br, trabalhos relacionados e ferramentas."],
- done:"A lista e as citações coincidem, e todas as referências estão completas."},
-{id:"m6",sev:"imp",title:"Escrita, termos e formatação",where:"Documento inteiro",time:"1 a 2 horas",
- why:"O título usa ponto e vírgula. O primeiro parágrafo da Proposta é uma única frase muito longa. A lista de malwares usa ponto e vírgula depois do nome (“Adware;”). O recurso aparece como “Datalog” e também como “Data Logs”. Alguns termos ainda não são explicados na primeira vez em que aparecem (core gameplay loop, sprints, playtesting), e a banca pediu isso (item 3).",
- steps:[
-  "No título, troque o ponto e vírgula por dois-pontos.",
-  "Divida o primeiro parágrafo da Proposta em frases menores.",
-  "Na lista de malwares, use dois-pontos ou travessão depois do nome e padronize as listas do documento (a), b), c)).",
-  "Escolha um nome só para o recurso (Datalog) e use em todo o texto.",
-  "Explique em poucas palavras cada termo de jogo na primeira vez que ele aparece, e use itálico nas palavras estrangeiras.",
-  "Revise o cronograma: os meses passados devem mostrar o que de fato aconteceu."],
- done:"Título, listas e nomes estão padronizados, e todos os termos de jogo são explicados."},
+  "Junte “Com intuito de reduzir…” à frase anterior ou complete-a.",
+  "Corrija “gerencie” para “gerenciem” na 4.3.",
+  "Faça uma leitura completa em voz alta antes de enviar."],
+ done:"O texto está sem frases incompletas nem erros de concordância."},
 
-{id:"p1",sev:"pos",title:"Você ouviu a banca",where:"Proposta e documento",
- why:"Trocar o Metroidvania por um shoot’em up com 5 chefes deixou o escopo viável (item 4). O jogo ganhou nome (item 7), a distribuição foi para o itch.io (item 5), a ideia de gamificação saiu do texto (item 10) e os professores entraram na avaliação (item 16)."},
-{id:"p2",sev:"pos",title:"A ideia pedagógica é boa",where:"Proposta",
- why:"Os chefes seguem a gravidade de cada malware, o Datalog liga cada inimigo a um caso real e às formas de proteção, e o jogador representa o Firewall. A ligação entre a mecânica e o conteúdo é clara."},
-{id:"p3",sev:"pos",title:"Introdução e Fundamentação melhoraram muito",where:"Seções 1 e 2",
- why:"O público-alvo está definido, as afirmações têm citação e a diferença entre GBL (a abordagem) e jogo educacional (o artefato) está bem explicada."},
-{id:"p4",sev:"pos",title:"A mecânica está bem descrita",where:"Proposta",
- why:"Os dois modos de tiro e a hitbox estão explicados de um jeito que quem não joga consegue entender."},
-
-{id:"s1",sev:"sug",title:"Grave um vídeo curto do jogo",where:"Desenvolvimento",time:"1 hora",
- why:"Um vídeo de 1 a 2 minutos ajuda a banca a entender o jogo antes da defesa e serve de reserva se algo falhar na demonstração.",
- steps:[
-  "Grave uma luta contra um chefe e a abertura do Datalog depois da vitória.",
-  "Publique na página do itch.io ou como vídeo não listado.",
-  "Coloque o link no texto, junto do link do jogo."],
- done:"O texto tem o link de um vídeo curto do jogo funcionando."},
-{id:"s2",sev:"sug",title:"Formato final do documento",where:"Documento inteiro",
- why:"Dado o prazo de 16/11 estabelecido pela coordenação, permaneça no formato atual de documento (DOCX) para focar 100% do tempo na qualidade do conteúdo (itens C1 a C4)."}
+{id:"p1",sev:"pos",title:"A avaliação aconteceu de verdade",where:"Resultados",
+ why:"Sessões com 56 participantes em duas datas, com dados reais apresentados. Isso é o que faltava no trabalho, e agora a banca tem o que discutir."},
+{id:"p2",sev:"pos",title:"Limitações honestas",where:"Seção 7.3",
+ why:"Você reconheceu a amostra pequena, a sessão única, a autopercepção e a dificuldade do jogo, com números. A banca valoriza muito esse tipo de honestidade."},
+{id:"p3",sev:"pos",title:"Trabalhos Futuros ligados aos resultados",where:"Trabalhos Futuros",
+ why:"Os itens estão em ordem de prioridade e cada um responde a uma limitação ou a um resultado (por exemplo, o tutorial por causa da dificuldade alta)."},
+{id:"p4",sev:"pos",title:"Fundamentação mais sólida",where:"Seção 2",
+ why:"Os malwares estão definidos com fontes confiáveis (Cartilha do CERT.br e CrowdStrike), e o gênero do jogo agora tem justificativa científica."},
+{id:"p5",sev:"pos",title:"O jogo está publicado e bem descrito",where:"Proposta",
+ why:"Cada chefe tem uma mecânica coerente com o malware, o HUD está explicado e o jogo pode ser jogado no itch.io."}
 ];
 
-var KEY="devolutiva-michel-v1", state={};
+
+
+var KEY="devolutiva-michel-v3", state={};
 try{ state=JSON.parse(localStorage.getItem(KEY)||"{}"); }catch(e){ state={}; }
 function save(){ try{ localStorage.setItem(KEY,JSON.stringify(state)); }catch(e){} }
 
@@ -277,10 +303,10 @@ function render(){
     if(openIds[it.id]) d.open=true;
     var prog=itemProgress(it);
     var s=document.createElement("summary");
-    s.innerHTML='<span class="s-main"><span class="meta"><span class="tag '+it.sev+'">'+SEV[it.sev]+(it.sev!=="pos"?" · "+it.id.toUpperCase():"")+'</span><span class="tag where">'+it.where+'</span>'+(it.time?'<span class="tag time">'+it.time+'</span>':'')+'</span><span class="s-title">'+it.title+'</span></span><span class="s-prog" data-prog="'+it.id+'">'+(prog?prog+" passos":"")+'</span>';
+    s.innerHTML='<span class="s-main"><span class="meta"><span class="tag '+it.sev+'">'+SEV[it.sev]+(it.sev!=="pos"?" · "+it.id.toUpperCase():"")+'</span>'+(it.status?'<span class="tag st-'+it.status+'">'+STATUS[it.status]+'</span>':'')+'<span class="tag where">'+it.where+'</span>'+(it.time?'<span class="tag time">'+it.time+'</span>':'')+'</span><span class="s-title">'+it.title+'</span></span><span class="s-prog" data-prog="'+it.id+'">'+(prog?prog+" passos":"")+'</span>';
     d.appendChild(s);
     var b=document.createElement("div"); b.className="body";
-    var html='<div><h3>'+(it.sev==="pos"?"Por que está bom":(it.sev==="sug"?"A ideia":"O problema"))+'</h3><p>'+it.why+'</p></div>';
+    var html=(it.avanco?'<div class="avanco"><b>O que já melhorou:</b> '+it.avanco+'</div>':'')+'<div><h3>'+(it.sev==="pos"?"Por que está bom":(it.sev==="sug"?"A ideia":(it.avanco?"O que ainda falta":"O problema")))+'</h3><p>'+it.why+'</p></div>';
     if(it.steps){
       html+='<div><h3>O que fazer</h3><ul class="steps">';
       it.steps.forEach(function(st,n){
