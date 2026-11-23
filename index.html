@@ -749,6 +749,132 @@
       color: var(--text-main);
     }
 
+    /* Parecer da Banca Card & Modal */
+    .banca-parecer-box {
+      background: rgba(147, 51, 234, 0.05);
+      border: 1px solid rgba(147, 51, 234, 0.22);
+      border-left: 3.5px solid var(--accent-purple);
+      border-radius: 0 8px 8px 0;
+      padding: 0.65rem 0.85rem;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      line-height: 1.45;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    .banca-parecer-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .banca-parecer-title {
+      font-weight: 700;
+      color: var(--accent-purple);
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-size: 0.8rem;
+    }
+
+    .btn-xs-banca {
+      background: rgba(147, 51, 234, 0.12);
+      border: 1px solid rgba(147, 51, 234, 0.35);
+      color: var(--accent-purple);
+      padding: 0.2rem 0.55rem;
+      border-radius: 6px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .btn-xs-banca:hover {
+      background: var(--accent-purple);
+      color: #fff;
+    }
+
+    .banca-defesa-texto {
+      color: var(--text-main);
+      font-size: 0.78rem;
+      white-space: pre-wrap;
+      background: var(--bg-surface);
+      padding: 0.5rem 0.65rem;
+      border-radius: 6px;
+      border: 1px solid var(--border-color);
+      max-height: 150px;
+      overflow-y: auto;
+      line-height: 1.45;
+    }
+
+    .banca-badge-resultado {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+      padding: 0.15rem 0.5rem;
+      border-radius: 999px;
+      font-size: 0.68rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+
+    .banca-badge-aprovado {
+      background: rgba(22, 163, 74, 0.15);
+      color: var(--ifsc-green);
+      border: 1px solid rgba(22, 163, 74, 0.3);
+    }
+
+    .banca-badge-ressalvas {
+      background: rgba(217, 119, 6, 0.15);
+      color: var(--accent-amber);
+      border: 1px solid rgba(217, 119, 6, 0.3);
+    }
+
+    .banca-badge-andamento {
+      background: rgba(8, 145, 178, 0.15);
+      color: var(--accent-cyan);
+      border: 1px solid rgba(8, 145, 178, 0.3);
+    }
+
+    .banca-hist-details {
+      margin-top: 0.25rem;
+      border-top: 1px dashed var(--border-color);
+      padding-top: 0.35rem;
+    }
+
+    .banca-hist-details summary {
+      cursor: pointer;
+      font-size: 0.72rem;
+      color: var(--text-dim);
+      font-weight: 600;
+      user-select: none;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .banca-hist-details summary:hover {
+      color: var(--accent-purple);
+    }
+
+    .banca-hist-content {
+      font-size: 0.74rem;
+      color: var(--text-muted);
+      margin-top: 0.3rem;
+      padding: 0.4rem 0.55rem;
+      background: var(--bg-surface);
+      border-radius: 6px;
+      border-left: 2px solid var(--accent-purple);
+      line-height: 1.45;
+    }
+
     .banca-meta {
       display: flex;
       flex-direction: column;
@@ -2742,6 +2868,83 @@ tectonic -Z shell-escape document.tex</pre>
     </div>
   </div>
 
+  <!-- MODAL: ANOTAÇÕES E PARECER DA BANCA EM TEMPO REAL -->
+  <div class="modal-overlay" id="bancaObsModal" onclick="closeModalOnOverlay(event, 'bancaObsModal')">
+    <div class="modal-container" style="max-width: 680px;">
+      <div class="modal-header">
+        <div>
+          <h3><i class="fa-solid fa-gavel" style="color: var(--accent-purple);"></i> Parecer e Deliberações da Banca</h3>
+          <p style="font-size: 0.78rem; color: var(--text-muted); margin-top: 2px;">Anotações em tempo real durante a arguição da defesa</p>
+        </div>
+        <button class="modal-close-btn" onclick="closeModal('bancaObsModal')">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <form id="bancaObsForm" onsubmit="saveBancaObs(event)">
+          <input type="hidden" id="bancaObsStudentId">
+          <input type="hidden" id="bancaObsStudentNome">
+
+          <div style="display: grid; grid-template-columns: 1.2fr 1fr; gap: 1rem;">
+            <div class="form-group">
+              <label>Orientando</label>
+              <input type="text" id="bancaObsNomeDisplay" class="form-control" readonly style="background: var(--bg-surface); opacity: 0.9; font-weight: 600;">
+            </div>
+            <div class="form-group">
+              <label>Data da Defesa</label>
+              <input type="date" id="bancaObsData" class="form-control" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Membros da Banca Avaliadora</label>
+            <input type="text" id="bancaObsMembros" class="form-control" placeholder="Ex: Prof. Dr. Fulano e Profª. Dra. Beltrana">
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1.3fr 1fr; gap: 1rem;">
+            <div class="form-group">
+              <label>Resultado / Parecer da Defesa *</label>
+              <select id="bancaObsResultado" class="form-control" required>
+                <option value="Em andamento">Em andamento / Arguição em tempo real</option>
+                <option value="Aprovado com ajustes">Aprovado(a) com ajustes / ressalvas</option>
+                <option value="Aprovado">Aprovado(a) integralmente sem ressalvas</option>
+                <option value="Aguardando deliberação">Aguardando deliberação final</option>
+                <option value="Reprovado">Reprovado(a)</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Prazo p/ Versão Final</label>
+              <input type="text" id="bancaObsPrazo" class="form-control" placeholder="Ex: 15 dias (08/12/2026)">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label style="display: flex; justify-content: space-between; align-items: center;">
+              <span><strong>Comentários, Sugestões e Ajustes Solicitados (em tempo real) *</strong></span>
+              <span style="font-size: 0.72rem; color: var(--text-dim); font-weight: normal;">(Ctrl + Enter para salvar)</span>
+            </label>
+            <textarea id="bancaObsTexto" class="form-control" rows="8" placeholder="Digite aqui em tempo real as observações, críticas, sugestões e correções apontadas pelos pareceristas durante a apresentação..." required style="line-height: 1.5; font-size: 0.85rem; font-family: inherit;"></textarea>
+          </div>
+
+          <div class="form-group">
+            <label>Histórico da Pré-Banca (Notas da Qualificação)</label>
+            <textarea id="bancaObsPreBancaTexto" class="form-control" rows="3" placeholder="Comentários recebidos na pré-banca..." style="font-size: 0.8rem; background: var(--bg-surface);"></textarea>
+          </div>
+
+          <div style="display: flex; justify-content: flex-end; gap: 0.75rem; margin-top: 1.25rem;">
+            <button type="button" class="btn-action" onclick="closeModal('bancaObsModal')" style="background: var(--bg-card); border: 1px solid var(--border-color); color: var(--text-main);">
+              Cancelar
+            </button>
+            <button type="submit" id="btnSalvarBancaObs" class="btn-action" style="background: var(--accent-purple); color: #fff; font-weight: 600;">
+              <i class="fa-solid fa-floppy-disk"></i> Salvar Parecer da Banca
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
   <!-- MODAL: REGISTRAR NOVA REUNIÃO -->
   <div class="modal-overlay" id="newMeetingModal" onclick="closeModalOnOverlay(event, 'newMeetingModal')">
     <div class="modal-container" style="max-width: 620px;">
@@ -3987,6 +4190,10 @@ tectonic -Z shell-escape document.tex</pre>
         const studentDemands = (typeof demandasData !== 'undefined' ? demandasData : []).filter(d => d.escopo === '*' || d.escopo.toLowerCase().includes(s.nome.toLowerCase().split(' ')[0]));
         const pendingDemands = studentDemands.filter(d => d.status === 'pendente').length;
 
+                const bancaObs = getStudentBancaObs(s);
+        const hasDefesa = bancaObs && bancaObs.textoDefesa && bancaObs.textoDefesa.trim().length > 0;
+        const hasPreBanca = bancaObs && bancaObs.textoPreBanca && bancaObs.textoPreBanca.trim().length > 0;
+        const resultadoBadgeClass = (bancaObs.resultado === 'Aprovado') ? 'banca-badge-aprovado' : ((bancaObs.resultado === 'Aprovado com ajustes') ? 'banca-badge-ressalvas' : 'banca-badge-andamento');
         const linkButtons = renderCardButtonsForStudent(s);
         const tagsHtml = s.tags ? s.tags.map(t => `<span class="tag-badge">${t}</span>`).join('') : '';
 
@@ -4027,6 +4234,39 @@ tectonic -Z shell-escape document.tex</pre>
               <strong style="${isInactive ? 'color: #ef4444;' : ''}">Situação / Próximos Passos:</strong> ${s.statusDetalhe || 'Aguardando novas instruções.'}
             </div>
 
+            <div class="banca-parecer-box">
+              <div class="banca-parecer-header">
+                <span class="banca-parecer-title">
+                  <i class="fa-solid fa-gavel"></i> Parecer da Banca
+                  ${bancaObs.resultado ? `<span class="banca-badge-resultado ${resultadoBadgeClass}">${bancaObs.resultado}</span>` : ''}
+                </span>
+                ${!isStudentView ? `
+                  <button class="btn-xs-banca admin-only" onclick="openBancaObsModal(${s.id})" title="Registrar ou editar comentários em tempo real">
+                    <i class="fa-solid fa-pen-to-square"></i> ${hasDefesa ? 'Editar' : 'Anotar'}
+                  </button>
+                ` : ''}
+              </div>
+
+              ${hasDefesa ? `
+                <div class="banca-defesa-texto"><strong>Defesa (${formatDateBR(bancaObs.dataDefesa || '2026-11-23')}):</strong>\n${escapeCardHtml(bancaObs.textoDefesa)}${bancaObs.prazoVersaoFinal ? `\n\n📅 <em>Prazo versão final: ${escapeCardHtml(bancaObs.prazoVersaoFinal)}</em>` : ''}</div>
+              ` : `
+                <div style="font-size: 0.74rem; color: var(--text-dim); display: flex; align-items: center; justify-content: space-between;">
+                  <span><em>Nenhum parecer da defesa gravado ainda.</em></span>
+                  ${!isStudentView ? `<span onclick="openBancaObsModal(${s.id})" style="color: var(--accent-purple); cursor: pointer; font-weight: 600;"><i class="fa-solid fa-plus"></i> Inserir em tempo real</span>` : ''}
+                </div>
+              `}
+
+              ${hasPreBanca ? `
+                <details class="banca-hist-details">
+                  <summary><i class="fa-solid fa-clock-rotate-left"></i> Histórico da Pré-Banca</summary>
+                  <div class="banca-hist-content">
+                    <strong>Recomendações da Pré-Banca:</strong><br>
+                    ${escapeCardHtml(bancaObs.textoPreBanca)}
+                  </div>
+                </details>
+              ` : ''}
+            </div>
+
             <div class="banca-meta">
               <div class="banca-meta-item">
                 <i class="fa-solid fa-users"></i> <span><strong>Banca:</strong> ${s.bancaMembros || 'Não cadastrada'}</span>
@@ -4047,6 +4287,9 @@ tectonic -Z shell-escape document.tex</pre>
             <div class="links-grid" style="margin-top: 0.5rem; align-items: center;">
               ${linkButtons}
               ${!isStudentView ? `
+                <button class="btn-link-action admin-only" onclick="openBancaObsModal(${s.id})" style="color: var(--accent-purple); border-color: rgba(147, 51, 234, 0.3);" title="Anotar Parecer da Banca em Tempo Real">
+                  <i class="fa-solid fa-gavel"></i> Banca
+                </button>
                 <button class="btn-link-action admin-only" onclick="quickRegisterMeeting('${s.nome}')" style="${isInactive ? 'color: #ef4444; border-color: rgba(239, 68, 68, 0.3);' : 'color: var(--ifsc-green);'}" title="Registrar Reunião com este aluno">
                   <i class="fa-solid fa-plus"></i> Reunião
                 </button>
@@ -4180,6 +4423,153 @@ tectonic -Z shell-escape document.tex</pre>
     }
 
     // Quick register meeting from student card
+    // ==========================================
+    // GESTÃO DE PARECER DA BANCA EM TEMPO REAL
+    // ==========================================
+    function escapeCardHtml(str) {
+      if (!str) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+
+    function getBancaObsStorage() {
+      try {
+        return JSON.parse(localStorage.getItem('ifsc-tcc-banca-pareceres')) || {};
+      } catch (e) {
+        return {};
+      }
+    }
+
+    function saveBancaObsStorage(data) {
+      localStorage.setItem('ifsc-tcc-banca-pareceres', JSON.stringify(data));
+    }
+
+    function getStudentBancaObs(student) {
+      const allObs = getBancaObsStorage();
+      let obs = allObs[student.nome] || allObs[student.id] || null;
+      if (!obs) {
+        // Tenta buscar no meetingsData a pré-banca existente
+        const preBancaMeeting = (typeof meetingsData !== 'undefined' ? meetingsData : []).find(m => 
+          m.alunoNome && m.alunoNome.toLowerCase().includes(student.nome.toLowerCase().split(' ')[0]) &&
+          (m.tipo === 'Pré-Banca' || (m.pauta && m.pauta.toLowerCase().includes('pré-banca')))
+        );
+        const preBancaText = preBancaMeeting ? preBancaMeeting.deliberacoes : (student.comentariosPreBanca || '');
+
+        obs = {
+          dataDefesa: '2026-11-23',
+          membros: student.bancaMembros || '',
+          resultado: '',
+          prazoVersaoFinal: '',
+          textoDefesa: '',
+          textoPreBanca: preBancaText
+        };
+      }
+      return obs;
+    }
+
+    function openBancaObsModal(studentId) {
+      if (isStudentView) return;
+      const s = studentsData.find(item => item.id === studentId);
+      if (!s) return;
+
+      const obs = getStudentBancaObs(s);
+
+      document.getElementById('bancaObsStudentId').value = s.id;
+      document.getElementById('bancaObsStudentNome').value = s.nome;
+      document.getElementById('bancaObsNomeDisplay').value = s.nome;
+      document.getElementById('bancaObsData').value = obs.dataDefesa || new Date().toISOString().split('T')[0];
+      document.getElementById('bancaObsMembros').value = obs.membros || s.bancaMembros || '';
+      document.getElementById('bancaObsResultado').value = obs.resultado || 'Em andamento';
+      document.getElementById('bancaObsPrazo').value = obs.prazoVersaoFinal || '';
+      document.getElementById('bancaObsTexto').value = obs.textoDefesa || '';
+      document.getElementById('bancaObsPreBancaTexto').value = obs.textoPreBanca || '';
+
+      document.getElementById('bancaObsModal').classList.add('active');
+      setTimeout(() => document.getElementById('bancaObsTexto').focus(), 150);
+    }
+
+    function saveBancaObs(e) {
+      if (e) e.preventDefault();
+      if (isStudentView) return;
+
+      const studentId = parseInt(document.getElementById('bancaObsStudentId').value, 10);
+      const s = studentsData.find(item => item.id === studentId);
+      if (!s) return;
+
+      const dataDefesa = document.getElementById('bancaObsData').value;
+      const membros = document.getElementById('bancaObsMembros').value.trim();
+      const resultado = document.getElementById('bancaObsResultado').value;
+      const prazoVersaoFinal = document.getElementById('bancaObsPrazo').value.trim();
+      const textoDefesa = document.getElementById('bancaObsTexto').value.trim();
+      const textoPreBanca = document.getElementById('bancaObsPreBancaTexto').value.trim();
+
+      const allObs = getBancaObsStorage();
+      allObs[s.nome] = {
+        dataDefesa,
+        membros,
+        resultado,
+        prazoVersaoFinal,
+        textoDefesa,
+        textoPreBanca,
+        atualizadoEm: new Date().toISOString()
+      };
+      saveBancaObsStorage(allObs);
+
+      // Atualiza membros no objeto do aluno se preenchido
+      if (membros) s.bancaMembros = membros;
+
+      // Cria ou atualiza uma reunião de 'Banca de Defesa' no meetingsData
+      const meetingPauta = `Arguição e Deliberações da Defesa de TCC (${resultado})`;
+      const existingDefesaIdx = meetingsData.findIndex(m => 
+        m.alunoNome && m.alunoNome.toLowerCase().includes(s.nome.toLowerCase().split(' ')[0]) &&
+        m.tipo === 'Banca de Defesa'
+      );
+
+      const dataFormatada = formatDateBR(dataDefesa);
+      if (existingDefesaIdx >= 0) {
+        meetingsData[existingDefesaIdx].data = dataFormatada;
+        meetingsData[existingDefesaIdx].deliberacoes = textoDefesa;
+        meetingsData[existingDefesaIdx].pauta = meetingPauta;
+        meetingsData[existingDefesaIdx].proximosPassos = prazoVersaoFinal ? `Entrega da versão final corrigida: ${prazoVersaoFinal}` : '';
+      } else if (textoDefesa) {
+        const newDefesaMeeting = {
+          id: Date.now(),
+          alunoNome: s.nome,
+          data: dataFormatada,
+          hora: '20:00',
+          tipo: 'Banca de Defesa',
+          pauta: meetingPauta,
+          deliberacoes: textoDefesa,
+          proximosPassos: prazoVersaoFinal ? `Entrega da versão final corrigida: ${prazoVersaoFinal}` : '',
+          pendencias: prazoVersaoFinal ? `1) Aplicar ajustes solicitados pela banca (${prazoVersaoFinal})` : '',
+          itensResolvidos: 'Arguição perante a banca realizada com sucesso',
+          items: []
+        };
+        meetingsData.unshift(newDefesaMeeting);
+      }
+      localStorage.setItem('ifsc-tcc-meetings', JSON.stringify(meetingsData));
+
+      closeModal('bancaObsModal');
+      renderProjects(studentsData);
+      renderMeetings();
+      showToast(`Parecer da banca de ${s.nome} gravado com sucesso!`, 'success');
+    }
+
+    // Atalho de teclado Ctrl+Enter / Cmd+Enter para salvar rapidamente
+    document.addEventListener('keydown', function(e) {
+      if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+        const modal = document.getElementById('bancaObsModal');
+        if (modal && modal.classList.contains('active')) {
+          e.preventDefault();
+          saveBancaObs();
+        }
+      }
+    });
+
     function quickRegisterMeeting(alunoNome) {
       if (isStudentView) return;
       document.getElementById('meetingAlunoSelect').value = alunoNome;
