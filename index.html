@@ -3419,6 +3419,87 @@ tectonic -Z shell-escape document.tex</pre>
       return session;
     }
 
+    // ==========================================================================
+    // REVISÕES DE TCC COMO MEMBRO DE BANCA
+    // Público: só metadados. Apontamentos e parecer ficam no Web App restrito
+    // (Apps Script "Somente eu") lendo a planilha privada de revisões.
+    // ==========================================================================
+    const REVISOES_WEBAPP_URL = ''; // cole aqui a URL /exec do Web App restrito após a implantação
+
+    const initialReviews = [
+      {
+        id: '2026-schalata',
+        aluno: 'Luiz Felipe Schalata Pacheco',
+        nivel: 'Superior • Sistemas para Internet',
+        titulo: 'Desenvolvimento de sistema web para gerenciamento de estoque da ASXT Peças',
+        orientador: 'Prof. Me. Alberto Felipe Friderichs Barros',
+        banca: 'Dr. Thiago Waltrik e Dr. André Luiz Silva de Moraes',
+        papel: 'Membro da banca',
+        dataBanca: '',
+        status: 'Parecer em elaboração',
+        tags: ['Flask', 'SQLite', 'Controle de Estoque', 'SUS']
+      }
+    ];
+    let reviewsData = [...initialReviews];
+
+    function renderReviews() {
+      const container = document.getElementById('reviewsContainer');
+      const countNav = document.getElementById('count-revisoes-nav');
+      if (countNav) countNav.textContent = reviewsData.length;
+
+      const restritoBtn = document.getElementById('revisoesRestritoBtn');
+      if (restritoBtn) {
+        if (REVISOES_WEBAPP_URL) {
+          restritoBtn.href = REVISOES_WEBAPP_URL;
+        } else {
+          restritoBtn.removeAttribute('href');
+          restritoBtn.style.opacity = '0.55';
+          restritoBtn.title = 'Configure REVISOES_WEBAPP_URL no index.html após implantar o Web App';
+        }
+      }
+      if (!container) return;
+
+      if (!reviewsData.length) {
+        container.innerHTML = `
+          <div style="grid-column: 1 / -1; text-align: center; padding: 3rem 2rem; background: var(--bg-card); border-radius: 16px; border: 1px dashed var(--border-color);">
+            <h3 style="color: var(--text-muted);">Nenhuma revisão de banca cadastrada.</h3>
+          </div>`;
+        return;
+      }
+
+      container.innerHTML = reviewsData.map(r => {
+        const initials = r.aluno.split(' ').map(n => n[0]).slice(0, 2).join('');
+        const tagsHtml = (r.tags || []).map(t => `<span class="tag-badge">${t}</span>`).join('');
+        const restrito = REVISOES_WEBAPP_URL
+          ? `<a href="${REVISOES_WEBAPP_URL}" target="_blank" class="btn-link-action" style="background: rgba(147, 51, 234, 0.1); border-color: var(--accent-purple); color: var(--accent-purple); margin-left: auto;" title="Apontamentos e parecer (área restrita)"><i class="fa-solid fa-lock"></i> Abrir revisão (restrito)</a>`
+          : `<span class="btn-link-action" style="opacity: 0.55; margin-left: auto;" title="Web App restrito ainda não configurado"><i class="fa-solid fa-lock"></i> Revisão restrita</span>`;
+        return `
+          <div class="project-card">
+            <div class="card-top">
+              <div class="student-identity">
+                <div class="student-avatar" style="background: rgba(147, 51, 234, 0.12); color: var(--accent-purple); border-color: rgba(147, 51, 234, 0.35);">${initials}</div>
+                <div class="student-meta">
+                  <h3 title="${r.aluno}">${r.aluno}</h3>
+                  <div class="email-link"><i class="fa-solid fa-graduation-cap"></i> ${r.nivel}</div>
+                </div>
+              </div>
+              <div class="card-top-badges">
+                <span class="flag-orientacao concluido" title="Papel na banca"><i class="fa-solid fa-scale-balanced"></i> ${r.papel}</span>
+                <span class="badge-status em-andamento">${r.status}</span>
+              </div>
+            </div>
+            <h4 class="project-title">${r.titulo}</h4>
+            <div class="banca-meta">
+              <div class="banca-meta-item"><i class="fa-solid fa-user-tie"></i> <span><strong>Orientador:</strong> ${r.orientador}</span></div>
+              <div class="banca-meta-item"><i class="fa-solid fa-users"></i> <span><strong>Banca:</strong> ${r.banca}</span></div>
+              <div class="banca-meta-item"><i class="fa-solid fa-calendar-day"></i> <span><strong>Data da banca:</strong> ${r.dataBanca || 'A definir'}</span></div>
+            </div>
+            <div class="tags-container">${tagsHtml}</div>
+            <div class="links-grid" style="margin-top: 0.5rem; align-items: center;">${restrito}</div>
+          </div>`;
+      }).join('');
+    }
+
     // Libera o dashboard quando autenticado com sucesso
     function unlockDashboard(session) {
       const gatekeeper = document.getElementById('authGatekeeper');
@@ -4113,6 +4194,9 @@ tectonic -Z shell-escape document.tex</pre>
 
       if (tabId === 'tab-demandas') {
         renderDemandas();
+      }
+      if (tabId === 'tab-revisoes') {
+        renderReviews();
       }
 
       window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -6220,87 +6304,6 @@ tectonic -Z shell-escape document.tex</pre>
         updateKpiCounts();
         filterProjects();
       }
-    }
-
-    // ==========================================================================
-    // REVISÕES DE TCC COMO MEMBRO DE BANCA
-    // Público: só metadados. Apontamentos e parecer ficam no Web App restrito
-    // (Apps Script "Somente eu") lendo a planilha privada de revisões.
-    // ==========================================================================
-    const REVISOES_WEBAPP_URL = ''; // cole aqui a URL /exec do Web App restrito após a implantação
-
-    const initialReviews = [
-      {
-        id: '2026-schalata',
-        aluno: 'Luiz Felipe Schalata Pacheco',
-        nivel: 'Superior • Sistemas para Internet',
-        titulo: 'Desenvolvimento de sistema web para gerenciamento de estoque da ASXT Peças',
-        orientador: 'Prof. Me. Alberto Felipe Friderichs Barros',
-        banca: 'Dr. Thiago Waltrik e Dr. André Luiz Silva de Moraes',
-        papel: 'Membro da banca',
-        dataBanca: '',
-        status: 'Parecer em elaboração',
-        tags: ['Flask', 'SQLite', 'Controle de Estoque', 'SUS']
-      }
-    ];
-    let reviewsData = [...initialReviews];
-
-    function renderReviews() {
-      const container = document.getElementById('reviewsContainer');
-      const countNav = document.getElementById('count-revisoes-nav');
-      if (countNav) countNav.textContent = reviewsData.length;
-
-      const restritoBtn = document.getElementById('revisoesRestritoBtn');
-      if (restritoBtn) {
-        if (REVISOES_WEBAPP_URL) {
-          restritoBtn.href = REVISOES_WEBAPP_URL;
-        } else {
-          restritoBtn.removeAttribute('href');
-          restritoBtn.style.opacity = '0.55';
-          restritoBtn.title = 'Configure REVISOES_WEBAPP_URL no index.html após implantar o Web App';
-        }
-      }
-      if (!container) return;
-
-      if (!reviewsData.length) {
-        container.innerHTML = `
-          <div style="grid-column: 1 / -1; text-align: center; padding: 3rem 2rem; background: var(--bg-card); border-radius: 16px; border: 1px dashed var(--border-color);">
-            <h3 style="color: var(--text-muted);">Nenhuma revisão de banca cadastrada.</h3>
-          </div>`;
-        return;
-      }
-
-      container.innerHTML = reviewsData.map(r => {
-        const initials = r.aluno.split(' ').map(n => n[0]).slice(0, 2).join('');
-        const tagsHtml = (r.tags || []).map(t => `<span class="tag-badge">${t}</span>`).join('');
-        const restrito = REVISOES_WEBAPP_URL
-          ? `<a href="${REVISOES_WEBAPP_URL}" target="_blank" class="btn-link-action" style="background: rgba(147, 51, 234, 0.1); border-color: var(--accent-purple); color: var(--accent-purple); margin-left: auto;" title="Apontamentos e parecer (área restrita)"><i class="fa-solid fa-lock"></i> Abrir revisão (restrito)</a>`
-          : `<span class="btn-link-action" style="opacity: 0.55; margin-left: auto;" title="Web App restrito ainda não configurado"><i class="fa-solid fa-lock"></i> Revisão restrita</span>`;
-        return `
-          <div class="project-card">
-            <div class="card-top">
-              <div class="student-identity">
-                <div class="student-avatar" style="background: rgba(147, 51, 234, 0.12); color: var(--accent-purple); border-color: rgba(147, 51, 234, 0.35);">${initials}</div>
-                <div class="student-meta">
-                  <h3 title="${r.aluno}">${r.aluno}</h3>
-                  <div class="email-link"><i class="fa-solid fa-graduation-cap"></i> ${r.nivel}</div>
-                </div>
-              </div>
-              <div class="card-top-badges">
-                <span class="flag-orientacao concluido" title="Papel na banca"><i class="fa-solid fa-scale-balanced"></i> ${r.papel}</span>
-                <span class="badge-status em-andamento">${r.status}</span>
-              </div>
-            </div>
-            <h4 class="project-title">${r.titulo}</h4>
-            <div class="banca-meta">
-              <div class="banca-meta-item"><i class="fa-solid fa-user-tie"></i> <span><strong>Orientador:</strong> ${r.orientador}</span></div>
-              <div class="banca-meta-item"><i class="fa-solid fa-users"></i> <span><strong>Banca:</strong> ${r.banca}</span></div>
-              <div class="banca-meta-item"><i class="fa-solid fa-calendar-day"></i> <span><strong>Data da banca:</strong> ${r.dataBanca || 'A definir'}</span></div>
-            </div>
-            <div class="tags-container">${tagsHtml}</div>
-            <div class="links-grid" style="margin-top: 0.5rem; align-items: center;">${restrito}</div>
-          </div>`;
-      }).join('');
     }
 
     // Initialize on page load
