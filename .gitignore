@@ -1,2 +1,5 @@
 Icon?
 .DS_Store
+
+# Área restrita (Apps Script e dados sensíveis de revisões de banca)
+_privado/
