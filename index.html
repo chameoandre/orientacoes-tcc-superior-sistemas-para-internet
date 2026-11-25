@@ -4030,6 +4030,30 @@ tectonic -Z shell-escape document.tex</pre>
     });
     localStorage.setItem('ifsc-tcc-meetings', JSON.stringify(meetingsData));
 
+      // Sincronização em tempo real com Google Sheets para os estudantes receberem sem precisar de commit
+      if (typeof GOOGLE_SCRIPT_WEBAPP_URL !== 'undefined' && GOOGLE_SCRIPT_WEBAPP_URL) {
+        try {
+          fetch(GOOGLE_SCRIPT_WEBAPP_URL, {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+            body: JSON.stringify({
+              action: 'gravar_reuniao',
+              tipo_acao: 'nova_reuniao',
+              aluno: s.nome,
+              data: dataFormatada,
+              tipo: 'Banca de Defesa',
+              pauta: meetingPauta,
+              deliberacoes: textoDefesa,
+              proximosPassos: prazoVersaoFinal ? `Entrega da versão final corrigida: ${prazoVersaoFinal}` : '',
+              pendencias: prazoVersaoFinal ? `1) Aplicar ajustes solicitados pela banca (${prazoVersaoFinal})` : ''
+            })
+          });
+        } catch (syncErr) {
+          console.warn('Erro ao sincronizar parecer com Google Sheets:', syncErr);
+        }
+      }
+
     // ==========================================================================
     // CONFIGURAÇÃO DE BOTÕES DOS CARDS (CUSTOMIZÁVEL PELO PROFESSOR)
     // ==========================================================================
@@ -4556,25 +4580,59 @@ tectonic -Z shell-escape document.tex</pre>
       localStorage.setItem('ifsc-tcc-banca-pareceres', JSON.stringify(data));
     }
 
+    // ==========================================
+    // PARECERES DA BANCA INICIAIS (SEED PÚBLICO)
+    // ==========================================
+    const initialBancaPareceres = {
+      "Marília Stefenon": {
+        dataDefesa: "2026-11-23",
+        membros: "Thiago Lipinski Paes e Ignácio Kirhiako Sepulveda Ramirez",
+        resultado: "Aprovado com ajustes",
+        prazoVersaoFinal: "30/11/2026",
+        textoDefesa: `Professor Ignácio\n------------------------\n1 - Resultados: revisar a acurácia, com metodologia fraca. A calibragem usadas para a avaliação das mensagens pode correr o risco de possuir uma quantidade muito grande de falsos positivos.\n2 - Existem problemas na afirmação das tecnologias apresentadas nos slides da apresentação, muitos termos confusos;\n3 - Detalhar melhor com quantas pessoas foram feitos os testes e como eles foram avaliados;\n\n   \nProfessor Thiago\n------------------------\n1 - Destacar melhor como a solução pode contribuir com a permanência e êxito no IFSC; \n2 - Destacadas informações que vieram do trabalho anterior, mas que poderiam ser corrigidas.\n3 - Framework RASA foi citada mas não está no texto com a correta referência bibliográfica;\n4 - O trabalho evoluiu mas continua com problemas metodológicos;\n5 - Ajustar o fluxo do andamento do VIVA (observar comentário do prof. Thiago)\n6 - O diagrama de arquitetura do sistema pode ser melhorado, podem ser usados ícones e figuras ilustrativas melhores para o documento;\n7 - Classificador Leve: ampliar a discussão sobre o classificador de cosseno e não fazer o comparativo direto com RAG, pois eles não são contraditórios.\n8 - Detalhar os algoritmos utilizados dentro da aplicação, como o Cosseno e o classificador. \n9 - Os exemplos de classificadores PLN podem ser incluídos dentro da Fundamentação teórica, com exemplos.\n10 - Incluir na parte de avaliação uma avaliação mais qualificada dos resultados, usando critérios melhor detalhados.\n11 - GitHub foi pouco utilizado durante o andamento do trabalho.`,
+        textoPreBanca: "Apresentação finalizada com sucesso. Pareceristas Thiago Lipinski e Ignácio Ramirez recomendaram recuperar comentários para qualificar a proposta, detalhando a arquitetura dos protótipos de PLN e LLM e alinhamento com a secretaria."
+      }
+    };
+
     function getStudentBancaObs(student) {
       const allObs = getBancaObsStorage();
       let obs = allObs[student.nome] || allObs[student.id] || null;
+      const seed = (typeof initialBancaPareceres !== 'undefined' && initialBancaPareceres[student.nome]) ? initialBancaPareceres[student.nome] : null;
+
+      // Busca reunião de defesa vinda da planilha oficial
+      const defesaMeeting = (typeof meetingsData !== 'undefined' ? meetingsData : []).find(m => 
+        m.alunoNome && m.alunoNome.toLowerCase().includes(student.nome.toLowerCase().split(' ')[0]) &&
+        m.tipo === 'Banca de Defesa'
+      );
+
       if (!obs) {
-        // Tenta buscar no meetingsData a pré-banca existente
         const preBancaMeeting = (typeof meetingsData !== 'undefined' ? meetingsData : []).find(m => 
           m.alunoNome && m.alunoNome.toLowerCase().includes(student.nome.toLowerCase().split(' ')[0]) &&
           (m.tipo === 'Pré-Banca' || (m.pauta && m.pauta.toLowerCase().includes('pré-banca')))
         );
-        const preBancaText = preBancaMeeting ? preBancaMeeting.deliberacoes : (student.comentariosPreBanca || '');
+        const preBancaText = seed ? seed.textoPreBanca : (preBancaMeeting ? preBancaMeeting.deliberacoes : (student.comentariosPreBanca || ''));
 
-        obs = {
-          dataDefesa: '2026-11-23',
-          membros: student.bancaMembros || '',
-          resultado: '',
-          prazoVersaoFinal: '',
-          textoDefesa: '',
-          textoPreBanca: preBancaText
-        };
+        if (defesaMeeting) {
+          obs = {
+            dataDefesa: defesaMeeting.data || '2026-11-23',
+            membros: student.bancaMembros || '',
+            resultado: defesaMeeting.pauta && defesaMeeting.pauta.includes('(') ? defesaMeeting.pauta.split('(')[1].replace(')', '') : 'Aprovado com ajustes',
+            prazoVersaoFinal: defesaMeeting.proximosPassos ? defesaMeeting.proximosPassos.replace('Entrega da versão final corrigida:', '').trim() : '',
+            textoDefesa: defesaMeeting.deliberacoes || '',
+            textoPreBanca: preBancaText
+          };
+        } else if (seed) {
+          obs = { ...seed };
+        } else {
+          obs = {
+            dataDefesa: '2026-11-23',
+            membros: student.bancaMembros || '',
+            resultado: '',
+            prazoVersaoFinal: '',
+            textoDefesa: '',
+            textoPreBanca: preBancaText
+          };
+        }
       }
       return obs;
     }
