@@ -4093,30 +4093,6 @@ tectonic -Z shell-escape document.tex</pre>
     });
     localStorage.setItem('ifsc-tcc-meetings', JSON.stringify(meetingsData));
 
-      // Sincronização em tempo real com Google Sheets para os estudantes receberem sem precisar de commit
-      if (typeof GOOGLE_SCRIPT_WEBAPP_URL !== 'undefined' && GOOGLE_SCRIPT_WEBAPP_URL) {
-        try {
-          fetch(GOOGLE_SCRIPT_WEBAPP_URL, {
-            method: 'POST',
-            mode: 'no-cors',
-            headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-            body: JSON.stringify({
-              action: 'gravar_reuniao',
-              tipo_acao: 'nova_reuniao',
-              aluno: s.nome,
-              data: dataFormatada,
-              tipo: 'Banca de Defesa',
-              pauta: meetingPauta,
-              deliberacoes: textoDefesa,
-              proximosPassos: prazoVersaoFinal ? `Entrega da versão final corrigida: ${prazoVersaoFinal}` : '',
-              pendencias: prazoVersaoFinal ? `1) Aplicar ajustes solicitados pela banca (${prazoVersaoFinal})` : ''
-            })
-          });
-        } catch (syncErr) {
-          console.warn('Erro ao sincronizar parecer com Google Sheets:', syncErr);
-        }
-      }
-
     // ==========================================================================
     // CONFIGURAÇÃO DE BOTÕES DOS CARDS (CUSTOMIZÁVEL PELO PROFESSOR)
     // ==========================================================================
@@ -4519,6 +4495,30 @@ tectonic -Z shell-escape document.tex</pre>
         meetingsData.unshift(newDefesaMeeting);
       }
       localStorage.setItem('ifsc-tcc-meetings', JSON.stringify(meetingsData));
+
+      // Sincronização em tempo real com Google Sheets para os estudantes receberem sem precisar de commit
+      if (typeof GOOGLE_SCRIPT_WEBAPP_URL !== 'undefined' && GOOGLE_SCRIPT_WEBAPP_URL) {
+        try {
+          fetch(GOOGLE_SCRIPT_WEBAPP_URL, {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+            body: JSON.stringify({
+              action: 'gravar_reuniao',
+              tipo_acao: 'nova_reuniao',
+              aluno: s.nome,
+              data: dataFormatada,
+              tipo: 'Banca de Defesa',
+              pauta: meetingPauta,
+              deliberacoes: textoDefesa,
+              proximosPassos: prazoVersaoFinal ? `Entrega da versão final corrigida: ${prazoVersaoFinal}` : '',
+              pendencias: prazoVersaoFinal ? `1) Aplicar ajustes solicitados pela banca (${prazoVersaoFinal})` : ''
+            })
+          });
+        } catch (syncErr) {
+          console.warn('Erro ao sincronizar parecer com Google Sheets:', syncErr);
+        }
+      }
 
       closeModal('bancaObsModal');
       renderProjects(studentsData);
